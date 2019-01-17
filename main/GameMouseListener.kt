@@ -7,6 +7,7 @@ class GameMouseListener : MouseListener {
 
     public override fun mouseClicked(e: MouseEvent?) {
         //TODO
+        //REMEMBER E.SOURCE
     }
 
     public override fun mouseEntered(e: MouseEvent?) {

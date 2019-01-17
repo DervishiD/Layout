@@ -1,0 +1,5 @@
+package geometry
+
+class Point {
+    
+}
