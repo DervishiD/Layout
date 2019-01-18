@@ -1,48 +1,147 @@
 package geometry
 
+import java.lang.ArithmeticException
+import kotlin.math.abs
+import kotlin.math.acos
+import kotlin.math.sqrt
+
+/**
+ * 2D Vectors.
+ * */
 class Vector {
 
+    /**
+     * The x coordinate.
+     * */
     private var x : Double
+    /**
+     * The y coordinate.
+     * */
     private var y : Double
 
+    /**
+     * Basic constructor
+     */
     constructor(x : Double, y : Double){
         this.x = x
         this.y = y
     }
+
+    /**
+     * Int constructor.
+     */
     constructor(x : Int, y : Int) : this(x.toDouble(), y.toDouble())
+
+    /**
+     * Empty constructor, creates a null Vector.
+     */
     constructor() : this(0, 0)
+
+    /**
+     * Creates a Vector from a Point.
+     */
     constructor(p : Point) : this(p.x(), p.y())
+
+    /**
+     * Creates a Vector from another vector.
+     */
     constructor(v : Vector) : this(v.x, v.y)
 
+    /**
+     * Returns x.
+     * */
     public fun x() : Double = x
+    /**
+     * Returns y.
+     */
     public fun y() : Double = y
 
-    /*
-    * Change the sign of x and y.
-    * */
-    public fun oppose(){
-        x = -x
-        y = -y
-    }
+    /**
+     * Returns the norm of this Vector.
+     */
+    public fun norm() : Double = sqrt(this * this)
 
-    /*
-    * Return the opposite of this Vector.
-    * */
-    public fun opposed() : Vector = Vector(-x, -y)
+    /**
+     * Returns the acute angle between this Vector ant the other one.
+     */
+    public fun angle(v : Vector) : Double = acos(abs((this * v) / (norm() * v.norm())))
 
-    /*
-    * Vector addition.
-    * */
+    /**
+     * Vector addition.
+     * @param v The added Vector.
+     * @return The sum of the two Vectors.
+     * */
     public operator fun plus(v : Vector) : Vector = Vector(x + v.x, y + v.y)
 
-    /*
-    * Vector subtraction.
-    * */
+    /**
+     * Vector subtraction.
+     * @param v The subtracted Vector.
+     * @return The subtraction of the two Vectors.
+     * */
     public operator fun minus(v : Vector) : Vector = Vector(x - v.x, y - v.y)
 
-    /*
-    * Dot product.
-    * */
+    /**
+     * Opposes this Vector.
+     */
+    public operator fun unaryMinus() : Vector = Vector(-x, -y)
+
+    /**
+     * Dot product.
+     * @param v The other Vector.
+     * @return The dot product of the two Vectors.
+     * */
     public operator fun times(v : Vector) : Double = x * v.x + y * v.y
+
+    /**
+     * Scalar multiplication.
+     * @param d Scalar.
+     * @return Scaled Vector.
+     */
+    public operator fun times(d : Double) : Vector = Vector(d * x, d * y)
+
+    /**
+     * Scalar multiplication.
+     * @param d Scalar.
+     * @return Scaled Vector.
+     */
+    public operator fun times(d : Int) : Vector = Vector(d * x, d * y)
+
+    /**
+     * Scalar multiplication.
+     * @param v Vector.
+     * @return Scaled Vector.
+     */
+    public operator fun Double.times(v : Vector) : Vector = v * this
+
+    /**
+     * Scalar multiplication.
+     * @param v Vector.
+     * @return Scaled Vector.
+     */
+    public operator fun Int.times(v : Vector) : Vector = v * this
+
+    /**
+     * Scalar division
+     * @param d Scalar.
+     * @return Scaled Vector.
+     * @throws ArithmeticException in case of a division by zero.
+     */
+    public operator fun div(d : Int) : Vector = this / d.toDouble()
+
+    /**
+     * Scalar division
+     * @param d Scalar.
+     * @return Scaled Vector.
+     * @throws ArithmeticException in case of a division by zero.
+     */
+    public operator fun div(d : Double) : Vector =
+        if(d != 0.0)
+            this * (1/d)
+        else throw ArithmeticException("Division by zero.")
+
+    /**
+     * Returns a Point with the same coordinates.
+     */
+    public fun toPoint() : Point = Point(x, y)
 
 }
