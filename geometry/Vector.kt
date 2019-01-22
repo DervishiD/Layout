@@ -1,5 +1,6 @@
 package geometry
 
+import main.DOUBLE_PRECISION
 import java.lang.ArithmeticException
 import kotlin.math.abs
 import kotlin.math.acos
@@ -43,9 +44,16 @@ class Vector {
     constructor(p : Point) : this(p.x(), p.y())
 
     /**
-     * Creates a Vector from another vector.
+     * Creates a Vector from another Vector.
      */
     constructor(v : Vector) : this(v.x, v.y)
+
+    /**
+     * Creates a Vector that goes from the first Point to the second one.
+     * @param from The starting Point
+     * @param to The tip Point
+     */
+    constructor(from : Point, to : Point) : this(to.x() - from.x(), to.y() - from.y())
 
     /**
      * Returns x.
@@ -138,6 +146,53 @@ class Vector {
         if(d != 0.0)
             this * (1/d)
         else throw ArithmeticException("Division by zero.")
+
+    /**
+     * Returns the i coordinate of this Vector.
+     */
+    public operator fun get(i : Int) : Double =
+        when(i){
+            0 -> x
+            1 -> y
+            else -> throw IndexOutOfBoundsException("A Vector only has two coordinates")
+        }
+
+    /**
+     * Sets the i coordinate of this Vector to value
+     * @param i The index to change
+     * @param value The new value of the coordinate
+     */
+    public operator fun set(i : Int, value : Double){
+        when(i){
+            0 -> x = value
+            1 -> y = value
+            else -> throw IndexOutOfBoundsException("A Vector only has two coordinates")
+        }
+    }
+
+    /**
+     * Sets the i coordinate of this Vector to value
+     * @param i The index to change
+     * @param value The new value of the coordinate
+     */
+    public operator fun set(i : Int, value : Int) = set(i, value.toDouble())
+
+    /**
+     * Checks whether this Vector is the same as the compared stuff.
+     */
+    public override operator fun equals(other: Any?): Boolean {
+        return when(other){
+            is Vector -> {
+                abs(x - other.x) <= DOUBLE_PRECISION &&
+                abs(y - other.y) <= DOUBLE_PRECISION
+            }
+            is Point -> {
+                abs(x - other.x()) <= DOUBLE_PRECISION &&
+                abs(y - other.y()) <= DOUBLE_PRECISION
+            }
+            else -> throw IllegalArgumentException("Can't compare to a Point.")
+        }
+    }
 
     /**
      * Returns a Point with the same coordinates.

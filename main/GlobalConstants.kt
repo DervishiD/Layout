@@ -8,4 +8,4 @@ public val FRAMEY : Int = (Toolkit.getDefaultToolkit().screenSize.getHeight()).t
 
 public val mainFrame : JFrame = JFrame()
 
-
+public const val DOUBLE_PRECISION : Double = 10e-2
