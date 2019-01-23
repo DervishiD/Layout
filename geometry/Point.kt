@@ -131,9 +131,15 @@ class Point {
             else -> throw IllegalArgumentException("Can't compare to a Point.")
         }
     }
+
     /**
      * Returns a Vector with the same coordinates.
      */
     public fun toVector() : Vector = Vector(x, y)
+
+    /**
+     * Returns a copy of this Point.
+     */
+    public fun copy() : Point = Point(x, y)
 
 }

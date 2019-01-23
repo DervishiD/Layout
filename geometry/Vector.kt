@@ -2,9 +2,15 @@ package geometry
 
 import main.DOUBLE_PRECISION
 import java.lang.ArithmeticException
-import kotlin.math.abs
-import kotlin.math.acos
-import kotlin.math.sqrt
+import kotlin.math.*
+
+/*
+* -- IMPORTANT NOTE --
+*
+* EX IS IN THE RIGHT DIRECTION, EY IS IN THE DOWN DIRECTION
+* THE ANGLES ARE COUNTED BACKWARDS
+*
+* */
 
 /**
  * 2D Vectors.
@@ -72,7 +78,35 @@ class Vector {
     /**
      * Returns the acute angle between this Vector ant the other one.
      */
-    public fun angle(v : Vector) : Double = acos(abs((this * v) / (norm() * v.norm())))
+    public infix fun angle(v : Vector) : Double = acos(abs((this * v) / (norm() * v.norm())))
+
+    /**
+     * Returns the complex-style argument of this Vector.
+     */
+    public fun argument() : Double{
+        return atan2(y, x)
+    }
+
+    /**
+     * Dot product.
+     */
+    public infix fun dot(v : Vector) : Double = this * v
+
+    /**
+     * Norm of the cross product aka determinant
+     */
+    public infix fun cross(v : Vector) : Double = x * v.y - y * v.x
+
+    /**
+     * Rotates this vector by the given angle.
+     * @param angle The angle of rotation.
+     */
+    public infix fun rotate(angle : Double){
+        val newX = x * cos(angle) - y * sin(angle)
+        val newY = x * sin(angle) + y * cos(angle)
+        x = newX
+        y = newY
+    }
 
     /**
      * Vector addition.
@@ -148,6 +182,11 @@ class Vector {
         else throw ArithmeticException("Division by zero.")
 
     /**
+     * Rotation
+     */
+    public operator fun rem(d : Double) = rotate(d)
+
+    /**
      * Returns the i coordinate of this Vector.
      */
     public operator fun get(i : Int) : Double =
@@ -198,5 +237,10 @@ class Vector {
      * Returns a Point with the same coordinates.
      */
     public fun toPoint() : Point = Point(x, y)
+
+    /**
+     * Returns a copy of this Vector.
+     */
+    public fun copy() : Vector = Vector(x, y)
 
 }
