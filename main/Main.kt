@@ -24,6 +24,15 @@ private fun initMainFrame(){
     mainFrame.isUndecorated = true
     mainFrame.isVisible = true
     mainFrame.requestFocus()
+
+    //EXAMPLE
+    /*
+    mainFrame.contentPane.addMouseListener(GameMouseListener())
+    val p : Text = Text()
+    p.setBounds(220, 220, 500, 500)
+    mainFrame.contentPane.add(p)
+    */
+
 }
 
 private fun launchProgram(){
