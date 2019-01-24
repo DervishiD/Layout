@@ -2,6 +2,6 @@ package display.texts
 
 import display.Text
 
-class GameText : Text() {
+class GameText /*: Text()*/ {
     //TODO
 }

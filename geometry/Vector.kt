@@ -20,11 +20,11 @@ class Vector {
     /**
      * The x coordinate.
      * */
-    private var x : Double
+    private var x: Double
     /**
      * The y coordinate.
      * */
-    private var y : Double
+    private var y: Double
 
     /**
      * Basic constructor

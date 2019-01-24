@@ -1,5 +1,6 @@
 package main
 
+import display.texts.MenuText
 import java.awt.Frame.MAXIMIZED_BOTH
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
@@ -24,6 +25,9 @@ private fun initMainFrame(){
     mainFrame.isUndecorated = true
     mainFrame.isVisible = true
     mainFrame.requestFocus()
+
+    val test : MenuText = MenuText(66, 40, "Hello World!")
+    mainFrame.add(test)
 
     //EXAMPLE
     /*
