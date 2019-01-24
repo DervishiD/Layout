@@ -123,16 +123,21 @@ class MenuText : Text {
         for(i : Int in 0 until lines.size){
             g.drawString(lines[i], 0, drawHeight + i * lineHeight)
         }
-        g.drawString(txt, 0, drawHeight)
     }
 
+    /**
+     * Called the first time the Text is drawn, to compute some lateinit parameters
+     */
     private fun initPhase(){
         lines = txt.split("\n")
         computeParameters()
         align()
-        setBounds(p.intx() - w / 2, p.inty() - (h * lines.size)/2, w, h)
+        setBounds(p.intx() - w/2, p.inty() - h/2, w, h)
     }
 
+    /**
+     * Computes the width, height, drawHeight and lineHeight
+     */
     private fun computeParameters(){
         val fm : FontMetrics = parent.graphics.getFontMetrics(f)
         for(line : String in lines){
@@ -141,21 +146,22 @@ class MenuText : Text {
                 w = lineWidth
             }
         }
-
         lineHeight = fm.maxAscent + fm.maxDescent
         h = lineHeight * lines.size
-
         drawHeight = fm.maxAscent
     }
 
+    /**
+     * Aligns the Text with respect to the required alignment
+     */
     private fun align(){
         if(alignLeftTo != null){
-            p = Point(alignLeftTo!! + w / 2, p.y())
+            p = Point(alignLeftTo!! + w/2, p.y())
         }else if(alignRightTo != null){
             p = Point(alignRightTo!! - w/2, p.y())
         }
         if(alignUpTo != null){
-            p = Point(p.x(), alignUpTo!! + (h * lines.size)/2)
+            p = Point(p.x(), alignUpTo!! + h/2)
         }else if(alignDownTo != null){
             p = Point(p.x(), alignDownTo!! - h/2)
         }
