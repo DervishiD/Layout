@@ -26,7 +26,9 @@ private fun initMainFrame(){
     mainFrame.isVisible = true
     mainFrame.requestFocus()
 
-    val test : MenuText = MenuText(66, 40, "Hello World!")
+    val test : MenuText = MenuText(FRAMEX / 2, FRAMEY / 2, "Hello World!\nOh hi Mark!")
+    test.alignRightTo(FRAMEX)
+    test.alignUpTo(0)
     mainFrame.add(test)
 
     //EXAMPLE

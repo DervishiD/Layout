@@ -40,6 +40,16 @@ class Vector {
     constructor(x : Int, y : Int) : this(x.toDouble(), y.toDouble())
 
     /**
+     * Mixed constructor.
+     */
+    constructor(x : Double, y : Int) : this(x, y.toDouble())
+
+    /**
+     * Mixed constructor.
+     */
+    constructor(x : Int, y : Double) : this(x.toDouble(), y)
+
+    /**
      * Empty constructor, creates a null Vector.
      */
     constructor() : this(0, 0)
