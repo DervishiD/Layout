@@ -11,11 +11,11 @@ class Point {
     /**
      * The x coordinate.
      * */
-    private var x : Double
+    public var x : Double
     /**
      * The y coordinate.
      * */
-    private var y : Double
+    public var y : Double
 
     /**
      * Basic constructor
@@ -53,17 +53,7 @@ class Point {
     /**
      * Creates a Point from a vector.
      */
-    constructor(v : Vector) : this(v.x(), v.y())
-
-    /**
-     * Returns x.
-     * */
-    public fun x() : Double = x
-
-    /**
-     * Returns y.
-     */
-    public fun y() : Double = y
+    constructor(v : Vector) : this(v.x, v.y)
 
     /**
      * Returns x rounded to an integer.
@@ -80,14 +70,14 @@ class Point {
      * @param v The direction Vector.
      * @return The moved Point.
      * */
-    public operator fun plus(v : Vector) : Point = Point(x + v.x(), y + v.y())
+    public operator fun plus(v : Vector) : Point = Point(x + v.x, y + v.y)
 
     /**
      * Subtraction of a Vector to a Point, corresponds to moving the Point along the opposite Vector.
      * @param v The direction Vector.
      * @return The moved Point.
      * */
-    public operator fun minus(v : Vector) : Point = Point(x - v.x(), y - v.y())
+    public operator fun minus(v : Vector) : Point = Point(x - v.x, y - v.y)
 
     /**
      * Creates a Vector from this Point to the other one.
@@ -135,8 +125,8 @@ class Point {
                 abs(y - other.y) <= DOUBLE_PRECISION
             }
             is Vector -> {
-                abs(x - other.x()) <= DOUBLE_PRECISION &&
-                abs(y - other.y()) <= DOUBLE_PRECISION
+                abs(x - other.x) <= DOUBLE_PRECISION &&
+                abs(y - other.y) <= DOUBLE_PRECISION
             }
             else -> throw IllegalArgumentException("Can't compare to a Point.")
         }

@@ -20,11 +20,11 @@ class Vector {
     /**
      * The x coordinate.
      * */
-    private var x: Double
+    public var x: Double
     /**
      * The y coordinate.
      * */
-    private var y: Double
+    public var y: Double
 
     /**
      * Basic constructor
@@ -57,7 +57,7 @@ class Vector {
     /**
      * Creates a Vector from a Point.
      */
-    constructor(p : Point) : this(p.x(), p.y())
+    constructor(p : Point) : this(p.x, p.y)
 
     /**
      * Creates a Vector from another Vector.
@@ -69,16 +69,7 @@ class Vector {
      * @param from The starting Point
      * @param to The tip Point
      */
-    constructor(from : Point, to : Point) : this(to.x() - from.x(), to.y() - from.y())
-
-    /**
-     * Returns x.
-     * */
-    public fun x() : Double = x
-    /**
-     * Returns y.
-     */
-    public fun y() : Double = y
+    constructor(from : Point, to : Point) : this(to.x - from.x, to.y - from.y)
 
     /**
      * Returns the norm of this Vector.
@@ -236,8 +227,8 @@ class Vector {
                 abs(y - other.y) <= DOUBLE_PRECISION
             }
             is Point -> {
-                abs(x - other.x()) <= DOUBLE_PRECISION &&
-                abs(y - other.y()) <= DOUBLE_PRECISION
+                abs(x - other.x) <= DOUBLE_PRECISION &&
+                abs(y - other.y) <= DOUBLE_PRECISION
             }
             else -> throw IllegalArgumentException("Can't compare to a Point.")
         }

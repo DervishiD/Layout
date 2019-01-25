@@ -156,14 +156,14 @@ class MenuText : Text {
      */
     private fun align(){
         if(alignLeftTo != null){
-            p = Point(alignLeftTo!! + w/2, p.y())
+            p.x = alignLeftTo!! + w/2.0
         }else if(alignRightTo != null){
-            p = Point(alignRightTo!! - w/2, p.y())
+            p.x = alignRightTo!! - w/2.0
         }
         if(alignUpTo != null){
-            p = Point(p.x(), alignUpTo!! + h/2)
+            p.y = alignUpTo!! + h/2.0
         }else if(alignDownTo != null){
-            p = Point(p.x(), alignDownTo!! - h/2)
+            p.y = alignDownTo!! - h/2.0
         }
     }
 
