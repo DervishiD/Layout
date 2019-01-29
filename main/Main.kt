@@ -1,6 +1,9 @@
 package main
 
+import java.awt.Color
+import display.StringDisplay
 import display.texts.MenuText
+import java.awt.Font
 import java.awt.Frame.MAXIMIZED_BOTH
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
@@ -26,10 +29,15 @@ private fun initMainFrame(){
     mainFrame.isVisible = true
     mainFrame.requestFocus()
 
-    val test : MenuText = MenuText(FRAMEX / 2, FRAMEY / 2, "Hello World!\nOh hi Mark!")
-    test.alignRightTo(FRAMEX)
-    test.alignUpTo(0)
-    mainFrame.add(test)
+    //EXAMPLE
+    val a : MenuText = MenuText(400, 400,
+        arrayListOf(
+            StringDisplay("Hello "),
+            StringDisplay("There", Font("Arial", Font.BOLD, 32), Color.RED),
+            StringDisplay("!\n", Color.BLUE),
+            StringDisplay("Oh hi Mark!", Font("Monospaced", Font.ITALIC, 40), Color.ORANGE)
+        ))
+    mainFrame.contentPane.add(a)
 
     //EXAMPLE
     /*

@@ -1,170 +1,145 @@
 package display.texts
 
-import display.DEFAULT_FONT
+import display.StringDisplay
 import display.Text
+import display.toLinesList
 import geometry.Point
-import geometry.Vector
-import java.awt.Color.BLACK
-import java.awt.Font
 import java.awt.FontMetrics
 import java.awt.Graphics
 
 /**
  * Text that has a fixed position on a Menu panel
  */
-class MenuText : Text {
+public class MenuText : Text {
 
-    override var w : Int = 1
-    override var h : Int = 1
-    override var drawHeight : Int = 1
-    override var lineHeight: Int = 1
+    override var w : Int = 0
+    override var h : Int = 0
+    private val lines = txt.toLinesList()
 
-    private lateinit var lines : List<String>
-
-    /**
-     * For a left alignment
-     */
-    private var alignLeftTo : Int? = null
-
-    /**
-     * For a right alignment
-     */
-    private var alignRightTo : Int? = null
-
-    /**
-     * For an up alignment
-     */
-    private var alignUpTo : Int? = null
-
-    /**
-     * For a down alignment
-     */
-    private var alignDownTo : Int? = null
-
-    /**
-     * Encodes if this MenuText is drawn for the first time
-     */
-    private var initphase : Boolean = true
-
-    /**
-     * Center x, center y, text, font
-     */
-    constructor(x : Int, y : Int, text : String, f : Font = DEFAULT_FONT) : super(x, y, text, f)
-
-    /**
-     * Center x, center y, text, font
-     */
-    constructor(x : Double, y : Double, text : String, f : Font = DEFAULT_FONT) : super(x, y, text, f)
-
-    /**
-     * Center Point, text, font
-     */
-    constructor(p : Point, text : String, f : Font = DEFAULT_FONT) : super(p, text, f)
-
-    /**
-     * Function to perform a left alignment
-     */
-    public fun alignLeftTo(l : Int){
-        alignLeftTo = l
-        alignRightTo = null
-    }
-
-    /**
-     * Function to perform a right alignment
-     */
-    public fun alignRightTo(r : Int){
-        alignRightTo = r
-        alignLeftTo = null
-    }
-
-    /**
-     * Function to perform an up alignment
-     */
-    public fun alignUpTo(u : Int){
-        alignUpTo = u
-        alignDownTo = null
-    }
-
-    /**
-     * Function to perform a down alignment
-     */
-    public fun alignDownTo(d : Int){
-        alignDownTo = d
-        alignUpTo = null
-    }
-
-    /**
-     * Function to perform a left alignment
-     */
-    public fun alignLeftTo(l : Double) = alignLeftTo(l.toInt())
-
-    /**
-     * Function to perform a right alignment
-     */
-    public fun alignRightTo(r : Double) = alignRightTo(r.toInt())
-
-    /**
-     * Function to perform an up alignment
-     */
-    public fun alignUpTo(u : Double) = alignUpTo(u.toInt())
-
-    /**
-     * Function to perform a down alignment
-     */
-    public fun alignDownTo(d : Double) = alignDownTo(d.toInt())
+    constructor(p : Point, text : ArrayList<StringDisplay>) : super(p, text)
+    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
+    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
+    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
+    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
+    constructor(p : Point, text : StringDisplay) : super(p, text)
+    constructor(x : Double, y : Double, text : StringDisplay) : super(Point(x, y), text)
+    constructor(x : Double, y : Int, text : StringDisplay) : super(Point(x, y), text)
+    constructor(x : Int, y : Double, text : StringDisplay) : super(Point(x, y), text)
+    constructor(x : Int, y : Int, text : StringDisplay) : super(Point(x, y), text)
+    constructor(p : Point, text : String) : super(p, text)
+    constructor(x : Double, y : Double, text : String) : super(Point(x, y), text)
+    constructor(x : Double, y : Int, text : String) : super(Point(x, y), text)
+    constructor(x : Int, y : Double, text : String) : super(Point(x, y), text)
+    constructor(x : Int, y : Int, text : String) : super(Point(x, y), text)
 
     public override fun paintComponent(g: Graphics?) {
         if(initphase){
-            initPhase()
+            loadParameters(g!!)
+            setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
             initphase = false
         }
-        g!!.color = BLACK
-        g.font = f
-        for(i : Int in 0 until lines.size){
-            g.drawString(lines[i], 0, drawHeight + i * lineHeight)
+        drawBackground(g!!)
+        drawText(g)
+    }
+
+    public override fun loadParameters(g : Graphics){
+        computeTotalHeight(g)
+        computeMaxLength(g)
+    }
+
+    private fun computeTotalHeight(g : Graphics){
+        for(line : ArrayList<StringDisplay> in lines){
+            h += computeHeight(g, line)
         }
     }
 
-    /**
-     * Called the first time the Text is drawn, to compute some lateinit parameters
-     */
-    private fun initPhase(){
-        lines = txt.split("\n")
-        computeParameters()
-        align()
-        setBounds(p.intx() - w/2, p.inty() - h/2, w, h)
-    }
-
-    /**
-     * Computes the width, height, drawHeight and lineHeight
-     */
-    private fun computeParameters(){
-        val fm : FontMetrics = parent.graphics.getFontMetrics(f)
-        for(line : String in lines){
-            val lineWidth = fm.stringWidth(line)
-            if(lineWidth > w){
-                w = lineWidth
+    private fun computeHeight(g : Graphics, line : ArrayList<StringDisplay>) : Int{
+        var maxAscent : Int = 0
+        var maxDescent : Int = 0
+        var fm : FontMetrics
+        for(s : StringDisplay in line){
+            fm = g.getFontMetrics(s.font)
+            if(fm.maxAscent > maxAscent){
+                maxAscent = fm.maxAscent
+            }
+            if(fm.maxDescent > maxDescent){
+                maxDescent = fm.maxDescent
             }
         }
-        lineHeight = fm.maxAscent + fm.maxDescent
-        h = lineHeight * lines.size
-        drawHeight = fm.maxAscent
+        return maxAscent + maxDescent
     }
 
-    /**
-     * Aligns the Text with respect to the required alignment
-     */
-    private fun align(){
-        if(alignLeftTo != null){
-            p.x = alignLeftTo!! + w/2.0
-        }else if(alignRightTo != null){
-            p.x = alignRightTo!! - w/2.0
+    private fun ascent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
+        var maxAscent : Int = 0
+        var fm : FontMetrics
+        for(s : StringDisplay in line){
+            fm = g.getFontMetrics(s.font)
+            if(fm.maxAscent > maxAscent){
+                maxAscent = fm.maxAscent
+            }
         }
-        if(alignUpTo != null){
-            p.y = alignUpTo!! + h/2.0
-        }else if(alignDownTo != null){
-            p.y = alignDownTo!! - h/2.0
+        return maxAscent
+    }
+
+    private fun descent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
+        var maxDescent : Int = 0
+        var fm : FontMetrics
+        for(s : StringDisplay in line){
+            fm = g.getFontMetrics(s.font)
+            if(fm.maxDescent > maxDescent){
+                maxDescent = fm.maxDescent
+            }
         }
+        return maxDescent
+    }
+
+    private fun computeMaxLength(g : Graphics){
+        var maxLength = 0
+        var currentLength = 0
+        var fm : FontMetrics
+        for(s : StringDisplay in txt){
+            fm = g.getFontMetrics(s.font)
+            if(!(s.text.contains("\n"))){
+                currentLength += fm.stringWidth(s.text)
+            }else{
+                val lines : List<String> = s.text.split("\n")
+                currentLength += fm.stringWidth(lines[0])
+                if(currentLength > maxLength){
+                    maxLength = currentLength
+                }
+                for(i : Int in 1 until lines.size){
+                    currentLength = fm.stringWidth(lines[i])
+                    if(currentLength > maxLength){
+                        maxLength = currentLength
+                    }
+                }
+            }
+        }
+        w = if(maxLength > currentLength) maxLength else currentLength
+    }
+
+    protected override fun drawBackground(g: Graphics) {
+        //TODO?
+    }
+
+    protected override fun drawText(g : Graphics) {
+        //TODO
+
+        var currentX : Int = 0
+        var currentY : Int = 0
+
+        for(line : ArrayList<StringDisplay> in lines){
+            currentY += ascent(g, line)
+            for(s : StringDisplay in line){
+                g.font = s.font
+                g.color = s.color
+                g.drawString(s.text, currentX, currentY)
+                currentX += g.getFontMetrics(s.font).stringWidth(s.text)
+            }
+            currentX = 0
+            currentY += descent(g, line)
+        }
+
     }
 
 }

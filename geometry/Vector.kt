@@ -82,6 +82,34 @@ class Vector {
     public infix fun angle(v : Vector) : Double = acos(abs((this * v) / (norm() * v.norm())))
 
     /**
+     * Stretches this Vector to the given length
+     */
+    public infix fun toLength(length : Double){
+        unit()
+        x *= length
+        y *= length
+    }
+
+    /**
+     * Stretches this Vector to the given length
+     */
+    public infix fun toLength(length : Int){
+        unit()
+        x *= length
+        y *= length
+    }
+
+    /**
+     * Creates a vector with this one's direction but with length one.
+     */
+    public fun unit() = this / norm()
+
+    /**
+     * Set this Vector's length to one.
+     */
+    public fun toUnit() = this toLength 1
+
+    /**
      * Returns the complex-style argument of this Vector.
      */
     public fun argument() : Double{
