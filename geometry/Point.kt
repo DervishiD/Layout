@@ -66,6 +66,30 @@ class Point {
     public fun inty() : Int = y.toInt()
 
     /**
+     * Sets the x coordinate
+     */
+    public infix fun setx(x : Double){
+        this.x = x
+    }
+
+    /**
+     * Sets the x coordinate
+     */
+    public infix fun setx(x : Int) = setx(x.toDouble())
+
+    /**
+     * Sets the y coordinate
+     */
+    public infix fun sety(y : Double){
+        this.y = y
+    }
+
+    /**
+     * Sets the y coordinate
+     */
+    public infix fun sety(y : Int) = sety(y.toDouble())
+
+    /**
      * Addition of a Vector to a Point, corresponds to moving the Point along the Vector.
      * @param v The direction Vector.
      * @return The moved Point.

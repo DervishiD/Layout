@@ -1,5 +1,6 @@
 package main
 
+import display.Button
 import java.awt.Color
 import display.StringDisplay
 import display.texts.MenuText
@@ -37,7 +38,21 @@ private fun initMainFrame(){
             StringDisplay("!\n", Color.BLUE),
             StringDisplay("Oh hi Mark!", Font("Monospaced", Font.ITALIC, 40), Color.ORANGE)
         ))
+    a alignRightTo FRAMEX
+    a alignDownTo FRAMEY
     mainFrame.contentPane.add(a)
+
+    //EXAMPLE
+    val b : Button = Button(400, 400,
+        arrayListOf(
+            StringDisplay("Hello "),
+            StringDisplay("There", Font("Arial", Font.BOLD, 32), Color.RED),
+            StringDisplay("!\n", Color.BLUE),
+            StringDisplay("Oh hi Mark!", Font("Monospaced", Font.ITALIC, 40), Color.ORANGE)
+        )
+    ) {}
+    b alignLeftTo 200
+    mainFrame.contentPane.add(b)
 
     //EXAMPLE
     /*

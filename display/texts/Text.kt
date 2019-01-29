@@ -1,11 +1,17 @@
-package display
+package display.texts
 
+import display.Displayed
+import display.StringDisplay
 import geometry.Point
+import java.awt.Graphics
 
 /**
  * Abstract JLabel extension created to display text as efficiently as possible
  */
 public abstract class Text : Displayed {
+
+    override var w : Int = 0
+    override var h : Int = 0
 
     constructor(p : Point, text : ArrayList<StringDisplay>) : super(p, text)
     constructor(x : Double, y : Double, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
@@ -22,5 +28,10 @@ public abstract class Text : Displayed {
     constructor(x : Double, y : Int, text : String) : super(Point(x, y), text)
     constructor(x : Int, y : Double, text : String) : super(Point(x, y), text)
     constructor(x : Int, y : Int, text : String) : super(Point(x, y), text)
+
+    protected override fun loadParameters(g : Graphics){
+        computeTotalHeight(g, 0)
+        computeMaxLength(g, 0)
+    }
 
 }

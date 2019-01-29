@@ -138,6 +138,30 @@ class Vector {
     }
 
     /**
+     * Sets the x coordinate
+     */
+    public infix fun setx(x : Double){
+        this.x = x
+    }
+
+    /**
+     * Sets the x coordinate
+     */
+    public infix fun setx(x : Int) = setx(x.toDouble())
+
+    /**
+     * Sets the y coordinate
+     */
+    public infix fun sety(y : Double){
+        this.y = y
+    }
+
+    /**
+     * Sets the y coordinate
+     */
+    public infix fun sety(y : Int) = sety(y.toDouble())
+
+    /**
      * Vector addition.
      * @param v The added Vector.
      * @return The sum of the two Vectors.
