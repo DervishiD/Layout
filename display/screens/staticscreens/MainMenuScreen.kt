@@ -1,5 +1,6 @@
 package display.screens.staticscreens
 
+import display.Button
 import display.TITLE
 
 /**
@@ -11,6 +12,9 @@ class MainMenuScreen : StaticScreen() {
     init{
         previousScreen = this
 
+        val test : Button = Button(300, 300, "Hi") {println("Hi")}
+
+        this add test
         this add TITLE
     }
 
