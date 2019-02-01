@@ -56,6 +56,11 @@ public abstract class Displayed : JLabel {
      */
     protected var alignDownTo : Int? = null
 
+    /**
+     * The maximal allowed line length
+     */
+    protected var maxLineLength : Int? = null
+
     init{
         setBounds(1, 1, 1, 1)
     }
@@ -124,6 +129,18 @@ public abstract class Displayed : JLabel {
     public infix fun alignDownTo(position : Double) = alignDownTo(position.toInt())
 
     /**
+     * Sets the maximal line length for this Component
+     */
+    public infix fun setMaxLineLength(length : Int){
+        maxLineLength = length
+    }
+
+    /**
+     * Sets the maximal line length for this Component.
+     */
+    public infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
+
+    /**
      * The center Point
      */
     public fun center() : Point = point
@@ -157,6 +174,97 @@ public abstract class Displayed : JLabel {
      * The highest x coordinate of the component
      */
     public fun highestX() : Int = (point.x + w / 2).toInt()
+
+    /**
+     * Forces the component to respect the maximal line length constraint
+     */
+    protected fun forceMaxLineLength(g : Graphics, delta : Int){
+        if(maxLineLength != null){
+            val result : ArrayList<ArrayList<StringDisplay>> = ArrayList<ArrayList<StringDisplay>>()
+            val currentLine : ArrayList<StringDisplay> = ArrayList<StringDisplay>()
+            var currentDisplay : StringDisplay
+            var fm : FontMetrics
+            var currentLineLength : Int = 2 * delta
+            var currentWord : String
+            var currentWordAndSpace : String
+            var charLength : Int
+            var wordLength : Int
+            var wordAndSpaceLength : Int
+            var words : List<String>
+            var chars : List<String>
+
+            for(line : ArrayList<StringDisplay> in lines){
+                for(s : StringDisplay in line){
+                    fm = g.getFontMetrics(s.font)
+                    words = s.text.split(" ")
+                    currentDisplay = StringDisplay("", s.font, s.color)
+                    for(i : Int in 0 until words.size){
+                        currentWord = words[i]
+                        currentWordAndSpace = " $currentWord"
+                        wordLength = fm.stringWidth(currentWord)
+                        wordAndSpaceLength = fm.stringWidth(currentWordAndSpace)
+                        if(currentLineLength + wordAndSpaceLength <= maxLineLength!!){
+                            if(i == 0){
+                                currentDisplay.push(currentWord)
+                                currentLineLength += wordLength
+                            }else{
+                                currentDisplay.push(currentWordAndSpace)
+                                currentLineLength += wordAndSpaceLength
+                            }
+                        }else{
+                            if(i == 0 && currentLineLength + wordLength <= maxLineLength!!){
+                                currentDisplay.push(currentWord)
+                                currentLine.add(currentDisplay.copy())
+                                result.add(currentLine.copy())
+                                currentLine.clear()
+                                currentDisplay.clear()
+                                currentLineLength = 2 * delta
+                            }else if(wordLength <= maxLineLength!!){
+                                currentLine.add(currentDisplay.copy())
+                                result.add(currentLine.copy())
+                                currentLine.clear()
+                                currentDisplay.clear()
+                                currentDisplay.push(currentWord)
+                                currentLineLength = 2 * delta + wordLength
+                            }else{
+                                chars = currentWord.split("")
+                                val spaceLength = fm.stringWidth(" ")
+                                if(currentLineLength + spaceLength <= maxLineLength!!){
+                                    currentDisplay.push(" ")
+                                    currentLineLength += spaceLength
+                                }else{
+                                    currentLine.add(currentDisplay.copy())
+                                    result.add(currentLine.copy())
+                                    currentLine.clear()
+                                    currentDisplay.clear()
+                                    currentLineLength = 2 * delta
+                                }
+                                for(c : String in chars){
+                                    charLength = fm.stringWidth(c)
+                                    if(currentLineLength + charLength <= maxLineLength!!){
+                                        currentDisplay.push(c)
+                                        currentLineLength += charLength
+                                    }else{
+                                        currentLine.add(currentDisplay.copy())
+                                        result.add(currentLine.copy())
+                                        currentLine.clear()
+                                        currentDisplay.clear()
+                                        currentDisplay.push(c)
+                                        currentLineLength = 2 * delta + charLength
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    currentLine.add(currentDisplay.copy())
+                }
+                result.add(currentLine.copy())
+                currentLine.clear()
+                currentLineLength = 2 * delta
+            }
+            lines = result
+        }
+    }
 
     /**
      * Aligns the component with the alignment constraints
@@ -207,6 +315,9 @@ public abstract class Displayed : JLabel {
         return maxAscent + maxDescent
     }
 
+    /**
+     * Returns the ascet of the line
+     */
     protected fun ascent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
         var maxAscent : Int = 0
         var fm : FontMetrics
@@ -219,6 +330,9 @@ public abstract class Displayed : JLabel {
         return maxAscent
     }
 
+    /**
+     * Returns the descent of the line.
+     */
     protected fun descent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
         var maxDescent : Int = 0
         var fm : FontMetrics
@@ -231,6 +345,9 @@ public abstract class Displayed : JLabel {
         return maxDescent
     }
 
+    /**
+     * Computes the total height of the displayed component
+     */
     protected fun computeTotalHeight(g : Graphics, delta : Int){
         h += 2 * delta
         for(line : ArrayList<StringDisplay> in lines){
@@ -238,6 +355,9 @@ public abstract class Displayed : JLabel {
         }
     }
 
+    /**
+     * Computes the maximal length of the StringDisplays' lines
+     */
     protected fun computeMaxLength(g : Graphics, delta : Int){
         var maxLength = 0
         var currentLength = 0

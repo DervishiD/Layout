@@ -30,6 +30,7 @@ public abstract class Text : Displayed {
     constructor(x : Int, y : Int, text : String) : super(Point(x, y), text)
 
     protected override fun loadParameters(g : Graphics){
+        forceMaxLineLength(g, 0)
         computeTotalHeight(g, 0)
         computeMaxLength(g, 0)
     }

@@ -38,6 +38,15 @@ public fun ArrayList<StringDisplay>.toLinesList() : ArrayList<ArrayList<StringDi
 }
 
 /**
+ * Returns a copy of this ArrayList
+ */
+public fun ArrayList<StringDisplay>.copy() : ArrayList<StringDisplay>{
+    var result : ArrayList<StringDisplay> = ArrayList<StringDisplay>()
+    result.addAll(this)
+    return result
+}
+
+/**
  * Class that represents a displayed String
  */
 class StringDisplay {
@@ -84,6 +93,46 @@ class StringDisplay {
         }
         return result
     }
+
+    /**
+     * Adds a string to the StringDisplay
+     */
+    public infix fun push(s : String){
+        text += s
+    }
+
+    /**
+     * Adds a char to the StringDisplay
+     */
+    public infix fun push(c : Char){
+        text += c
+    }
+
+    /**
+     * Adds an Int to the StringDisplay
+     */
+    public infix fun push(i : Int){
+        text += i.toString()
+    }
+
+    /**
+     * Adds a Double to the StringDisplay
+     */
+    public infix fun push(d : Double){
+        text += d.toString()
+    }
+
+    /**
+     * Replaces the text with an empty String
+     */
+    public fun clear(){
+        text = ""
+    }
+
+    /**
+     * Creates a copy of this StringDisplay
+     */
+    public fun copy() : StringDisplay = StringDisplay(text, color, font)
 
     public operator fun plus(other : StringDisplay) : String = this.text + other.text
     public operator fun plus(other : String) : String = this.text + other
