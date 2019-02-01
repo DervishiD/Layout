@@ -42,6 +42,7 @@ class Button : Displayed {
     public fun click() = action.invoke()
 
     protected override fun loadParameters(g : Graphics){
+        forceMaxLineLength(g, LINE_THICKNESS + DELTA)
         computeTotalHeight(g, LINE_THICKNESS + DELTA)
         computeMaxLength(g, LINE_THICKNESS + DELTA)
     }

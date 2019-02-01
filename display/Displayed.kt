@@ -1,6 +1,7 @@
 package display
 
 import geometry.Point
+import java.awt.Font
 import java.awt.FontMetrics
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
@@ -228,16 +229,18 @@ public abstract class Displayed : JLabel {
                                 currentLineLength = 2 * delta + wordLength
                             }else{
                                 chars = currentWord.split("")
-                                val spaceLength = fm.stringWidth(" ")
-                                if(currentLineLength + spaceLength <= maxLineLength!!){
-                                    currentDisplay.push(" ")
-                                    currentLineLength += spaceLength
-                                }else{
-                                    currentLine.add(currentDisplay.copy())
-                                    result.add(currentLine.copy())
-                                    currentLine.clear()
-                                    currentDisplay.clear()
-                                    currentLineLength = 2 * delta
+                                if(i != 0){
+                                    val spaceLength = fm.stringWidth(" ")
+                                    if(currentLineLength + spaceLength <= maxLineLength!!){
+                                        currentDisplay.push(" ")
+                                        currentLineLength += spaceLength
+                                    }else{
+                                        currentLine.add(currentDisplay.copy())
+                                        result.add(currentLine.copy())
+                                        currentLine.clear()
+                                        currentDisplay.clear()
+                                        currentLineLength = 2 * delta
+                                    }
                                 }
                                 for(c : String in chars){
                                     charLength = fm.stringWidth(c)
@@ -360,28 +363,24 @@ public abstract class Displayed : JLabel {
      */
     protected fun computeMaxLength(g : Graphics, delta : Int){
         var maxLength = 0
-        var currentLength = 0
-        var fm : FontMetrics
-        for(s : StringDisplay in txt){
-            fm = g.getFontMetrics(s.font)
-            if(!(s.text.contains("\n"))){
-                currentLength += fm.stringWidth(s.text)
-            }else{
-                val lines : List<String> = s.text.split("\n")
-                currentLength += fm.stringWidth(lines[0])
-                if(currentLength > maxLength){
-                    maxLength = currentLength
-                }
-                for(i : Int in 1 until lines.size){
-                    currentLength = fm.stringWidth(lines[i])
-                    if(currentLength > maxLength){
-                        maxLength = currentLength
-                    }
-                }
+        for(line : ArrayList<StringDisplay> in lines){
+            val lineLength : Int = lineLength(g, line)
+            if(lineLength > maxLength){
+                maxLength = lineLength
             }
         }
-        w = if(maxLength > currentLength) maxLength else currentLength
-        w += 2 * delta
+        w = maxLength + 2 * delta
+    }
+
+    /**
+     * Computes the length of a StringDisplay line.
+     */
+    private fun lineLength(g : Graphics, line : ArrayList<StringDisplay>) : Int{
+        var result : Int = 0
+        for(s : StringDisplay in line){
+            result +=  g.getFontMetrics(s.font).stringWidth(s.text)
+        }
+        return result
     }
 
     public override fun paintComponent(g: Graphics?) {

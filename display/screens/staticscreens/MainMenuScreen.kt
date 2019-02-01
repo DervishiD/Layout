@@ -15,7 +15,7 @@ class MainMenuScreen : StaticScreen() {
     init{
         previousScreen = this
 
-        val test : Button = Button(300, 300, "Hi") {println("Hi")}
+        val test : Button = Button(700, 300, "Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii") {println("Hi")}
 
         val a : MenuText = MenuText(600, 500, arrayListOf<StringDisplay>(
             StringDisplay("Hello there!\nGeneral Kenobi!\n"),
@@ -23,6 +23,9 @@ class MainMenuScreen : StaticScreen() {
         ))
 
         a setMaxLineLength 400
+        test setMaxLineLength 100
+        a alignUpTo 0
+        a alignLeftTo 0
 
         this add a
         this add test
