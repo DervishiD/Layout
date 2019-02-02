@@ -28,4 +28,9 @@ public abstract class Screen : JPanel() {
      */
     public abstract fun save()
 
+    /**
+     * To load this screen
+     */
+    public abstract fun load()
+
 }

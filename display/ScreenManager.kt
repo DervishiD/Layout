@@ -11,6 +11,7 @@ public class ScreenManager {
         @JvmStatic private var previousScreen : Screen = mainMenuScreen
 
         @JvmStatic public fun start(){
+            mainMenuScreen.load()
             mainFrame.contentPane = mainMenuScreen
             currentScreen = mainMenuScreen
         }
@@ -19,6 +20,7 @@ public class ScreenManager {
             currentScreen.save()
             currentScreen = currentScreen.previousScreen()
             previousScreen = currentScreen.previousScreen()
+            currentScreen.load()
             mainFrame.contentPane = currentScreen
         }
 
@@ -26,6 +28,7 @@ public class ScreenManager {
             currentScreen.save()
             previousScreen = currentScreen.previousScreen()
             currentScreen = screen
+            currentScreen.load()
             mainFrame.contentPane = currentScreen
         }
 

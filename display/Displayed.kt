@@ -1,7 +1,7 @@
 package display
 
 import geometry.Point
-import java.awt.Font
+import geometry.Vector
 import java.awt.FontMetrics
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
@@ -67,9 +67,7 @@ public abstract class Displayed : JLabel {
     }
 
     constructor(p : Point, text : ArrayList<StringDisplay>) : super(){
-        if(text.size == 0){
-            throw IllegalArgumentException("A text displayer must display text.")
-        }
+        if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")
         point = p
         txt = text
         lines = txt.toLinesList()
@@ -130,6 +128,16 @@ public abstract class Displayed : JLabel {
     public infix fun alignDownTo(position : Double) = alignDownTo(position.toInt())
 
     /**
+     * Resets this component's alignment constraints
+     */
+    public fun resetAlignment(){
+        alignLeftTo = null
+        alignRightTo = null
+        alignUpTo = null
+        alignDownTo = null
+    }
+
+    /**
      * Sets the maximal line length for this Component
      */
     public infix fun setMaxLineLength(length : Int){
@@ -140,6 +148,11 @@ public abstract class Displayed : JLabel {
      * Sets the maximal line length for this Component.
      */
     public infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
+
+    /**
+     * Returns the displayed text
+     */
+    public fun text() : String = txt.collapse()
 
     /**
      * The center Point
@@ -179,7 +192,7 @@ public abstract class Displayed : JLabel {
     /**
      * Forces the component to respect the maximal line length constraint
      */
-    protected fun forceMaxLineLength(g : Graphics, delta : Int){
+    protected fun forceMaxLineLength(g : Graphics, delta : Int){ //IF IT WORKS, DON'T TOUCH IT
         if(maxLineLength != null){
             val result : ArrayList<ArrayList<StringDisplay>> = ArrayList<ArrayList<StringDisplay>>()
             val currentLine : ArrayList<StringDisplay> = ArrayList<StringDisplay>()
@@ -267,6 +280,89 @@ public abstract class Displayed : JLabel {
             }
             lines = result
         }
+    }
+
+    /**
+     * Modifies the displayed text
+     */
+    public infix fun setDisplayedText(text : ArrayList<StringDisplay>){
+        if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")
+        txt = text
+        lines = txt.toLinesList()
+        initphase = true
+    }
+
+    /**
+     * Modifies the displayed text
+     */
+    public infix fun setDisplayedText(text : StringDisplay) = this setDisplayedText arrayListOf<StringDisplay>(text)
+
+    /**
+     * Modifies the displayed text
+     */
+    public infix fun setDisplayedText(text : String) = this setDisplayedText StringDisplay(text)
+
+    /**
+     * Change this component's center point
+     */
+    public infix fun moveTo(p : Point){
+        point = p
+        resetAlignment()
+        loadBounds()
+    }
+
+    /**
+     * Change this component's center point.
+     */
+    public fun moveTo(x : Int, y : Int) = this moveTo Point(x, y)
+
+    /**
+     * Change this component's center point.
+     */
+    public fun moveTo(x : Double, y : Int) = this moveTo Point(x, y)
+
+    /**
+     * Change this component's center point.
+     */
+    public fun moveTo(x : Int, y : Double) = this moveTo Point(x, y)
+
+    /**
+     * Change this component's center point.
+     */
+    public fun moveTo(x : Double, y : Double) = this moveTo Point(x, y)
+
+    /**
+     * Change this component's x coordinate.
+     */
+    public infix fun setx(x : Int){
+        point setx x
+        resetAlignment()
+        loadBounds()
+    }
+
+    /**
+     * Change this component's x coordinate.
+     */
+    public infix fun setx(x : Double) = this setx x.toInt()
+
+    /**
+     * Change this component's y coordinate.
+     */
+    public infix fun sety(y : Int){
+        point setx y
+        resetAlignment()
+        loadBounds()
+    }
+
+    /**
+     * Change this component's y coordinate.
+     */
+    public infix fun sety(y : Double) = this sety y.toInt()
+
+    public infix fun moveAlong(v : Vector){
+        point += v
+        resetAlignment()
+        loadBounds()
     }
 
     /**
@@ -383,11 +479,16 @@ public abstract class Displayed : JLabel {
         return result
     }
 
+    /**
+     * Sets this component's required bounds
+     */
+    private fun loadBounds() = setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
+
     public override fun paintComponent(g: Graphics?) {
         if(initphase){
             loadParameters(g!!)
             align()
-            setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
+            loadBounds()
             initphase = false
         }
         drawBackground(g!!)
