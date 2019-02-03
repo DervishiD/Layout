@@ -1,8 +1,9 @@
-package display.screens.staticscreens
+package display.screens
 
 import display.Button
 import display.StringDisplay
 import display.TITLE
+import display.screens.Screen
 import display.texts.MenuText
 import geometry.Point
 import geometry.Vector
@@ -12,7 +13,7 @@ import java.awt.Font
 /**
  * The Main Menu Screen
  */
-class MainMenuScreen : StaticScreen() {
+class MainMenuScreen : Screen() {
     //TODO
 
     var b : Button = Button(0, 0, ""){}

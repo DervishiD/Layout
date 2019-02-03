@@ -10,12 +10,12 @@ import javax.swing.JLabel
 /**
  * General class for displayed texts and buttons
  */
-public abstract class Displayed : JLabel {
+abstract class Displayed : JLabel {
 
     /**
      * The central Point of the object
      */
-    protected var point : Point
+    private var point : Point
 
     /**
      * The width of the component
@@ -31,36 +31,36 @@ public abstract class Displayed : JLabel {
      * The displayed Text, as a list of StringDisplays.
      * @see StringDisplay
      */
-    protected var txt : ArrayList<StringDisplay>
+    private var txt : ArrayList<StringDisplay>
 
     protected var lines : ArrayList<ArrayList<StringDisplay>>
 
     /**
      * Detects if the component is being initialized
      */
-    protected var initphase : Boolean = true
+    private var initphase : Boolean = true
 
     /**
      * Left alignment
      */
-    protected var alignLeftTo : Int? = null
+    private var alignLeftTo : Int? = null
     /**
      * Right alignment
      */
-    protected var alignRightTo : Int? = null
+    private var alignRightTo : Int? = null
     /**
      * Up alignment
      */
-    protected var alignUpTo : Int? = null
+    private var alignUpTo : Int? = null
     /**
      * Down alignment
      */
-    protected var alignDownTo : Int? = null
+    private var alignDownTo : Int? = null
 
     /**
      * The maximal allowed line length
      */
-    protected var maxLineLength : Int? = null
+    private var maxLineLength : Int? = null
 
     init{
         setBounds(1, 1, 1, 1)
@@ -368,7 +368,7 @@ public abstract class Displayed : JLabel {
     /**
      * Aligns the component with the alignment constraints
      */
-    protected fun align(){
+    private fun align(){
         alignLateral()
         alignVertical()
     }
@@ -398,7 +398,7 @@ public abstract class Displayed : JLabel {
     /**
      * Computes the height of a line of StringDisplays
      */
-    protected fun computeHeight(g : Graphics, line : ArrayList<StringDisplay>) : Int{
+    private fun computeHeight(g : Graphics, line : ArrayList<StringDisplay>) : Int{
         var maxAscent : Int = 0
         var maxDescent : Int = 0
         var fm : FontMetrics
@@ -415,7 +415,7 @@ public abstract class Displayed : JLabel {
     }
 
     /**
-     * Returns the ascet of the line
+     * Returns the ascent of the line
      */
     protected fun ascent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
         var maxAscent : Int = 0
@@ -448,7 +448,7 @@ public abstract class Displayed : JLabel {
      * Computes the total height of the displayed component
      */
     protected fun computeTotalHeight(g : Graphics, delta : Int){
-        h += 2 * delta
+        h = 2 * delta
         for(line : ArrayList<StringDisplay> in lines){
             h += computeHeight(g, line)
         }

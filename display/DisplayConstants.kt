@@ -1,6 +1,6 @@
 package display
 
-import display.screens.staticscreens.MainMenuScreen
+import display.screens.MainMenuScreen
 import display.texts.MenuText
 import main.FRAMEX
 import main.FRAMEY
@@ -18,7 +18,7 @@ public val DEFAULT_COLOR : Color = BLACK
 
 //SCREENS----------------------------------------------------------------------
 
-public val mainMenuScreen : MainMenuScreen by lazy{MainMenuScreen()}
+public val mainMenuScreen : MainMenuScreen by lazy{ MainMenuScreen() }
 
 //MENUTEXTS--------------------------------------------------------------------
 
