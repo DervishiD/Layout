@@ -17,20 +17,20 @@ class EventHandler {
         private var hoveredComponent : Component? = null
         private var pressedComponent : Component? = null
 
-        public fun pressedKeys() : ArrayList<Int> = pressedKeys
+        internal fun pressedKeys() : ArrayList<Int> = pressedKeys
 
-        public fun press(key : Int){
+        internal fun press(key : Int){
             pressedKeys.add(key)
             //TODO -- WITH THE TYPING TEXT BOOLEAN THAT DETECTS IF YOU TYPE
             //TODO -- CONTINUOUSLY AAAAAAAAAAAAAA OR TEXT-LIKE A...AAAAAAAAAAAA
         }
 
-        public fun release(key : Int){
+        internal fun release(key : Int){
             pressedKeys.remove(key)
             //TODO
         }
 
-        public fun handle(mouseAction : MouseAction){
+        internal fun handle(mouseAction : MouseAction){
             val target : Component = mouseAction.target()
             val behaviour : MouseBehaviour = mouseAction.behaviour()
             when(behaviour){
