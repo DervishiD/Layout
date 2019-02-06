@@ -2,6 +2,7 @@ package display
 
 import geometry.Point
 import geometry.Vector
+import main.GraphicAction
 import java.awt.FontMetrics
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
@@ -11,6 +12,10 @@ import javax.swing.JLabel
  * General class for displayed texts and buttons
  */
 abstract class Displayed : JLabel {
+
+    companion object {
+        @JvmStatic public val NO_BACKGROUND : GraphicAction = { _, _, _ ->  }
+    }
 
     /**
      * The central Point of the object
@@ -62,18 +67,21 @@ abstract class Displayed : JLabel {
      */
     private var maxLineLength : Int? = null
 
+    protected var backgroundDrawer : GraphicAction
+
     init{
         setBounds(1, 1, 1, 1)
     }
 
-    constructor(p : Point, text : ArrayList<StringDisplay>) : super(){
+    constructor(p : Point, text : ArrayList<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(){
         if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")
         point = p
         txt = text
         lines = txt.toLinesList()
+        backgroundDrawer = background
     }
-    constructor(p : Point, text : StringDisplay) : this(p, arrayListOf<StringDisplay>(text))
-    constructor(p : Point, text : String) : this(p, StringDisplay(text))
+    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : this(p, arrayListOf<StringDisplay>(text), background)
+    constructor(p : Point, text : String, background: GraphicAction = NO_BACKGROUND) : this(p, StringDisplay(text), background)
 
     /**
      * Aligns left to the given position
@@ -496,14 +504,14 @@ abstract class Displayed : JLabel {
     }
 
     /**
+     * Draws the background of the component.
+     */
+    protected fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
+
+    /**
      * Loads the necessary parameters during the initialization phase.
      */
     protected abstract fun loadParameters(g : Graphics)
-
-    /**
-     * Draws the background of the component.
-     */
-    protected abstract fun drawBackground(g : Graphics)
 
     /**
      * Draws Text on the component.

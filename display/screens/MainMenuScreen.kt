@@ -16,19 +16,19 @@ import java.awt.Font
 class MainMenuScreen : Screen() {
     //TODO
 
-    var b : Button = Button(0, 0, ""){}
+    var b : Button = Button(0, 0, "", {})
 
     init{
         previousScreen = this
 
-        val test : Button = Button(700, 300, "Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii") {println("Hi")}
+        val test : Button = Button(700, 300, "Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", {println("Hi")})
 
         val a : MenuText = MenuText(600, 500, arrayListOf<StringDisplay>(
             StringDisplay("Hello there!\nGeneral Kenobi!\n"),
             StringDisplay("text string font font color color string display huh", Font("Arial", Font.PLAIN, 32))
         ))
 
-        b = Button(1400, 100, "b"){b moveAlong Vector(-12, 12) }
+        b = Button(1400, 100, "b", {b moveAlong Vector(-12, 12) })
 
         test setMaxLineLength 100
         a setMaxLineLength 400

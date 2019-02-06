@@ -2,6 +2,7 @@ package display.texts
 
 import display.StringDisplay
 import geometry.Point
+import main.GraphicAction
 import java.awt.Graphics
 
 /**
@@ -9,23 +10,21 @@ import java.awt.Graphics
  */
 public class MenuText : Text {
 
-    constructor(p : Point, text : ArrayList<StringDisplay>) : super(p, text)
-    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
-    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
-    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
-    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>) : super(Point(x, y), text)
-    constructor(p : Point, text : StringDisplay) : super(p, text)
-    constructor(x : Double, y : Double, text : StringDisplay) : super(Point(x, y), text)
-    constructor(x : Double, y : Int, text : StringDisplay) : super(Point(x, y), text)
-    constructor(x : Int, y : Double, text : StringDisplay) : super(Point(x, y), text)
-    constructor(x : Int, y : Int, text : StringDisplay) : super(Point(x, y), text)
-    constructor(p : Point, text : String) : super(p, text)
-    constructor(x : Double, y : Double, text : String) : super(Point(x, y), text)
-    constructor(x : Double, y : Int, text : String) : super(Point(x, y), text)
-    constructor(x : Int, y : Double, text : String) : super(Point(x, y), text)
-    constructor(x : Int, y : Int, text : String) : super(Point(x, y), text)
-
-    protected override fun drawBackground(g: Graphics) {}
+    constructor(p : Point, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
+    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
+    constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(p : Point, text : String, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
+    constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
 
     protected override fun drawText(g : Graphics) {
         var currentX : Int = 0

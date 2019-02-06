@@ -5,10 +5,6 @@ import display.ScreenManager
 import java.awt.Frame.MAXIMIZED_BOTH
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
-typealias Action = () -> Unit
-
-
-
 public fun main(){
     init()
 }
