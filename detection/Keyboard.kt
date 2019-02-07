@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent
 /**
  * An implementation of KeyAdapter.
  */
-class Keyboard : KeyAdapter() {
+internal class Keyboard : KeyAdapter() {
 
     public override fun keyPressed(e: KeyEvent?) {
         EventHandler.press(e!!.keyCode)

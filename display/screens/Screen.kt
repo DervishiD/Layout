@@ -1,6 +1,6 @@
 package display.screens
 
-import display.Displayed
+import display.TextDisplayer
 import main.FRAMEX
 import main.FRAMEY
 import java.awt.Color.WHITE
@@ -29,20 +29,20 @@ public abstract class Screen : JPanel() {
     /**
      * The list of the components of this Screen
      */
-    private var parts : ArrayList<Displayed> = ArrayList<Displayed>()
+    private var parts : ArrayList<TextDisplayer> = ArrayList<TextDisplayer>()
 
     /**
-     * Adds a Displayed component to the Screen
+     * Adds a TextDisplayer component to the Screen
      */
-    public infix fun add(d : Displayed){
+    public infix fun add(d : TextDisplayer){
         parts.add(d)
         (this as JPanel).add(d)
     }
 
     /**
-     * Removes a Displayed component from the Screen
+     * Removes a TextDisplayer component from the Screen
      */
-    public infix fun remove(d : Displayed){
+    public infix fun remove(d : TextDisplayer){
         parts.remove(d)
         (this as JPanel).remove(d)
     }
@@ -50,7 +50,7 @@ public abstract class Screen : JPanel() {
     public override fun paintComponent(g: Graphics?) {
         g!!.color = WHITE
         g.fillRect(0, 0, FRAMEX, FRAMEY)
-        for(part : Displayed in parts){
+        for(part : TextDisplayer in parts){
             part.paintComponent(g)
         }
         super.paintComponent(g)

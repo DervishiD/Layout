@@ -4,7 +4,7 @@ import display.screens.Screen
 import main.mainFrame
 
 public class ScreenManager {
-    public companion object{
+    companion object{
 
         @JvmStatic private var currentScreen : Screen = mainMenuScreen
 
@@ -24,7 +24,7 @@ public class ScreenManager {
             mainFrame.contentPane = currentScreen
         }
 
-        @JvmStatic public fun setScreen(screen : Screen){
+        @JvmStatic public infix fun setScreen(screen : Screen){
             currentScreen.save()
             previousScreen = currentScreen.previousScreen()
             currentScreen = screen

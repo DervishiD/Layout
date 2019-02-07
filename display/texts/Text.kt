@@ -1,6 +1,6 @@
 package display.texts
 
-import display.Displayed
+import display.TextDisplayer
 import display.StringDisplay
 import geometry.Point
 import main.GraphicAction
@@ -9,7 +9,7 @@ import java.awt.Graphics
 /**
  * Abstract JLabel extension created to display text as efficiently as possible
  */
-public abstract class Text : Displayed {
+public abstract class Text : TextDisplayer {
 
     override var w : Int = 0
     override var h : Int = 0

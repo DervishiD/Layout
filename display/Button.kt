@@ -6,7 +6,7 @@ import main.GraphicAction
 import java.awt.Color
 import java.awt.Graphics
 
-class Button : Displayed {
+class Button : TextDisplayer {
 
     companion object {
         private const val LINE_THICKNESS : Int = 5

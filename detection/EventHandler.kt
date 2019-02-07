@@ -7,8 +7,8 @@ import detection.MouseBehaviour.RELEASE
 import display.Button
 import java.awt.Component
 
-class EventHandler {
-    companion object {
+internal class EventHandler {
+    internal companion object {
 
         private val pressedKeys : ArrayList<Int> = ArrayList<Int>()
 

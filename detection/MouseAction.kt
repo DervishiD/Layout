@@ -5,7 +5,7 @@ import java.awt.Component
 /**
  * A class that represents a mouse event
  */
-class MouseAction(target : Component, behaviour: MouseBehaviour) {
+internal class MouseAction(target : Component, behaviour: MouseBehaviour) {
 
     /**
      * The Component on which the action has been detected.
@@ -19,10 +19,10 @@ class MouseAction(target : Component, behaviour: MouseBehaviour) {
     /**
      * Returns the Component on which the action has been detected.
      */
-    public fun target() : Component = target
+    internal fun target() : Component = target
     /**
      * returns the observed behaviour of the mouse.
      */
-    public fun behaviour() : MouseBehaviour = behaviour
+    internal fun behaviour() : MouseBehaviour = behaviour
 
 }
