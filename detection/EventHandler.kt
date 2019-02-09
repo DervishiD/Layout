@@ -1,9 +1,5 @@
 package detection
 
-import detection.MouseBehaviour.ENTER
-import detection.MouseBehaviour.EXIT
-import detection.MouseBehaviour.PRESS
-import detection.MouseBehaviour.RELEASE
 import display.Button
 import java.awt.Component
 
@@ -30,33 +26,22 @@ internal class EventHandler {
             //TODO
         }
 
-        internal fun handle(mouseAction : MouseAction){
-            val target : Component = mouseAction.target()
-            val behaviour : MouseBehaviour = mouseAction.behaviour()
-            when(behaviour){
-                ENTER -> enter(target)
-                EXIT -> exit(target)
-                PRESS -> press(target)
-                RELEASE -> release(target)
-            }
-        }
-
-        private fun enter(target : Component){
+        internal fun enter(target : Component){
             hoveredComponent = target
             //TODO
         }
 
-        private fun exit(target : Component){
+        internal fun exit(target : Component){
             hoveredComponent = null
             //TODO
         }
 
-        private fun press(target : Component){
+        internal fun press(target : Component){
             pressedComponent = target
             //TODO
         }
 
-        private fun release(target : Component){
+        internal fun release(target : Component){
             pressedComponent = null
 
             if(target is Button){

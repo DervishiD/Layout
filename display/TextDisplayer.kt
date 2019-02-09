@@ -26,7 +26,12 @@ abstract class TextDisplayer : Displayer {
      */
     private var maxLineLength : Int? = null
 
-    constructor(p : Point, text : ArrayList<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p, background){
+    /**
+     * The GraphicAction that draws the background of this Displayer
+     */
+    private var backgroundDrawer : GraphicAction
+
+    constructor(p : Point, text : ArrayList<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p){
         if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")
         point = p
         txt = text
@@ -249,6 +254,11 @@ abstract class TextDisplayer : Displayer {
         }
         return result
     }
+
+    /**
+     * Draws the background of the component.
+     */
+    private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
 
     override fun drawDisplayer(g : Graphics){
         drawBackground(g)

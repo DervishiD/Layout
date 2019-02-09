@@ -1,9 +1,5 @@
 package detection
 
-import detection.MouseBehaviour.ENTER
-import detection.MouseBehaviour.EXIT
-import detection.MouseBehaviour.PRESS
-import detection.MouseBehaviour.RELEASE
 import geometry.Point
 import main.mainFrame
 import java.awt.Component
@@ -27,19 +23,19 @@ class Mouse : MouseAdapter() {
     }
 
     public override fun mouseClicked(e: MouseEvent?) {
-        EventHandler.handle(MouseAction(component(e!!), PRESS))
+        EventHandler.press(component(e!!))
     }
 
     public override fun mouseReleased(e: MouseEvent?) {
-        EventHandler.handle(MouseAction(component(e!!), RELEASE))
+        EventHandler.release(component(e!!))
     }
 
     public override fun mouseEntered(e: MouseEvent?) {
-        EventHandler.handle(MouseAction(component(e!!), ENTER))
+        EventHandler.enter(component(e!!))
     }
 
     public override fun mouseExited(e: MouseEvent?) {
-        EventHandler.handle(MouseAction(component(e!!), EXIT))
+        EventHandler.exit(component(e!!))
     }
 
     public override fun mouseMoved(e: MouseEvent?) {

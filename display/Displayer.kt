@@ -6,14 +6,13 @@ import main.GraphicAction
 import java.awt.Graphics
 import javax.swing.JLabel
 
-abstract class Displayer(p: Point, background: GraphicAction = NO_BACKGROUND) : JLabel() {
+/**
+ * Anything that displays anything
+ */
+abstract class Displayer(p: Point) : JLabel() {
 
     companion object {
         @JvmStatic val NO_BACKGROUND : GraphicAction = { _, _, _ ->  }
-    }
-
-    init{
-        setBounds(1, 1, 1, 1)
     }
 
     /**
@@ -52,11 +51,6 @@ abstract class Displayer(p: Point, background: GraphicAction = NO_BACKGROUND) : 
      * Down alignment
      */
     private var alignDownTo : Int? = null
-
-    /**
-     * The GraphicAction that draws the background of this Displayer
-     */
-    protected var backgroundDrawer : GraphicAction = background
 
     /**
      * Aligns left to the given position
@@ -221,7 +215,7 @@ abstract class Displayer(p: Point, background: GraphicAction = NO_BACKGROUND) : 
     /**
      * Aligns the component with the alignment constraints
      */
-    protected fun align(){
+    private fun align(){
         alignLateral()
         alignVertical()
     }
@@ -251,12 +245,7 @@ abstract class Displayer(p: Point, background: GraphicAction = NO_BACKGROUND) : 
     /**
      * Sets this component's required bounds
      */
-    protected fun loadBounds() = setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
-
-    /**
-     * Draws the background of the component.
-     */
-    protected fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
+    private fun loadBounds() = setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
 
     public override fun paintComponent(g: Graphics?) {
         if(initphase){
