@@ -1,5 +1,6 @@
 package display
 
+import display.screens.Screen
 import geometry.Point
 import geometry.Vector
 import main.GraphicAction
@@ -55,7 +56,7 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * Aligns left to the given position
      */
-    infix fun alignLeftTo(position : Int){
+    open infix fun alignLeftTo(position : Int){
         alignLeftTo = position
         alignRightTo = null
     }
@@ -63,7 +64,7 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * Aligns right to the given position
      */
-    infix fun alignRightTo(position : Int){
+    open infix fun alignRightTo(position : Int){
         alignRightTo = position
         alignLeftTo = null
     }
@@ -71,7 +72,7 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * Aligns up to the given position
      */
-    infix fun alignUpTo(position : Int){
+    open infix fun alignUpTo(position : Int){
         alignUpTo = position
         alignDownTo = null
     }
@@ -79,7 +80,7 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * Aligns down to the given position
      */
-    infix fun alignDownTo(position : Int){
+    open infix fun alignDownTo(position : Int){
         alignDownTo = position
         alignUpTo = null
     }
@@ -215,7 +216,7 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * Aligns the component with the alignment constraints
      */
-    private fun align(){
+    protected fun align(){
         alignLateral()
         alignVertical()
     }
@@ -246,6 +247,16 @@ abstract class Displayer(p: Point) : JLabel() {
      * Sets this component's required bounds
      */
     private fun loadBounds() = setBounds(point.intx() - w / 2, point.inty() - h / 2, w, h)
+
+    /**
+     * A function called when the Displayer is added to a Screen
+     */
+    internal open fun onAdd(source : Screen){}
+
+    /**
+     * A function called when the Displayer is removed from a Screen
+     */
+    internal open fun onRemove(source : Screen){}
 
     public override fun paintComponent(g: Graphics?) {
         if(initphase){

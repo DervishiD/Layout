@@ -1,5 +1,6 @@
-package display
+package display.selectors
 
+import display.Displayer
 import geometry.Point
 import java.awt.Graphics
 

@@ -29,7 +29,7 @@ abstract class TextDisplayer : Displayer {
     /**
      * The GraphicAction that draws the background of this Displayer
      */
-    private var backgroundDrawer : GraphicAction
+    protected var backgroundDrawer : GraphicAction
 
     constructor(p : Point, text : ArrayList<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p){
         if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")

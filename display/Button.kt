@@ -25,6 +25,7 @@ class Button : TextDisplayer {
     override var w : Int = 0
     override var h : Int = 0
     private var action : Action
+    private var hasCustomImage : Boolean = false
 
     constructor(p : Point, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
         this.action = action
@@ -47,31 +48,54 @@ class Button : TextDisplayer {
     constructor(x : Double, y : Int, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Double, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Int, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
+    constructor(p : Point, action : Action, background : GraphicAction, width : Int, height : Int) : super(p, "", background){
+        this.action = action
+        this.w = width
+        this.h = height
+        hasCustomImage = true
+    }
+    constructor(x : Double, y : Double, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
+    constructor(x : Double, y : Int, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
+    constructor(x : Int, y : Double, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
+    constructor(x : Int, y : Int, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
 
-    public fun click() = action.invoke()
+    fun click() = action.invoke()
 
-    protected override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g, LINE_THICKNESS + DELTA)
-        computeTotalHeight(g, LINE_THICKNESS + DELTA)
-        computeMaxLength(g, LINE_THICKNESS + DELTA)
+    /**
+     * Sets the image displayed by this Button. It won't be able to display any text.
+     */
+    fun setImage(image : GraphicAction, width : Int, height : Int){
+        this.backgroundDrawer = image
+        this.w = width
+        this.h = height
+        hasCustomImage = true
     }
 
-    protected override fun drawText(g : Graphics) {
-        var currentX : Int = LINE_THICKNESS + DELTA
-        var currentY : Int = LINE_THICKNESS + DELTA
-
-        for(line : ArrayList<StringDisplay> in lines){
-            currentY += ascent(g, line)
-            for(s : StringDisplay in line){
-                g.font = s.font
-                g.color = s.color
-                g.drawString(s.text, currentX, currentY)
-                currentX += g.getFontMetrics(s.font).stringWidth(s.text)
-            }
-            currentX = LINE_THICKNESS + DELTA
-            currentY += descent(g, line)
+    override fun loadParameters(g : Graphics){
+        if(!hasCustomImage){
+            forceMaxLineLength(g, LINE_THICKNESS + DELTA)
+            computeTotalHeight(g, LINE_THICKNESS + DELTA)
+            computeMaxLength(g, LINE_THICKNESS + DELTA)
         }
+    }
 
+    override fun drawText(g : Graphics) {
+        if(!hasCustomImage){
+            var currentX : Int = LINE_THICKNESS + DELTA
+            var currentY : Int = LINE_THICKNESS + DELTA
+
+            for(line : ArrayList<StringDisplay> in lines){
+                currentY += ascent(g, line)
+                for(s : StringDisplay in line){
+                    g.font = s.font
+                    g.color = s.color
+                    g.drawString(s.text, currentX, currentY)
+                    currentX += g.getFontMetrics(s.font).stringWidth(s.text)
+                }
+                currentX = LINE_THICKNESS + DELTA
+                currentY += descent(g, line)
+            }
+        }
     }
 
 }
