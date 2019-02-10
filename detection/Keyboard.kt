@@ -1,5 +1,7 @@
 package detection
 
+import display.ScreenManager
+import main.pressedKeys
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 
@@ -8,12 +10,14 @@ import java.awt.event.KeyEvent
  */
 internal class Keyboard : KeyAdapter() {
 
-    public override fun keyPressed(e: KeyEvent?) {
-        EventHandler.press(e!!.keyCode)
+    override fun keyPressed(e: KeyEvent?) {
+        pressedKeys.add(e!!.keyCode)
+        ScreenManager.currentScreen().pressKey(e.keyCode)
     }
 
-    public override fun keyReleased(e: KeyEvent?) {
-        EventHandler.release(e!!.keyCode)
+    override fun keyReleased(e: KeyEvent?) {
+        pressedKeys.remove(e!!.keyCode)
+        ScreenManager.currentScreen().releaseKey(e.keyCode)
     }
 
 }

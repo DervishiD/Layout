@@ -1,10 +1,13 @@
 package detection
 
+import display.Displayer
 import geometry.Point
+import geometry.Vector
 import main.mainFrame
 import java.awt.Component
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.event.MouseWheelEvent
 
 /**
  * Mouse Adapter implementation
@@ -16,30 +19,61 @@ class Mouse : MouseAdapter() {
          * The mouse's position.
          */
         @JvmStatic private var mousePosition : Point = Point()
+
+        /**
+         * The infinitesimal displacement of the mouse
+         */
+        @JvmStatic private var displacement : Vector = Vector()
+
         /**
          * The mouse's position
          */
-        @JvmStatic public fun mousePosition() : Point = mousePosition
+        @JvmStatic fun mousePosition() : Point = mousePosition
+
+        /**
+         * The last displacement of the mouse
+         */
+        @JvmStatic fun mouseDisplacement() : Vector = displacement
     }
 
-    public override fun mouseClicked(e: MouseEvent?) {
-        EventHandler.press(component(e!!))
+    override fun mouseClicked(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mouseClick()
     }
 
-    public override fun mouseReleased(e: MouseEvent?) {
-        EventHandler.release(component(e!!))
+    override fun mousePressed(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mousePress()
     }
 
-    public override fun mouseEntered(e: MouseEvent?) {
-        EventHandler.enter(component(e!!))
+    override fun mouseReleased(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mouseRelease()
     }
 
-    public override fun mouseExited(e: MouseEvent?) {
-        EventHandler.exit(component(e!!))
+    override fun mouseEntered(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mouseEnter()
     }
 
-    public override fun mouseMoved(e: MouseEvent?) {
-        mousePosition setx e!!.x
+    override fun mouseExited(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mouseExit()
+    }
+
+    override fun mouseDragged(e: MouseEvent?) {
+        val source : Component = component(e!!)
+        if(source is Displayer) source.mouseDrag()
+    }
+
+    override fun mouseWheelMoved(e: MouseWheelEvent?) {
+        //TODO
+    }
+
+    override fun mouseMoved(e: MouseEvent?) {
+        displacement setx e!!.x - mousePosition.x
+        displacement sety e.y - mousePosition.y
+        mousePosition setx e.x
         mousePosition sety e.y
     }
 

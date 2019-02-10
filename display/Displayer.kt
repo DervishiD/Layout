@@ -278,4 +278,34 @@ abstract class Displayer(p: Point) : JLabel() {
      */
     protected abstract fun drawDisplayer(g : Graphics)
 
+    /**
+     * Reacts to a mouse click
+     */
+    open fun mouseClick(){}
+
+    /**
+     * Reacts to a mouse press
+     */
+    open fun mousePress(){}
+
+    /**
+     * Reacts to a mouse release
+     */
+    open fun mouseRelease(){}
+
+    /**
+     * Reacts to the mouse entering
+     */
+    open fun mouseEnter(){}
+
+    /**
+     * Reacts to the mouse exiting
+     */
+    open fun mouseExit(){}
+
+    /**
+     * Reacts to a mouse drag
+     */
+    open fun mouseDrag(){}
+
 }

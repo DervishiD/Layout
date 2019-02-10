@@ -20,6 +20,8 @@ class Grid {
         grid = Array(lines){Array(columns){Cell()}}
     }
 
+    fun origin() : Point = origin
+
     private fun resetOrigin(){
         origin setx (FRAMEX / 2) - (columns / 2) * mesh
         origin sety (FRAMEY / 2) - (lines / 2) * mesh

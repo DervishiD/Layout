@@ -10,7 +10,7 @@ import javax.swing.JPanel
 /**
  * The general abstraction for a Screen
  */
-public abstract class Screen : JPanel() {
+abstract class Screen : JPanel() {
 
     /**
      * The previous Screen in the Screen tree
@@ -24,7 +24,7 @@ public abstract class Screen : JPanel() {
     /**
      * Returns the previous Screen
      */
-    public fun previousScreen() : Screen = previousScreen
+    fun previousScreen() : Screen = previousScreen
 
     /**
      * The list of the components of this Screen
@@ -34,7 +34,7 @@ public abstract class Screen : JPanel() {
     /**
      * Adds a TextDisplayer component to the Screen
      */
-    public infix fun add(d : Displayer){
+    infix fun add(d : Displayer){
         parts.add(d)
         (this as JPanel).add(d)
         d.onAdd(this)
@@ -43,7 +43,7 @@ public abstract class Screen : JPanel() {
     /**
      * Removes a TextDisplayer component from the Screen
      */
-    public infix fun remove(d : Displayer){
+    infix fun remove(d : Displayer){
         parts.remove(d)
         (this as JPanel).remove(d)
         d.onRemove(this)
@@ -59,13 +59,23 @@ public abstract class Screen : JPanel() {
     }
 
     /**
+     * Reacts to a key press event
+     */
+    open fun pressKey(key : Int){}
+
+    /**
+     * Reacts to a key release event
+     */
+    open fun releaseKey(key : Int){}
+
+    /**
      * To save the current state of the Screen
      */
-    public abstract fun save()
+    abstract fun save()
 
     /**
      * To load this screen
      */
-    public abstract fun load()
+    abstract fun load()
 
 }
