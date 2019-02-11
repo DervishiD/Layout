@@ -245,9 +245,7 @@ class ArrowSelector<T> : GeneralSelector<T> {
 
         g.fillRect(0, 0, LINE_THICKNESS, h)
         g.fillRect(0, 0, w, LINE_THICKNESS)
-        g.fillRect(0, h - LINE_THICKNESS, w,
-            LINE_THICKNESS
-        )
+        g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)
         g.fillRect(w - LINE_THICKNESS, 0, w, h)
     }
 

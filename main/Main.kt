@@ -1,11 +1,10 @@
 package main
 
-import detection.Mouse
 import display.ScreenManager
 import java.awt.Frame.MAXIMIZED_BOTH
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
-public fun main(){
+fun main(){
     init()
 }
 
@@ -23,15 +22,7 @@ private fun initMainFrame(){
     mainFrame.isVisible = true
     mainFrame.requestFocus()
     mainFrame.addMouseListener(Mouse())
-
-    //EXAMPLE
-    /*
-    mainFrame.contentPane.addMouseListener(Mouse())
-    val p : Text = Text()
-    p.setBounds(220, 220, 500, 500)
-    mainFrame.contentPane.add(p)
-    */
-
+    mainFrame.addKeyListener(KEYBOARD)
 }
 
 private fun launchProgram(){

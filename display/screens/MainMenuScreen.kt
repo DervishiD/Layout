@@ -2,6 +2,7 @@ package display.screens
 
 import display.EDITOR_BUTTON
 import display.TITLE
+import javax.swing.JPanel
 
 /**
  * The Main Menu Screen
@@ -14,14 +15,6 @@ class MainMenuScreen : Screen() {
 
         this add EDITOR_BUTTON
         this add TITLE
-    }
-
-    public override fun save() {
-        //TODO
-    }
-
-    public override fun load(){
-        //TODO
     }
 
 }

@@ -3,36 +3,48 @@ package display
 import display.screens.Screen
 import main.mainFrame
 
-public class ScreenManager {
+/**
+ * A class that manages the transition between screens
+ */
+class ScreenManager {
     companion object{
 
+        /**
+         * The current Screen
+         */
         @JvmStatic private var currentScreen : Screen = mainMenuScreen
 
-        @JvmStatic private var previousScreen : Screen = mainMenuScreen
-
-        @JvmStatic public fun start(){
+        /**
+         * Displays the main Screen
+         */
+        @JvmStatic fun start(){
             mainMenuScreen.load()
             mainFrame.contentPane = mainMenuScreen
             currentScreen = mainMenuScreen
         }
 
-        @JvmStatic public fun toPreviousScreen(){
-            currentScreen.save()
-            currentScreen = currentScreen.previousScreen()
-            previousScreen = currentScreen.previousScreen()
-            currentScreen.load()
-            mainFrame.contentPane = currentScreen
+        /**
+         * Goes to the previous Screen
+         */
+        @JvmStatic fun toPreviousScreen(){
+            setScreen(currentScreen.previousScreen())
         }
 
-        @JvmStatic public infix fun setScreen(screen : Screen){
+        /**
+         * Changes the displayed Screen for the given one
+         */
+        @JvmStatic infix fun setScreen(screen : Screen){
             currentScreen.save()
-            previousScreen = currentScreen.previousScreen()
             currentScreen = screen
             currentScreen.load()
             mainFrame.contentPane = currentScreen
+            currentScreen.initialize()
         }
 
-        @JvmStatic public fun currentScreen() : Screen{
+        /**
+         * The current Screen
+         */
+        @JvmStatic fun currentScreen() : Screen{
             return currentScreen
         }
 

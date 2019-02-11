@@ -1,9 +1,8 @@
-package detection
+package main
 
-import display.Displayer
+import display.ScreenManager
 import geometry.Point
 import geometry.Vector
-import main.mainFrame
 import java.awt.Component
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -37,33 +36,27 @@ class Mouse : MouseAdapter() {
     }
 
     override fun mouseClicked(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mouseClick()
+        ScreenManager.currentScreen().mouseClick(component(e!!))
     }
 
     override fun mousePressed(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mousePress()
+        ScreenManager.currentScreen().mousePress(component(e!!))
     }
 
     override fun mouseReleased(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mouseRelease()
+        ScreenManager.currentScreen().mouseRelease(component(e!!))
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mouseEnter()
+        ScreenManager.currentScreen().mouseEnter(component(e!!))
     }
 
     override fun mouseExited(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mouseExit()
+        ScreenManager.currentScreen().mouseExit(component(e!!))
     }
 
     override fun mouseDragged(e: MouseEvent?) {
-        val source : Component = component(e!!)
-        if(source is Displayer) source.mouseDrag()
+        ScreenManager.currentScreen().mouseDrag(component(e!!))
     }
 
     override fun mouseWheelMoved(e: MouseWheelEvent?) {

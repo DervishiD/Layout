@@ -151,6 +151,13 @@ abstract class Displayer(p: Point) : JLabel() {
     fun highestX() : Int = (point.x + w / 2).toInt()
 
     /**
+     * Forces the initphase of this Displayer
+     */
+    fun initialize(){
+        initphase = true
+    }
+
+    /**
      * Change this component's center point
      */
     infix fun moveTo(p : Point){
