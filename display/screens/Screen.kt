@@ -139,4 +139,18 @@ abstract class Screen : JPanel() {
         if(source is Displayer) source.mouseDrag()
     }
 
+    /**
+     * Reacts to a mouse movement
+     */
+    open fun mouseMoved(source : Component){
+        if(source is Displayer) source.mouseMoved()
+    }
+
+    /**
+     * Reacts to a mouse wheel movement
+     */
+    open fun mouseWheelMoved(source : Component, units : Int){
+        if(source is Displayer) source.mouseWheelMoved(units)
+    }
+
 }

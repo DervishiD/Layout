@@ -1,11 +1,13 @@
 package display.screens
 
+import display.BACK_BUTTON
 import display.TextField
 import display.mainMenuScreen
 import main.FRAMEX
 import main.FRAMEY
 import main.shiftPressed
 import java.awt.Component
+import java.awt.Graphics
 import java.awt.event.KeyEvent
 
 class EditorScreen : Screen(), TextFieldUser{
@@ -13,15 +15,15 @@ class EditorScreen : Screen(), TextFieldUser{
     companion object {
         private val ALLOWED_GRID_WIDTH : Int = FRAMEX * 3/4
         private val ALLOWED_GRID_HEIGHT : Int = FRAMEY * 3/4
+        private val ALLOWED_LEFT_WIDTH : Int = FRAMEX - ALLOWED_GRID_WIDTH
+        private val ALLOWED_LEFT_HEIGHT : Int = FRAMEY - ALLOWED_GRID_HEIGHT
     }
 
     override var currentTextField: TextField? = null
 
     init{
         previousScreen = mainMenuScreen
-        val a : TextField = TextField(500, 500, 100, "Hello there", true)
-        a alignLeftTo 0
-        this add a
+
     }
 
     override fun pressKey(key: Int) {
@@ -55,10 +57,11 @@ class EditorScreen : Screen(), TextFieldUser{
 
     override fun save() {
         currentTextField = null
+        this remove BACK_BUTTON
     }
 
     override fun load() {
-        //TODO?
+        this add BACK_BUTTON
     }
 
 }

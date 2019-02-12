@@ -315,4 +315,14 @@ abstract class Displayer(p: Point) : JLabel() {
      */
     open fun mouseDrag(){}
 
+    /**
+     * Reacts to a mouse movement
+     */
+    open fun mouseMoved(){}
+
+    /**
+     * Reacts to a mouse wheel movement
+     */
+    open fun mouseWheelMoved(units : Int){}
+
 }

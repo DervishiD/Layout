@@ -26,12 +26,12 @@ internal val KEYBOARD : KeyAdapter = object : KeyAdapter() {
 
     override fun keyPressed(e: KeyEvent?) {
         pressedKeys.add(e!!.keyCode)
-        ScreenManager.currentScreen().pressKey(e.keyCode)
+        ScreenManager.pressKey(e.keyCode)
     }
 
     override fun keyReleased(e: KeyEvent?) {
         pressedKeys.remove(e!!.keyCode)
-        ScreenManager.currentScreen().releaseKey(e.keyCode)
+        ScreenManager.releaseKey(e.keyCode)
     }
 
 }

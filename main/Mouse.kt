@@ -36,31 +36,31 @@ class Mouse : MouseAdapter() {
     }
 
     override fun mouseClicked(e: MouseEvent?) {
-        ScreenManager.currentScreen().mouseClick(component(e!!))
+        ScreenManager.mouseClick(component(e!!))
     }
 
     override fun mousePressed(e: MouseEvent?) {
-        ScreenManager.currentScreen().mousePress(component(e!!))
+        ScreenManager.mousePress(component(e!!))
     }
 
     override fun mouseReleased(e: MouseEvent?) {
-        ScreenManager.currentScreen().mouseRelease(component(e!!))
+        ScreenManager.mouseRelease(component(e!!))
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        ScreenManager.currentScreen().mouseEnter(component(e!!))
+        ScreenManager.mouseEnter(component(e!!))
     }
 
     override fun mouseExited(e: MouseEvent?) {
-        ScreenManager.currentScreen().mouseExit(component(e!!))
+        ScreenManager.mouseExit(component(e!!))
     }
 
     override fun mouseDragged(e: MouseEvent?) {
-        ScreenManager.currentScreen().mouseDrag(component(e!!))
+        ScreenManager.mouseDrag(component(e!!))
     }
 
     override fun mouseWheelMoved(e: MouseWheelEvent?) {
-        //TODO
+        ScreenManager.mouseWheelMoved(component(e!!), e.wheelRotation)
     }
 
     override fun mouseMoved(e: MouseEvent?) {
@@ -68,6 +68,7 @@ class Mouse : MouseAdapter() {
         displacement sety e.y - mousePosition.y
         mousePosition setx e.x
         mousePosition sety e.y
+        ScreenManager.mouseMoved(component(e))
     }
 
     /**
