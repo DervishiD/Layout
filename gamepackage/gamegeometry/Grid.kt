@@ -10,7 +10,7 @@ import main.FRAMEY
 class Grid {
 
     companion object {
-        private const val DEFAULT_MESH : Int = 50 //TODO
+        private const val DEFAULT_MESH : Int = 120 //TODO
     }
 
     /**
@@ -34,17 +34,18 @@ class Grid {
     /**
      * The actual grid, a 2D array
      */
-    private val grid : ArrayList<ArrayList<Cell>> = ArrayList()
+    private var grid : ArrayList<ArrayList<Cell>> = ArrayList(1)
 
     constructor(lines : Int, columns : Int){
         this.lines = lines
         this.columns = columns
         resetOrigin()
 
+        grid = ArrayList(lines)
         for(i : Int in 0 until lines){
-            grid[i] = ArrayList(columns)
+            grid.add(ArrayList(columns))
             for(j : Int in 0 until columns){
-                grid[i][j] = Cell()
+                grid[i].add(Cell())
             }
         }
 
@@ -80,7 +81,7 @@ class Grid {
     fun cellAt(line : Int, column : Int) : Cell{
         if(line < lines && column < columns && line >= 0 && column >= 0){
             return grid[line][column]
-        }else throw IndexOutOfBoundsException("The cell you're looking for doesn't exist")
+        }else throw IndexOutOfBoundsException("The cell you're looking for at ($line, $column) doesn't exist")
     }
 
     /**

@@ -1,5 +1,6 @@
 package editor
 
+import display.DEFAULT_COLOR
 import display.Displayer
 import gamepackage.gamegeometry.Cell
 import gamepackage.gamegeometry.Grid
@@ -15,11 +16,31 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     override var w: Int = width
     override var h: Int = height
 
-    private var grid : Grid = Grid(1, 1)
+    private var grid : Grid = Grid(10, 10)
 
-    private var mesh : Int = 50 // TODO
+    private var mesh : Int = 120 // TODO
 
+    constructor(x : Int, y : Int, width : Int, height : Int) : this(Point(x, y), width, height)
+
+    /**
+     * Obtains the cell at the given position
+     */
     private fun cellAt(line : Int, column : Int) = grid.cellAt(line, column)
+
+    /**
+     * The grid's origin
+     */
+    private fun origin() = grid.origin()
+
+    /**
+     * The leftmost x coordinate of a cell in a given column
+     */
+    private fun cellLeftX(column : Int) : Int = (origin().x + column * mesh).toInt()
+
+    /**
+     * The uppermost y coordinate of a cell in a given line
+     */
+    private fun cellUpY(line : Int) : Int = (origin().y + line * mesh).toInt()
 
     /**
      * The lowest column index currently displayed on the screen
@@ -33,8 +54,8 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * The highest column index currently displayed on the screen
      */
     private fun highestColumnIndexOnScreen() : Int{
-        val highestColumnIndex : Int = floor((grid.origin().x - highestX()) / mesh).toInt()
-        return if(highestColumnIndex >= grid.columns) grid.columns else highestColumnIndex
+        val highestColumnIndex : Int = floor((highestX() - grid.origin().x) / mesh).toInt()
+        return if(highestColumnIndex >= grid.columns) grid.columns - 1 else highestColumnIndex
     }
 
     /**
@@ -49,8 +70,8 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * The highest line index currently displayed on the screen
      */
     private fun highestLineIndexOnScreen() : Int{
-        val highestLineIndex : Int = floor((grid.origin().y - highestY()) / mesh).toInt()
-        return if(highestLineIndex >= grid.lines) grid.lines else highestLineIndex
+        val highestLineIndex : Int = floor((highestY() - grid.origin().y) / mesh).toInt()
+        return if(highestLineIndex >= grid.lines) grid.lines - 1 else highestLineIndex
     }
 
     override fun loadParameters(g: Graphics) {
@@ -61,13 +82,20 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
         //TODO -- CHECK FOR MODIFICATIONS IN SIZE, ETC
         for(line : Int in lowestLineIndexOnScreen()..highestLineIndexOnScreen()){
             for(column : Int in lowestColumnIndexOnScreen()..highestColumnIndexOnScreen()){
-                drawCell(g, cellAt(line, column))
+                drawCell(g, line, column)
             }
         }
     }
 
-    private fun drawCell(g : Graphics, cell : Cell){
-        //TODO
+    /**
+     * Draws a cell on the screen
+     */
+    private fun drawCell(g : Graphics, line : Int, column : Int){
+        val x : Int = cellLeftX(column) - lowestX()
+        val y : Int = cellUpY(line) - lowestY()
+        g.drawImage(cellAt(line, column).image(), x, y, null)
+        g.color = DEFAULT_COLOR
+        g.drawRect(x, y, mesh, mesh)
     }
 
 }
