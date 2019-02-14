@@ -7,6 +7,8 @@ import main.Action
 import main.FRAMEX
 import main.FRAMEY
 import main.Mouse
+import java.awt.Color.BLACK
+import java.awt.Graphics
 
 /**
  * The Main Menu Screen
@@ -39,13 +41,14 @@ class MainMenuScreen : Screen() {
     init{
         previousScreen = this
 
-        var a : Button = Button(600, 600, "Click", {println("Hi")})
+        val a : Button = Button(0, 0, "Click", {println("Hi")})
         val b : MenuText = MenuText(0, 0, "Hi")
-        val c : DisplayerScrollPane = DisplayerScrollPane(1300, 600, 400, 500)
-        c.add(a, 200)
-        c.add(b)
-        this add a
-        this add b
+        val c : DisplayerScrollPane = DisplayerScrollPane(1300, 600, 400, 500) { g : Graphics, w : Int, h : Int -> run{
+            g.color = BLACK
+            g.drawRect(0, 0, w-1, h-1)
+        }}
+        c.addToScrollPane(a, 200)
+        c.addToScrollPane(b)
         this add c
 
     }

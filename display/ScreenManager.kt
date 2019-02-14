@@ -39,7 +39,7 @@ class ScreenManager {
             currentScreen = screen
             currentScreen.load()
             mainFrame.contentPane = currentScreen
-            currentScreen.initialize()
+            currentScreen.initialization()
         }
 
         /**

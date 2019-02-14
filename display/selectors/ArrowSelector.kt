@@ -1,9 +1,9 @@
 package display.selectors
 
 import display.Button
+import display.CustomContainer
 import display.DEFAULT_COLOR
 import display.DEFAULT_FONT
-import display.screens.Screen
 import geometry.Point
 import main.Action
 import main.GraphicAction
@@ -191,12 +191,12 @@ class ArrowSelector<T> : GeneralSelector<T> {
         }
     }
 
-    override fun onAdd(source : Screen) {
+    override fun onAdd(source : CustomContainer) {
         source add previousArrow
         source add nextArrow
     }
 
-    override fun onRemove(source : Screen) {
+    override fun onRemove(source : CustomContainer) {
         source remove previousArrow
         source remove nextArrow
     }

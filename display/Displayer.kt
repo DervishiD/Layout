@@ -354,12 +354,12 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * A function called when the Displayer is added to a Screen
      */
-    internal open fun onAdd(source : Screen){}
+    internal open fun onAdd(source : CustomContainer){}
 
     /**
      * A function called when the Displayer is removed from a Screen
      */
-    internal open fun onRemove(source : Screen){}
+    internal open fun onRemove(source : CustomContainer){}
 
     public override fun paintComponent(g: Graphics?) {
         if(initphase){

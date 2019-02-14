@@ -1,6 +1,7 @@
 package display.screens
 
 import display.BACK_BUTTON
+import display.DEFAULT_COLOR
 import display.TextField
 import display.mainMenuScreen
 import editor.GridDisplayer
@@ -8,6 +9,7 @@ import main.FRAMEX
 import main.FRAMEY
 import main.shiftPressed
 import java.awt.Component
+import java.awt.Graphics
 import java.awt.event.KeyEvent
 
 class EditorScreen : Screen(), TextFieldUser{
@@ -29,6 +31,12 @@ class EditorScreen : Screen(), TextFieldUser{
     init{
         previousScreen = mainMenuScreen
 
+    }
+
+    override fun drawBackground(g: Graphics) {
+        val separatorLineThickness : Int = 24
+        g.color = DEFAULT_COLOR
+        g.fillRect(ALLOWED_LEFT_WIDTH - separatorLineThickness/2, 0, separatorLineThickness, ALLOWED_GRID_HEIGHT)
     }
 
     override fun pressKey(key: Int) {

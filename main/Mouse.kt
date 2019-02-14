@@ -1,5 +1,6 @@
 package main
 
+import display.CustomContainer
 import display.ScreenManager
 import geometry.Point
 import geometry.Vector
@@ -37,42 +38,89 @@ class Mouse : MouseAdapter() {
     }
 
     override fun mouseClicked(e: MouseEvent?) {
-        ScreenManager.mouseClick(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseClick(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseClick(component)
+        }
     }
 
     override fun mousePressed(e: MouseEvent?) {
-        ScreenManager.mousePress(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mousePress(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mousePress(component)
+        }
     }
 
     override fun mouseReleased(e: MouseEvent?) {
-        ScreenManager.mouseRelease(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseRelease(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseRelease(component)
+        }
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        ScreenManager.mouseEnter(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseEnter(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseEnter(component)
+        }
     }
 
     override fun mouseExited(e: MouseEvent?) {
-        ScreenManager.mouseExit(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseExit(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseExit(component)
+        }
     }
 
     override fun mouseDragged(e: MouseEvent?) {
-        ScreenManager.mouseDrag(component(e!!))
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseDrag(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseDrag(component)
+        }
     }
 
     override fun mouseMoved(e: MouseEvent?) {
-        displacement setx e!!.x - mousePosition.x
-        displacement sety e.y - mousePosition.y
-        mousePosition setx e.x
-        mousePosition sety e.y
-        ScreenManager.mouseMoved(component(e))
+        setNewMousePosition(e!!.x, e.y)
+        val component : Component = component(e)
+        if(component is CustomContainer){
+            component.mouseMoved(component.getComponentAt(e.x - component.x, e.y - component.y))
+        }else{
+            ScreenManager.mouseMoved(component)
+        }
+    }
+
+    private fun setNewMousePosition(newx : Int, newy : Int){
+        displacement setx newx - mousePosition.x
+        displacement sety newy - mousePosition.y
+        mousePosition setx newx
+        mousePosition sety newy
     }
 
 }
 
+/**
+ * A custom Mouse wheel listener
+ */
 class MouseWheel : MouseWheelListener{
     override fun mouseWheelMoved(e: MouseWheelEvent?) {
-        ScreenManager.mouseWheelMoved(component(e!!), e.wheelRotation)
+        val component : Component = component(e!!)
+        if(component is CustomContainer){
+            component.mouseWheelMoved(component.getComponentAt(e.x - component.x, e.y - component.y), e.wheelRotation)
+        }else{
+            ScreenManager.mouseWheelMoved(component, e.wheelRotation)
+        }
     }
 }
 

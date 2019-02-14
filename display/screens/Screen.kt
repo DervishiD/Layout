@@ -1,11 +1,10 @@
 package display.screens
 
+import display.CustomContainer
 import display.Displayer
 import display.ScreenManager
 import main.FRAMEX
 import main.FRAMEY
-import java.awt.Color.WHITE
-import java.awt.Component
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ESCAPE
 import javax.swing.JPanel
@@ -13,7 +12,7 @@ import javax.swing.JPanel
 /**
  * The general abstraction for a Screen
  */
-abstract class Screen : JPanel() {
+abstract class Screen : JPanel(), CustomContainer {
 
     /**
      * The previous Screen in the Screen tree
@@ -32,55 +31,20 @@ abstract class Screen : JPanel() {
     /**
      * The list of the components of this Screen
      */
-    private var parts : ArrayList<Displayer> = ArrayList<Displayer>()
-
-    /**
-     * Adds a TextDisplayer component to the Screen
-     */
-    infix fun add(d : Displayer){
-        parts.add(d)
-        (this as JPanel).add(d)
-        d.onAdd(this)
-    }
-
-    /**
-     * Removes a TextDisplayer component from the Screen
-     */
-    infix fun remove(d : Displayer){
-        parts.remove(d)
-        (this as JPanel).remove(d)
-        d.onRemove(this)
-    }
-
-    /**
-     * Forces the initialization of the parts of this Screen
-     */
-    fun initialize(){
-        for(part : Displayer in parts){
-            part.initialize()
-        }
-    }
+    override var parts : ArrayList<Displayer> = ArrayList<Displayer>()
 
     public override fun paintComponent(g: Graphics?) {
-        g!!.color = WHITE
-        g.fillRect(0, 0, FRAMEX, FRAMEY)
         for(part : Displayer in parts){
             part.paintComponent(g)
         }
-        super.paintComponent(g)
+        g!!.clearRect(0, 0, width, height)
+        drawBackground(g)
     }
 
     /**
-     * Reacts to a key press event
+     * Draws the background of this Screen
      */
-    open fun pressKey(key : Int){}
-
-    /**
-     * Reacts to a key release event
-     */
-    open fun releaseKey(key : Int){
-        if(key == VK_ESCAPE) escape()
-    }
+    open fun drawBackground(g : Graphics){}
 
     /**
      * To save the current state of the Screen
@@ -92,65 +56,13 @@ abstract class Screen : JPanel() {
      */
     open fun load(){}
 
+    override fun releaseKey(key: Int) {
+        if(key == VK_ESCAPE) escape()
+    }
+
     /**
      * Back to the previous screen
      */
     open fun escape() = ScreenManager.toPreviousScreen()
-
-    /**
-     * Reacts to a mouse click
-     */
-    open fun mouseClick(source : Component){
-        if(source is Displayer) source.mouseClick()
-    }
-
-    /**
-     * Reacts to a mouse press
-     */
-    open fun mousePress(source : Component){
-        if(source is Displayer) source.mousePress()
-    }
-
-    /**
-     * Reacts to a mouse release
-     */
-    open fun mouseRelease(source : Component){
-        if(source is Displayer) source.mouseRelease()
-    }
-
-    /**
-     * Reacts to the mouse entering
-     */
-    open fun mouseEnter(source : Component){
-        if(source is Displayer) source.mouseEnter()
-    }
-
-    /**
-     * Reacts to the mouse exiting
-     */
-    open fun mouseExit(source : Component){
-        if(source is Displayer) source.mouseExit()
-    }
-
-    /**
-     * Reacts to a mouse drag
-     */
-    open fun mouseDrag(source : Component){
-        if(source is Displayer) source.mouseDrag()
-    }
-
-    /**
-     * Reacts to a mouse movement
-     */
-    open fun mouseMoved(source : Component){
-        if(source is Displayer) source.mouseMoved()
-    }
-
-    /**
-     * Reacts to a mouse wheel movement
-     */
-    open fun mouseWheelMoved(source : Component, units : Int){
-        if(source is Displayer) source.mouseWheelMoved(units)
-    }
 
 }
