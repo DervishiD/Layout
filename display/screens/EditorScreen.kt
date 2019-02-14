@@ -7,10 +7,7 @@ import editor.GridDisplayer
 import main.FRAMEX
 import main.FRAMEY
 import main.shiftPressed
-import java.awt.Color.BLACK
-import java.awt.Color.WHITE
 import java.awt.Component
-import java.awt.Graphics
 import java.awt.event.KeyEvent
 
 class EditorScreen : Screen(), TextFieldUser{

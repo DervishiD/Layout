@@ -2,9 +2,11 @@ package display.screens
 
 import display.*
 import display.texts.MenuText
+import geometry.Vector
 import main.Action
 import main.FRAMEX
 import main.FRAMEY
+import main.Mouse
 
 /**
  * The Main Menu Screen
@@ -36,6 +38,15 @@ class MainMenuScreen : Screen() {
 
     init{
         previousScreen = this
+
+        var a : Button = Button(600, 600, "Click", {println("Hi")})
+        val b : MenuText = MenuText(0, 0, "Hi")
+        val c : DisplayerScrollPane = DisplayerScrollPane(1300, 600, 400, 500)
+        c.add(a, 200)
+        c.add(b)
+        this add a
+        this add b
+        this add c
 
     }
 

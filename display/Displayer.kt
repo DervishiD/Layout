@@ -8,6 +8,21 @@ import java.awt.Graphics
 import javax.swing.JLabel
 
 /**
+ * An alignment constraint to another Displayer
+ */
+private typealias AlignmentConstraint = Triple<Displayer, Int, AlignmentConstraintsType>
+
+/**
+ * The type of an alignment to another Displayer
+ */
+private enum class AlignmentConstraintsType{
+    UP_TO_UP, UP_TO_DOWN,
+    LEFT_TO_LEFT, LEFT_TO_RIGHT,
+    RIGHT_TO_RIGHT, RIGHT_TO_LEFT,
+    DOWN_TO_DOWN, DOWN_TO_UP;
+}
+
+/**
  * Anything that displays anything
  */
 abstract class Displayer(p: Point) : JLabel() {
@@ -52,6 +67,11 @@ abstract class Displayer(p: Point) : JLabel() {
      * Down alignment
      */
     private var alignDownTo : Int? = null
+
+    /**
+     * The component alignment constraints relative to other components
+     */
+    private var alignmentConstraints : ArrayList<AlignmentConstraint> = ArrayList()
 
     /**
      * Aligns left to the given position
@@ -106,6 +126,62 @@ abstract class Displayer(p: Point) : JLabel() {
     infix fun alignDownTo(position : Double) = alignDownTo(position.toInt())
 
     /**
+     * Aligns the upper part of this component to the upper part of the other with the given delta
+     */
+    fun alignUpToUp(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.UP_TO_UP))
+    }
+
+    /**
+     * Aligns the upper part of this component to the lower part of the other with the given delta
+     */
+    fun alignUpToDown(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.UP_TO_DOWN))
+    }
+
+    /**
+     * Aligns the leftmost part of this component to the leftmost part of the other with the given delta
+     */
+    fun alignLeftToLeft(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.LEFT_TO_LEFT))
+    }
+
+    /**
+     * Aligns the leftmost part of this component to the rightmost part of the other with the given delta
+     */
+    fun alignLeftToRight(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.LEFT_TO_RIGHT))
+    }
+
+    /**
+     * Aligns the rightmost part of this component to the leftmost part of the other with the given delta
+     */
+    fun alignRightToLeft(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.RIGHT_TO_LEFT))
+    }
+
+    /**
+     * Aligns the rightmost part of this component to the rightmost part of the other with the given delta
+     */
+    fun alignRightToRight(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.RIGHT_TO_RIGHT))
+    }
+
+    /**
+     * Aligns the lower part of this component to the lower part of the other with the given delta
+     */
+    fun alignDownToDown(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.DOWN_TO_DOWN))
+    }
+
+    /**
+     * Aligns the lower part of this component to the upper part of the other with the given delta
+     */
+    fun alignDownToUp(component : Displayer, delta : Int = 0){
+        alignmentConstraints.add(AlignmentConstraint(component, delta, AlignmentConstraintsType.DOWN_TO_UP))
+    }
+
+    /**
      * Resets this component's alignment constraints
      */
     private fun resetAlignment(){
@@ -113,6 +189,7 @@ abstract class Displayer(p: Point) : JLabel() {
         alignRightTo = null
         alignUpTo = null
         alignDownTo = null
+        alignmentConstraints.clear()
     }
 
     /**
@@ -224,8 +301,27 @@ abstract class Displayer(p: Point) : JLabel() {
      * Aligns the component with the alignment constraints
      */
     protected fun align(){
+        performComponentAlignments()
         alignLateral()
         alignVertical()
+    }
+
+    /**
+     * Aligns the component with the alignment constraints given by the component constraints
+     */
+    private fun performComponentAlignments(){
+        for(constraint : AlignmentConstraint in alignmentConstraints){
+            when(constraint.third){
+                AlignmentConstraintsType.UP_TO_UP -> this alignUpTo constraint.first.lowestY() + constraint.second
+                AlignmentConstraintsType.UP_TO_DOWN -> this alignUpTo constraint.first.highestY() + constraint.second
+                AlignmentConstraintsType.LEFT_TO_LEFT -> this alignLeftTo constraint.first.lowestX() + constraint.second
+                AlignmentConstraintsType.LEFT_TO_RIGHT -> this alignLeftTo constraint.first.highestX() + constraint.second
+                AlignmentConstraintsType.RIGHT_TO_RIGHT -> this alignRightTo constraint.first.highestX() + constraint.second
+                AlignmentConstraintsType.RIGHT_TO_LEFT -> this alignRightTo constraint.first.lowestX() + constraint.second
+                AlignmentConstraintsType.DOWN_TO_DOWN -> this alignDownTo constraint.first.highestY() + constraint.second
+                AlignmentConstraintsType.DOWN_TO_UP -> this alignDownTo constraint.first.lowestY() + constraint.second
+            }
+        }
     }
 
     /**
@@ -272,6 +368,8 @@ abstract class Displayer(p: Point) : JLabel() {
             loadBounds()
             initphase = false
         }
+        align()
+        loadBounds()
         drawDisplayer(g!!)
     }
 

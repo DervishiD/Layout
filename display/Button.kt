@@ -59,7 +59,7 @@ class Button : TextDisplayer {
     constructor(x : Int, y : Double, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
     constructor(x : Int, y : Int, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
 
-    override fun mouseClick() = action.invoke()
+    override fun mouseRelease() = action.invoke()
 
     /**
      * Sets the image displayed by this Button. It won't be able to display any text.

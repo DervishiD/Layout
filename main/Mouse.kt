@@ -7,6 +7,7 @@ import java.awt.Component
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.MouseWheelEvent
+import java.awt.event.MouseWheelListener
 
 /**
  * Mouse Adapter implementation
@@ -59,10 +60,6 @@ class Mouse : MouseAdapter() {
         ScreenManager.mouseDrag(component(e!!))
     }
 
-    override fun mouseWheelMoved(e: MouseWheelEvent?) {
-        ScreenManager.mouseWheelMoved(component(e!!), e.wheelRotation)
-    }
-
     override fun mouseMoved(e: MouseEvent?) {
         displacement setx e!!.x - mousePosition.x
         displacement sety e.y - mousePosition.y
@@ -71,12 +68,17 @@ class Mouse : MouseAdapter() {
         ScreenManager.mouseMoved(component(e))
     }
 
-    /**
-     * Returns the component at the mouse's position.
-     */
-    private fun component(e : MouseEvent) : Component = mainFrame.contentPane.getComponentAt(e.x, e.y)
-
 }
 
+class MouseWheel : MouseWheelListener{
+    override fun mouseWheelMoved(e: MouseWheelEvent?) {
+        ScreenManager.mouseWheelMoved(component(e!!), e.wheelRotation)
+    }
+}
+
+/**
+ * Returns the component at the mouse's position.
+ */
+private fun component(e : MouseEvent) : Component = mainFrame.contentPane.getComponentAt(e.x, e.y)
 
 

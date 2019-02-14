@@ -2,6 +2,8 @@ package main
 
 import display.ScreenManager
 import java.awt.Frame.MAXIMIZED_BOTH
+import java.awt.event.MouseWheelEvent
+import java.awt.event.MouseWheelListener
 import javax.swing.JFrame.EXIT_ON_CLOSE
 
 fun main(){
@@ -23,6 +25,8 @@ private fun initMainFrame(){
     mainFrame.requestFocus()
     mainFrame.addMouseListener(Mouse())
     mainFrame.addKeyListener(KEYBOARD)
+    mainFrame.addMouseWheelListener(MouseWheel())
+
 }
 
 private fun launchProgram(){
