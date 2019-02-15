@@ -47,7 +47,7 @@ class MainMenuScreen : Screen() {
             g.color = BLACK
             g.drawRect(0, 0, w-1, h-1)
         }}
-        c.addToScrollPane(a, 200)
+        c.addToScrollPane(a, 50)
         c.addToScrollPane(b)
         this add c
 

@@ -23,7 +23,8 @@ private fun initMainFrame(){
     mainFrame.requestFocus()
     mainFrame.addMouseListener(Mouse())
     mainFrame.addKeyListener(KEYBOARD)
-    mainFrame.addMouseWheelListener(MouseWheel())
+    mainFrame.addMouseWheelListener(mouseWheel)
+    mainFrame.addMouseMotionListener(mouseMotionListener)
 
 }
 

@@ -323,7 +323,7 @@ abstract class Displayer(p: Point) : JLabel() {
             }
         }
     }
-
+    
     /**
      * Aligns the component laterally with the constraints
      */

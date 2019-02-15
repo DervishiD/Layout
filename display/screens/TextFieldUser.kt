@@ -8,9 +8,11 @@ interface TextFieldUser {
 
     infix fun focusTextField(toFocus : TextField){
         currentTextField = toFocus
+        currentTextField!!.focus()
     }
 
     fun unfocusTextField(){
+        currentTextField?.unfocus()
         currentTextField = null
     }
 

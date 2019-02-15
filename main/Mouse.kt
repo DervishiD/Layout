@@ -5,37 +5,12 @@ import display.ScreenManager
 import geometry.Point
 import geometry.Vector
 import java.awt.Component
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
-import java.awt.event.MouseWheelEvent
-import java.awt.event.MouseWheelListener
+import java.awt.event.*
 
 /**
  * Mouse Adapter implementation
  */
 class Mouse : MouseAdapter() {
-
-    companion object {
-        /**
-         * The mouse's position.
-         */
-        @JvmStatic private var mousePosition : Point = Point()
-
-        /**
-         * The infinitesimal displacement of the mouse
-         */
-        @JvmStatic private var displacement : Vector = Vector()
-
-        /**
-         * The mouse's position
-         */
-        @JvmStatic fun mousePosition() : Point = mousePosition
-
-        /**
-         * The last displacement of the mouse
-         */
-        @JvmStatic fun mouseDisplacement() : Vector = displacement
-    }
 
     override fun mouseClicked(e: MouseEvent?) {
         val component : Component = component(e!!)
@@ -82,15 +57,21 @@ class Mouse : MouseAdapter() {
         }
     }
 
-    override fun mouseDragged(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mouseDrag(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseDrag(component)
-        }
-    }
+}
 
+/**
+ * A custom mouse wheel listener
+ */
+internal val mouseWheel : MouseWheelListener = MouseWheelListener { e ->
+    val component : Component = component(e!!)
+    if(component is CustomContainer){
+        component.mouseWheelMoved(component.getComponentAt(e.x - component.x, e.y - component.y), e.wheelRotation)
+    }else{
+        ScreenManager.mouseWheelMoved(component, e.wheelRotation)
+    }
+}
+
+internal val mouseMotionListener : MouseMotionListener = object : MouseMotionListener{
     override fun mouseMoved(e: MouseEvent?) {
         setNewMousePosition(e!!.x, e.y)
         val component : Component = component(e)
@@ -101,27 +82,16 @@ class Mouse : MouseAdapter() {
         }
     }
 
-    private fun setNewMousePosition(newx : Int, newy : Int){
-        displacement setx newx - mousePosition.x
-        displacement sety newy - mousePosition.y
-        mousePosition setx newx
-        mousePosition sety newy
-    }
-
-}
-
-/**
- * A custom Mouse wheel listener
- */
-class MouseWheel : MouseWheelListener{
-    override fun mouseWheelMoved(e: MouseWheelEvent?) {
-        val component : Component = component(e!!)
+    override fun mouseDragged(e: MouseEvent?) {
+        setNewMousePosition(e!!.x, e.y)
+        val component : Component = component(e)
         if(component is CustomContainer){
-            component.mouseWheelMoved(component.getComponentAt(e.x - component.x, e.y - component.y), e.wheelRotation)
+            component.mouseDrag(component.getComponentAt(e.x - component.x, e.y - component.y))
         }else{
-            ScreenManager.mouseWheelMoved(component, e.wheelRotation)
+            ScreenManager.mouseDrag(component)
         }
     }
+
 }
 
 /**
@@ -129,4 +99,32 @@ class MouseWheel : MouseWheelListener{
  */
 private fun component(e : MouseEvent) : Component = mainFrame.contentPane.getComponentAt(e.x, e.y)
 
+/**
+ * Moves the mouse position at the given coordinates
+ */
+private fun setNewMousePosition(newx : Int, newy : Int){
+    displacement setx newx - mousePosition.x
+    displacement sety newy - mousePosition.y
+    mousePosition setx newx
+    mousePosition sety newy
+}
 
+/**
+ * The mouse's position.
+ */
+private var mousePosition : Point = Point()
+
+/**
+ * The infinitesimal displacement of the mouse
+ */
+private var displacement : Vector = Vector()
+
+/**
+ * The mouse's position
+ */
+fun mousePosition() : Point = mousePosition
+
+/**
+ * The last displacement of the mouse
+ */
+fun mouseDisplacement() : Vector = displacement

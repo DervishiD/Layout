@@ -1,6 +1,7 @@
 package gamepackage.gamegeometry
 
 import geometry.Point
+import geometry.Vector
 import main.FRAMEX
 import main.FRAMEY
 
@@ -24,7 +25,7 @@ class Grid {
     /**
      * The mesh size
      */
-    var mesh : Int = DEFAULT_MESH
+    private var mesh : Int = DEFAULT_MESH
 
     /**
      * The origin of the Grid
@@ -90,6 +91,13 @@ class Grid {
     private fun resetOrigin(){
         origin setx (FRAMEX / 2) - (columns / 2) * mesh
         origin sety (FRAMEY / 2) - (lines / 2) * mesh
+    }
+
+    /**
+     * Moves the origin along the given vector
+     */
+    infix fun moveAlong(v : Vector){
+        origin += v
     }
 
 }

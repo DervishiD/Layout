@@ -1,8 +1,10 @@
 package display
 
+import display.screens.TextFieldUser
 import geometry.Point
 import geometry.Vector
 import main.GraphicAction
+import java.awt.Component
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
 import javax.swing.JLabel
@@ -45,13 +47,16 @@ class DisplayerScrollPane : Displayer, CustomContainer {
      */
     private var startingPoint : Point
 
+    /**
+     * Draws the background
+     */
     private val backgroundDrawer : GraphicAction
 
     constructor(p : Point, width : Int, height : Int, scrollbarPosition : Int = SCROLLBAR_RIGHT, parts : List<Displayer> = ArrayList(), background : GraphicAction = NO_BACKGROUND) : super(p){
         w = width
         h = height
         this.scrollbarPosition = scrollbarPosition
-        startingPoint = Point(w/2, 0)
+        startingPoint = if(isVertical()) Point(w/2, 0) else Point(0, h/2)
         for(part : Displayer in parts){
             this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
         }
@@ -115,6 +120,45 @@ class DisplayerScrollPane : Displayer, CustomContainer {
         }else{
             Vector(-units * SCROLL_DELTA, 0)
         }
+        verifyPosition()
+    }
+
+    /**
+     * Prevents the ScrollPane from scrolling too far
+     */
+    private fun verifyPosition(){
+        if(isVertical()){
+            if(startingPoint.y < 0){
+                startingPoint sety 0
+            }else if(startingPoint.y > maxScroll()){
+                startingPoint sety maxScroll()
+            }
+        }else{
+            if(startingPoint.x < 0){
+                startingPoint setx 0
+            }else if(startingPoint.x > maxScroll()){
+                startingPoint setx maxScroll()
+            }
+        }
+    }
+
+    /**
+     * Returns the maximal scroll of this panel
+     */
+    private fun maxScroll() : Int{
+        var result : Int = scrollPaneObjects[0].second
+        if(isVertical()){
+            for(part : ScrollPaneObject in scrollPaneObjects){
+                result += part.second + part.first.height()
+            }
+            if(result < h) result = 0
+        }else{
+            for(part : ScrollPaneObject in scrollPaneObjects){
+                result += part.second + part.first.width()
+            }
+            if(result < w) result = 0
+        }
+        return result
     }
 
     /**
@@ -124,6 +168,16 @@ class DisplayerScrollPane : Displayer, CustomContainer {
         SCROLLBAR_RIGHT, SCROLLBAR_LEFT -> true
         SCROLLBAR_UP, SCROLLBAR_DOWN -> false
         else -> throw IllegalArgumentException("Undefined scrollbar position")
+    }
+
+    override fun mouseRelease(source: Component) {
+        super<CustomContainer>.mouseRelease(source)
+        if(source is TextField){
+            (parent as TextFieldUser).unfocusTextField()
+            (parent as TextFieldUser).focusTextField(source)
+        }else if(parent is TextFieldUser){
+            (parent as TextFieldUser).unfocusTextField()
+        }
     }
 
 }
