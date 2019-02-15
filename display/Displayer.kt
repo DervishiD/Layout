@@ -210,22 +210,22 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * The lowest y coordinate of the component
      */
-    fun lowestY() : Int = (point.y - h / 2).toInt()
+    open fun lowestY() : Int = (point.y - h / 2).toInt()
 
     /**
      * The highest y coordinate of the component
      */
-    fun highestY() : Int = (point.y + h / 2).toInt()
+    open fun highestY() : Int = (point.y + h / 2).toInt()
 
     /**
      * The lowest x coordinate of this component
      */
-    fun lowestX() : Int = (point.x - w / 2).toInt()
+    open fun lowestX() : Int = (point.x - w / 2).toInt()
 
     /**
      * The highest x coordinate of the component
      */
-    fun highestX() : Int = (point.x + w / 2).toInt()
+    open fun highestX() : Int = (point.x + w / 2).toInt()
 
     /**
      * Forces the initphase of this Displayer

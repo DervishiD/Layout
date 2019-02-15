@@ -1,6 +1,7 @@
 package display.screens
 
 import display.*
+import display.selectors.ArrowSelector
 import display.texts.MenuText
 import geometry.Vector
 import main.Action
@@ -50,6 +51,11 @@ class MainMenuScreen : Screen() {
         c.addToScrollPane(a, 50)
         c.addToScrollPane(b)
         this add c
+
+        val d : ArrowSelector<Int> = ArrowSelector(300, 600, arrayListOf(1, 2, 3, 4, 5), false)
+        d.setHorizontal()
+        d setNextArrowColor java.awt.Color.RED
+        this add d
 
     }
 

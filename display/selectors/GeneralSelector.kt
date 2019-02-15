@@ -8,7 +8,14 @@ import geometry.Point
  */
 abstract class GeneralSelector<T> : Displayer {
 
+    /**
+     * The list of possible options
+     */
     protected var options : ArrayList<T>
+
+    /**
+     * The index of the current option
+     */
     protected var currentOption : Int = 0
 
     constructor(p : Point, options : ArrayList<T>) : super(p){
@@ -20,6 +27,9 @@ abstract class GeneralSelector<T> : Displayer {
     constructor(x : Double, y : Int, options: ArrayList<T>) : this(Point(x, y), options)
     constructor(x : Int, y : Int, options: ArrayList<T>) : this(Point(x, y), options)
 
+    /**
+     * Returns the current selected option
+     */
     fun selectedOption() : T = options[currentOption]
 
 }
