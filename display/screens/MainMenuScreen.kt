@@ -52,7 +52,7 @@ class MainMenuScreen : Screen() {
         c.addToScrollPane(b)
         this add c
 
-        val d : ArrowSelector<String> = ArrowSelector(300, 600, arrayListOf("Hi", "Hi hi hi hi hi hi hi hi hi hi hi hi hi hi"), true)
+        val d : ArrowSelector<String> = ArrowSelector(300, 600, arrayListOf("Hi", "hi hi hi hi hi hi hi hi hi hi hi hi hi hi"), true)
         d setNextArrowColor java.awt.Color.RED
         d setMaxLineLength 200
         d.alignUpToDown(TITLE)

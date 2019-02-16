@@ -294,7 +294,6 @@ class ArrowSelector<T> : GeneralSelector<T> {
             var currentWordLength : Int
             var currentWordAndSpaceLength : Int
             var chars : List<String>
-            val currentChar : String = ""
             var currentCharLength : Int
             for(line : String in lines){
                 if(fm.stringWidth(line) + additionalWidth <= maxLineLength!!){ //LINE FITS
@@ -311,15 +310,16 @@ class ArrowSelector<T> : GeneralSelector<T> {
                                 currentLineLength += currentWordLength
                             }else{ //FIRST WORD DOESN'T FIT
                                 chars = currentWord.split("")
+                                println(chars[0])
                                 for(char : String in chars){
                                     currentCharLength = fm.stringWidth(char)
                                     if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
-                                        currentLine += currentChar
+                                        currentLine += char
                                         currentLineLength += currentCharLength
                                     }else{ //CHAR DOESN'T FIT
                                         result.add(currentLine)
                                         currentLineLength = additionalWidth + currentCharLength
-                                        currentLine = currentChar
+                                        currentLine = char
                                     }
                                 }
                             }
@@ -340,12 +340,12 @@ class ArrowSelector<T> : GeneralSelector<T> {
                                         for(char : String in chars){
                                             currentCharLength = fm.stringWidth(char)
                                             if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
-                                                currentLine += currentChar
+                                                currentLine += char
                                                 currentLineLength += currentCharLength
                                             }else{ //CHAR DOESN'T FIT
                                                 result.add(currentLine)
                                                 currentLineLength = additionalWidth + currentCharLength
-                                                currentLine = currentChar
+                                                currentLine = char
                                             }
                                         }
                                     }else{ //SPACE AND FIRST CHAR DON'T FIT --> START NEW LINE
@@ -355,12 +355,12 @@ class ArrowSelector<T> : GeneralSelector<T> {
                                         for(char : String in chars){
                                             currentCharLength = fm.stringWidth(char)
                                             if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
-                                                currentLine += currentChar
+                                                currentLine += char
                                                 currentLineLength += currentCharLength
                                             }else{ //CHAR DOESN'T FIT
                                                 result.add(currentLine)
                                                 currentLineLength = additionalWidth + currentCharLength
-                                                currentLine = currentChar
+                                                currentLine = char
                                             }
                                         }
                                     }

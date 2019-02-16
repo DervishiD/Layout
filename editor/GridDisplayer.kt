@@ -43,6 +43,16 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     private fun origin() : Point = grid.origin()
 
     /**
+     * The grid's number of columns
+     */
+    private fun gridWidth() : Int = grid.columns
+
+    /**
+     * The grid's number of lines
+     */
+    private fun gridHeight() : Int = grid.lines
+
+    /**
      * Zooms in
      */
     private fun zoomIn(){
@@ -54,6 +64,24 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      */
     private fun zoomOut(){
         if(mesh > MAX_ZOOM_MESH) mesh -= MESH_ZOOM_DELTA
+    }
+
+    /**
+     * Modifies the width of the Grid
+     */
+    infix fun setGridWidth(newWidth : Int){
+        if(newWidth != gridWidth()){
+            grid.setColumnsNumber(newWidth)
+        }
+    }
+
+    /**
+     * Modifies the height of the Grid
+     */
+    infix fun setGridHeight(newHeight : Int){
+        if(newHeight != gridWidth()){
+            grid.setLinesNumber(newHeight)
+        }
     }
 
     /**

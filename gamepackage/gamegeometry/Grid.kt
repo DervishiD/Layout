@@ -100,4 +100,43 @@ class Grid {
         origin += v
     }
 
+    /**
+     * Changes the number of columns
+     */
+    infix fun setColumnsNumber(newColumnsNumber : Int){
+        if(newColumnsNumber > columns){
+            for(line : ArrayList<Cell> in grid){
+                for(i : Int in 1..newColumnsNumber - columns){
+                    line.add(Cell())
+                }
+            }
+        }else if(newColumnsNumber < columns){
+            for(line : ArrayList<Cell> in grid){
+                for(i : Int in 1..newColumnsNumber - columns){
+                    line.removeAt(columns - i)
+                }
+            }
+        }
+        columns = newColumnsNumber
+    }
+
+    /**
+     * Changes the number of lines
+     */
+    infix fun setLinesNumber(newLinesNumber : Int){
+        if(newLinesNumber > lines){
+            for(i : Int in 0 until newLinesNumber - lines){
+                grid.add(ArrayList(columns))
+                for(j : Int in 0 until columns){
+                    grid[lines + i].add(Cell())
+                }
+            }
+        }else if(newLinesNumber < lines){
+            for(i : Int in 0 until lines - newLinesNumber){
+                grid.removeAt(lines - i - 1)
+            }
+        }
+        lines = newLinesNumber
+    }
+
 }

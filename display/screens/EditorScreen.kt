@@ -54,6 +54,14 @@ class EditorScreen : Screen(), TextFieldUser{
 
     }
 
+    /**
+     * Updates the edited Grid
+     */
+    private fun updateGrid(){
+        GRID_DISPLAYER.setGridWidth(WIDTH_TEXTFIELD.typedText().toInt())
+        GRID_DISPLAYER.setGridHeight(HEIGHT_TEXTFIELD.typedText().toInt())
+    }
+
     override fun drawBackground(g: Graphics) {
         val separatorLineThickness : Int = 24
         g.color = DEFAULT_COLOR
@@ -74,11 +82,13 @@ class EditorScreen : Screen(), TextFieldUser{
                 "period", "PERIOD" -> currentTextField!!.type(".")
                 "comma", "COMMA" -> currentTextField!!.type(",")
                 "minus", "MINUS" -> currentTextField!!.type("-")
+                "enter", "ENTER" -> updateGrid()
             }
         }
     }
 
     override fun mouseRelease(source: Component) {
+        updateGrid()
         unfocusTextField()
         super.mouseRelease(source)
     }
