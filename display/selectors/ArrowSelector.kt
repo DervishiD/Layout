@@ -8,6 +8,7 @@ import geometry.Point
 import main.Action
 import main.GraphicAction
 import java.awt.Color
+import java.awt.Font
 import java.awt.FontMetrics
 import java.awt.Graphics
 
@@ -48,6 +49,8 @@ class ArrowSelector<T> : GeneralSelector<T> {
         private const val LINE_THICKNESS : Int = 5
         private const val INTERIOR_DELTA : Int = 2
         private const val EXTERIOR_DELTA : Int = 5
+
+        private val DISPLAYED_FONT : Font = DEFAULT_FONT
     }
 
     /**
@@ -80,6 +83,16 @@ class ArrowSelector<T> : GeneralSelector<T> {
      */
     private var displayedText : String = selectedOption().toString()
 
+    /**
+     * The maximal length of a line
+     */
+    private var maxLineLength : Int? = null
+
+    /**
+     * The displayed lines
+     */
+    private var lines : ArrayList<String> = lines(displayedText)
+
     constructor(p : Point, options : ArrayList<T>, isHorizontal : Boolean = true) : super(p, options){
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
@@ -100,6 +113,7 @@ class ArrowSelector<T> : GeneralSelector<T> {
             currentOption = 0
         }
         displayedText = selectedOption().toString()
+        lines = lines(displayedText)
         initphase = true
     }
 
@@ -113,6 +127,7 @@ class ArrowSelector<T> : GeneralSelector<T> {
             currentOption = options.size - 1
         }
         displayedText = selectedOption().toString()
+        lines = lines(displayedText)
         initphase = true
     }
 
@@ -167,6 +182,18 @@ class ArrowSelector<T> : GeneralSelector<T> {
     }
 
     /**
+     * Sets the maximal line length for the Selector
+     */
+    infix fun setMaxLineLength(length : Int){
+        maxLineLength = length
+    }
+
+    /**
+     * Sets the maximal line length for the Selector
+     */
+    infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
+
+    /**
      * Sets a new color for both arrows
      */
     infix fun setArrowsColor(color : Color){
@@ -193,30 +220,6 @@ class ArrowSelector<T> : GeneralSelector<T> {
             nextArrow.setImage(rightArrowDrawer(color), HORIZONTAL_ARROW_WIDTH, HORIZONTAL_ARROW_HEIGHT)
         }else{
             nextArrow.setImage(upArrowDrawer(color), VERTICAL_ARROW_WIDTH, VERTICAL_ARROW_HEIGHT)
-        }
-    }
-
-    /**
-     * Places the arrows associated with this Selector horizontally
-     */
-    fun setHorizontal(){
-        if(!isHorizontal){
-            isHorizontal = true
-            previousArrow = initializePreviousArrow()
-            nextArrow = initializeNextArrow()
-            initphase = true
-        }
-    }
-
-    /**
-     * Places the arrows associated with this Selector vertically
-     */
-    fun setVertical(){
-        if(isHorizontal){
-            isHorizontal = false
-            previousArrow = initializePreviousArrow()
-            nextArrow = initializeNextArrow()
-            initphase = true
         }
     }
 
@@ -271,11 +274,130 @@ class ArrowSelector<T> : GeneralSelector<T> {
     }
 
     override fun loadParameters(g: Graphics) {
-        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
-        w = fm.stringWidth(displayedText) + 2 * (LINE_THICKNESS + INTERIOR_DELTA)
-        h = fm.maxAscent + fm.maxDescent + 2 * (LINE_THICKNESS + INTERIOR_DELTA)
+        lines = lines(displayedText)
+        forceMaxLineLength(g)
+        computeWidth(g)
+        computeHeight(g)
         align()
         setArrowsPosition()
+    }
+
+    private fun forceMaxLineLength(g : Graphics){
+        if(maxLineLength != null){
+            val result : ArrayList<String> = ArrayList()
+            val fm : FontMetrics = g.getFontMetrics(DISPLAYED_FONT)
+            val additionalWidth : Int = 2 * (INTERIOR_DELTA + LINE_THICKNESS) + if(isHorizontal) 2 * (EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH) else 0
+            var currentLine : String = ""
+            var currentLineLength : Int = additionalWidth
+            var words : List<String>
+            var currentWord : String
+            var currentWordLength : Int
+            var currentWordAndSpaceLength : Int
+            var chars : List<String>
+            val currentChar : String = ""
+            var currentCharLength : Int
+            for(line : String in lines){
+                if(fm.stringWidth(line) + additionalWidth <= maxLineLength!!){ //LINE FITS
+                    result.add(line)
+                }else{ //LINE DOESN'T FIT
+                    words = line.split(" ")
+                    for(i : Int in 0 until words.size){
+                        currentWord = words[i]
+                        currentWordLength = fm.stringWidth(currentWord)
+                        currentWordAndSpaceLength = fm.stringWidth(" $currentWord")
+                        if(currentLine == ""){ //FIRST WORD OF THE LINE
+                            if(currentWordLength + currentLineLength <= maxLineLength!!){ //FIRST WORD FITS
+                                currentLine += currentWord
+                                currentLineLength += currentWordLength
+                            }else{ //FIRST WORD DOESN'T FIT
+                                chars = currentWord.split("")
+                                for(char : String in chars){
+                                    currentCharLength = fm.stringWidth(char)
+                                    if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
+                                        currentLine += currentChar
+                                        currentLineLength += currentCharLength
+                                    }else{ //CHAR DOESN'T FIT
+                                        result.add(currentLine)
+                                        currentLineLength = additionalWidth + currentCharLength
+                                        currentLine = currentChar
+                                    }
+                                }
+                            }
+                        }else{ //NOT FIRST WORD OF THE LINE
+                            if(currentWordAndSpaceLength + currentLineLength <= maxLineLength!!){ //WORD FITS
+                                currentLine += " $currentWord"
+                                currentLineLength += currentWordAndSpaceLength
+                            }else{ //WORD DOESN'T FIT
+                                if(currentWordLength + additionalWidth <= maxLineLength!!){ //WORD FITS IN NEW LINE
+                                    result.add(currentLine)
+                                    currentLineLength = currentWordLength + additionalWidth
+                                    currentLine = currentWord
+                                }else{ //WORD DOESN'T FIT IN NEW LINE
+                                    chars = currentWord.split("")
+                                    if(currentLineLength + fm.stringWidth(" ${chars[0]}") <= maxLineLength!!){ //IF SPACE AND FIRST CHAR FIT
+                                        currentLineLength += fm.stringWidth(" ")
+                                        currentLine += " "
+                                        for(char : String in chars){
+                                            currentCharLength = fm.stringWidth(char)
+                                            if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
+                                                currentLine += currentChar
+                                                currentLineLength += currentCharLength
+                                            }else{ //CHAR DOESN'T FIT
+                                                result.add(currentLine)
+                                                currentLineLength = additionalWidth + currentCharLength
+                                                currentLine = currentChar
+                                            }
+                                        }
+                                    }else{ //SPACE AND FIRST CHAR DON'T FIT --> START NEW LINE
+                                        currentLineLength = additionalWidth
+                                        result.add(currentLine)
+                                        currentLine = ""
+                                        for(char : String in chars){
+                                            currentCharLength = fm.stringWidth(char)
+                                            if(currentCharLength + currentLineLength <= maxLineLength!!){ //CHAR FITS
+                                                currentLine += currentChar
+                                                currentLineLength += currentCharLength
+                                            }else{ //CHAR DOESN'T FIT
+                                                result.add(currentLine)
+                                                currentLineLength = additionalWidth + currentCharLength
+                                                currentLine = currentChar
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if(currentLine != ""){
+                    result.add(currentLine)
+                    currentLine = ""
+                    currentLineLength = additionalWidth
+                }
+            }
+            lines = result
+        }
+    }
+
+    private fun computeWidth(g : Graphics){
+        w = 2 * (INTERIOR_DELTA + LINE_THICKNESS)
+        var maxLine : Int = 0
+        val fm = g.getFontMetrics(DISPLAYED_FONT)
+        for(line : String in lines){
+            val lineWidth : Int = fm.stringWidth(line)
+            if(lineWidth > maxLine){
+                maxLine = lineWidth
+            }
+        }
+        w += maxLine
+    }
+
+    private fun computeHeight(g : Graphics){
+        h = 2 * (INTERIOR_DELTA + LINE_THICKNESS)
+        val fm : FontMetrics = g.getFontMetrics(DISPLAYED_FONT)
+        for(i : Int in 1..lines.size){
+            h += fm.maxAscent + fm.maxDescent
+        }
     }
 
     /**
@@ -306,16 +428,29 @@ class ArrowSelector<T> : GeneralSelector<T> {
     }
 
     override fun drawDisplayer(g: Graphics) {
-        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
-        val textDrawHeight : Int = LINE_THICKNESS + INTERIOR_DELTA + fm.maxAscent
+        val fm : FontMetrics = g.getFontMetrics(DISPLAYED_FONT)
+        var textDrawHeight : Int = LINE_THICKNESS + INTERIOR_DELTA + fm.maxAscent
         g.color = DEFAULT_COLOR
-        g.font = DEFAULT_FONT
-        g.drawString(displayedText, LINE_THICKNESS + INTERIOR_DELTA, textDrawHeight)
+        g.font = DISPLAYED_FONT
+        for(line : String in lines){
+            g.drawString(line, LINE_THICKNESS + INTERIOR_DELTA, textDrawHeight)
+            textDrawHeight += fm.maxDescent + fm.maxAscent
+        }
 
         g.fillRect(0, 0, LINE_THICKNESS, h)
         g.fillRect(0, 0, w, LINE_THICKNESS)
         g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)
         g.fillRect(w - LINE_THICKNESS, 0, w, h)
+        setArrowsPosition()
+    }
+
+    /**
+     * Splits the given text in lines
+     */
+    private fun lines(text : String) : ArrayList<String>{
+        val result : ArrayList<String> = ArrayList()
+        result.addAll(text.split("\n"))
+        return result
     }
 
 }

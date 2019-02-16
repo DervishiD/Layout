@@ -11,11 +11,11 @@ class Point {
     /**
      * The x coordinate.
      * */
-    public var x : Double
+    var x : Double
     /**
      * The y coordinate.
      * */
-    public var y : Double
+    var y : Double
 
     /**
      * Basic constructor
@@ -58,61 +58,61 @@ class Point {
     /**
      * Returns x rounded to an integer.
      */
-    public fun intx() : Int = x.toInt()
+    fun intx() : Int = x.toInt()
 
     /**
      * Returns y rounded to an integer.
      */
-    public fun inty() : Int = y.toInt()
+    fun inty() : Int = y.toInt()
 
     /**
      * Sets the x coordinate
      */
-    public infix fun setx(x : Double){
+    infix fun setx(x : Double){
         this.x = x
     }
 
     /**
      * Sets the x coordinate
      */
-    public infix fun setx(x : Int) = setx(x.toDouble())
+    infix fun setx(x : Int) = setx(x.toDouble())
 
     /**
      * Sets the y coordinate
      */
-    public infix fun sety(y : Double){
+    infix fun sety(y : Double){
         this.y = y
     }
 
     /**
      * Sets the y coordinate
      */
-    public infix fun sety(y : Int) = sety(y.toDouble())
+    infix fun sety(y : Int) = sety(y.toDouble())
 
     /**
      * Addition of a Vector to a Point, corresponds to moving the Point along the Vector.
      * @param v The direction Vector.
      * @return The moved Point.
      * */
-    public operator fun plus(v : Vector) : Point = Point(x + v.x, y + v.y)
+    operator fun plus(v : Vector) : Point = Point(x + v.x, y + v.y)
 
     /**
      * Subtraction of a Vector to a Point, corresponds to moving the Point along the opposite Vector.
      * @param v The direction Vector.
      * @return The moved Point.
      * */
-    public operator fun minus(v : Vector) : Point = Point(x - v.x, y - v.y)
+    operator fun minus(v : Vector) : Point = Point(x - v.x, y - v.y)
 
     /**
      * Creates a Vector from this Point to the other one.
      * @param p The other Point
      */
-    public operator fun rangeTo(p : Point) : Vector = Vector(this, p)
+    operator fun rangeTo(p : Point) : Vector = Vector(this, p)
 
     /**
      * Returns the i coordinate of this Point.
      */
-    public operator fun get(i : Int) : Double =
+    operator fun get(i : Int) : Double =
         when (i) {
             0 -> x
             1 -> y
@@ -124,7 +124,7 @@ class Point {
      * @param i The index to change
      * @param value The new value of the coordinate
      */
-    public operator fun set(i : Int, value : Double) {
+    operator fun set(i : Int, value : Double) {
         when (i) {
             0 -> x = value
             1 -> y = value
@@ -137,12 +137,12 @@ class Point {
      * @param i The index to change
      * @param value The new value of the coordinate
      */
-    public operator fun set(i : Int, value : Int) = set(i, value.toDouble())
+    operator fun set(i : Int, value : Int) = set(i, value.toDouble())
 
     /**
      * Checks whether this Point is the same as the compared stuff.
      */
-    public override operator fun equals(other : Any?) : Boolean {
+    override operator fun equals(other : Any?) : Boolean {
         return when(other){
             is Point -> {
                 abs(x - other.x) <= DOUBLE_PRECISION &&
@@ -159,11 +159,13 @@ class Point {
     /**
      * Returns a Vector with the same coordinates.
      */
-    public fun toVector() : Vector = Vector(x, y)
+    fun toVector() : Vector = Vector(x, y)
 
     /**
      * Returns a copy of this Point.
      */
-    public fun copy() : Point = Point(x, y)
+    fun copy() : Point = Point(x, y)
+
+    override fun toString() : String = "( $x , $y )"
 
 }
