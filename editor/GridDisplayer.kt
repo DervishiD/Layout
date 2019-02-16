@@ -5,12 +5,11 @@ import display.Displayer
 import gamepackage.gamegeometry.Grid
 import geometry.Point
 import main.mouseDisplacement
+import main.mousePosition
 import java.awt.Graphics
 import kotlin.math.floor
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
-
-
 
 /**
  * The Displayer that displays the Grid in the editor
@@ -19,8 +18,8 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
 
     private companion object {
         private const val DEFAULT_MESH_SIZE : Int = 120
-        private const val MAX_ZOOM_MESH : Int = 20
-        private const val MESH_ZOOM_DELTA : Int = 10
+        private const val MAX_ZOOM_MESH : Int = 16
+        private const val MESH_ZOOM_DELTA : Int = 8
     }
 
     override var w: Int = width
@@ -40,7 +39,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     /**
      * The grid's origin
      */
-    private fun origin() : Point = grid.origin()
+    private var origin : Point = grid.origin()
 
     /**
      * The grid's number of columns
@@ -56,15 +55,54 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * Zooms in
      */
     private fun zoomIn(){
-        if(mesh < DEFAULT_MESH_SIZE) mesh += MESH_ZOOM_DELTA
+        if(mesh < DEFAULT_MESH_SIZE){
+            performMeshVariation(MESH_ZOOM_DELTA)
+        }
     }
 
     /**
      * Zooms out
      */
     private fun zoomOut(){
-        if(mesh > MAX_ZOOM_MESH) mesh -= MESH_ZOOM_DELTA
+        if(mesh > MAX_ZOOM_MESH){
+            performMeshVariation(-MESH_ZOOM_DELTA)
+        }
     }
+
+    /**
+     * Abstracts the zoom operation as a variation in the mesh
+     * @param meshVariation The absolute variation, in pixels, of the mesh
+     */
+    private fun performMeshVariation(meshVariation : Int){
+        val correspondingGridPoint : Point = frameToGrid(mousePosition())
+        val line : Int = lineOf(correspondingGridPoint)
+        val column : Int = columnOf(correspondingGridPoint)
+        val proportionaldx : Double = correspondingGridPoint.x / mesh - column
+        val proportionaldy : Double = correspondingGridPoint.y / mesh - line
+        mesh += meshVariation
+        val newGridPoint : Point = Point((column + proportionaldx) * mesh, (line + proportionaldy) * mesh)
+        origin += newGridPoint..correspondingGridPoint
+    }
+
+    /**
+     * Converts a Point on the displayed Grid to one in the frame
+     */
+    private fun gridToFrame(p : Point) : Point = origin + p.toVector()
+
+    /**
+     * Converts a Point in the frame to one on the displayed Grid
+     */
+    private fun frameToGrid(p : Point) : Point = p - origin.toVector()
+
+    /**
+     * Returns the column index of a Point on the dispalyed Grid
+     */
+    private fun columnOf(pointInDisplayedGrid : Point) : Int = floor(pointInDisplayedGrid.x / mesh).toInt()
+
+    /**
+     * Returns the line index of a Point on the displayed Grid
+     */
+    private fun lineOf(pointInDisplayedGrid : Point) : Int = floor(pointInDisplayedGrid.y / mesh).toInt()
 
     /**
      * Modifies the width of the Grid
@@ -79,7 +117,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * Modifies the height of the Grid
      */
     infix fun setGridHeight(newHeight : Int){
-        if(newHeight != gridWidth()){
+        if(newHeight != gridHeight()){
             grid.setLinesNumber(newHeight)
         }
     }
@@ -87,18 +125,18 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     /**
      * The leftmost x coordinate of a cell in a given column
      */
-    private fun cellLeftX(column : Int) : Int = (origin().x + column * mesh).toInt()
+    private fun cellLeftX(column : Int) : Int = (origin.x + column * mesh).toInt()
 
     /**
      * The uppermost y coordinate of a cell in a given line
      */
-    private fun cellUpY(line : Int) : Int = (origin().y + line * mesh).toInt()
+    private fun cellUpY(line : Int) : Int = (origin.y + line * mesh).toInt()
 
     /**
      * The lowest column index currently displayed on the screen
      */
     private fun lowestColumnIndexOnScreen() : Int{
-        val lowestColumnIndex : Int = floor((lowestX() - origin().x) / mesh).toInt()
+        val lowestColumnIndex : Int = floor((lowestX() - origin.x) / mesh).toInt()
         return if(lowestColumnIndex <= 0) 0 else lowestColumnIndex
     }
 
@@ -106,7 +144,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * The highest column index currently displayed on the screen
      */
     private fun highestColumnIndexOnScreen() : Int{
-        val highestColumnIndex : Int = floor((highestX() - origin().x) / mesh).toInt()
+        val highestColumnIndex : Int = floor((highestX() - origin.x) / mesh).toInt()
         return if(highestColumnIndex >= grid.columns) grid.columns - 1 else highestColumnIndex
     }
 
@@ -114,7 +152,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * The lowest line index currently displayed on the screen
      */
     private fun lowestLineIndexOnScreen() : Int{
-        val lowestLineIndex : Int = floor((lowestY() - origin().y) / mesh).toInt()
+        val lowestLineIndex : Int = floor((lowestY() - origin.y) / mesh).toInt()
         return if(lowestLineIndex <= 0) 0 else lowestLineIndex
     }
 
@@ -122,7 +160,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
      * The highest line index currently displayed on the screen
      */
     private fun highestLineIndexOnScreen() : Int{
-        val highestLineIndex : Int = floor((highestY() - origin().y) / mesh).toInt()
+        val highestLineIndex : Int = floor((highestY() - origin.y) / mesh).toInt()
         return if(highestLineIndex >= grid.lines) grid.lines - 1 else highestLineIndex
     }
 
@@ -179,6 +217,8 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
         }
     }
 
-    override fun mouseDrag() = grid moveAlong mouseDisplacement()
+    override fun mouseDrag(){
+        origin += mouseDisplacement()
+    }
 
 }

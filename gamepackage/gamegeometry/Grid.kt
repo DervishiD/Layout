@@ -139,4 +139,54 @@ class Grid {
         lines = newLinesNumber
     }
 
+    /**
+     * Converts a Point on the grid to a point in the frame
+     */
+    fun gridToFrame(p : Point) : Point = origin + p.toVector()
+
+    /**
+     * Converts a Point on the grid to a point in the frame
+     */
+    fun gridToFrame(x : Int, y : Double) : Point = gridToFrame(Point(x, y))
+
+    /**
+     * Converts a Point on the grid to a point in the frame
+     */
+    fun gridToFrame(x : Double, y : Int) : Point = gridToFrame(Point(x, y))
+
+    /**
+     * Converts a Point on the grid to a point in the frame
+     */
+    fun gridToFrame(x : Double, y : Double) : Point = gridToFrame(Point(x, y))
+
+    /**
+     * Converts a Point on the grid to a point in the frame
+     */
+    fun gridToFrame(x : Int, y : Int) : Point = gridToFrame(Point(x, y))
+
+    /**
+     * Converts a Point in the frame to a Point on the Grid
+     */
+    fun frameToGrid(p : Point) : Point = p - origin.toVector()
+
+    /**
+     * Converts a Point in the frame to a Point on the Grid
+     */
+    fun frameToGrid(x : Int, y : Int) : Point = frameToGrid(Point(x, y))
+
+    /**
+     * Converts a Point in the frame to a Point on the Grid
+     */
+    fun frameToGrid(x : Double, y : Int) : Point = frameToGrid(Point(x, y))
+
+    /**
+     * Converts a Point in the frame to a Point on the Grid
+     */
+    fun frameToGrid(x : Int, y : Double) : Point = frameToGrid(Point(x, y))
+
+    /**
+     * Converts a Point in the frame to a Point on the Grid
+     */
+    fun frameToGrid(x : Double, y : Double) : Point = frameToGrid(Point(x, y))
+
 }
