@@ -4,6 +4,8 @@ import display.DEFAULT_COLOR
 import display.Displayer
 import gamepackage.gamegeometry.Grid
 import geometry.Point
+import main.FRAMEX
+import main.FRAMEY
 import main.mouseDisplacement
 import main.mousePosition
 import java.awt.Graphics
@@ -120,6 +122,11 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
         if(newHeight != gridHeight()){
             grid.setLinesNumber(newHeight)
         }
+    }
+
+    fun resetOrigin(){
+        origin setx (FRAMEX / 2) - (gridWidth() / 2) * mesh
+        origin sety (FRAMEY / 2) - (gridHeight() / 2) * mesh
     }
 
     /**

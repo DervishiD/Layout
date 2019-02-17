@@ -42,9 +42,9 @@ class Grid {
         this.columns = columns
         resetOrigin()
 
-        grid = ArrayList(lines)
+        grid = ArrayList()
         for(i : Int in 0 until lines){
-            grid.add(ArrayList(columns))
+            grid.add(ArrayList())
             for(j : Int in 0 until columns){
                 grid[i].add(Cell())
             }
@@ -105,19 +105,14 @@ class Grid {
      */
     infix fun setColumnsNumber(newColumnsNumber : Int){
         if(newColumnsNumber > columns){
-            for(line : ArrayList<Cell> in grid){
-                for(i : Int in 1..newColumnsNumber - columns){
-                    line.add(Cell())
-                }
+            for(i : Int in 1..newColumnsNumber - columns){
+                addColumn(columns)
             }
         }else if(newColumnsNumber < columns){
-            for(line : ArrayList<Cell> in grid){
-                for(i : Int in 1..newColumnsNumber - columns){
-                    line.removeAt(columns - i)
-                }
+            for(i : Int in 1..columns - newColumnsNumber){
+                removeColumn(columns - 1)
             }
         }
-        columns = newColumnsNumber
     }
 
     /**
@@ -126,17 +121,76 @@ class Grid {
     infix fun setLinesNumber(newLinesNumber : Int){
         if(newLinesNumber > lines){
             for(i : Int in 0 until newLinesNumber - lines){
-                grid.add(ArrayList(columns))
-                for(j : Int in 0 until columns){
-                    grid[lines + i].add(Cell())
-                }
+                addLine(lines)
             }
         }else if(newLinesNumber < lines){
             for(i : Int in 0 until lines - newLinesNumber){
-                grid.removeAt(lines - i - 1)
+                removeLine(lines - 1)
             }
         }
-        lines = newLinesNumber
+    }
+
+    /**
+     * Adds a line at the given index
+     */
+    tailrec infix fun addLine(index : Int){
+        when {
+            index > lines -> addLine(lines)
+            index < 0 -> addLine(0)
+            else -> {
+                grid.add(index, ArrayList())
+                for(i : Int in 0 until columns){
+                    grid[index].add(Cell())
+                }
+                lines++
+            }
+        }
+    }
+
+    /**
+     * Removes the line at the given index
+     */
+    tailrec infix fun removeLine(index : Int){
+        when{
+            index < 0 -> removeLine(0)
+            index >= lines -> removeLine(lines - 1)
+            else -> {
+                grid.removeAt(index)
+                lines--
+            }
+        }
+    }
+
+    /**
+     * Adds the column at the given index
+     */
+    tailrec infix fun addColumn(index : Int){
+        when{
+            index < 0 -> addColumn(0)
+            index > columns -> addColumn(columns)
+            else -> {
+                for(line : ArrayList<Cell> in grid){
+                    line.add(index, Cell())
+                }
+                columns++
+            }
+        }
+    }
+
+    /**
+     * Removes the column at the given index
+     */
+    tailrec infix fun removeColumn(index : Int){
+        when{
+            index < 0 -> removeColumn(index)
+            index >= columns -> removeColumn(columns - 1)
+            else -> {
+                for(i : Int in 0 until lines){
+                    grid[i].removeAt(index)
+                }
+                columns--
+            }
+        }
     }
 
     /**
