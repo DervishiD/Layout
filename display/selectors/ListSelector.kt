@@ -8,9 +8,6 @@ import java.awt.Graphics
  */
 class ListSelector<T> : GeneralSelector<T> {
 
-    override var w : Int = 0
-    override var h : Int = 0
-
     constructor(p : Point, options : ArrayList<T>) : super(p, options)
     constructor(x : Double, y : Double, options: ArrayList<T>) : super(x, y, options)
     constructor(x : Int, y : Double, options: ArrayList<T>) : super(x, y, options)

@@ -50,6 +50,8 @@ class EditorScreen : Screen(), TextFieldUser{
         private const val BRUSH_SIZE_SELECTOR_DELTA : Int = 50
         private val LEFT_SCROLL_PANE : DisplayerScrollPane =
             DisplayerScrollPane(ALLOWED_LEFT_WIDTH/2, ALLOWED_LEFT_HEIGHT/2, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT).also {
+                it.alignLeftTo(0)
+                it.alignUpTo(0)
                 it.addToScrollPane(WIDTH_TEXT, WIDTH_TEXT_DELTA)
                 it.addToScrollPane(WIDTH_TEXTFIELD, WIDTH_FIELD_DELTA)
                 it.addToScrollPane(HEIGHT_TEXT, HEIGHT_TEXT_DELTA)
@@ -79,6 +81,7 @@ class EditorScreen : Screen(), TextFieldUser{
         val separatorLineThickness : Int = 24
         g.color = DEFAULT_COLOR
         g.fillRect(ALLOWED_LEFT_WIDTH - separatorLineThickness/2, 0, separatorLineThickness, ALLOWED_GRID_HEIGHT)
+        g.fillRect(ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT - separatorLineThickness / 2, ALLOWED_GRID_WIDTH, separatorLineThickness)
     }
 
     override fun pressKey(key: Int) {
@@ -87,16 +90,23 @@ class EditorScreen : Screen(), TextFieldUser{
             text = text.toUpperCase()
         }
         if(currentTextField != null){
-            if(text.length == 1){
-                currentTextField!!.type(text)
-            }else when(text){
-                "space", "SPACE" -> currentTextField!!.type(" ")
-                "backspace", "BACKSPACE" -> currentTextField!!.backspace()
-                "period", "PERIOD" -> currentTextField!!.type(".")
-                "comma", "COMMA" -> currentTextField!!.type(",")
-                "minus", "MINUS" -> currentTextField!!.type("-")
-                "enter", "ENTER" -> updateGrid()
-            }
+            typeInField(text)
+        }
+    }
+
+    /**
+     * Types the given text in the focused TextField
+     */
+    private infix fun typeInField(text : String){
+        if(text.length == 1){
+            currentTextField!!.type(text)
+        }else when(text){
+            "space", "SPACE" -> currentTextField!!.type(" ")
+            "backspace", "BACKSPACE" -> currentTextField!!.backspace()
+            "period", "PERIOD" -> currentTextField!!.type(".")
+            "comma", "COMMA" -> currentTextField!!.type(",")
+            "minus", "MINUS" -> currentTextField!!.type("-")
+            "enter", "ENTER" -> updateGrid()
         }
     }
 

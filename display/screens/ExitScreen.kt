@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent.WINDOW_CLOSING
 
 class ExitScreen : Screen() {
 
-    companion object {
+    private companion object {
 
         private val EXIT_PROGRAM_BUTTON_X : Int = FRAMEX / 3
         private val EXIT_PROGRAM_BUTTON_Y : Int = FRAMEY * 2 / 3

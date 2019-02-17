@@ -11,9 +11,6 @@ import java.awt.Graphics
  */
 public abstract class Text : TextDisplayer {
 
-    override var w : Int = 0
-    override var h : Int = 0
-
     constructor(p : Point, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
     constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
     constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)

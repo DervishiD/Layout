@@ -8,16 +8,13 @@ import kotlin.math.max
 
 class TextField : Displayer{
 
-    companion object {
+    private companion object {
         private const val DEFAULT_WIDTH = 25
         private const val LINE_THICKNESS : Int = 2
         private const val DELTA : Int = 2
         private val UNFOCUSED_COLOR : Color = DEFAULT_COLOR
         private val FOCUSED_COLOR : Color = Color(70, 140, 70)
     }
-
-    override var w : Int = 0
-    override var h : Int = 0
 
     private var typedText : String
     private var isFocused : Boolean = false

@@ -9,9 +9,6 @@ import java.awt.Graphics
  */
 class Slider<T> : Displayer /* : GeneralSelector eventually*/ {
 
-    override var w : Int = 0
-    override var h : Int = 0
-
     constructor(p : Point) : super(p){
         //TODO
     }

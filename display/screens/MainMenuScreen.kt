@@ -16,7 +16,7 @@ import java.awt.Graphics
  */
 class MainMenuScreen : Screen() {
 
-    companion object {
+    private companion object {
         private val TITLE_X : Int = FRAMEX / 2
         private val TITLE_Y : Int = FRAMEY / 5
         private const val TITLE_TEXT : String = "Title"

@@ -39,12 +39,12 @@ abstract class Displayer(p: Point) : JLabel() {
     /**
      * The width of the component
      */
-    protected abstract var w : Int
+    protected var w : Int = 0
 
     /**
      * The height of the component
      */
-    protected abstract var h : Int
+    protected var h : Int = 0
 
     /**
      * Detects if the component is being initialized

@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage
 /**
  * The Displayer that displays the Grid in the editor
  */
-class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
+class GridDisplayer : Displayer {
 
     private companion object {
         private const val DEFAULT_MESH_SIZE : Int = 120
@@ -24,12 +24,14 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
         private const val MESH_ZOOM_DELTA : Int = 8
     }
 
-    override var w: Int = width
-    override var h: Int = height
-
     private var grid : Grid = Grid(10, 10)
 
     private var mesh : Int = DEFAULT_MESH_SIZE
+
+    constructor(p : Point, width : Int, height : Int) : super(p){
+        this.w = width
+        this.h = height
+    }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : this(Point(x, y), width, height)
 
@@ -72,7 +74,7 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     }
 
     /**
-     * Abstracts the zoom operation as a variation in the mesh
+     * Abstracts the zoom operation as a variation in the mesh and a displacement of the displayed grid
      * @param meshVariation The absolute variation, in pixels, of the mesh
      */
     private fun performMeshVariation(meshVariation : Int){
@@ -124,6 +126,9 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
         }
     }
 
+    /**
+     * Centers the displayed grid in the frame
+     */
     fun resetOrigin(){
         origin setx (FRAMEX / 2) - (gridWidth() / 2) * mesh
         origin sety (FRAMEY / 2) - (gridHeight() / 2) * mesh
@@ -172,11 +177,10 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     }
 
     override fun loadParameters(g: Graphics) {
-        //TODO
+        //TODO?
     }
 
     override fun drawDisplayer(g: Graphics) {
-        //TODO -- CHECK FOR MODIFICATIONS IN SIZE, ETC
         for(line : Int in lowestLineIndexOnScreen()..highestLineIndexOnScreen()){
             for(column : Int in lowestColumnIndexOnScreen()..highestColumnIndexOnScreen()){
                 drawCell(g, line, column)
@@ -190,10 +194,18 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
     private fun drawCell(g : Graphics, line : Int, column : Int){
         val x : Int = cellLeftX(column) - lowestX()
         val y : Int = cellUpY(line) - lowestY()
-
         val originalImage : BufferedImage = cellAt(line, column).image()
-        if(mesh == originalImage.height){
-            g.drawImage(originalImage, x, y, null)
+        g.drawImage(resizedImage(originalImage), x, y, null)
+        g.color = DEFAULT_COLOR
+        g.drawRect(x, y, mesh, mesh)
+    }
+
+    /**
+     * Returns a resized version of a background image, according to the displayed gris mesh
+     */
+    private infix fun resizedImage(originalImage : BufferedImage) : BufferedImage{
+        return if(mesh == originalImage.height){
+            originalImage
         }else{
             val resized = BufferedImage(mesh, mesh, originalImage.type)
             val gr = resized.createGraphics()
@@ -206,10 +218,8 @@ class GridDisplayer(p: Point, width : Int, height : Int) : Displayer(p) {
                 originalImage.height, null
             )
             gr.dispose()
-            g.drawImage(resized, x, y, null)
+            resized
         }
-        g.color = DEFAULT_COLOR
-        g.drawRect(x, y, mesh, mesh)
     }
 
     override fun mouseWheelMoved(units: Int) {

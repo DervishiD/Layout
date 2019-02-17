@@ -8,7 +8,7 @@ import java.awt.Graphics
 
 class Button : TextDisplayer {
 
-    companion object {
+    private companion object {
         private const val LINE_THICKNESS : Int = 5
         private const val DELTA : Int = 2
         private val LINE_COLOR : Color = Color.BLACK
@@ -22,8 +22,6 @@ class Button : TextDisplayer {
             }}
     }
 
-    override var w : Int = 0
-    override var h : Int = 0
     private var action : Action
     private var hasCustomImage : Boolean = false
 

@@ -10,7 +10,7 @@ import main.FRAMEY
  */
 class Grid {
 
-    companion object {
+    private companion object {
         private const val DEFAULT_MESH : Int = 120 //TODO
     }
 
@@ -41,15 +41,7 @@ class Grid {
         this.lines = lines
         this.columns = columns
         resetOrigin()
-
-        grid = ArrayList()
-        for(i : Int in 0 until lines){
-            grid.add(ArrayList())
-            for(j : Int in 0 until columns){
-                grid[i].add(Cell())
-            }
-        }
-
+        refillGrid()
     }
 
     /**
@@ -60,29 +52,34 @@ class Grid {
     /**
      * Returns a given line
      */
-    fun line(index : Int) : ArrayList<Cell>{
-        if(index < lines){
+    infix fun line(index : Int) : ArrayList<Cell>{
+        if(index >= lines || index < 0){
+            throw IndexOutOfBoundsException("There is no line with index $index in this Grid")
+        }else{
             return grid[index]
-        }else throw IndexOutOfBoundsException("There is no line with index $index in this Grid")
+        }
     }
 
     /**
      * Returns a given column
      */
-    fun column(index : Int) : ArrayList<Cell>{
-        if(index < columns){
+    infix fun column(index : Int) : ArrayList<Cell>{
+        if(index >= columns || index < 0){
+            throw IndexOutOfBoundsException("There is no column with index $index in this Grid")
+        }else{
             val result : ArrayList<Cell> = ArrayList()
             for(line : ArrayList<Cell> in grid){
                 result.add(line[index])
             }
             return result
-        }else throw IndexOutOfBoundsException("There is no column with index $index in this Grid")
+        }
     }
 
     fun cellAt(line : Int, column : Int) : Cell{
         if(line < lines && column < columns && line >= 0 && column >= 0){
             return grid[line][column]
-        }else throw IndexOutOfBoundsException("The cell you're looking for at ($line, $column) doesn't exist")
+        }else throw IndexOutOfBoundsException("The cell you're looking for at ($line, $column) doesn't exist \n" +
+                                              "This Grid has $lines lines and $columns columns")
     }
 
     /**
@@ -91,6 +88,19 @@ class Grid {
     private fun resetOrigin(){
         origin setx (FRAMEX / 2) - (columns / 2) * mesh
         origin sety (FRAMEY / 2) - (lines / 2) * mesh
+    }
+
+    /**
+     * Fills the grid with empty Cells
+     */
+    private fun refillGrid(){
+        grid = ArrayList()
+        for(i : Int in 0 until lines){
+            grid.add(ArrayList())
+            for(j : Int in 0 until columns){
+                grid[i].add(Cell())
+            }
+        }
     }
 
     /**

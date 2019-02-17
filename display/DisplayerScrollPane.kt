@@ -28,8 +28,6 @@ class DisplayerScrollPane : Displayer, CustomContainer {
         const val SCROLL_DELTA : Int = 50 //TODO?
     }
 
-    override var w : Int = 0
-    override var h : Int = 0
     override val parts: ArrayList<Displayer> = ArrayList()
 
     /**

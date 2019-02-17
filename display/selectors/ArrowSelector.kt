@@ -17,7 +17,7 @@ import java.awt.Graphics
  */
 class ArrowSelector<T> : GeneralSelector<T> {
 
-    companion object {
+    private companion object {
         private const val HORIZONTAL_ARROW_WIDTH : Int = 30
         private const val HORIZONTAL_ARROW_HEIGHT : Int = 30
         private const val VERTICAL_ARROW_WIDTH : Int = 30
@@ -61,9 +61,6 @@ class ArrowSelector<T> : GeneralSelector<T> {
      * The Action of the 'next' arrow
      */
     private var nextAction : Action = {this.next()}
-
-    override var w : Int = 0
-    override var h : Int = 0
 
     /**
      * Encodes if the arrows are placed horizontally or vertically
