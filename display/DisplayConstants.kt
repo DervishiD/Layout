@@ -39,3 +39,11 @@ val BACK_BUTTON : Button by lazy{
     result
 }
 
+//NUMBERS----------------------------------------------------------------------
+
+const val DEFAULT_GRID_MESH_SIZE : Int = 120
+const val GRID_IMAGE_SIZE_DELTA : Int = 10
+const val SMALLEST_GRID_IMAGE_SIZE : Int = 20
+
+
+

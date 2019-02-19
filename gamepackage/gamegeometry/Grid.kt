@@ -75,6 +75,54 @@ class Grid {
         }
     }
 
+    /**
+     * Returns a list of lines starting at firstIncl and ending at endIncl
+     */
+    fun lines(firstIncl : Int, lastIncl : Int) : ArrayList<ArrayList<Cell>>{
+        var startIndex : Int = firstIncl
+        var endIndex : Int = lastIncl
+        if(startIndex > endIndex){
+            val temporary : Int = startIndex
+            startIndex = endIndex
+            endIndex = temporary
+        }
+        when{
+            startIndex < 0 -> startIndex = 0
+            startIndex >= lines -> startIndex = lines - 1
+            endIndex < 0 -> endIndex = 0
+            endIndex >= lines -> endIndex = lines - 1
+        }
+        val result : ArrayList<ArrayList<Cell>> = ArrayList()
+        for(index : Int in startIndex..endIndex){
+            result.add(line(index))
+        }
+        return result
+    }
+
+    /**
+     * Returns a list of columns starting at firstIncl and ending at endIncl
+     */
+    fun columns(firstIncl : Int, lastIncl : Int) : ArrayList<ArrayList<Cell>>{
+        var startIndex : Int = firstIncl
+        var endIndex : Int = lastIncl
+        if(startIndex > endIndex){
+            val temporary : Int = startIndex
+            startIndex = endIndex
+            endIndex = temporary
+        }
+        when{
+            startIndex < 0 -> startIndex = 0
+            startIndex >= columns -> startIndex = columns - 1
+            endIndex < 0 -> endIndex = 0
+            endIndex >= columns -> endIndex = columns - 1
+        }
+        val result : ArrayList<ArrayList<Cell>> = ArrayList()
+        for(index : Int in startIndex..endIndex){
+            result.add(column(index))
+        }
+        return result
+    }
+
     fun cellAt(line : Int, column : Int) : Cell{
         if(line < lines && column < columns && line >= 0 && column >= 0){
             return grid[line][column]

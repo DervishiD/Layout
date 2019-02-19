@@ -1,7 +1,11 @@
 package editor.selections
 
-class ColumnSelector : LinearSelector() {
-    companion object {
+import editor.GridDisplayer
+
+class ColumnSelector(gridDisplayer: GridDisplayer) : LinearSelector(gridDisplayer) {
+
+    override fun updateSelection() {
         //TODO
     }
+
 }

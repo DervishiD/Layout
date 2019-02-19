@@ -1,7 +1,7 @@
 package editor
 
-import display.DEFAULT_COLOR
-import display.Displayer
+import display.*
+import gamepackage.gamegeometry.Cell
 import gamepackage.gamegeometry.Grid
 import geometry.Point
 import main.FRAMEX
@@ -19,9 +19,9 @@ import java.awt.image.BufferedImage
 class GridDisplayer : Displayer {
 
     private companion object {
-        private const val DEFAULT_MESH_SIZE : Int = 120
-        private const val MAX_ZOOM_MESH : Int = 16
-        private const val MESH_ZOOM_DELTA : Int = 8
+        private const val DEFAULT_MESH_SIZE : Int = DEFAULT_GRID_MESH_SIZE
+        private const val MAX_ZOOM_MESH : Int = SMALLEST_GRID_IMAGE_SIZE
+        private const val MESH_ZOOM_DELTA : Int = GRID_IMAGE_SIZE_DELTA
     }
 
     private var grid : Grid = Grid(10, 10)
@@ -133,6 +133,26 @@ class GridDisplayer : Displayer {
         origin setx (FRAMEX / 2) - (gridWidth() / 2) * mesh
         origin sety (FRAMEY / 2) - (gridHeight() / 2) * mesh
     }
+
+    /**
+     * Returns the line with given index
+     */
+    fun line(index : Int) : ArrayList<Cell> = grid.line(index)
+
+    /**
+     * Returns the column with given index
+     */
+    fun column(index : Int) : ArrayList<Cell> = grid.column(index)
+
+    /**
+     * Returns a list of lines starting at firstIncl and ending at endIncl
+     */
+    fun lines(firstIncl : Int, lastIncl : Int) : ArrayList<ArrayList<Cell>> = grid.lines(firstIncl, lastIncl)
+
+    /**
+     * Returns a list of columns starting at firstIncl and ending at endIncl
+     */
+    fun columns(firstIncl : Int, lastIncl : Int) : ArrayList<ArrayList<Cell>> = grid.columns(firstIncl, lastIncl)
 
     /**
      * The leftmost x coordinate of a cell in a given column

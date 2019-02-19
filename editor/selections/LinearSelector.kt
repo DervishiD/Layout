@@ -1,9 +1,9 @@
 package editor.selections
 
-abstract class LinearSelector : AbstractGridSelector(){
+import editor.GridDisplayer
 
-    companion object {
-        protected val indicesSet : HashSet<Int> = HashSet()
-        //TODO
-    }
+abstract class LinearSelector(gridDisplayer: GridDisplayer) : AbstractGridSelector(gridDisplayer){
+
+    protected val indicesSet : HashSet<Int> = HashSet()
+
 }
