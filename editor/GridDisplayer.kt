@@ -48,12 +48,12 @@ class GridDisplayer : Displayer {
     /**
      * The grid's number of columns
      */
-    private fun gridWidth() : Int = grid.columns
+    fun gridWidth() : Int = grid.columns
 
     /**
      * The grid's number of lines
      */
-    private fun gridHeight() : Int = grid.lines
+    fun gridHeight() : Int = grid.lines
 
     /**
      * Zooms in

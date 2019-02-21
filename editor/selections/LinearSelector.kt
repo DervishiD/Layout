@@ -4,6 +4,8 @@ import editor.GridDisplayer
 
 abstract class LinearSelector(gridDisplayer: GridDisplayer) : AbstractGridSelector(gridDisplayer){
 
-    protected val indicesSet : HashSet<Int> = HashSet()
+    protected val previousIndicesSet : HashSet<Int> = HashSet()
+    protected var currentMinIndex : Int? = null
+    protected var currentMaxIndex : Int? = null
 
 }

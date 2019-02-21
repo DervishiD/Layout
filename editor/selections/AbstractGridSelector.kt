@@ -25,17 +25,9 @@ abstract class AbstractGridSelector(protected val gridDisplayer : GridDisplayer)
      */
     protected var hoveredColumn : Int? = null
     /**
-     * The set of the Cells that are already selected
-     */
-    protected val previouslySelectedSet : HashSet<Cell> = HashSet()
-    /**
      * The set of the Cells that the user is currently selecting
      */
     protected val currentlySelectedSet : HashSet<Cell> = HashSet()
-    /**
-     * Wait, it doesn't mean anything //TODO
-     */
-    protected val xorSet : HashSet<Cell> = HashSet()
 
     fun startNewSelection(line : Int, column : Int){
         startingLine = line
@@ -53,8 +45,12 @@ abstract class AbstractGridSelector(protected val gridDisplayer : GridDisplayer)
         }
     }
 
-    fun currentSelection() : HashSet<Cell> = xorSet
+    abstract fun currentSelection() : HashSet<Cell>
 
-    abstract fun updateSelection()
+    abstract fun cellMatch(line : Int, column : Int) : Boolean
+
+    protected abstract fun updateSelection()
+
+    protected abstract fun endCurrentSelection()
 
 }

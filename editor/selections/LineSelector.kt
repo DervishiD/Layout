@@ -1,26 +1,42 @@
 package editor.selections
 
 import editor.GridDisplayer
+import gamepackage.gamegeometry.Cell
 import kotlin.math.max
 import kotlin.math.min
 
 class LineSelector(gridDisplayer: GridDisplayer) : LinearSelector(gridDisplayer){
 
     override fun updateSelection() {
-        indicesSet.clear()
-        for(i : Int in min(startingLine!!, hoveredLine!!)..max(startingLine!!, hoveredLine!!)){
-            indicesSet.add(i)
+        currentMinIndex = max(0, min(startingLine!!, hoveredLine!!))
+        currentMaxIndex = min(gridDisplayer.gridHeight() - 1, max(startingLine!!, hoveredLine!!))
+    }
+
+    override fun currentSelection(): HashSet<Cell> {
+        val result : HashSet<Cell> = HashSet()
+        for(i : Int in previousIndicesSet){
+            result.addAll(gridDisplayer.line(i))
         }
-        updateCurrentSelection()
-        updateXORSet()
+        for(i : Int in currentMinIndex!!..currentMaxIndex!!){
+            if(!previousIndicesSet.contains(i)){
+                result.addAll(gridDisplayer.line(i))
+            }
+        }
+        return result
     }
 
-    private fun updateCurrentSelection(){
-        //TODO
+    override fun endCurrentSelection() {
+        for(i : Int in currentMinIndex!!..currentMaxIndex!!){
+            previousIndicesSet.add(i)
+        }
+        clearCurrentSelection()
     }
 
-    private fun updateXORSet(){
-        //TODO
+    override fun cellMatch(line : Int, column : Int): Boolean = (line in currentMinIndex!!..currentMaxIndex!!)
+
+    private fun clearCurrentSelection(){
+        currentMinIndex = null
+        currentMaxIndex = null
     }
 
 }
