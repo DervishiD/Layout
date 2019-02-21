@@ -1,6 +1,5 @@
 package display
 
-import display.screens.Screen
 import geometry.Point
 import geometry.Vector
 import main.GraphicAction

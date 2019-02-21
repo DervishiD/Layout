@@ -10,6 +10,7 @@ import javax.swing.JFrame
 
 typealias Action = () -> Unit
 typealias GraphicAction = (Graphics, Int, Int) -> Unit
+typealias MouseWheelAction = (Int) -> Unit
 
 val FRAMEX : Int = (Toolkit.getDefaultToolkit().screenSize.getWidth()).toInt()
 val FRAMEY : Int = (Toolkit.getDefaultToolkit().screenSize.getHeight()).toInt()
