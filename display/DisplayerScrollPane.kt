@@ -3,7 +3,9 @@ package display
 import display.screens.TextFieldUser
 import geometry.Point
 import geometry.Vector
+import main.Action
 import main.GraphicAction
+import main.MouseWheelAction
 import java.awt.Component
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
@@ -49,6 +51,15 @@ class DisplayerScrollPane : Displayer, CustomContainer {
      * Draws the background
      */
     private val backgroundDrawer : GraphicAction
+
+    override var onWheelMoved : MouseWheelAction = {units : Int -> run{
+        startingPoint += if(isVertical()){
+            Vector(0, -units * SCROLL_DELTA)
+        }else{
+            Vector(-units * SCROLL_DELTA, 0)
+        }
+        verifyPosition()
+    }}
 
     constructor(p : Point, width : Int, height : Int, scrollbarPosition : Int = SCROLLBAR_RIGHT, parts : List<Displayer> = ArrayList(), background : GraphicAction = NO_BACKGROUND) : super(p){
         w = width
@@ -111,15 +122,6 @@ class DisplayerScrollPane : Displayer, CustomContainer {
         }
         g.clearRect(0, 0, w, h)
         backgroundDrawer.invoke(g, w, h)
-    }
-
-    override fun mouseWheelMoved(units: Int) {
-        startingPoint += if(isVertical()){
-            Vector(0, -units * SCROLL_DELTA)
-        }else{
-            Vector(-units * SCROLL_DELTA, 0)
-        }
-        verifyPosition()
     }
 
     /**

@@ -2,7 +2,9 @@ package display
 
 import geometry.Point
 import geometry.Vector
+import main.Action
 import main.GraphicAction
+import main.MouseWheelAction
 import java.awt.Graphics
 import javax.swing.JLabel
 
@@ -24,7 +26,7 @@ private enum class AlignmentConstraintsType{
 /**
  * Anything that displays anything
  */
-abstract class Displayer(p: Point) : JLabel() {
+abstract class Displayer(p: Point) : JLabel(), MouseInteractable {
 
     companion object {
         @JvmStatic val NO_BACKGROUND : GraphicAction = { _, _, _ ->  }
@@ -71,6 +73,25 @@ abstract class Displayer(p: Point) : JLabel() {
      * The component alignment constraints relative to other components
      */
     private var alignmentConstraints : ArrayList<AlignmentConstraint> = ArrayList()
+
+    /**
+     * The minimal width of this component
+     */
+    private var preferredWidth : Int? = null
+
+    /**
+     * The minimal height of this component
+     */
+    private var preferredHeight : Int? = null
+
+    override var onClick : Action = {}
+    override var onPress : Action = {}
+    override var onRelease : Action = {}
+    override var onEnter : Action = {}
+    override var onExit : Action = {}
+    override var onDrag : Action = {}
+    override var onMove : Action = {}
+    override var onWheelMoved : MouseWheelAction = {_ -> }
 
     /**
      * Aligns left to the given position
@@ -189,6 +210,20 @@ abstract class Displayer(p: Point) : JLabel() {
         alignUpTo = null
         alignDownTo = null
         alignmentConstraints.clear()
+    }
+
+    /**
+     * Sets a preferred width for this Component
+     */
+    infix fun setPreferredWidth(preferredWidth : Int){
+        this.preferredWidth = preferredWidth
+    }
+
+    /**
+     * Sets a preferred height for this Component
+     */
+    infix fun setPreferredHeight(preferredHeight : Int){
+        this.preferredHeight = preferredHeight
     }
 
     /**
@@ -363,6 +398,7 @@ abstract class Displayer(p: Point) : JLabel() {
     public override fun paintComponent(g: Graphics?) {
         if(initphase){
             loadParameters(g!!)
+            applyPreferredSize()
             align()
             loadBounds()
             initphase = false
@@ -370,6 +406,32 @@ abstract class Displayer(p: Point) : JLabel() {
         align()
         loadBounds()
         drawDisplayer(g!!)
+    }
+
+    /**
+     * Applies the preferred size constraints
+     */
+    private fun applyPreferredSize(){
+        applyPreferredWidth()
+        applyPreferredHeight()
+    }
+
+    /**
+     * Applies the preferred width constraint
+     */
+    private fun applyPreferredWidth(){
+        if(preferredWidth != null && w < preferredWidth!!){
+            w = preferredWidth!!
+        }
+    }
+
+    /**
+     * Applies the preferred height constraint
+     */
+    private fun applyPreferredHeight(){
+        if(preferredHeight != null && h < preferredHeight!!){
+            h = preferredHeight!!
+        }
     }
 
     /**
@@ -381,45 +443,5 @@ abstract class Displayer(p: Point) : JLabel() {
      * Draws this Displayer
      */
     protected abstract fun drawDisplayer(g : Graphics)
-
-    /**
-     * Reacts to a mouse click
-     */
-    open fun mouseClick(){}
-
-    /**
-     * Reacts to a mouse press
-     */
-    open fun mousePress(){}
-
-    /**
-     * Reacts to a mouse release
-     */
-    open fun mouseRelease(){}
-
-    /**
-     * Reacts to the mouse entering
-     */
-    open fun mouseEnter(){}
-
-    /**
-     * Reacts to the mouse exiting
-     */
-    open fun mouseExit(){}
-
-    /**
-     * Reacts to a mouse drag
-     */
-    open fun mouseDrag(){}
-
-    /**
-     * Reacts to a mouse movement
-     */
-    open fun mouseMoved(){}
-
-    /**
-     * Reacts to a mouse wheel movement
-     */
-    open fun mouseWheelMoved(units : Int){}
 
 }

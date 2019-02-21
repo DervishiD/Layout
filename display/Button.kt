@@ -22,32 +22,31 @@ class Button : TextDisplayer {
             }}
     }
 
-    private var action : Action
     private var hasCustomImage : Boolean = false
 
     constructor(p : Point, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
-        this.action = action
+        this setOnReleaseAction action
     }
     constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Double, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Int, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(p : Point, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
-        this.action = action
+        this setOnReleaseAction action
     }
     constructor(x : Double, y : Double, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Double, y : Int, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Double, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Int, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(p : Point, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
-        this.action = action
+        this setOnReleaseAction action
     }
     constructor(x : Double, y : Double, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Double, y : Int, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Double, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(x : Int, y : Int, text : String, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(p : Point, action : Action, background : GraphicAction, width : Int, height : Int) : super(p, "", background){
-        this.action = action
+        this setOnReleaseAction action
         this.w = width
         this.h = height
         hasCustomImage = true
@@ -56,8 +55,6 @@ class Button : TextDisplayer {
     constructor(x : Double, y : Int, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
     constructor(x : Int, y : Double, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
     constructor(x : Int, y : Int, action : Action, background : GraphicAction, width : Int, height : Int) : this(Point(x, y), action, background, width, height)
-
-    override fun mouseRelease() = action.invoke()
 
     /**
      * Sets the image displayed by this Button. It won't be able to display any text.
