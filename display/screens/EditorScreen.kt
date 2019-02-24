@@ -4,6 +4,9 @@ import display.*
 import display.selectors.ArrowSelector
 import display.texts.MenuText
 import editor.GridDisplayer
+import editor.selections.AbstractGridSelector
+import editor.selections.ColumnSelector
+import editor.selections.LineSelector
 import main.Action
 import main.FRAMEX
 import main.FRAMEY
@@ -42,12 +45,17 @@ class EditorScreen : Screen(), TextFieldUser{
         private val BRUSH_SIZE_SELECTOR_OPTIONS : ArrayList<Int> = arrayListOf(1, 3, 5, 7, 9, 11, 13, 15, 17, 19)
         private val BRUSH_SIZE_SELECTOR : ArrowSelector<Int> = ArrowSelector(0, 0, BRUSH_SIZE_SELECTOR_OPTIONS)
 
+        private val CELL_SELECTORS : ArrayList<AbstractGridSelector> =
+            arrayListOf(LineSelector(GRID_DISPLAYER), ColumnSelector(GRID_DISPLAYER))
+        private val CELL_SELECTOR_SELECTOR : ArrowSelector<AbstractGridSelector> = ArrowSelector(0, 0, CELL_SELECTORS)
+
         private const val WIDTH_TEXT_DELTA : Int = 50
         private const val WIDTH_FIELD_DELTA : Int = 10
         private const val HEIGHT_TEXT_DELTA : Int = 50
         private const val HEIGHT_FIELD_DELTA : Int = 10
         private const val RECENTER_BUTTON_DELTA : Int = 50
         private const val BRUSH_SIZE_SELECTOR_DELTA : Int = 50
+        private const val CELL_SELECTOR_SELECTOR_DELTA : Int = 50
         private val LEFT_SCROLL_PANE : DisplayerScrollPane =
             DisplayerScrollPane(ALLOWED_LEFT_WIDTH/2, ALLOWED_LEFT_HEIGHT/2, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT).also {
                 it.alignLeftTo(0)
@@ -58,6 +66,7 @@ class EditorScreen : Screen(), TextFieldUser{
                 it.addToScrollPane(HEIGHT_TEXTFIELD, HEIGHT_FIELD_DELTA)
                 it.addToScrollPane(RECENTER_BUTTON, RECENTER_BUTTON_DELTA)
                 it.addToScrollPane(BRUSH_SIZE_SELECTOR, BRUSH_SIZE_SELECTOR_DELTA)
+                it.addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA)
             }
 
     }

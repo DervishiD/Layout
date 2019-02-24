@@ -1,12 +1,9 @@
 package display
 
 import geometry.Point
-import geometry.Vector
 import main.GraphicAction
 import java.awt.FontMetrics
 import java.awt.Graphics
-import java.lang.IllegalArgumentException
-import javax.swing.JLabel
 
 /**
  * General class for displayed texts and buttons
@@ -63,8 +60,8 @@ abstract class TextDisplayer : Displayer {
      */
     protected fun forceMaxLineLength(g : Graphics, delta : Int){ //IF IT WORKS, DON'T TOUCH IT
         if(maxLineLength != null){
-            val result : ArrayList<ArrayList<StringDisplay>> = ArrayList<ArrayList<StringDisplay>>()
-            val currentLine : ArrayList<StringDisplay> = ArrayList<StringDisplay>()
+            val result : ArrayList<ArrayList<StringDisplay>> = ArrayList()
+            val currentLine : ArrayList<StringDisplay> = ArrayList()
             var currentDisplay : StringDisplay
             var fm : FontMetrics
             var currentLineLength : Int = 2 * delta
@@ -155,8 +152,7 @@ abstract class TextDisplayer : Displayer {
      * Modifies the displayed text
      */
     infix fun setDisplayedText(text : ArrayList<StringDisplay>){
-        if(text.size == 0) throw IllegalArgumentException("A text displayer must display text.")
-        txt = text
+        txt = if(text.size == 0) arrayListOf(StringDisplay("")) else text
         lines = txt.toLinesList()
         initphase = true
     }
@@ -164,7 +160,7 @@ abstract class TextDisplayer : Displayer {
     /**
      * Modifies the displayed text
      */
-    infix fun setDisplayedText(text : StringDisplay) = this setDisplayedText arrayListOf<StringDisplay>(text)
+    infix fun setDisplayedText(text : StringDisplay) = this setDisplayedText arrayListOf(text)
 
     /**
      * Modifies the displayed text

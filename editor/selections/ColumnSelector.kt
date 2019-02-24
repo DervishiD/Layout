@@ -2,23 +2,29 @@ package editor.selections
 
 import editor.GridDisplayer
 import gamepackage.gamegeometry.Cell
+import kotlin.math.max
+import kotlin.math.min
 
 class ColumnSelector(gridDisplayer: GridDisplayer) : LinearSelector(gridDisplayer) {
 
     override fun updateSelection() {
-        //TODO
+        currentMinIndex = max(0, min(startingColumn!!, hoveredColumn!!))
+        currentMaxIndex = min(gridDisplayer.gridWidth() - 1, max(startingColumn!!, hoveredColumn!!))
     }
 
     override fun currentSelection(): HashSet<Cell> {
-        TODO()
+        val result : HashSet<Cell> = HashSet()
+        for(i : Int in previousIndicesSet){
+            result.addAll(gridDisplayer.column(i))
+        }
+        for(i : Int in currentMinIndex!!..currentMaxIndex!!){
+            if(!previousIndicesSet.contains(i)){
+                result.addAll(gridDisplayer.column(i))
+            }
+        }
+        return result
     }
 
-    override fun endCurrentSelection() {
-        TODO()
-    }
-
-    override fun cellMatch(line : Int, column : Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun cellMatch(line : Int, column : Int): Boolean = (column in currentMinIndex!!..currentMaxIndex!!)
 
 }

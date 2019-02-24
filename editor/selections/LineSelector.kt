@@ -25,18 +25,6 @@ class LineSelector(gridDisplayer: GridDisplayer) : LinearSelector(gridDisplayer)
         return result
     }
 
-    override fun endCurrentSelection() {
-        for(i : Int in currentMinIndex!!..currentMaxIndex!!){
-            previousIndicesSet.add(i)
-        }
-        clearCurrentSelection()
-    }
-
     override fun cellMatch(line : Int, column : Int): Boolean = (line in currentMinIndex!!..currentMaxIndex!!)
-
-    private fun clearCurrentSelection(){
-        currentMinIndex = null
-        currentMaxIndex = null
-    }
 
 }

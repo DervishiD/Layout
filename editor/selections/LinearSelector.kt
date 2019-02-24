@@ -8,4 +8,18 @@ abstract class LinearSelector(gridDisplayer: GridDisplayer) : AbstractGridSelect
     protected var currentMinIndex : Int? = null
     protected var currentMaxIndex : Int? = null
 
+
+    override fun endCurrentSelection() {
+        for(i : Int in currentMinIndex!!..currentMaxIndex!!){
+            previousIndicesSet.add(i)
+        }
+        clearCurrentSelection()
+    }
+
+    private fun clearCurrentSelection(){
+        currentMinIndex = null
+        currentMaxIndex = null
+    }
+
+
 }
