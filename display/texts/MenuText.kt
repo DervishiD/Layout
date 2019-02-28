@@ -1,6 +1,8 @@
 package display.texts
 
 import display.StringDisplay
+import display.ascent
+import display.descent
 import geometry.Point
 import main.GraphicAction
 import java.awt.Graphics
@@ -10,11 +12,11 @@ import java.awt.Graphics
  */
 public class MenuText : Text {
 
-    constructor(p : Point, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(p : Point, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
+    constructor(x : Double, y : Double, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
     constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
     constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
     constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
@@ -31,7 +33,7 @@ public class MenuText : Text {
         var currentY : Int = 0
 
         for(line : ArrayList<StringDisplay> in lines){
-            currentY += ascent(g, line)
+            currentY += line.ascent(g)
             for(s : StringDisplay in line){
                 g.font = s.font
                 g.color = s.color
@@ -39,7 +41,7 @@ public class MenuText : Text {
                 currentX += g.getFontMetrics(s.font).stringWidth(s.text)
             }
             currentX = 0
-            currentY += descent(g, line)
+            currentY += line.descent(g)
         }
 
     }

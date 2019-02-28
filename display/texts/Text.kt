@@ -11,11 +11,11 @@ import java.awt.Graphics
  */
 public abstract class Text : TextDisplayer {
 
-    constructor(p : Point, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(p : Point, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
+    constructor(x : Double, y : Double, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : List<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
     constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
     constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
     constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)

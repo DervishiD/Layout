@@ -2,6 +2,7 @@ package display.screens
 
 import display.*
 import display.selectors.ArrowSelector
+import display.selectors.TextArrowSelector
 import display.texts.MenuText
 import geometry.Vector
 import main.Action
@@ -9,6 +10,8 @@ import main.FRAMEX
 import main.FRAMEY
 import main.Mouse
 import java.awt.Color.BLACK
+import java.awt.Color.RED
+import java.awt.Font
 import java.awt.Graphics
 
 /**
@@ -39,9 +42,9 @@ class MainMenuScreen : Screen() {
 
     }
 
-    init{
-        previousScreen = this
+    override var previousScreen: Screen = this
 
+    init{
         val a : Button = Button(0, 0, "Click", {println("Hi")})
         val b : MenuText = MenuText(0, 0, "Hi")
         val c : DisplayerScrollPane = DisplayerScrollPane(1300, 600, 400, 500) { g : Graphics, w : Int, h : Int -> run{
@@ -53,11 +56,24 @@ class MainMenuScreen : Screen() {
         this add c
 
         val d : ArrowSelector<String> = ArrowSelector(300, 600, arrayListOf("Hi", "hi hi hi hi hi hi hi hi hi hi hi hi hi hi"), true)
-        d setNextArrowColor java.awt.Color.RED
+        d setNextArrowColor RED
         d setMaxLineLength 200
         d.alignUpToDown(TITLE)
         d.alignRightToRight(TITLE)
         this add d
+        
+        val e : TextArrowSelector<Int> = TextArrowSelector(400, 800, mapOf(
+            listOf(StringDisplay("One apple")) to 1,
+            listOf(StringDisplay("Two trees", RED)) to 2,
+            listOf(StringDisplay("Three ounces of\ncat food")) to 3,
+            listOf(StringDisplay("Four"),
+                   StringDisplay(" squids in\na vacuum", Font("monospaced", Font.PLAIN, 40)))
+                    to 4
+        ))
+
+        e setPreviousArrowColor RED
+        e alignLeftTo 0
+        this add e
 
     }
 

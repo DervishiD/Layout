@@ -14,9 +14,9 @@ abstract class TextDisplayer : Displayer {
      * The displayed Text, as a list of StringDisplays.
      * @see StringDisplay
      */
-    private var txt : ArrayList<StringDisplay>
+    private var txt : ArrayList<StringDisplay> = ArrayList()
 
-    protected var lines : ArrayList<ArrayList<StringDisplay>>
+    protected var lines : ArrayList<ArrayList<StringDisplay>> = ArrayList()
 
     /**
      * The maximal allowed line length
@@ -28,10 +28,12 @@ abstract class TextDisplayer : Displayer {
      */
     protected var backgroundDrawer : GraphicAction
 
-    constructor(p : Point, text : ArrayList<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p){
-        if(text.size == 0) throw Exception("A text displayer must display text.")
+    constructor(p : Point, text : List<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
         point = p
-        txt = text
+        for(s : StringDisplay in text){
+            txt.add(s)
+        }
         lines = txt.toLinesList()
         backgroundDrawer = background
     }
@@ -168,61 +170,12 @@ abstract class TextDisplayer : Displayer {
     infix fun setDisplayedText(text : String) = this setDisplayedText StringDisplay(text)
 
     /**
-     * Computes the height of a line of StringDisplays
-     */
-    private fun computeHeight(g : Graphics, line : ArrayList<StringDisplay>) : Int{
-        var maxAscent : Int = 0
-        var maxDescent : Int = 0
-        var fm : FontMetrics
-        for(s : StringDisplay in line){
-            fm = g.getFontMetrics(s.font)
-            if(fm.maxAscent > maxAscent){
-                maxAscent = fm.maxAscent
-            }
-            if(fm.maxDescent > maxDescent){
-                maxDescent = fm.maxDescent
-            }
-        }
-        return maxAscent + maxDescent
-    }
-
-    /**
-     * Returns the ascent of the line
-     */
-    protected fun ascent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
-        var maxAscent : Int = 0
-        var fm : FontMetrics
-        for(s : StringDisplay in line){
-            fm = g.getFontMetrics(s.font)
-            if(fm.maxAscent > maxAscent){
-                maxAscent = fm.maxAscent
-            }
-        }
-        return maxAscent
-    }
-
-    /**
-     * Returns the descent of the line.
-     */
-    protected fun descent(g : Graphics, line : ArrayList<StringDisplay>) : Int{
-        var maxDescent : Int = 0
-        var fm : FontMetrics
-        for(s : StringDisplay in line){
-            fm = g.getFontMetrics(s.font)
-            if(fm.maxDescent > maxDescent){
-                maxDescent = fm.maxDescent
-            }
-        }
-        return maxDescent
-    }
-
-    /**
      * Computes the total height of the displayed component
      */
     protected fun computeTotalHeight(g : Graphics, delta : Int){
         h = 2 * delta
         for(line : ArrayList<StringDisplay> in lines){
-            h += computeHeight(g, line)
+            h += line.lineHeight(g)
         }
     }
 
@@ -232,23 +185,12 @@ abstract class TextDisplayer : Displayer {
     protected fun computeMaxLength(g : Graphics, delta : Int){
         var maxLength = 0
         for(line : ArrayList<StringDisplay> in lines){
-            val lineLength : Int = lineLength(g, line)
+            val lineLength : Int = line.lineLength(g)
             if(lineLength > maxLength){
                 maxLength = lineLength
             }
         }
         w = maxLength + 2 * delta
-    }
-
-    /**
-     * Computes the length of a StringDisplay line.
-     */
-    private fun lineLength(g : Graphics, line : ArrayList<StringDisplay>) : Int{
-        var result : Int = 0
-        for(s : StringDisplay in line){
-            result +=  g.getFontMetrics(s.font).stringWidth(s.text)
-        }
-        return result
     }
 
     /**

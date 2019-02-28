@@ -17,7 +17,7 @@ abstract class Screen : JPanel(), CustomContainer {
     /**
      * The previous Screen in the Screen tree
      */
-    protected lateinit var previousScreen : Screen
+    protected abstract var previousScreen : Screen
 
     init{
         setBounds(0, 0, FRAMEX, FRAMEY)
@@ -31,7 +31,7 @@ abstract class Screen : JPanel(), CustomContainer {
     /**
      * The list of the components of this Screen
      */
-    override var parts : ArrayList<Displayer> = ArrayList<Displayer>()
+    override var parts : ArrayList<Displayer> = ArrayList()
 
     public override fun paintComponent(g: Graphics?) {
         for(part : Displayer in parts){

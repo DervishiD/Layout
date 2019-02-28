@@ -24,13 +24,13 @@ class Button : TextDisplayer {
 
     private var hasCustomImage : Boolean = false
 
-    constructor(p : Point, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
+    constructor(p : Point, text : List<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
         this setOnReleaseAction action
     }
-    constructor(x : Double, y : Double, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
-    constructor(x : Double, y : Int, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
-    constructor(x : Int, y : Double, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
-    constructor(x : Int, y : Int, text : ArrayList<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
+    constructor(x : Double, y : Double, text : List<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
+    constructor(x : Double, y : Int, text : List<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
+    constructor(x : Int, y : Double, text : List<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
+    constructor(x : Int, y : Int, text : List<StringDisplay>, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
     constructor(p : Point, text : StringDisplay, action : Action, background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(p, text, background){
         this setOnReleaseAction action
     }
@@ -80,7 +80,7 @@ class Button : TextDisplayer {
             var currentY : Int = LINE_THICKNESS + DELTA
 
             for(line : ArrayList<StringDisplay> in lines){
-                currentY += ascent(g, line)
+                currentY += line.ascent(g)
                 for(s : StringDisplay in line){
                     g.font = s.font
                     g.color = s.color
@@ -88,7 +88,7 @@ class Button : TextDisplayer {
                     currentX += g.getFontMetrics(s.font).stringWidth(s.text)
                 }
                 currentX = LINE_THICKNESS + DELTA
-                currentY += descent(g, line)
+                currentY += line.descent(g)
             }
         }
     }

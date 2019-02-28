@@ -72,11 +72,7 @@ class EditorScreen : Screen(), TextFieldUser{
     }
 
     override var currentTextField: TextField? = null
-
-    init{
-        previousScreen = mainMenuScreen
-
-    }
+    override var previousScreen: Screen = mainMenuScreen
 
     /**
      * Updates the edited Grid

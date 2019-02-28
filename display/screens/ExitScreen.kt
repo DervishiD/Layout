@@ -35,10 +35,7 @@ class ExitScreen : Screen() {
 
     }
 
-    init{
-        previousScreen = mainMenuScreen
-    }
-
+    override var previousScreen: Screen = mainMenuScreen
 
     override fun load() {
         this add EXIT_PROGRAM_QUESTION
