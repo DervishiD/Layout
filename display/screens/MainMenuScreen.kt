@@ -61,7 +61,7 @@ class MainMenuScreen : Screen() {
         d.alignUpToDown(TITLE)
         d.alignRightToRight(TITLE)
         this add d
-        
+
         val e : TextArrowSelector<Int> = TextArrowSelector(400, 800, mapOf(
             listOf(StringDisplay("One apple")) to 1,
             listOf(StringDisplay("Two trees", RED)) to 2,

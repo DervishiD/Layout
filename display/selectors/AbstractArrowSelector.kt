@@ -9,6 +9,9 @@ import main.GraphicAction
 import java.awt.Color
 import java.awt.Graphics
 
+/**
+ * An abstract Arrow Selector
+ */
 abstract class AbstractArrowSelector<K, T> : Displayer, AbstractSelector<K, T>{
 
     protected companion object {

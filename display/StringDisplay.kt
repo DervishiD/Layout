@@ -40,15 +40,6 @@ fun List<StringDisplay>.toLinesList() : ArrayList<ArrayList<StringDisplay>>{
 }
 
 /**
- * Returns a copy of this ArrayList
- */
-fun MutableList<StringDisplay>.copy() : ArrayList<StringDisplay>{
-    val result : ArrayList<StringDisplay> = ArrayList()
-    result.addAll(this)
-    return result
-}
-
-/**
  * Computes the height of this as a line of text in the given Graphics context
  */
 infix fun Collection<StringDisplay>.lineHeight(g : Graphics) : Int{

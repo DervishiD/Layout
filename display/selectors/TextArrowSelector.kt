@@ -7,7 +7,11 @@ import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.FontMetrics
 import java.awt.Graphics
+import utilities.copy
 
+/**
+ * An Arrow Selector that displays text
+ */
 class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
 
     companion object {
@@ -23,8 +27,15 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         private const val SIDE_DELTA : Int = 7
     }
 
+    /**
+     * The list of displays, in the form of the displayed lines, the width and the height
+     * of the component for each value
+     */
     private var linesList : ArrayList<Triple<List<List<StringDisplay>>, Int, Int>> = ArrayList()
 
+    /**
+     * The background
+     */
     private var backgroundDrawer : GraphicAction = DEFAULT_BACKGROUND
 
     /**
@@ -51,6 +62,9 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
     * MST
     * */
 
+    /**
+     * Changes the background of this Displayer
+     */
     infix fun setBackground(background : GraphicAction){
         backgroundDrawer = background
     }
@@ -72,6 +86,9 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         reloadDimensions()
     }
 
+    /**
+     * Changes the dimensions of this Selector
+     */
     private fun reloadDimensions(){
         w = linesList[currentOption].second
         h = linesList[currentOption].third
@@ -89,10 +106,13 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         setArrowsPosition()
     }
 
+    /**
+     * Forces the max line length constraint
+     */
     private infix fun forceMaxLineLength(g : Graphics){
         if(maxLineLength != null){
             val finalResult : ArrayList<Triple<List<List<StringDisplay>>, Int, Int>> = ArrayList()
-            val currentLine : ArrayList<StringDisplay> = ArrayList()
+            val currentLine : MutableList<StringDisplay> = mutableListOf()
             var currentDisplay : StringDisplay
             var fm : FontMetrics
             var currentLineLength : Int = 2 * SIDE_DELTA
@@ -183,6 +203,9 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         }
     }
 
+    /**
+     * Loads the dimensions associated with each value
+     */
     private fun computeDimensions(g : Graphics){
         val result : ArrayList<Triple<List<List<StringDisplay>>, Int, Int>> = ArrayList()
         for(triple : Triple<List<List<StringDisplay>>, Int, Int> in linesList){
@@ -207,8 +230,14 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         drawText(g)
     }
 
+    /**
+     * Draws the background of the displayer
+     */
     private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
 
+    /**
+     * Draws the text of the displayer
+     */
     private fun drawText(g : Graphics){
         var currentX : Int = SIDE_DELTA
         var currentY : Int = SIDE_DELTA
