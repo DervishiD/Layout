@@ -12,11 +12,11 @@ interface FilteredMapping : IndexedMutableMapping {
     /**
      * The set of authorized key classes
      */
-    val authorizedKeys : MutableSet<KClass<out Any>>
+    var authorizedKeys : MutableSet<KClass<out Any>>
     /**
      * The set of authorized value classes
      */
-    val authorizedValues : MutableSet<KClass<out Any>>
+    var authorizedValues : MutableSet<KClass<out Any>>
 
     /**
      * Detects if the given key is valid, i.e. can be accepted in the map.

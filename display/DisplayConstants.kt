@@ -3,10 +3,7 @@ package display
 import display.screens.EditorScreen
 import display.screens.ExitScreen
 import display.screens.MainMenuScreen
-import display.texts.MenuText
 import main.Action
-import main.FRAMEX
-import main.FRAMEY
 import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.Font

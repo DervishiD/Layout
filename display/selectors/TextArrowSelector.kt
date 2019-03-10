@@ -3,16 +3,19 @@ package display.selectors
 import display.*
 import geometry.Point
 import main.GraphicAction
+import utilities.IndexedMapping
+import utilities.copy
 import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.FontMetrics
 import java.awt.Graphics
-import utilities.copy
+import kotlin.IllegalArgumentException
+import kotlin.reflect.KClass
 
 /**
- * An Arrow Selector that displays text
+ * An arrow Selector that displays text
  */
-class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
+class TextArrowSelector : AbstractArrowSelector {
 
     companion object {
         private const val DEFAULT_LINE_THICKNESS : Int = 5
@@ -27,11 +30,13 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
         private const val SIDE_DELTA : Int = 7
     }
 
+    override var authorizedKeys: MutableSet<KClass<out Any>> = mutableSetOf(String::class, StringDisplay::class, List::class)
+
     /**
-     * The list of displays, in the form of the displayed lines, the width and the height
-     * of the component for each value
+     * The list of the list of lines that constitute the final displaying information.
+     * Those are the displayed lines in the component, its width and its height
      */
-    private var linesList : ArrayList<Triple<List<List<StringDisplay>>, Int, Int>> = ArrayList()
+    private var linesList : MutableList<Triple<List<List<StringDisplay>>, Int, Int>> = mutableListOf()
 
     /**
      * The background
@@ -43,24 +48,84 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
      */
     private var maxLineLength : Int? = null
 
-    constructor(p : Point, options : Map<List<StringDisplay>, T>, isHorizontal: Boolean = true) : super(p, options.keys.toList(), options.values.toList(), isHorizontal){
-        for(text : List<StringDisplay> in options.keys){
-            linesList.add(Triple(text.toLinesList(), 0, 0))
+    /**
+     * True if each option's display's dimensions have been computed
+     */
+    private var dimensionsComputed : Boolean = false
+
+    constructor(p : Point, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options, isHorizontal){
+        if(optionsAreInvalid(options)) throw IllegalArgumentException()
+        fillLinesList()
+        backgroundDrawer = background
+    }
+    constructor(x : Int, y : Int, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Int, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Int, y : Double, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Double, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(p : Point, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, keys, values, isHorizontal){
+        if(optionsAreInvalid(keys, values)) throw IllegalArgumentException()
+        fillLinesList()
+        backgroundDrawer = background
+    }
+    constructor(x : Int, y : Int, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
+    constructor(x : Double, y : Int, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
+    constructor(x : Int, y : Double, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
+    constructor(x : Double, y : Double, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
+    constructor(p : Point, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options.asList(), isHorizontal){
+        if(optionsAreInvalid(options.asList())) throw IllegalArgumentException()
+        fillLinesList()
+        backgroundDrawer = background
+    }
+    constructor(x : Int, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
+    constructor(x : Double, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
+    constructor(x : Int, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
+    constructor(x : Double, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
+    constructor(p : Point, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options, isHorizontal){
+        if(optionsAreInvalid(options)) throw IllegalArgumentException()
+        fillLinesList()
+        backgroundDrawer = background
+    }
+    constructor(x : Int, y : Int, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Int, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Int, y : Double, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Double, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(p : Point, options : IndexedMapping, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options, isHorizontal){
+        if(optionsAreInvalid(options)) throw IllegalArgumentException()
+        fillLinesList()
+        backgroundDrawer = background
+    }
+    constructor(x : Int, y : Int, options : IndexedMapping, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Int, options : IndexedMapping, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Int, y : Double, options : IndexedMapping, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(x : Double, y : Double, options : IndexedMapping, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+
+    /**
+     * Fills the list of lines with the values corresponding to the options the constructor received
+     */
+    private fun fillLinesList(){
+        for(key : Any? in keys){
+            when{
+                key == null -> linesList.add(Triple(listOf(listOf(StringDisplay("null"))), 0, 0))
+                isString(key) -> {
+                    val lines : List<StringDisplay> = (StringDisplay(key as String)).toLines()
+                    val result : MutableList<List<StringDisplay>> = mutableListOf()
+                    for(sd : StringDisplay in lines){
+                        result.add(listOf(sd))
+                    }
+                    linesList.add(Triple(result, 0, 0))
+                }
+                isStringDisplay(key) -> {
+                    val lines : List<StringDisplay> = (key as StringDisplay).toLines()
+                    val result : MutableList<List<StringDisplay>> = mutableListOf()
+                    for(sd : StringDisplay in lines){
+                        result.add(listOf(sd))
+                    }
+                    linesList.add(Triple(result, 0, 0))
+                }
+                isStringDisplayList(key) -> @Suppress("UNCHECKED_CAST") linesList.add(Triple((key as List<StringDisplay>).toLinesList(), 0, 0))
+            }
         }
     }
-    constructor(x : Int, y : Int, options : Map<List<StringDisplay>, T>, isHorizontal: Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Int, y : Double, options : Map<List<StringDisplay>, T>, isHorizontal: Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Double, y : Int, options : Map<List<StringDisplay>, T>, isHorizontal: Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Double, y : Double, options : Map<List<StringDisplay>, T>, isHorizontal: Boolean = true) : this(Point(x, y), options, isHorizontal)
-
-    /*TODO -- ADD FOLLOWING CONSTRUCTORS FOR P X Y BY SOME WAY MAYBE
-    * LSD - LT
-    * LS - LT
-    * LT
-    * MLST -- INCOMPATIBLE
-    * MSDT
-    * MST
-    * */
 
     /**
      * Changes the background of this Displayer
@@ -74,7 +139,14 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
      */
     infix fun setMaxLineLength(length : Int){
         maxLineLength = length
+        initphase = true
+        dimensionsComputed = false
     }
+
+    /**
+     * Sets the maximal line length for this Component.
+     */
+    infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
 
     override fun next(){
         super.next()
@@ -92,18 +164,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
     private fun reloadDimensions(){
         w = linesList[currentOption].second
         h = linesList[currentOption].third
-    }
-
-    /**
-     * Sets the maximal line length for this Component.
-     */
-    infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
-
-    override fun loadParameters(g: Graphics) {
-        forceMaxLineLength(g)
-        computeDimensions(g)
-        align()
-        setArrowsPosition()
     }
 
     /**
@@ -219,15 +279,98 @@ class TextArrowSelector<T> : AbstractArrowSelector<List<StringDisplay>, T> {
                 height += line.lineHeight(g)
             }
             width += 2 * SIDE_DELTA
+            if(preferredWidth != null && width < preferredWidth!!) width = preferredWidth!!
+            if(preferredHeight != null && height < preferredHeight!!) height = preferredHeight!!
             result.add(Triple(triple.first, width, height))
         }
         linesList = result
         reloadDimensions()
     }
 
+    /**
+     * Returns true if the given options fit the map, i.e. if the keys are String, StringDisplays
+     * or List of StringDisplays
+     */
+    private fun optionsAreInvalid(options : List<Pair<Any?, Any?>>) : Boolean{
+        for(option in options){
+            if(!(isString(option.first) || isStringDisplay(option.first) || isStringDisplayList(option.first))){
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns true if the given options fit the map, i.e. if the keys are String, StringDisplays
+     * or List of StringDisplays
+     */
+    private fun optionsAreInvalid(keys : List<Any?>, values: List<Any?>) : Boolean{
+        if(keys.size == values.size){
+            for(i : Int in 0 until keys.size){
+                if(!(isString(keys[i]) || isStringDisplay(keys[i]) || isStringDisplayList(keys[i]))){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns true if the given options fit the map, i.e. if the keys are String, StringDisplays
+     * or List of StringDisplays
+     */
+    private fun optionsAreInvalid(options : Map<Any?, Any?>) : Boolean{
+        for(option in options){
+            if(!(isString(option.key) || isStringDisplay(option.key) || isStringDisplayList(option.key))){
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns true if the given options fit the map, i.e. if the keys are String, StringDisplays
+     * or List of StringDisplays
+     */
+    private fun optionsAreInvalid(options : IndexedMapping) : Boolean{
+        for(option in options){
+            if(!(isString(option.first) || isStringDisplay(option.first) || isStringDisplayList(option.first))){
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns true f the given parameter is a String
+     */
+    private fun isString(key : Any?) : Boolean = key is String
+
+    /**
+     * Returns true if the given parameter is a StringDisplay
+     */
+    private fun isStringDisplay(key : Any?) : Boolean = key is StringDisplay
+
+    /**
+     * Returns true if the given parameter is a List of StringDisplays
+     */
+    private fun isStringDisplayList(key : Any?) : Boolean = key is List<*> && key.filterIsInstance<StringDisplay>().size == key.size
+
+    override fun loadParameters(g: Graphics) {
+        if(!dimensionsComputed){
+            forceMaxLineLength(g)
+            computeDimensions(g)
+            dimensionsComputed = true
+        }
+        align()
+        reloadDimensions()
+        setArrowsPosition()
+    }
+
     override fun drawDisplayer(g: Graphics) {
         drawBackground(g)
         drawText(g)
+        setArrowsPosition()
     }
 
     /**

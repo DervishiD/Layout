@@ -2,6 +2,7 @@ package display
 
 import geometry.Point
 import geometry.Vector
+import geometry.Vector.Companion.NULL
 import main.Action
 import main.GraphicAction
 import main.MouseWheelAction
@@ -77,12 +78,12 @@ abstract class Displayer(p: Point) : JLabel(), MouseInteractable {
     /**
      * The minimal width of this component
      */
-    private var preferredWidth : Int? = null
+    protected var preferredWidth : Int? = null
 
     /**
      * The minimal height of this component
      */
-    private var preferredHeight : Int? = null
+    protected var preferredHeight : Int? = null
 
     override var onClick : Action = {}
     override var onPress : Action = {}
@@ -272,9 +273,11 @@ abstract class Displayer(p: Point) : JLabel(), MouseInteractable {
      * Change this component's center point
      */
     infix fun moveTo(p : Point){
-        point = p
-        resetAlignment()
-        loadBounds()
+        if(p != point){
+            point = p
+            resetAlignment()
+            loadBounds()
+        }
     }
 
     /**
@@ -326,9 +329,11 @@ abstract class Displayer(p: Point) : JLabel(), MouseInteractable {
     infix fun sety(y : Double) = this sety y.toInt()
 
     infix fun moveAlong(v : Vector){
-        point += v
-        resetAlignment()
-        loadBounds()
+        if(v != NULL){
+            point += v
+            resetAlignment()
+            loadBounds()
+        }
     }
 
     /**
@@ -399,7 +404,7 @@ abstract class Displayer(p: Point) : JLabel(), MouseInteractable {
         if(initphase){
             loadParameters(g!!)
             applyPreferredSize()
-            align()
+            //align() //Not necessary
             loadBounds()
             initphase = false
         }

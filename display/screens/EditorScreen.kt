@@ -2,6 +2,7 @@ package display.screens
 
 import display.*
 import display.selectors.ArrowSelector
+import display.selectors.TextArrowSelector
 import display.texts.MenuText
 import editor.GridDisplayer
 import editor.selections.AbstractGridSelector
@@ -42,12 +43,14 @@ class EditorScreen : Screen(), TextFieldUser{
         private val RECENTER_BUTTON_ACTION : Action = { GRID_DISPLAYER.resetOrigin()}
         private val RECENTER_BUTTON : Button = Button(0, 0, RECENTER_BUTTON_TEXT, RECENTER_BUTTON_ACTION)
 
-        private val BRUSH_SIZE_SELECTOR_OPTIONS : ArrayList<Int> = arrayListOf(1, 3, 5, 7, 9, 11, 13, 15, 17, 19)
-        private val BRUSH_SIZE_SELECTOR : ArrowSelector<Int> = ArrowSelector(0, 0, BRUSH_SIZE_SELECTOR_OPTIONS)
+        private val BRUSH_SIZE_SELECTOR_OPTIONS : Map<Any?, Any?> = mapOf(
+            "1" to 1, "3" to 3, "5" to 5, "7" to 7, "9" to 9, "11" to 11, "13" to 13, "15" to 15, "17" to 17, "19" to 19
+        )
+        private val BRUSH_SIZE_SELECTOR : TextArrowSelector = TextArrowSelector(0, 0, BRUSH_SIZE_SELECTOR_OPTIONS)
 
-        private val CELL_SELECTORS : ArrayList<AbstractGridSelector> =
-            arrayListOf(LineSelector(GRID_DISPLAYER), ColumnSelector(GRID_DISPLAYER))
-        private val CELL_SELECTOR_SELECTOR : ArrowSelector<AbstractGridSelector> = ArrowSelector(0, 0, CELL_SELECTORS)
+        private val CELL_SELECTORS : Map<Any?, Any?> =
+            mapOf("Lines" to LineSelector(GRID_DISPLAYER), "Columns" to ColumnSelector(GRID_DISPLAYER))
+        private val CELL_SELECTOR_SELECTOR : TextArrowSelector = TextArrowSelector(0, 0, CELL_SELECTORS)
 
         private const val WIDTH_TEXT_DELTA : Int = 50
         private const val WIDTH_FIELD_DELTA : Int = 10

@@ -7,8 +7,8 @@ import kotlin.reflect.KClass
  */
 open class FilteredMap : IndexedMutableMap, FilteredMapping {
 
-    override val authorizedKeys : MutableSet<KClass<out Any>> = mutableSetOf()
-    override val authorizedValues : MutableSet<KClass<out Any>> = mutableSetOf()
+    override var authorizedKeys : MutableSet<KClass<out Any>> = mutableSetOf()
+    override var authorizedValues : MutableSet<KClass<out Any>> = mutableSetOf()
 
     constructor(keysClasses : Collection<KClass<out Any>>, valuesClasses : Collection<KClass<out Any>>){
         authorizedKeys.addAll(keysClasses)

@@ -3,7 +3,6 @@ package display
 import display.screens.TextFieldUser
 import geometry.Point
 import geometry.Vector
-import main.Action
 import main.GraphicAction
 import main.MouseWheelAction
 import java.awt.Component
@@ -79,8 +78,9 @@ class DisplayerScrollPane : Displayer, CustomContainer {
     /**
      * Adds a Displayer to the structure of the ScrollPane
      * @param directionalDelta The distance between this Displayer and the last one
-     *                          in the direction of the scrollig
+     *                          in the direction of the scrolling
      * @param perpendicularDelta The distance between this Displayer and the center of the ScrollPane
+     *                          in the direction perpendicular to the scrolling
      */
     fun addToScrollPane(part : Displayer, directionalDelta : Int = 0, perpendicularDelta : Int = 0){
         scrollPaneObjects.add(ScrollPaneObject(part, abs(directionalDelta), perpendicularDelta))

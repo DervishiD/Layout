@@ -17,6 +17,10 @@ import kotlin.math.*
  * */
 class Vector {
 
+    companion object {
+        @JvmStatic val NULL : Vector = Vector(0, 0)
+    }
+
     /**
      * The x coordinate.
      * */

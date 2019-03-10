@@ -6,13 +6,15 @@ import display.Displayer
 import geometry.Point
 import main.Action
 import main.GraphicAction
+import utilities.IndexedMapping
 import java.awt.Color
 import java.awt.Graphics
+import kotlin.reflect.KClass
 
 /**
  * An abstract Arrow Selector
  */
-abstract class AbstractArrowSelector<K, T> : Displayer, AbstractSelector<K, T>{
+abstract class AbstractArrowSelector : Displayer, AbstractSelector{
 
     protected companion object {
         private const val HORIZONTAL_ARROW_WIDTH : Int = 30
@@ -49,7 +51,14 @@ abstract class AbstractArrowSelector<K, T> : Displayer, AbstractSelector<K, T>{
 
     override var currentOption: Int = 0
 
-    override var options : ArrayList<Pair<K, T>> = ArrayList()
+    override var authorizedKeys: MutableSet<KClass<out Any>> = mutableSetOf()
+    override var authorizedValues: MutableSet<KClass<out Any>> = mutableSetOf()
+
+    override val entries: ArrayList<Pair<Any?, Any?>> = ArrayList()
+    override val keys: ArrayList<Any?> = ArrayList()
+    override val values: ArrayList<Any?> = ArrayList()
+
+    override var size: Int = 0
 
     /**
      * The Action of the 'previous' arrow
@@ -73,32 +82,52 @@ abstract class AbstractArrowSelector<K, T> : Displayer, AbstractSelector<K, T>{
      */
     private var nextArrow : Button
 
-    constructor(p : Point, options : List<Pair<K, T>>, isHorizontal : Boolean = true) : super(p){
-        setOptionsList(options)
+    constructor(p : Point, options : List<Pair<Any?, Any?>>, isHorizontal : Boolean = true) : super(p){
+        authorizedKeys = mutableSetOf()
+        authorizedValues = mutableSetOf()
+        addOptionsList(options)
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
         nextArrow = initializeNextArrow()
     }
-    constructor(x : Int, y : Int, options : List<Pair<K, T>>, isHorizontal : Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Double, y : Int, options : List<Pair<K, T>>, isHorizontal : Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Int, y : Double, options : List<Pair<K, T>>, isHorizontal : Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(x : Double, y : Double, options : List<Pair<K, T>>, isHorizontal : Boolean = true) : this(Point(x, y), options, isHorizontal)
-    constructor(p : Point, keys : List<K>, values : List<T>, isHorizontal : Boolean = true) : super(p){
-        setOptionsList(keys, values)
+    constructor(p : Point, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true) : super(p){
+        authorizedKeys = mutableSetOf()
+        authorizedValues = mutableSetOf()
+        addOptionsList(keys, values)
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
         nextArrow = initializeNextArrow()
     }
-    constructor(x : Int, y : Int, keys : List<K>, values : List<T>, isHorizontal : Boolean = true) : this(Point(x, y), keys, values, isHorizontal)
-    constructor(x : Double, y : Int, keys : List<K>, values : List<T>, isHorizontal : Boolean = true) : this(Point(x, y), keys, values, isHorizontal)
-    constructor(x : Int, y : Double, keys : List<K>, values : List<T>, isHorizontal : Boolean = true) : this(Point(x, y), keys, values, isHorizontal)
-    constructor(x : Double, y : Double, keys : List<K>, values : List<T>, isHorizontal : Boolean = true) : this(Point(x, y), keys, values, isHorizontal)
+    constructor(p : Point, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true) : super(p){
+        authorizedKeys = mutableSetOf()
+        authorizedValues = mutableSetOf()
+        addOptionsList(options.asList())
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+    constructor(p : Point, options : Map<Any?, Any?>, isHorizontal: Boolean = true) : super(p){
+        authorizedKeys = mutableSetOf()
+        authorizedValues = mutableSetOf()
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+    constructor(p : Point, options : IndexedMapping, isHorizontal: Boolean = true) : super(p){
+        authorizedKeys = mutableSetOf()
+        authorizedValues = mutableSetOf()
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
 
     /**
      * Goes to the next option
      */
     protected open fun next(){
-        if(currentOption < options.size - 1){
+        if(currentOption < size - 1){
             currentOption++
         }else{
             currentOption = 0
@@ -113,7 +142,7 @@ abstract class AbstractArrowSelector<K, T> : Displayer, AbstractSelector<K, T>{
         if(currentOption > 0){
             currentOption--
         }else{
-            currentOption = options.size - 1
+            currentOption = size - 1
         }
         initphase = true
     }

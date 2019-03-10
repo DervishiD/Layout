@@ -1,16 +1,14 @@
 package display.selectors
 
+import utilities.FilteredMapping
+import utilities.IndexedMapping
+
 /**
  * An interface implemented by discrete selector classes that select an option : T by showing
  * the user a key : K. For example, a selector that shows the user the name of a color (K, StringDisplay)
  * and selects the described color (T, java.awt.Color).
  */
-internal interface AbstractSelector<K, T> {
-
-    /**
-     * The options to choose from
-     */
-    var options : ArrayList<Pair<K, T>>
+interface AbstractSelector : FilteredMapping {
 
     /**
      * The index of the current option
@@ -20,65 +18,57 @@ internal interface AbstractSelector<K, T> {
     /**
      * Returns the current selected option
      */
-    fun selectedOption() : T = options[currentOption].second
+    fun selectedOption() : Any? = values[currentOption]
 
     /**
      * Returns the current selected key
      */
-    fun selectedKey() : K = options[currentOption].first
+    fun selectedKey() : Any? = keys[currentOption]
 
     /**
-     * Sets the options of this Selector
+     * Adds the given list of options to the current one
      */
-    infix fun setOptionsList(list : Collection<Pair<K, T>>){
-        if(list.isNotEmpty()){
-            if(options.isNotEmpty()) options.clear()
-            for(pair : Pair<K, T> in list){
-                addOption(pair)
-            }
-        }else throw IllegalArgumentException("Options must exist")
-    }
-
-    /**
-     * Sets the options of this Selector
-     */
-    fun setOptionsList(keys : List<K>, values : List<T>){
-        if((keys.size == values.size) && keys.isNotEmpty()){
-            if(options.isNotEmpty()) options.clear()
-            for(i : Int in 0 until keys.size){
-                addOption(keys[i], values[i])
-            }
-        }else throw IllegalArgumentException("The lists are incompatible : The keys have size ${keys.size}, the values ${values.size}")
-    }
-
-    /**
-     * Adds an option to the list
-     */
-    infix fun addOption(pair : Pair<K, T>) = options.add(pair)
-
-    /**
-     * Adds an option to the list
-     */
-    fun addOption(key : K, value : T) = addOption(Pair(key, value))
-
-    /**
-     * Adds a list of options to the current list
-     */
-    infix fun addOptionsList(list : List<Pair<K, T>>){
-        for(pair : Pair<K, T> in list){
-            addOption(pair)
+    infix fun addOptionsList(options : List<Pair<Any?, Any?>>){
+        for(option : Pair<Any?, Any?> in options){
+            if(option.first != null) addKeyClasses(option.first!!::class)
+            if(option.second != null) addValueClasses(option.second!!::class)
+            add(option)
         }
     }
 
     /**
-     * Adds a list of options to the current list
+     * Adds the given list of options to the current one
      */
-    fun addOptionsList(keys : List<K>, values : List<T>){
-        if(keys.size == values.size && keys.isNotEmpty()){
+    fun addOptionsList(keys : List<Any?>, values : List<Any?>){
+        if(keys.size == values.size){
             for(i : Int in 0 until keys.size){
-                addOption(keys[i], values[i])
+                if(keys[i] != null) addKeyClasses(keys[i]!!::class)
+                if(values[i] != null) addValueClasses(values[i]!!::class)
+                add(keys[i], values[i])
             }
-        }else throw IllegalArgumentException("The lists are incompatible : The keys have size ${keys.size}, the values ${values.size}")
+        }else throw IllegalArgumentException()
+    }
+
+    /**
+     * Adds the given list of options to the current one
+     */
+    infix fun addOptionsList(options : Map<Any?, Any?>){
+        for(option in options){
+            if(option.key != null) addKeyClasses(option.key!!::class)
+            if(option.value != null) addValueClasses(option.value!!::class)
+            add(option.key, option.value)
+        }
+    }
+
+    /**
+     * Adds the given list of options to the current one
+     */
+    infix fun addOptionsList(options : IndexedMapping){
+        for(option : Pair<Any?, Any?> in options){
+            if(option.first != null) addKeyClasses(option.first!!::class)
+            if(option.second != null) addValueClasses(option.second!!::class)
+            add(option)
+        }
     }
 
 }

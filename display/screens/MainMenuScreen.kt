@@ -4,14 +4,12 @@ import display.*
 import display.selectors.ArrowSelector
 import display.selectors.TextArrowSelector
 import display.texts.MenuText
-import geometry.Vector
 import main.Action
 import main.FRAMEX
 import main.FRAMEY
-import main.Mouse
-import java.awt.Color.BLACK
-import java.awt.Color.RED
+import java.awt.Color.*
 import java.awt.Font
+import java.awt.Font.BOLD
 import java.awt.Graphics
 
 /**
@@ -34,7 +32,7 @@ class MainMenuScreen : Screen() {
         private const val EXIT_BUTTON_TEXT : String = "X"
         private val EXIT_BUTTON_ACTION : Action = { ScreenManager setScreen exitProgramScreen }
         private val EXIT_BUTTON : Button by lazy{
-            val result : Button = Button(0, 0, EXIT_BUTTON_TEXT, EXIT_BUTTON_ACTION)
+            val result = Button(0, 0, EXIT_BUTTON_TEXT, EXIT_BUTTON_ACTION)
             result alignUpTo 0
             result alignLeftTo 0
             result
@@ -55,24 +53,23 @@ class MainMenuScreen : Screen() {
         c.addToScrollPane(b)
         this add c
 
-        val d : ArrowSelector<String> = ArrowSelector(300, 600, arrayListOf("Hi", "hi hi hi hi hi hi hi hi hi hi hi hi hi hi"), true)
+        val d = TextArrowSelector(300, 600, "Hi" to "Hi", "hi hi hi hi hi hi hi hi hi" to "hi hi hi", isHorizontal = true)
         d setNextArrowColor RED
         d setMaxLineLength 200
-        d.alignUpToDown(TITLE)
-        d.alignRightToRight(TITLE)
+        d.alignUpToDown(c)
+        d.alignRightToRight(c)
         this add d
 
-        val e : TextArrowSelector<Int> = TextArrowSelector(400, 800, mapOf(
-            listOf(StringDisplay("One apple")) to 1,
-            listOf(StringDisplay("Two trees", RED)) to 2,
-            listOf(StringDisplay("Three ounces of\ncat food")) to 3,
-            listOf(StringDisplay("Four"),
-                   StringDisplay(" squids in\na vacuum", Font("monospaced", Font.PLAIN, 40)))
-                    to 4
-        ))
+        val e = TextArrowSelector(200, 200,
+            "Hello there" to 1, "General Kenobi" to 2,
+            StringDisplay("Hello There", RED) to 3,
+            StringDisplay("General Kenobi", Font("Arial", BOLD, 30)) to 4,
+            listOf(StringDisplay("Hello there\n", RED), StringDisplay("General Kenobi", GREEN)) to 5)
 
-        e setPreviousArrowColor RED
-        e alignLeftTo 0
+        e.setMaxLineLength(250)
+        e.setPreferredWidth(250)
+        e.alignLeftTo(0)
+        e.setNextArrowColor(RED)
         this add e
 
     }
