@@ -72,14 +72,14 @@ class TextArrowSelector : AbstractArrowSelector {
     constructor(x : Int, y : Double, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
     constructor(x : Double, y : Double, keys : List<Any?>, values : List<Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
     constructor(p : Point, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options.asList(), isHorizontal){
-        if(optionsAreInvalid(options.asList())) throw IllegalArgumentException()
+        if(optionsAreInvalid(*options)) throw IllegalArgumentException()
         fillLinesList()
         backgroundDrawer = background
     }
-    constructor(x : Int, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
-    constructor(x : Double, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
-    constructor(x : Int, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
-    constructor(x : Double, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options.asList(), isHorizontal, background)
+    constructor(x : Int, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
+    constructor(x : Double, y : Int, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
+    constructor(x : Int, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
+    constructor(x : Double, y : Double, vararg options : Pair<Any?, Any?>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
     constructor(p : Point, options : Map<Any?, Any?>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options, isHorizontal){
         if(optionsAreInvalid(options)) throw IllegalArgumentException()
         fillLinesList()
@@ -285,6 +285,19 @@ class TextArrowSelector : AbstractArrowSelector {
         }
         linesList = result
         reloadDimensions()
+    }
+
+    /**
+     * Returns true if the given options fit the map, i.e. if the keys are String, StringDisplays
+     * or List of StringDisplays
+     */
+    private fun optionsAreInvalid(vararg options : Pair<Any?, Any?>) : Boolean{
+        for(option in options){
+            if(!(isString(option.first) || isStringDisplay(option.first) || isStringDisplayList(option.first))){
+                return true
+            }
+        }
+        return false
     }
 
     /**

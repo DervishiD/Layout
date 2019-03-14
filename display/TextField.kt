@@ -1,6 +1,7 @@
 package display
 
 import geometry.Point
+import main.Action
 import java.awt.Color
 import java.awt.FontMetrics
 import java.awt.Graphics
@@ -21,6 +22,8 @@ class TextField : Displayer{
     private val isResizable : Boolean
     private val baseWidth : Int
     private val regex : Regex
+
+    override var onRelease: Action = {focus()}
 
     constructor(p : Point, width : Int, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : super(p){
         this.baseWidth = width

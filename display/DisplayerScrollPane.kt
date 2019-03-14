@@ -1,11 +1,9 @@
 package display
 
-import display.screens.TextFieldUser
 import geometry.Point
 import geometry.Vector
 import main.GraphicAction
 import main.MouseWheelAction
-import java.awt.Component
 import java.awt.Graphics
 import java.lang.IllegalArgumentException
 import javax.swing.JLabel
@@ -19,7 +17,7 @@ private typealias ScrollPaneObject = Triple<Displayer, Int, Int>
 /**
  * A scroll pane that scrolls Displayers
  */
-class DisplayerScrollPane : Displayer, CustomContainer {
+class DisplayerScrollPane : DisplayerContainer {
 
     companion object {
         const val SCROLLBAR_RIGHT : Int = 0
@@ -169,16 +167,6 @@ class DisplayerScrollPane : Displayer, CustomContainer {
         SCROLLBAR_RIGHT, SCROLLBAR_LEFT -> true
         SCROLLBAR_UP, SCROLLBAR_DOWN -> false
         else -> throw IllegalArgumentException("Undefined scrollbar position")
-    }
-
-    override fun mouseRelease(source: Component) {
-        super<CustomContainer>.mouseRelease(source)
-        if(source is TextField){
-            (parent as TextFieldUser).unfocusTextField()
-            (parent as TextFieldUser).focusTextField(source)
-        }else if(parent is TextFieldUser){
-            (parent as TextFieldUser).unfocusTextField()
-        }
     }
 
 }

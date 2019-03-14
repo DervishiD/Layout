@@ -60,42 +60,42 @@ class ScreenManager {
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseClick(source : Component) = currentScreen.mouseClick(source)
+        @JvmStatic fun mouseClick(x : Int, y : Int) = currentScreen.mouseClick(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mousePress(source : Component) = currentScreen.mousePress(source)
+        @JvmStatic fun mousePress(x : Int, y : Int) = currentScreen.mousePress(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseRelease(source : Component) = currentScreen.mouseRelease(source)
+        @JvmStatic fun mouseRelease(x : Int, y : Int) = currentScreen.mouseRelease(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseEnter(source : Component) = currentScreen.mouseEnter(source)
+        @JvmStatic fun mouseEnter(x : Int, y : Int) = currentScreen.mouseEnter(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseExit(source : Component) = currentScreen.mouseExit(source)
+        @JvmStatic fun mouseExit(x : Int, y : Int) = currentScreen.mouseExit(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseMoved(source : Component) = currentScreen.mouseMoved(source)
+        @JvmStatic fun mouseMoved(x : Int, y : Int) = currentScreen.mouseMoved(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseDrag(source : Component) = currentScreen.mouseDrag(source)
+        @JvmStatic fun mouseDrag(x : Int, y : Int) = currentScreen.mouseDrag(x, y)
 
         /**
          * Performs the event in the current Screen
          */
-        @JvmStatic fun mouseWheelMoved(source : Component, units : Int) = currentScreen.mouseWheelMoved(source, units)
+        @JvmStatic fun mouseWheelMoved(x : Int, y : Int, units : Int) = currentScreen.mouseWheelMoved(x, y, units)
 
     }
 }

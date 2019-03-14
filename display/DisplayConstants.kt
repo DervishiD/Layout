@@ -7,6 +7,8 @@ import editor.GridDisplayer
 import editor.selections.ColumnSelector
 import editor.selections.LineSelector
 import main.*
+import utilities.FilteredMap
+import utilities.filteredMapOf
 import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.Component
@@ -125,7 +127,7 @@ val mainMenuScreen : Screen = object : Screen() {
 /**
  * The Editor Screen, extending the Screen class
  */
-val editorScreen : Screen = object : Screen(), TextFieldUser {
+val editorScreen : Screen = object : Screen() {
 
     private val ALLOWED_GRID_WIDTH : Int = FRAMEX * 4/5
     private val ALLOWED_GRID_HEIGHT : Int = FRAMEY * 3/4
@@ -156,8 +158,8 @@ val editorScreen : Screen = object : Screen(), TextFieldUser {
     )
     private val BRUSH_SIZE_SELECTOR : TextArrowSelector = TextArrowSelector(0, 0, BRUSH_SIZE_SELECTOR_OPTIONS)
 
-    private val CELL_SELECTORS : Map<Any?, Any?> =
-        mapOf("Lines" to LineSelector(GRID_DISPLAYER), "Columns" to ColumnSelector(GRID_DISPLAYER))
+    private val CELL_SELECTORS : FilteredMap =
+        filteredMapOf("Lines" to LineSelector(GRID_DISPLAYER), "Columns" to ColumnSelector(GRID_DISPLAYER))
     private val CELL_SELECTOR_SELECTOR : TextArrowSelector = TextArrowSelector(0, 0, CELL_SELECTORS)
 
     private val WIDTH_TEXT_DELTA : Int = 50
@@ -180,9 +182,9 @@ val editorScreen : Screen = object : Screen(), TextFieldUser {
             it.addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA)
         }
 
-
-    override var currentTextField: TextField? = null
     override var previousScreen: Screen = mainMenuScreen
+
+    var currentTextField: TextField? = null
 
     /**
      * Updates the edited Grid
@@ -225,10 +227,36 @@ val editorScreen : Screen = object : Screen(), TextFieldUser {
         }
     }
 
-    override fun mouseRelease(source: Component) {
-        updateGrid()
+    infix fun focusTextField(toFocus : TextField){
+        currentTextField = toFocus
+        currentTextField!!.focus()
+    }
+
+    fun unfocusTextField(){
+        currentTextField?.unfocus()
+        currentTextField = null
+    }
+
+    override fun mouseRelease(x : Int, y : Int) {
         unfocusTextField()
-        super.mouseRelease(source)
+        val component : Component = getComponentAt(x, y)
+        when(component){
+            //is Screen -> mouseRelease() -- useless here
+            is DisplayerContainer ->{
+                val bottom : Displayer = component.displayerAt(x - component.lowestX(), y - component.lowestY())
+                if(bottom is TextField){
+                    focusTextField(bottom)
+                    bottom.mouseRelease()
+                }else bottom.mouseRelease()
+            }
+            is Displayer -> {
+                if(component is TextField){
+                    focusTextField(component)
+                    component.mouseRelease()
+                }else component.mouseRelease()
+            }
+        }
+        updateGrid()
     }
 
     override fun load() {
@@ -243,7 +271,6 @@ val editorScreen : Screen = object : Screen(), TextFieldUser {
         this remove GRID_DISPLAYER
         this remove LEFT_SCROLL_PANE
     }
-
 
 }
 

@@ -1,10 +1,8 @@
 package main
 
-import display.CustomContainer
 import display.ScreenManager
 import geometry.Point
 import geometry.Vector
-import java.awt.Component
 import java.awt.event.*
 
 /**
@@ -12,50 +10,15 @@ import java.awt.event.*
  */
 class Mouse : MouseAdapter() {
 
-    override fun mouseClicked(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mouseClick(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseClick(component)
-        }
-    }
+    override fun mouseClicked(e: MouseEvent?) = ScreenManager.mouseClick(e!!.x, e.y)
 
-    override fun mousePressed(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mousePress(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mousePress(component)
-        }
-    }
+    override fun mousePressed(e: MouseEvent?) = ScreenManager.mousePress(e!!.x, e.y)
 
-    override fun mouseReleased(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mouseRelease(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseRelease(component)
-        }
-    }
+    override fun mouseReleased(e: MouseEvent?) = ScreenManager.mouseRelease(e!!.x, e.y)
 
-    override fun mouseEntered(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mouseEnter(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseEnter(component)
-        }
-    }
+    override fun mouseEntered(e: MouseEvent?) = ScreenManager.mouseEnter(e!!.x, e.y)
 
-    override fun mouseExited(e: MouseEvent?) {
-        val component : Component = component(e!!)
-        if(component is CustomContainer){
-            component.mouseExit(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseExit(component)
-        }
-    }
+    override fun mouseExited(e: MouseEvent?) = ScreenManager.mouseExit(e!!.x, e.y)
 
 }
 
@@ -63,41 +26,21 @@ class Mouse : MouseAdapter() {
  * A custom mouse wheel listener
  */
 internal val mouseWheel : MouseWheelListener = MouseWheelListener { e ->
-    val component : Component = component(e!!)
-    if(component is CustomContainer){
-        component.mouseWheelMoved(component.getComponentAt(e.x - component.x, e.y - component.y), e.wheelRotation)
-    }else{
-        ScreenManager.mouseWheelMoved(component, e.wheelRotation)
-    }
+    ScreenManager.mouseWheelMoved(e!!.x, e.y, e.wheelRotation)
 }
 
 internal val mouseMotionListener : MouseMotionListener = object : MouseMotionListener{
     override fun mouseMoved(e: MouseEvent?) {
         setNewMousePosition(e!!.x, e.y)
-        val component : Component = component(e)
-        if(component is CustomContainer){
-            component.mouseMoved(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseMoved(component)
-        }
+        ScreenManager.mouseMoved(e.x, e.y)
     }
 
     override fun mouseDragged(e: MouseEvent?) {
         setNewMousePosition(e!!.x, e.y)
-        val component : Component = component(e)
-        if(component is CustomContainer){
-            component.mouseDrag(component.getComponentAt(e.x - component.x, e.y - component.y))
-        }else{
-            ScreenManager.mouseDrag(component)
-        }
+        ScreenManager.mouseDrag(e.x, e.y)
     }
 
 }
-
-/**
- * Returns the component at the mouse's position.
- */
-private fun component(e : MouseEvent) : Component = mainFrame.contentPane.getComponentAt(e.x, e.y)
 
 /**
  * Moves the mouse position at the given coordinates

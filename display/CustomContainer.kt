@@ -1,6 +1,5 @@
 package display
 
-import java.awt.Component
 import java.awt.Container
 
 /**
@@ -53,57 +52,40 @@ interface CustomContainer {
     /**
      * Reacts to a mouse click
      */
-    fun mouseClick(source : Component){
-        if(source is Displayer) source.mouseClick()
-    }
+    fun mouseClick(x : Int, y : Int)
 
     /**
      * Reacts to a mouse press
      */
-    fun mousePress(source : Component){
-        if(source is Displayer) source.mousePress()
-    }
-
+    fun mousePress(x : Int, y : Int)
     /**
      * Reacts to a mouse release
      */
-    fun mouseRelease(source : Component){
-        if(source is Displayer) source.mouseRelease()
-    }
+    fun mouseRelease(x : Int, y : Int)
 
     /**
      * Reacts to the mouse entering
      */
-    fun mouseEnter(source : Component){
-        if(source is Displayer) source.mouseEnter()
-    }
+    fun mouseEnter(x : Int, y : Int)
 
     /**
      * Reacts to the mouse exiting
      */
-    fun mouseExit(source : Component){
-        if(source is Displayer) source.mouseExit()
-    }
+    fun mouseExit(x : Int, y : Int)
 
     /**
      * Reacts to a mouse drag
      */
-    fun mouseDrag(source : Component){
-        if(source is Displayer) source.mouseDrag()
-    }
+    fun mouseDrag(x : Int, y : Int)
 
     /**
      * Reacts to a mouse movement
      */
-    fun mouseMoved(source : Component){
-        if(source is Displayer) source.mouseMoved()
-    }
+    fun mouseMoved(x : Int, y : Int)
 
     /**
      * Reacts to a mouse wheel movement
      */
-    fun mouseWheelMoved(source : Component, units : Int){
-        if(source is Displayer) source.mouseWheelMoved(units)
-    }
+    fun mouseWheelMoved(x : Int, y : Int, units : Int)
 
 }

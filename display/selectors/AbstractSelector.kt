@@ -4,9 +4,8 @@ import utilities.FilteredMapping
 import utilities.IndexedMapping
 
 /**
- * An interface implemented by discrete selector classes that select an option : T by showing
- * the user a key : K. For example, a selector that shows the user the name of a color (K, StringDisplay)
- * and selects the described color (T, java.awt.Color).
+ * An interface implemented by discrete selector classes that select an option by showing something to the user.
+ * The Selector selects values in its map, and shows the corresponding key.
  */
 interface AbstractSelector : FilteredMapping {
 
