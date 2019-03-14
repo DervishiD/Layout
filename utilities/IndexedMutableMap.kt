@@ -6,7 +6,7 @@ package utilities
 open class IndexedMutableMap : IndexedMap, IndexedMutableMapping {
 
     constructor(entries : List<Pair<Any?, Any?>>) : super(entries)
-    constructor(vararg entries : Pair<Any?, Any?>) : super(entries.asList())
+    constructor(vararg entries : Pair<Any?, Any?>) : super(*entries)
     constructor(keys : List<Any?>, values : List<Any?>) : super(keys, values)
     constructor(map : Map<Any?, Any?>) : super(map)
     constructor(map : IndexedMapping) : super(map)

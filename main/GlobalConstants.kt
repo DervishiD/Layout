@@ -19,7 +19,7 @@ val mainFrame : JFrame = JFrame()
 
 const val DOUBLE_PRECISION : Double = 10e-2
 
-val pressedKeys : HashSet<Int> = HashSet<Int>()
+val pressedKeys : HashSet<Int> = HashSet()
 
 fun shiftPressed() : Boolean = pressedKeys.contains(VK_SHIFT)
 
@@ -36,4 +36,3 @@ internal val KEYBOARD : KeyAdapter = object : KeyAdapter() {
     }
 
 }
-

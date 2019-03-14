@@ -370,7 +370,7 @@ class TextArrowSelector : AbstractArrowSelector {
     override fun drawDisplayer(g: Graphics) {
         drawBackground(g)
         drawText(g)
-        setArrowsPosition()
+            setArrowsPosition()
     }
 
     /**
