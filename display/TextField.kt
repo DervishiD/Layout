@@ -5,7 +5,6 @@ import main.Action
 import java.awt.Color
 import java.awt.FontMetrics
 import java.awt.Graphics
-import kotlin.math.max
 
 class TextField : Displayer{
 
@@ -19,34 +18,37 @@ class TextField : Displayer{
 
     private var typedText : String
     private var isFocused : Boolean = false
-    private val isResizable : Boolean
     private val baseWidth : Int
     private val regex : Regex
 
     override var onRelease: Action = {focus()}
 
-    constructor(p : Point, width : Int, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : super(p){
+    constructor(p : Point, width : Int, defaultText : String = "", regex : String = ".") : super(p){
         this.baseWidth = width
         this.typedText = defaultText
-        this.isResizable = isResizable
         this.regex = Regex(regex)
         this.w = baseWidth
     }
-    constructor(x : Double, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : this(Point(x, y), width, defaultText, isResizable, regex)
-    constructor(x : Int, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : this(Point(x, y), width, defaultText, isResizable, regex)
-    constructor(x : Double, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : this(Point(x, y), width, defaultText, isResizable, regex)
-    constructor(x : Int, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", isResizable : Boolean = false, regex : String = ".") : this(Point(x, y), width, defaultText, isResizable, regex)
+    constructor(x : Double, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(x : Int, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(x : Double, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(x : Int, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
 
-    fun type(key : String){
-        if(key.matches(regex)) typedText += key
-        initphase = true
+    infix fun type(keyCode : Int){
+        val key : Char = keyCode.toChar()
+        when{
+            regex.matches(key.toString()) -> typedText += key
+            key == '\b' -> backspace()
+            key == '\t' -> tab()
+        }
     }
 
-    fun backspace(){
-        if(typedText != ""){
-            typedText = typedText.substring(0, typedText.length - 1)
-            initphase = true
-        }
+    private fun backspace(){
+        typedText = typedText.substring(0, typedText.length - 1)
+    }
+
+    private fun tab(){
+        typedText += "    " //four spaces
     }
 
     fun focus(){
@@ -59,24 +61,28 @@ class TextField : Displayer{
 
     fun typedText() : String = typedText
 
-    fun reset(){
+    fun clear(){
         typedText = ""
     }
 
     override fun loadParameters(g: Graphics) {
         val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
         h = fm.maxAscent + fm.maxDescent + 2 * (LINE_THICKNESS + DELTA)
-        if(isResizable) w = max(fm.stringWidth(typedText) + 2 * (LINE_THICKNESS + DELTA), baseWidth)
     }
 
     override fun drawDisplayer(g: Graphics) {
-        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
+        drawText(g)
+        drawBackground(g)
+    }
 
+    private fun drawText(g : Graphics){
+        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
         g.color = if(isFocused) FOCUSED_COLOR else UNFOCUSED_COLOR
         g.font = DEFAULT_FONT
-
         g.drawString(typedText, LINE_THICKNESS + DELTA, fm.maxAscent)
+    }
 
+    private fun drawBackground(g : Graphics){
         g.fillRect(0, 0, LINE_THICKNESS, h)
         g.fillRect(0, 0, w, LINE_THICKNESS)
         g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)

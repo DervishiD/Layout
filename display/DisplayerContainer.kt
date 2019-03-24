@@ -3,6 +3,12 @@ package display
 import geometry.Point
 import java.awt.Component
 
+/**
+ * A Displayer that implements the CustomContainer interface.
+ * @param p The position of this DisplayerContainer, as a Point.
+ * @see Displayer
+ * @see CustomContainer
+ */
 abstract class DisplayerContainer(p : Point) : Displayer(p), CustomContainer{
 
     override fun mouseClick(x : Int, y : Int){}
@@ -14,6 +20,13 @@ abstract class DisplayerContainer(p : Point) : Displayer(p), CustomContainer{
     override fun mouseMoved(x : Int, y : Int){}
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){}
 
+    /**
+     * Returns the Displayer at the given coordinates, relative to itself.
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @return The Displayer at the given coordinates, relative to itself.
+     * @throws Exception If the coordinates are out of the bounds of this DisplayerContainer.
+     */
     fun displayerAt(x : Int, y : Int) : Displayer{
         val component : Component = getComponentAt(x, y)
         return when(component){

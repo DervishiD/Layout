@@ -1,22 +1,24 @@
 package display
 
-import display.screens.Screen
 import main.mainFrame
-import java.awt.Component
 
 /**
- * A class that manages the transition between screens
+ * A class that manages the transition between screens.
+ * @see Screen
  */
 class ScreenManager {
+
     companion object{
 
         /**
-         * The current Screen
+         * The Screen that is currently displayed.
+         * @see Screen
          */
         @JvmStatic private var currentScreen : Screen = mainMenuScreen
 
         /**
-         * Displays the main Screen
+         * Displays the starting Screen.
+         * @see Screen
          */
         @JvmStatic fun start(){
             mainMenuScreen.load()
@@ -25,14 +27,25 @@ class ScreenManager {
         }
 
         /**
-         * Goes to the previous Screen
+         * Goes to the previous Screen.
+         * @see Screen
+         * @see Screen.previousScreen
+         * @see setScreen
          */
         @JvmStatic fun toPreviousScreen(){
             setScreen(currentScreen.previousScreen())
         }
 
         /**
-         * Changes the displayed Screen for the given one
+         * Changes the current Screen.
+         * The methods starts by saving the old one, then loads the new one, and
+         * finally initializes it.
+         * @param screen The new displayed Screen.
+         * @see Screen
+         * @see Screen.save
+         * @see Screen.load
+         * @see Screen.initialization
+         * @see currentScreen
          */
         @JvmStatic infix fun setScreen(screen : Screen){
             currentScreen.save()
@@ -43,66 +56,112 @@ class ScreenManager {
         }
 
         /**
-         * Escapes the current screen
+         * Escapes the current screen.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.escape
          */
         @JvmStatic fun escape() = currentScreen.escape()
 
         /**
-         * Gives the given key to the current Screen
+         * Transmits the event to the current Screen.
+         * @param key The code of the pressed key.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.pressKey
          */
-        @JvmStatic fun pressKey(key : Int) = currentScreen.pressKey(key)
+        @JvmStatic infix fun pressKey(key : Int) = currentScreen.pressKey(key)
 
         /**
-         * Gives the given key to the current Screen
+         * Transmits the event to the current Screen.
+         * @param key The code of the released key.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.releaseKey
          */
-        @JvmStatic fun releaseKey(key : Int) = currentScreen.releaseKey(key)
+        @JvmStatic infix fun releaseKey(key : Int) = currentScreen.releaseKey(key)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseClick
          */
         @JvmStatic fun mouseClick(x : Int, y : Int) = currentScreen.mouseClick(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mousePress
          */
         @JvmStatic fun mousePress(x : Int, y : Int) = currentScreen.mousePress(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseRelease
          */
         @JvmStatic fun mouseRelease(x : Int, y : Int) = currentScreen.mouseRelease(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseEnter
          */
         @JvmStatic fun mouseEnter(x : Int, y : Int) = currentScreen.mouseEnter(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseExit
          */
         @JvmStatic fun mouseExit(x : Int, y : Int) = currentScreen.mouseExit(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseMoved
          */
         @JvmStatic fun mouseMoved(x : Int, y : Int) = currentScreen.mouseMoved(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseDrag
          */
         @JvmStatic fun mouseDrag(x : Int, y : Int) = currentScreen.mouseDrag(x, y)
 
         /**
-         * Performs the event in the current Screen
+         * Transmits the event to the current Screen.
+         * @param x The x coordinate of the event.
+         * @param y The y coordinate of the event.
+         * @param units The number of units scrolled.
+         * @see currentScreen
+         * @see Screen
+         * @see Screen.mouseClick
          */
         @JvmStatic fun mouseWheelMoved(x : Int, y : Int, units : Int) = currentScreen.mouseWheelMoved(x, y, units)
 
     }
+
 }
-
-
-
-
-
-
-

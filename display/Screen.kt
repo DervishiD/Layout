@@ -1,6 +1,5 @@
-package display.screens
+package display
 
-import display.*
 import main.Action
 import main.FRAMEX
 import main.FRAMEY
@@ -11,28 +10,36 @@ import java.awt.event.KeyEvent.VK_ESCAPE
 import javax.swing.JPanel
 
 /**
- * The general abstraction for a Screen
+ * The general abstraction for a Screen. A Screen is a special kind of JPanel that is used in this Layout.
+ * Every scene that appears in the Frame is a Screen.
+ * @see CustomContainer
+ * @see MouseInteractable
+ * @see Displayer
+ * @see ScreenManager
+ * @see JPanel
  */
 abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
 
     /**
-     * The previous Screen in the Screen tree
+     * The Screen that comes before this one in the program architecture.
      */
     protected abstract var previousScreen : Screen
 
+    /**
+     * Loads the bounds of the Screen as fullscreen.
+     */
     init{
         setBounds(0, 0, FRAMEX, FRAMEY)
     }
 
     /**
      * Returns the previous Screen
+     * @see previousScreen
+     * @return The previous Screen in the program architecture.
      */
     fun previousScreen() : Screen = previousScreen
 
-    /**
-     * The list of the components of this Screen
-     */
-    override var parts : ArrayList<Displayer> = ArrayList()
+    override var parts : MutableCollection<Displayer> = mutableListOf()
 
     override var onClick : Action = {}
     override var onPress : Action = {}
@@ -52,17 +59,20 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
     }
 
     /**
-     * Draws the background of this Screen
+     * Draws the background image of this Screen.
+     * @param g the Graphics environment that draws it.
      */
     open fun drawBackground(g : Graphics){}
 
     /**
-     * To save the current state of the Screen
+     * Saves the state of the Screen when it's removed from the main frame.
+     * @see load
      */
     open fun save(){}
 
     /**
-     * To load this screen
+     * Loads the Screen when it's added to the main frame.
+     * @see save
      */
     open fun load(){}
 
@@ -71,7 +81,9 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
     }
 
     /**
-     * Back to the previous screen
+     * Goes back to the previous Screen designed by the previousScreen attribute.
+     * @see previousScreen
+     * @see ScreenManager.toPreviousScreen
      */
     open fun escape() = ScreenManager.toPreviousScreen()
 
