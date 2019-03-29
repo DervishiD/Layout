@@ -4,8 +4,6 @@ import geometry.Point
 import main.GraphicAction
 import utilities.StringDisplay
 import utilities.Text
-import utilities.ascent
-import utilities.descent
 import java.awt.Graphics
 
 /**
@@ -16,6 +14,11 @@ import java.awt.Graphics
  * @see StringDisplay
  */
 class Label : TextDisplayer {
+
+    override var upDelta: Int = 0
+    override var downDelta: Int = 0
+    override var leftDelta: Int = 0
+    override var rightDelta: Int = 0
 
     /**
      * Constructs a Label with the given parameters.
@@ -252,29 +255,10 @@ class Label : TextDisplayer {
      */
     constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
 
-
-    override fun drawText(g : Graphics) {
-        var currentX = 0
-        var currentY = 0
-
-        for(line : Collection<StringDisplay> in lines){
-            currentY += line.ascent(g)
-            for(s : StringDisplay in line){
-                g.font = s.font
-                g.color = s.color
-                g.drawString(s.text, currentX, currentY)
-                currentX += g.getFontMetrics(s.font).stringWidth(s.text)
-            }
-            currentX = 0
-            currentY += line.descent(g)
-        }
-
-    }
-
     override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g, 0)
-        computeTotalHeight(g, 0)
-        computeMaxLength(g, 0)
+        forceMaxLineLength(g)
+        computeTotalHeight(g)
+        computeMaxLength(g)
     }
 
 }

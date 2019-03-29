@@ -37,7 +37,7 @@ abstract class TextDisplayer : Displayer {
      * @see toLinesList
      * @see StringDisplay
      */
-    protected var lines : MutableCollection<List<StringDisplay>> = ArrayList()
+    protected var lines : MutableCollection<List<StringDisplay>> = mutableListOf()
 
     /**
      * The maximal allowed line length of this TextDisplayer.
@@ -52,6 +52,26 @@ abstract class TextDisplayer : Displayer {
      * @see drawBackground
      */
     protected var backgroundDrawer : GraphicAction
+
+    /**
+     * The distance between the top of the text and the top of this TextDisplayer.
+     */
+    protected abstract var upDelta : Int
+
+    /**
+     * The distance between the bottom of the text and the bottom of this TextDisplayer.
+     */
+    protected abstract var downDelta : Int
+
+    /**
+     * The distance between the left side of the text and the left side of this TextDisplayer.
+     */
+    protected abstract var leftDelta : Int
+
+    /**
+     * The distance between the right side of the text and the right side of this TextDisplayer.
+     */
+    protected abstract var rightDelta : Int
 
     /**
      * Constructs a TextDisplayer with the given parameters.
@@ -135,6 +155,89 @@ abstract class TextDisplayer : Displayer {
     infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
 
     /**
+     * Sets the side deltas to the given value.
+     * @param delta The new delta, in pixels.
+     * @see upDelta
+     * @see downDelta
+     * @see leftDelta
+     * @see rightDelta
+     */
+    infix fun setSideDistance(delta : Int){
+        if(delta >= 0){
+            upDelta = delta
+            downDelta = delta
+            leftDelta = delta
+            rightDelta = delta
+        }else throw IllegalArgumentException("Negative sides delta : $delta")
+    }
+
+    /**
+     * Sets the horizontal side deltas to the given value.
+     * @param delta The new delta, in pixels.
+     * @see leftDelta
+     * @see rightDelta
+     */
+    infix fun setHorizontalDistance(delta : Int){
+        if(delta >= 0){
+            leftDelta = delta
+            rightDelta = delta
+        }else throw IllegalArgumentException("Negative horizontal sides delta : $delta")
+    }
+
+    /**
+     * Sets the vertical side deltas to the given value.
+     * @param delta The new delta, in pixels.
+     * @see upDelta
+     * @see downDelta
+     */
+    infix fun setVerticalDistance(delta: Int){
+        if(delta >= 0){
+            upDelta = delta
+            downDelta = delta
+        }else throw IllegalArgumentException("Negative vertical sides delta : $delta")
+    }
+
+    /**
+     * Sets the left side delta to the given value.
+     * @param delta The new delta, in pixels.
+     * @see leftDelta
+     */
+    infix fun setLeftDistance(delta : Int){
+        if(delta >= 0) upDelta = delta
+        else throw IllegalArgumentException("Negative left side delta : $delta")
+    }
+
+    /**
+     * Sets the right side delta to the given value.
+     * @param delta The new delta, in pixels.
+     * @see rightDelta
+     */
+    infix fun setRightDistance(delta : Int){
+        if(delta >= 0) rightDelta = delta
+        else throw IllegalArgumentException("Negative right side delta : $delta")
+    }
+
+    /**
+     * Sets the top side delta to the given value.
+     * @param delta The new delta, in pixels.
+     * @see upDelta
+     */
+    infix fun setTopDistance(delta : Int){
+        if(delta >= 0) upDelta = delta
+        else throw IllegalArgumentException("Negative up side delta : $delta")
+    }
+
+    /**
+     * Sets the bottom side delta to the given value.
+     * @param delta The new delta, in pixels.
+     * @see downDelta
+     */
+    infix fun setBottomDistance(delta : Int){
+        if(delta >= 0) downDelta = delta
+        else throw IllegalArgumentException("Negative down side delta : $delta")
+    }
+
+    /**
      * Returns the displayed text as a String.
      * @return The displayed text, as a String.
      * @see txt
@@ -146,13 +249,13 @@ abstract class TextDisplayer : Displayer {
      * @param g The Graphics context of the Selector.
      * @see maxLineLength
      */
-    protected fun forceMaxLineLength(g : Graphics, delta : Int){ //IF IT WORKS, DON'T TOUCH IT
+    protected infix fun forceMaxLineLength(g : Graphics){ //IF IT WORKS, DON'T TOUCH IT
         if(maxLineLength != null){
             val result : MutableList<List<StringDisplay>> = mutableListOf()
             val currentLine : MutableList<StringDisplay> = mutableListOf()
             var currentDisplay : StringDisplay
             var fm : FontMetrics
-            var currentLineLength : Int = 2 * delta
+            var currentLineLength : Int = leftDelta + rightDelta
             var currentWord : String
             var currentWordAndSpace : String
             var charLength : Int
@@ -186,14 +289,14 @@ abstract class TextDisplayer : Displayer {
                                 result.add(currentLine.copy())
                                 currentLine.clear()
                                 currentDisplay.clear()
-                                currentLineLength = 2 * delta
+                                currentLineLength = leftDelta + rightDelta
                             }else if(wordLength <= maxLineLength!!){
                                 currentLine.add(currentDisplay.copy())
                                 result.add(currentLine.copy())
                                 currentLine.clear()
                                 currentDisplay.clear()
                                 currentDisplay.push(currentWord)
-                                currentLineLength = 2 * delta + wordLength
+                                currentLineLength = leftDelta + rightDelta + wordLength
                             }else{
                                 chars = currentWord.split("")
                                 if(i != 0){
@@ -206,7 +309,7 @@ abstract class TextDisplayer : Displayer {
                                         result.add(currentLine.copy())
                                         currentLine.clear()
                                         currentDisplay.clear()
-                                        currentLineLength = 2 * delta
+                                        currentLineLength = leftDelta + rightDelta
                                     }
                                 }
                                 for(c : String in chars){
@@ -220,7 +323,7 @@ abstract class TextDisplayer : Displayer {
                                         currentLine.clear()
                                         currentDisplay.clear()
                                         currentDisplay.push(c)
-                                        currentLineLength = 2 * delta + charLength
+                                        currentLineLength = leftDelta + rightDelta + charLength
                                     }
                                 }
                             }
@@ -230,7 +333,7 @@ abstract class TextDisplayer : Displayer {
                 }
                 result.add(currentLine.copy())
                 currentLine.clear()
-                currentLineLength = 2 * delta
+                currentLineLength = leftDelta + rightDelta
             }
             lines = result
         }
@@ -277,10 +380,9 @@ abstract class TextDisplayer : Displayer {
     /**
      * Computes the total height of the TextDisplayer.
      * @param g The Graphics context.
-     * @param delta The distance between the text and the vertical bounds.
      */
-    protected fun computeTotalHeight(g : Graphics, delta : Int){
-        h = 2 * delta
+    protected infix fun computeTotalHeight(g : Graphics){
+        h = upDelta + downDelta
         for(line : List<StringDisplay> in lines){
             h += line.lineHeight(g)
         }
@@ -289,9 +391,8 @@ abstract class TextDisplayer : Displayer {
     /**
      * Computes the maximal length of the StringDisplays' lines.
      * @param g The Graphics context.
-     * @param delta The distance between the text and the horizontal bounds.
      */
-    protected fun computeMaxLength(g : Graphics, delta : Int){
+    protected fun computeMaxLength(g : Graphics){
         var maxLength = 0
         for(line : List<StringDisplay> in lines){
             val lineLength : Int = line.lineLength(g)
@@ -299,7 +400,7 @@ abstract class TextDisplayer : Displayer {
                 maxLength = lineLength
             }
         }
-        w = maxLength + 2 * delta
+        w = maxLength + leftDelta + rightDelta
     }
 
     /**
@@ -318,6 +419,21 @@ abstract class TextDisplayer : Displayer {
      * Draws the text of the TextDisplayer.
      * @param g The Graphics context.
      */
-    protected abstract fun drawText(g : Graphics)
+    private fun drawText(g : Graphics){
+        var currentX : Int = leftDelta
+        var currentY : Int = upDelta
+
+        for(line : Collection<StringDisplay> in lines){
+            currentY += line.ascent(g)
+            for(s : StringDisplay in line){
+                g.font = s.font
+                g.color = s.color
+                g.drawString(s.text, currentX, currentY)
+                currentX += g.getFontMetrics(s.font).stringWidth(s.text)
+            }
+            currentX = leftDelta
+            currentY += line.descent(g)
+        }
+    }
 
 }

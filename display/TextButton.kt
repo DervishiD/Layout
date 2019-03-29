@@ -5,8 +5,6 @@ import main.Action
 import main.GraphicAction
 import utilities.StringDisplay
 import utilities.Text
-import utilities.ascent
-import utilities.descent
 import java.awt.Color
 import java.awt.Graphics
 
@@ -30,18 +28,22 @@ class TextButton : TextDisplayer {
         private const val LINE_THICKNESS : Int = 5
 
         /**
-         * The distance between the line and the text in the default background of the TextButton.
+         * The base side delta.
+         * @see TextDisplayer.upDelta
+         * @see TextDisplayer.downDelta
+         * @see TextDisplayer.leftDelta
+         * @see TextDisplayer.rightDelta
          * @see DEFAULT_BUTTON_BACKGROUND
          * @see GraphicAction
          */
-        private const val DELTA : Int = 2
+        private const val DELTA : Int = LINE_THICKNESS + 2
 
         /**
          * The color of the line in the default background of the TextButton.
          * @see DEFAULT_BUTTON_BACKGROUND
          * @see GraphicAction
          */
-        private val LINE_COLOR : Color = Color.BLACK
+        private val LINE_COLOR : Color = DEFAULT_COLOR
 
         /**
          * The default background of this TextButton.
@@ -57,6 +59,11 @@ class TextButton : TextDisplayer {
             }}
 
     }
+
+    override var upDelta: Int = DELTA
+    override var downDelta: Int = DELTA
+    override var leftDelta: Int = DELTA
+    override var rightDelta: Int = DELTA
 
     /**
      * Constructs a TextButton with the given text at the given position with the given background
@@ -322,26 +329,9 @@ class TextButton : TextDisplayer {
     constructor(x : Double, y : Double, text : Text, action : Action, background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(Point(x, y), text, action, background)
 
     override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g, LINE_THICKNESS + DELTA)
-        computeTotalHeight(g, LINE_THICKNESS + DELTA)
-        computeMaxLength(g, LINE_THICKNESS + DELTA)
-    }
-
-    override fun drawText(g : Graphics) {
-        var currentX : Int = LINE_THICKNESS + DELTA
-        var currentY : Int = LINE_THICKNESS + DELTA
-
-        for(line : Collection<StringDisplay> in lines){
-            currentY += line.ascent(g)
-            for(s : StringDisplay in line){
-                g.font = s.font
-                g.color = s.color
-                g.drawString(s.text, currentX, currentY)
-                currentX += g.getFontMetrics(s.font).stringWidth(s.text)
-            }
-            currentX = LINE_THICKNESS + DELTA
-            currentY += line.descent(g)
-        }
+        forceMaxLineLength(g)
+        computeTotalHeight(g)
+        computeMaxLength(g)
     }
 
 }
