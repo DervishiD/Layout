@@ -23,7 +23,6 @@ import java.awt.event.WindowEvent
  * @see Font
  */
 internal val DEFAULT_FONT : Font = Font("Courier New", BOLD, 24)
-
 /**
  * The default font used in the questions asked to the User.
  * @see Font
