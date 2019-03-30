@@ -26,9 +26,9 @@ private typealias ScrollPaneObject = Triple<Displayer, Int, Int>
  * A Displayer that acts as a scroll pane, containing other Displayers.
  * @see ScrollPaneObject
  * @see Displayer
- * @see DisplayerContainer
+ * @see AbstractDisplayerContainer
  */
-class DisplayerScrollPane : DisplayerContainer {
+class DisplayerScrollPane : AbstractDisplayerContainer {
 
     companion object {
 

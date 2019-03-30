@@ -91,7 +91,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseClick()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseClick()
             is Displayer -> component.mouseClick()
         }
@@ -101,7 +101,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mousePress()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mousePress()
             is Displayer -> component.mousePress()
         }
@@ -111,7 +111,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseRelease()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseRelease()
             is Displayer -> component.mouseRelease()
         }
@@ -121,7 +121,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseEnter()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseEnter()
             is Displayer -> component.mouseEnter()
         }
@@ -131,7 +131,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseExit()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseExit()
             is Displayer -> component.mouseExit()
         }
@@ -141,7 +141,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseDrag()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseDrag()
             is Displayer -> component.mouseDrag()
         }
@@ -151,7 +151,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseMoved()
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseMoved()
             is Displayer -> component.mouseMoved()
         }
@@ -161,7 +161,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
         val component : Component = getComponentAt(x, y)
         when(component){
             is Screen -> mouseWheelMoved(units)
-            is DisplayerContainer ->
+            is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseWheelMoved(units)
             is Displayer -> component.mouseWheelMoved(units)
         }

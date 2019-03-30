@@ -5,15 +5,18 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-<<<<<<< HEAD
+////KUBUNTU
 private const val IMAGES_FOLDER : String = "src/img/images"
 
 private const val RED101_PATH : String = "$IMAGES_FOLDER/red101.png"
-=======
-private const val IMAGES_FOLDER : String = "src\\img\\images"
 
-private const val RED101_PATH : String = "$IMAGES_FOLDER\\red101.png"
->>>>>>> 546d802e3703bd7f2bda79adb6fdbc81642e7fe9
+/*
+    ////WINDOWS
+    private const val IMAGES_FOLDER : String = "src\\img\\images"
+
+    private const val RED101_PATH : String = "$IMAGES_FOLDER\\red101.png"
+
+*/
 
 val RED101 : BufferedImage by lazy{loadImage(RED101_PATH)}
 

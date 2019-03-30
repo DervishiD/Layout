@@ -22,18 +22,18 @@ import java.awt.event.WindowEvent
  * The default font used in the display system.
  * @see Font
  */
-internal val DEFAULT_FONT : Font = Font("Courier New", BOLD, 24)
+internal val DEFAULT_FONT : Font = Font("Courier New", BOLD, 16)
 /**
  * The default font used in the questions asked to the User.
  * @see Font
  */
-internal val QUESTION_FONT : Font = Font("Courier New", BOLD, 32)
+internal val QUESTION_FONT : Font = Font("Courier New", BOLD, 24)
 
 /**
  * The default font used in title-type displays.
  * @see Font
  */
-internal val TITLE_FONT : Font = Font("Courier New", BOLD, 40)
+internal val TITLE_FONT : Font = Font("Courier New", BOLD, 32)
 
 //COLOURS----------------------------------------------------------------------
 
@@ -257,7 +257,7 @@ val editorScreen : Screen = object : Screen() {
         val component : Component = getComponentAt(x, y)
         when(component){
             //is Screen -> mouseRelease() -- useless here
-            is DisplayerContainer ->{
+            is AbstractDisplayerContainer ->{
                 val bottom : Displayer = component.displayerAt(x - component.lowestX(), y - component.lowestY())
                 if(bottom is TextField){
                     focusTextField(bottom)
