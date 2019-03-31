@@ -71,7 +71,7 @@ internal fun debugText(){
 }
 
 internal fun debugCollectionCast(){
-    var a : ArrayList<MutableList<Int>> = arrayListOf(mutableListOf(1, 2), mutableListOf(3, 4))
-    var b = a.toCollectionOf<List<Int>, MutableList<Int>>()
+    val a : ArrayList<MutableList<Int>> = arrayListOf(mutableListOf(1, 2), mutableListOf(3, 4))
+    val b = a.toCollectionOf<List<Int>, MutableList<Int>>()
     b.print()
 }

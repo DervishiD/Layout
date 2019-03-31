@@ -1,7 +1,5 @@
 Better TextField
 Slider
-Rename DisplayerContainers and CustomContainer
-Create 'empty' Displayer Container
 Drawing easily on Displayers and Screen, points, lines and such
 Separate frame object
 Resizable frame, Resize Events
@@ -13,3 +11,4 @@ More interfaces
 Pack methods to resize containers around contained Displayers
 Use more efficient data types (shorts, bytes, etc)
 More efficient GraphicActions
+Drawable, or something
