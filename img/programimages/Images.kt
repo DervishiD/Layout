@@ -5,18 +5,13 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-////KUBUNTU
-private const val IMAGES_FOLDER : String = "src/img/images"
+private val SEPARATOR : String by lazy{
+    if(System.getProperty("os.name").toLowerCase().contains("win")) "\\" else "/"
+}
 
-private const val RED101_PATH : String = "$IMAGES_FOLDER/red101.png"
+private val IMAGES_FOLDER : String = "src${SEPARATOR}img${SEPARATOR}images"
 
-/*
-    ////WINDOWS
-    private const val IMAGES_FOLDER : String = "src\\img\\images"
-
-    private const val RED101_PATH : String = "$IMAGES_FOLDER\\red101.png"
-
-*/
+private val RED101_PATH : String = "$IMAGES_FOLDER${SEPARATOR}red101.png"
 
 val RED101 : BufferedImage by lazy{loadImage(RED101_PATH)}
 

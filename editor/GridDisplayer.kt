@@ -1,13 +1,12 @@
 package editor
 
 import display.*
+import display.frame.LMouse
 import gamepackage.gamegeometry.Cell
 import gamepackage.gamegeometry.Grid
 import geometry.Point
 import main.FRAMEX
 import main.FRAMEY
-import main.mouseDisplacement
-import main.mousePosition
 import java.awt.Graphics
 import kotlin.math.floor
 import java.awt.RenderingHints
@@ -78,7 +77,7 @@ class GridDisplayer : Displayer {
      * @param meshVariation The absolute variation, in pixels, of the mesh
      */
     private fun performMeshVariation(meshVariation : Int){
-        val correspondingGridPoint : Point = frameToGrid(mousePosition())
+        val correspondingGridPoint : Point = frameToGrid(LMouse.mousePosition())
         val line : Int = lineOf(correspondingGridPoint)
         val column : Int = columnOf(correspondingGridPoint)
         val proportionaldx : Double = correspondingGridPoint.x / mesh - column
@@ -255,7 +254,7 @@ class GridDisplayer : Displayer {
     }
 
     override fun mouseDrag(){
-        origin += mouseDisplacement()
+        origin += LMouse.mouseDisplacement()
     }
 
 }

@@ -1,11 +1,10 @@
 package main
 
-import display.ScreenManager
+import display.frame.LFrame
+import display.frame.LFrameBuilder
+import display.mainMenuScreen
 import java.awt.Graphics
 import java.awt.Toolkit
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import java.awt.event.KeyEvent.VK_SHIFT
 import javax.swing.JFrame
 
 typealias Action = () -> Unit
@@ -15,24 +14,6 @@ typealias MouseWheelAction = (Int) -> Unit
 val FRAMEX : Int = (Toolkit.getDefaultToolkit().screenSize.getWidth()).toInt()
 val FRAMEY : Int = (Toolkit.getDefaultToolkit().screenSize.getHeight()).toInt()
 
-val mainFrame : JFrame = JFrame()
+val mainFrame : LFrame by lazy{ LFrameBuilder(mainMenuScreen).exitOnClose().setDecorated(false).setFullScreen(true).build()}
 
 const val DOUBLE_PRECISION : Double = 10e-2
-
-val pressedKeys : HashSet<Int> = HashSet()
-
-fun shiftPressed() : Boolean = pressedKeys.contains(VK_SHIFT)
-
-internal val KEYBOARD : KeyAdapter = object : KeyAdapter() {
-
-    override fun keyPressed(e: KeyEvent?) {
-        pressedKeys.add(e!!.keyCode)
-        ScreenManager.pressKey(e.keyCode)
-    }
-
-    override fun keyReleased(e: KeyEvent?) {
-        pressedKeys.remove(e!!.keyCode)
-        ScreenManager.releaseKey(e.keyCode)
-    }
-
-}

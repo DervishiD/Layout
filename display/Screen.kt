@@ -4,6 +4,7 @@ import main.Action
 import main.FRAMEX
 import main.FRAMEY
 import main.MouseWheelAction
+import utilities.LProperty
 import java.awt.Component
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ESCAPE
@@ -24,6 +25,8 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
      * The Screen that comes before this one in the program architecture.
      */
     protected abstract var previousScreen : Screen
+
+    var nextScreen : LProperty<Screen?> = LProperty(null)
 
     /**
      * Loads the bounds of the Screen as fullscreen.
@@ -49,6 +52,10 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
     override var onDrag : Action = {}
     override var onMove : Action = {}
     override var onWheelMoved : MouseWheelAction = {_ -> }
+
+    protected infix fun setNextScreen(nextScreen : Screen){
+        this.nextScreen.value = nextScreen
+    }
 
     public override fun paintComponent(g: Graphics?) {
         for(part : Displayer in parts){
@@ -85,7 +92,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
      * @see previousScreen
      * @see ScreenManager.toPreviousScreen
      */
-    open fun escape() = ScreenManager.toPreviousScreen()
+    open fun escape() = setNextScreen(previousScreen)
 
     override fun mouseClick(x : Int, y : Int){
         val component : Component = getComponentAt(x, y)

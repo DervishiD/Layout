@@ -14,7 +14,6 @@ import java.awt.Font
 import java.awt.Font.BOLD
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ENTER
-import java.awt.event.WindowEvent
 
 //FONTS------------------------------------------------------------------------
 
@@ -42,38 +41,6 @@ internal val TITLE_FONT : Font = Font("Courier New", BOLD, 32)
  * @see Color
  */
 internal val DEFAULT_COLOR : Color = BLACK
-
-//BUTTONS----------------------------------------------------------------------
-
-/**
- * The default text of the 'Back' button.
- * @see BACK_BUTTON
- */
-private const val BACK_BUTTON_TEXT : String = "<-"
-
-/**
- * The Action executed by the 'Back' button, that is, calling the ScreenManager escape() function.
- * @see BACK_BUTTON
- * @see ScreenManager
- * @see ScreenManager.escape
- */
-private val BACK_BUTTON_ACTION : Action = {ScreenManager.escape()}
-
-/**
- * The 'Back' button, a typical TextButton that goes back to the previous Screen.
- * @see TextButton
- * @see Screen
- * @see BACK_BUTTON_ACTION
- * @see BACK_BUTTON_TEXT
- * @see ScreenManager
- * @see ScreenManager.escape
- */
-val BACK_BUTTON : TextButton by lazy{
-    val result = TextButton(0, 0, BACK_BUTTON_TEXT, BACK_BUTTON_ACTION)
-    result alignLeftTo 0
-    result alignUpTo 0
-    result
-}
 
 //NUMBERS----------------------------------------------------------------------
 
@@ -103,11 +70,11 @@ val mainMenuScreen : Screen = object : Screen() {
     private val EDITOR_BUTTON_X : Int = FRAMEX / 3
     private val EDITOR_BUTTON_Y : Int = FRAMEY / 2
     private val EDITOR_BUTTON_TEXT : String = "Editor"
-    private val EDITOR_BUTTON_ACTION : Action = { ScreenManager setScreen editorScreen }
+    private val EDITOR_BUTTON_ACTION : Action = { setNextScreen(editorScreen) }
     private val EDITOR_BUTTON : TextButton by lazy{ TextButton(EDITOR_BUTTON_X, EDITOR_BUTTON_Y, EDITOR_BUTTON_TEXT, EDITOR_BUTTON_ACTION) }
 
     private val EXIT_BUTTON_TEXT : String = "X"
-    private val EXIT_BUTTON_ACTION : Action = { ScreenManager setScreen exitProgramScreen }
+    private val EXIT_BUTTON_ACTION : Action = { setNextScreen(exitProgramScreen) }
     private val EXIT_BUTTON : TextButton by lazy{
         val result = TextButton(0, 0, EXIT_BUTTON_TEXT, EXIT_BUTTON_ACTION)
         result alignUpTo 0
@@ -118,7 +85,7 @@ val mainMenuScreen : Screen = object : Screen() {
     private val TEST_BUTTON_X : Int = FRAMEX / 2
     private val TEST_BUTTON_Y : Int = FRAMEY * 4 / 5
     private val TEST_BUTTON_TEXT : String = "Test Screen"
-    private val TEST_BUTTON_ACTION : Action = {ScreenManager.setScreen(testScreen)}
+    private val TEST_BUTTON_ACTION : Action = {setNextScreen(testScreen)}
     private val TEST_BUTTON : TextButton = TextButton(TEST_BUTTON_X, TEST_BUTTON_Y, TEST_BUTTON_TEXT, TEST_BUTTON_ACTION)
 
     override var previousScreen: Screen = this
@@ -137,9 +104,7 @@ val mainMenuScreen : Screen = object : Screen() {
         this remove EXIT_BUTTON
     }
 
-    override fun escape() {
-        ScreenManager setScreen exitProgramScreen
-    }
+    override fun escape() = setNextScreen(exitProgramScreen)
 
 }
 
@@ -157,6 +122,15 @@ val editorScreen : Screen = object : Screen() {
     private val GRID_DISPLAYER_X : Int = ALLOWED_LEFT_WIDTH + ALLOWED_GRID_WIDTH / 2
     private val GRID_DISPLAYER_Y : Int = ALLOWED_GRID_HEIGHT / 2
     private val GRID_DISPLAYER : GridDisplayer = GridDisplayer(GRID_DISPLAYER_X, GRID_DISPLAYER_Y, ALLOWED_GRID_WIDTH, ALLOWED_GRID_HEIGHT)
+
+    private val BACK_BUTTON_TEXT : String = "<-"
+    private val BACK_BUTTON_ACTION : Action = {escape()}
+    val BACK_BUTTON : TextButton by lazy{
+        val result = TextButton(0, 0, BACK_BUTTON_TEXT, BACK_BUTTON_ACTION)
+        result alignLeftTo 0
+        result alignUpTo 0
+        result
+    }
 
     private val WIDTH_TEXT_STRING : String = "Grid width"
     private val HEIGHT_TEXT_STRING : String = "Grid height"
@@ -298,16 +272,13 @@ val exitProgramScreen : Screen = object : Screen(){
     private val EXIT_PROGRAM_BUTTON_X : Int = FRAMEX / 3
     private val EXIT_PROGRAM_BUTTON_Y : Int = FRAMEY * 2 / 3
     private val EXIT_PROGRAM_BUTTON_TEXT : String = "Exit"
-    private val EXIT_PROGRAM_BUTTON_ACTION : Action = {
-        mainFrame.isVisible = false
-        mainFrame.dispatchEvent(WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING))
-    }
+    private val EXIT_PROGRAM_BUTTON_ACTION : Action = {mainFrame.close()}
     private val EXIT_PROGRAM_BUTTON : TextButton by lazy{TextButton(EXIT_PROGRAM_BUTTON_X, EXIT_PROGRAM_BUTTON_Y, EXIT_PROGRAM_BUTTON_TEXT, EXIT_PROGRAM_BUTTON_ACTION)}
 
     private val CANCEL_EXIT_BUTTON_X : Int = FRAMEX * 2 / 3
     private val CANCEL_EXIT_BUTTON_Y : Int = EXIT_PROGRAM_BUTTON_Y
     private val CANCEL_EXIT_BUTTON_TEXT : String = "Cancel"
-    private val CANCEL_EXIT_BUTTON_ACTION : Action = {ScreenManager.escape()}
+    private val CANCEL_EXIT_BUTTON_ACTION : Action = {escape()}
     private val CANCEL_EXIT_BUTTON : TextButton by lazy{TextButton(CANCEL_EXIT_BUTTON_X, CANCEL_EXIT_BUTTON_Y, CANCEL_EXIT_BUTTON_TEXT, CANCEL_EXIT_BUTTON_ACTION)}
 
     private val EXIT_PROGRAM_QUESTION_X : Int = FRAMEX / 2
@@ -342,6 +313,15 @@ val exitProgramScreen : Screen = object : Screen(){
  * @see Screen
  */
 val testScreen : Screen = object : Screen(){
+
+    private val BACK_BUTTON_TEXT : String = "<-"
+    private val BACK_BUTTON_ACTION : Action = {escape()}
+    val BACK_BUTTON : TextButton by lazy{
+        val result = TextButton(0, 0, BACK_BUTTON_TEXT, BACK_BUTTON_ACTION)
+        result alignLeftTo 0
+        result alignUpTo 0
+        result
+    }
 
     override var previousScreen: Screen = mainMenuScreen
 
