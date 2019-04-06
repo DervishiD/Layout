@@ -70,17 +70,22 @@ class TextField : Displayer{
 
     /**
      * Constructs a TextField with the given parameters.
-     * @param p The center point of this TextDisplayer.
+     * @param x The x coordinate of the center point of this TextDisplayer.
+     * @param y The y coordinate of the center point of this TextDisplayer.
      * @param width The width of this TextField.
      * @param defaultText The text that appears on this TextField.
      * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see Point
      * @see regex
      */
-    constructor(p : Point, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : super(p){
+    constructor(
+            x : Int,
+            y : Int,
+            width : Int = DEFAULT_WIDTH,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
         this.typedText = defaultText
         this.regex = Regex(regex)
-        this.w = width
+        this.w.value = width
     }
 
     /**
@@ -92,7 +97,16 @@ class TextField : Displayer{
      * @param regex A Regex that defines which characters can be typed in this TextField.
      * @see regex
      */
-    constructor(x : Double, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(
+            x : Int,
+            y : Double,
+            width : Int = DEFAULT_WIDTH,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        this.w.value = width
+    }
 
     /**
      * Constructs a TextField with the given parameters.
@@ -103,7 +117,16 @@ class TextField : Displayer{
      * @param regex A Regex that defines which characters can be typed in this TextField.
      * @see regex
      */
-    constructor(x : Int, y : Double, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(
+            x : Double,
+            y : Int,
+            width : Int = DEFAULT_WIDTH,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        this.w.value = width
+    }
 
     /**
      * Constructs a TextField with the given parameters.
@@ -114,18 +137,32 @@ class TextField : Displayer{
      * @param regex A Regex that defines which characters can be typed in this TextField.
      * @see regex
      */
-    constructor(x : Double, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(
+            x : Double,
+            y : Double,
+            width : Int = DEFAULT_WIDTH,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        this.w.value = width
+    }
 
     /**
      * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
+     * @param p The center point of this TextDisplayer.
      * @param width The width of this TextField.
      * @param defaultText The text that appears on this TextField.
      * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see Point
      * @see regex
      */
-    constructor(x : Int, y : Int, width : Int = DEFAULT_WIDTH, defaultText : String = "", regex : String = ".") : this(Point(x, y), width, defaultText, regex)
+    constructor(
+            p : Point,
+            width : Int = DEFAULT_WIDTH,
+            defaultText : String = "",
+            regex : String = ".")
+            : this(p.intx(), p.inty(), width, defaultText, regex)
 
     /**
      * Types the given character (as a keyCode) in this TextField.
@@ -133,13 +170,14 @@ class TextField : Displayer{
      * @see typedText
      * @see regex
      */
-    infix fun type(keyCode : Int){
+    infix fun type(keyCode : Int) : TextField{
         val key : Char = keyCode.toChar()
         when{
             regex.matches(key.toString()) -> typedText += key
             key == '\b' -> backspace()
             key == '\t' -> tab()
         }
+        return this
     }
 
     /**
@@ -164,16 +202,18 @@ class TextField : Displayer{
      * Focuses this TextField.
      * @see FOCUSED_COLOR
      */
-    fun focus(){
+    fun focus() : TextField{
         isFocused = true
+        return this
     }
 
     /**
      * Unfocuses this TextField.
      * @see UNFOCUSED_COLOR
      */
-    fun unfocus(){
+    fun unfocus() : TextField{
         isFocused = false
+        return this
     }
 
     /**
@@ -187,13 +227,14 @@ class TextField : Displayer{
      * Clears the typed text.
      * @see typedText
      */
-    fun clear(){
+    fun clear() : TextField{
         typedText = ""
+        return this
     }
 
     override fun loadParameters(g: Graphics) {
         val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
-        h = fm.maxAscent + fm.maxDescent + 2 * (LINE_THICKNESS + DELTA)
+        h.value = fm.maxAscent + fm.maxDescent + 2 * (LINE_THICKNESS + DELTA)
     }
 
     override fun drawDisplayer(g: Graphics) {
@@ -222,10 +263,10 @@ class TextField : Displayer{
      * @see LINE_THICKNESS
      */
     private fun drawBackground(g : Graphics){
-        g.fillRect(0, 0, LINE_THICKNESS, h)
-        g.fillRect(0, 0, w, LINE_THICKNESS)
-        g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)
-        g.fillRect(w - LINE_THICKNESS, 0, w, h)
+        g.fillRect(0, 0, LINE_THICKNESS, height())
+        g.fillRect(0, 0, width(), LINE_THICKNESS)
+        g.fillRect(0, height() - LINE_THICKNESS, width(), LINE_THICKNESS)
+        g.fillRect(width() - LINE_THICKNESS, 0, width(), height())
     }
 
 }

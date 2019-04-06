@@ -1,36 +1,40 @@
 package display.frame
 
-import main.Action
 import java.util.*
 
-internal class LTimer {
+/**
+ * A decorator for the java.util.Timer, used by the LFrame class.
+ * @param frame This LTimer's LFrame.
+ * @param period This LTimer's period.
+ * @see java.util.Timer
+ * @see LFrame
+ */
+internal class LTimer(private val frame: LFrame, private val period: Long = DEFAULT_PERIOD) {
 
     companion object {
 
+        /**
+         * The default period of a LTimer.
+         */
         private const val DEFAULT_PERIOD : Long = 30
 
-        private class Task(private val action : Action) : TimerTask(){
-            override fun run(){
-                action.invoke()
-            }
-        }
-
     }
 
-    private val frame : LFrame
-
-    private var period : Long
-
+    /**
+     * The inner java.util.Timer of this LTimer.
+     * @see java.util.Timer
+     */
     private val timer : Timer = Timer(false)
 
-    private val task : Task
-
-    constructor(frame : LFrame, period : Long = DEFAULT_PERIOD){
-        this.frame = frame
-        this.period = period
-        task = Task{frame.repaint()}
-    }
-
-    fun start() = timer.scheduleAtFixedRate(task, 0, period)
+    /**
+     * Starts this LTimer.
+     * @see timer
+     * @see period
+     */
+    fun start() = timer.scheduleAtFixedRate(object : TimerTask(){
+        override fun run() {
+            frame.repaint()
+        }
+    }, 0, period)
 
 }

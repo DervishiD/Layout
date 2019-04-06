@@ -56,8 +56,8 @@ const val SMALLEST_GRID_IMAGE_SIZE : Int = 20
  */
 val mainMenuScreen : Screen = object : Screen() {
 
-    private val TITLE_X : Int = FRAMEX / 2
-    private val TITLE_Y : Int = FRAMEY / 5
+    private val TITLE_X : Double = 0.5
+    private val TITLE_Y : Double = 0.2
     private val TITLE_TEXT : String = "Title"
     private val TITLE : Label by lazy{
         Label(
@@ -67,8 +67,8 @@ val mainMenuScreen : Screen = object : Screen() {
         )
     }
 
-    private val EDITOR_BUTTON_X : Int = FRAMEX / 3
-    private val EDITOR_BUTTON_Y : Int = FRAMEY / 2
+    private val EDITOR_BUTTON_X : Double = 1.0/3
+    private val EDITOR_BUTTON_Y : Double = 0.5
     private val EDITOR_BUTTON_TEXT : String = "Editor"
     private val EDITOR_BUTTON_ACTION : Action = { setNextScreen(editorScreen) }
     private val EDITOR_BUTTON : TextButton by lazy{ TextButton(EDITOR_BUTTON_X, EDITOR_BUTTON_Y, EDITOR_BUTTON_TEXT, EDITOR_BUTTON_ACTION) }
@@ -82,8 +82,8 @@ val mainMenuScreen : Screen = object : Screen() {
         result
     }
 
-    private val TEST_BUTTON_X : Int = FRAMEX / 2
-    private val TEST_BUTTON_Y : Int = FRAMEY * 4 / 5
+    private val TEST_BUTTON_X : Double = 0.5
+    private val TEST_BUTTON_Y : Double = 0.8
     private val TEST_BUTTON_TEXT : String = "Test Screen"
     private val TEST_BUTTON_ACTION : Action = {setNextScreen(testScreen)}
     private val TEST_BUTTON : TextButton = TextButton(TEST_BUTTON_X, TEST_BUTTON_Y, TEST_BUTTON_TEXT, TEST_BUTTON_ACTION)
@@ -174,19 +174,16 @@ val editorScreen : Screen = object : Screen() {
     private val SELECTOR_SELECTOR_TEXT_DELTA : Int = 50
     private val CELL_SELECTOR_SELECTOR_DELTA : Int = 10
     private val LEFT_SCROLL_PANE : DisplayerScrollPane =
-        DisplayerScrollPane(ALLOWED_LEFT_WIDTH/2, ALLOWED_LEFT_HEIGHT/2, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT).also {
-            it.alignLeftTo(0)
-            it.alignUpTo(0)
-            it.addToScrollPane(WIDTH_TEXT, WIDTH_TEXT_DELTA)
-            it.addToScrollPane(WIDTH_TEXTFIELD, WIDTH_FIELD_DELTA)
-            it.addToScrollPane(HEIGHT_TEXT, HEIGHT_TEXT_DELTA)
-            it.addToScrollPane(HEIGHT_TEXTFIELD, HEIGHT_FIELD_DELTA)
-            it.addToScrollPane(RECENTER_BUTTON, RECENTER_BUTTON_DELTA)
-            it.addToScrollPane(BRUSH_SELECTOR_TEXT, BRUSH_SELECTOR_TEXT_DELTA)
-            it.addToScrollPane(BRUSH_SIZE_SELECTOR, BRUSH_SIZE_SELECTOR_DELTA)
-            it.addToScrollPane(SELECTOR_SELECTOR_TEXT, SELECTOR_SELECTOR_TEXT_DELTA)
-            it.addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA)
-        }
+        DisplayerScrollPane(ALLOWED_LEFT_WIDTH/2, ALLOWED_LEFT_HEIGHT/2, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT)
+            .addToScrollPane(WIDTH_TEXT, WIDTH_TEXT_DELTA)
+            .addToScrollPane(WIDTH_TEXTFIELD, WIDTH_FIELD_DELTA)
+            .addToScrollPane(HEIGHT_TEXT, HEIGHT_TEXT_DELTA)
+            .addToScrollPane(HEIGHT_TEXTFIELD, HEIGHT_FIELD_DELTA)
+            .addToScrollPane(RECENTER_BUTTON, RECENTER_BUTTON_DELTA)
+            .addToScrollPane(BRUSH_SELECTOR_TEXT, BRUSH_SELECTOR_TEXT_DELTA)
+            .addToScrollPane(BRUSH_SIZE_SELECTOR, BRUSH_SIZE_SELECTOR_DELTA)
+            .addToScrollPane(SELECTOR_SELECTOR_TEXT, SELECTOR_SELECTOR_TEXT_DELTA)
+            .addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA)
 
     override var previousScreen: Screen = mainMenuScreen
 
@@ -269,20 +266,20 @@ val editorScreen : Screen = object : Screen() {
  */
 val exitProgramScreen : Screen = object : Screen(){
 
-    private val EXIT_PROGRAM_BUTTON_X : Int = FRAMEX / 3
-    private val EXIT_PROGRAM_BUTTON_Y : Int = FRAMEY * 2 / 3
+    private val EXIT_PROGRAM_BUTTON_X : Double = 1/3.0
+    private val EXIT_PROGRAM_BUTTON_Y : Double = 2 / 3.0
     private val EXIT_PROGRAM_BUTTON_TEXT : String = "Exit"
     private val EXIT_PROGRAM_BUTTON_ACTION : Action = {mainFrame.close()}
     private val EXIT_PROGRAM_BUTTON : TextButton by lazy{TextButton(EXIT_PROGRAM_BUTTON_X, EXIT_PROGRAM_BUTTON_Y, EXIT_PROGRAM_BUTTON_TEXT, EXIT_PROGRAM_BUTTON_ACTION)}
 
-    private val CANCEL_EXIT_BUTTON_X : Int = FRAMEX * 2 / 3
-    private val CANCEL_EXIT_BUTTON_Y : Int = EXIT_PROGRAM_BUTTON_Y
+    private val CANCEL_EXIT_BUTTON_X : Double = 2/3.0
+    private val CANCEL_EXIT_BUTTON_Y : Double = EXIT_PROGRAM_BUTTON_Y
     private val CANCEL_EXIT_BUTTON_TEXT : String = "Cancel"
     private val CANCEL_EXIT_BUTTON_ACTION : Action = {escape()}
     private val CANCEL_EXIT_BUTTON : TextButton by lazy{TextButton(CANCEL_EXIT_BUTTON_X, CANCEL_EXIT_BUTTON_Y, CANCEL_EXIT_BUTTON_TEXT, CANCEL_EXIT_BUTTON_ACTION)}
 
-    private val EXIT_PROGRAM_QUESTION_X : Int = FRAMEX / 2
-    private val EXIT_PROGRAM_QUESTION_Y : Int = FRAMEY / 4
+    private val EXIT_PROGRAM_QUESTION_X : Double = 0.5
+    private val EXIT_PROGRAM_QUESTION_Y : Double = 0.25
     private val EXIT_PROGRAM_QUESTION_TEXT : String = "Are you sure you want to quit?"
     private val EXIT_PROGRAM_QUESTION : Label by lazy{
         Label(

@@ -1,5 +1,6 @@
 package display
 
+import utilities.LProperty
 import java.awt.Container
 
 /**
@@ -17,11 +18,19 @@ import java.awt.Container
  */
 interface CustomContainer {
 
+    var w : LProperty<Int>
+
+    var h : LProperty<Int>
+
     /**
      * The Displayers contained in this Container
      * @see Displayer
      */
     val parts : MutableCollection<Displayer>
+
+    fun width() : Int = w.value
+
+    fun height() : Int = h.value
 
     /**
      * Adds a Displayer to this CustomContainer.
@@ -30,10 +39,15 @@ interface CustomContainer {
      * @see Displayer.onAdd
      * @see parts
      */
-    infix fun add(d : Displayer){
+    infix fun add(d : Displayer) : CustomContainer{
         parts.add(d)
         (this as Container).add(d)
+        d.updateRelativeValues(width(), height())
+        w.addListener(d){d.updateRelativeValues(width(), height())}
+        h.addListener(d){d.updateRelativeValues(width(), height())}
+        d.addRequestUpdateListener(this){d.updateRelativeValues(width(), height())}
         d.onAdd(this)
+        return this
     }
 
     /**
@@ -43,10 +57,14 @@ interface CustomContainer {
      * @see Displayer.onRemove
      * @see parts
      */
-    infix fun remove(d : Displayer){
+    infix fun remove(d : Displayer) : CustomContainer{
         parts.remove(d)
         (this as Container).remove(d)
+        w.removeListener(d)
+        h.removeListener(d)
+        d.removeRequestUpdateListener(this)
         d.onRemove(this)
+        return this
     }
 
     /**

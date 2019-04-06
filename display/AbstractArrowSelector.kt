@@ -156,12 +156,133 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
      */
+    constructor(x : Int, y : Int, options : Collection<T>, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The vararg list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Int, y : Int, vararg options : T, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(*options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Int, y : Double, options : Collection<T>, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The vararg list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Int, y : Double, vararg options : T, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(*options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Double, y : Int, options : Collection<T>, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The vararg list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Double, y : Int, vararg options : T, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(*options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Double, y : Double, options : Collection<T>, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The vararg list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
+    constructor(x : Double, y : Double, vararg options : T, isHorizontal : Boolean = true) : super(x, y){
+        addOptionsList(*options)
+        this.isHorizontal = isHorizontal
+        previousArrow = initializePreviousArrow()
+        nextArrow = initializeNextArrow()
+    }
+
+    /**
+     * Creates an ArrowSelector at the given position, with the given list of options, and
+     * horizontal if isHorizontal is true.
+     * @param p The position of the Selector
+     * @param options The list of options of this Selector.
+     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
+     * @see Displayer
+     */
     constructor(p : Point, options : Collection<T>, isHorizontal : Boolean = true) : super(p){
         addOptionsList(options)
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
         nextArrow = initializeNextArrow()
     }
+
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
@@ -209,7 +330,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     private fun initializePreviousArrow() : ImageButton {
         return if(isHorizontal){
             ImageButton(
-                point,
+                absoluteX, absoluteY,
                 HORIZONTAL_ARROW_WIDTH,
                 HORIZONTAL_ARROW_HEIGHT,
                 previousAction,
@@ -217,7 +338,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             )
         }else{
             ImageButton(
-                point,
+                absoluteX, absoluteY,
                 VERTICAL_ARROW_WIDTH,
                 VERTICAL_ARROW_HEIGHT,
                 previousAction,
@@ -234,7 +355,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     private fun initializeNextArrow() : ImageButton {
         return if(isHorizontal){
             ImageButton(
-                point,
+                absoluteX, absoluteY,
                 HORIZONTAL_ARROW_WIDTH,
                 HORIZONTAL_ARROW_HEIGHT,
                 nextAction,
@@ -242,7 +363,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             )
         }else{
             ImageButton(
-                point,
+                    absoluteX, absoluteY,
                 VERTICAL_ARROW_WIDTH,
                 VERTICAL_ARROW_HEIGHT,
                 nextAction,
@@ -256,9 +377,10 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * @see setPreviousArrowColor
      * @see setNextArrowColor
      */
-    infix fun setArrowsColor(color : Color){
+    infix fun setArrowsColor(color : Color) : AbstractArrowSelector<T>{
         setPreviousArrowColor(color)
         setNextArrowColor(color)
+        return this
     }
 
     /**
@@ -266,7 +388,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * @see leftArrowDrawer
      * @see downArrowDrawer
      */
-    infix fun setPreviousArrowColor(color : Color){
+    infix fun setPreviousArrowColor(color : Color) : AbstractArrowSelector<T>{
         if(isHorizontal){
             previousArrow.setImage(
                 leftArrowDrawer(color),
@@ -280,6 +402,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
                 VERTICAL_ARROW_HEIGHT
             )
         }
+        return this
     }
 
     /**
@@ -287,7 +410,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * @see rightArrowDrawer
      * @see upArrowDrawer
      */
-    infix fun setNextArrowColor(color: Color){
+    infix fun setNextArrowColor(color: Color) : AbstractArrowSelector<T>{
         if(isHorizontal){
             nextArrow.setImage(
                 rightArrowDrawer(color),
@@ -301,6 +424,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
                 VERTICAL_ARROW_HEIGHT
             )
         }
+        return this
     }
 
     override fun lowestX() : Int = super.lowestX() - if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
@@ -311,36 +435,40 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     override fun highestY() : Int = super.highestY() + if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
 
-    override infix fun alignLeftTo(position : Int){
+    override infix fun alignLeftTo(position : Int) : AbstractArrowSelector<T>{
         if(isHorizontal){
             super.alignLeftTo(position + HORIZONTAL_ARROW_WIDTH + EXTERIOR_DELTA)
         }else{
             super.alignLeftTo(position)
         }
+        return this
     }
 
-    override infix fun alignRightTo(position : Int){
+    override infix fun alignRightTo(position : Int) : AbstractArrowSelector<T>{
         if(isHorizontal){
             super.alignRightTo(position - HORIZONTAL_ARROW_WIDTH - EXTERIOR_DELTA)
         }else{
             super.alignRightTo(position)
         }
+        return this
     }
 
-    override infix fun alignUpTo(position : Int){
+    override infix fun alignUpTo(position : Int) : AbstractArrowSelector<T>{
         if(isHorizontal){
             super.alignUpTo(position)
         }else{
             super.alignUpTo(position + VERTICAL_ARROW_HEIGHT + EXTERIOR_DELTA)
         }
+        return this
     }
 
-    override infix fun alignDownTo(position : Int){
+    override infix fun alignDownTo(position : Int) : AbstractArrowSelector<T>{
         if(isHorizontal){
             super.alignDownTo(position)
         }else{
             super.alignDownTo(position - VERTICAL_ARROW_HEIGHT - EXTERIOR_DELTA)
         }
+        return this
     }
 
     override fun onAdd(source : CustomContainer) {
@@ -371,8 +499,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * correctly with this Selector
      */
     private fun setHorizontalArrowPosition(){
-        previousArrow.moveTo(point.x - w/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, point.y)
-        nextArrow.moveTo(point.x + w/2 + EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH /2, point.y)
+        previousArrow.moveTo(absoluteX - width()/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, absoluteY)
+        nextArrow.moveTo(absoluteX + width()/2 + EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH /2, absoluteY)
     }
 
     /**
@@ -380,8 +508,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * correctly with this Selector
      */
     private fun setVerticalArrowPosition(){
-        previousArrow.moveTo(point.x, point.y + h/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)
-        nextArrow.moveTo(point.x, point.y - h/2 - EXTERIOR_DELTA - VERTICAL_ARROW_HEIGHT /2)
+        previousArrow.moveTo(absoluteX, absoluteY + height()/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)
+        nextArrow.moveTo(absoluteX, absoluteY - height()/2 - EXTERIOR_DELTA - VERTICAL_ARROW_HEIGHT /2)
     }
 
 }

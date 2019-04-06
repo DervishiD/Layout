@@ -1,44 +1,47 @@
 package display
 
-import main.Action
-import main.FRAMEX
-import main.FRAMEY
-import main.MouseWheelAction
-import utilities.LProperty
+import display.frame.LFrame
+import display.frame.LScreenManager
 import java.awt.Component
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ESCAPE
 import javax.swing.JPanel
+import main.Action
+import main.MouseWheelAction
+import utilities.LProperty
 
 /**
  * The general abstraction for a Screen. A Screen is a special kind of JPanel that is used in this Layout.
- * Every scene that appears in the Frame is a Screen.
+ * Every scene that appears in a LFrame is a Screen.
  * @see CustomContainer
  * @see MouseInteractable
  * @see Displayer
- * @see ScreenManager
+ * @see LScreenManager
  * @see JPanel
+ * @see LFrame
  */
 abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
+
+    override var w : LProperty<Int> = LProperty(0)
+
+    override var h : LProperty<Int> = LProperty(0)
 
     /**
      * The Screen that comes before this one in the program architecture.
      */
     protected abstract var previousScreen : Screen
 
-    var nextScreen : LProperty<Screen?> = LProperty(null)
-
     /**
-     * Loads the bounds of the Screen as fullscreen.
+     * The next Screen, as a LProperty.
+     * @see setNextScreen
+     * @see LProperty
      */
-    init{
-        setBounds(0, 0, FRAMEX, FRAMEY)
-    }
+    private var nextScreen : LProperty<Screen?> = LProperty(null)
 
     /**
      * Returns the previous Screen
-     * @see previousScreen
      * @return The previous Screen in the program architecture.
+     * @see previousScreen
      */
     fun previousScreen() : Screen = previousScreen
 
@@ -53,6 +56,12 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
     override var onMove : Action = {}
     override var onWheelMoved : MouseWheelAction = {_ -> }
 
+    /**
+     * Sets the next Screen to the given value.
+     * @param nextScreen The Screen that appears on the core LFrame after this one.
+     * @see nextScreen
+     * @see LFrame
+     */
     protected infix fun setNextScreen(nextScreen : Screen){
         this.nextScreen.value = nextScreen
     }
@@ -90,9 +99,41 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
     /**
      * Goes back to the previous Screen designed by the previousScreen attribute.
      * @see previousScreen
-     * @see ScreenManager.toPreviousScreen
+     * @see setNextScreen
      */
     open fun escape() = setNextScreen(previousScreen)
+
+    /**
+     * Adds a Screen change listener to the nextScreen LProperty.
+     * @param key The key of the added listener.
+     * @param action The Action executed by the listener.
+     * @see nextScreen
+     * @see LProperty
+     * @see Action
+     */
+    fun addScreenChangeListener(key : Any?, action : Action) = nextScreen.addListener(key, action)
+
+    /**
+     * Removes a Screen change listener from the nextScreen LProperty.
+     * @param key The key of the listener to remove.
+     * @see LProperty
+     * @see nextScreen
+     */
+    fun removeScreenChangeListener(key : Any?) = nextScreen.removeListener(key)
+
+    fun setBounds(width : Int, height : Int) = setBounds(0, 0, width, height)
+
+    override fun setBounds(x: Int, y: Int, width: Int, height: Int) {
+        super.setBounds(x, y, width, height)
+        w.value = width
+        h.value = height
+    }
+
+    /**
+     * The next Screen.
+     * @see nextScreen
+     */
+    fun nextScreen() : Screen? = nextScreen.value
 
     override fun mouseClick(x : Int, y : Int){
         val component : Component = getComponentAt(x, y)

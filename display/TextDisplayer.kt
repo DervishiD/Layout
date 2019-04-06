@@ -83,15 +83,84 @@ abstract class TextDisplayer : Displayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(p : Point, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(p){
+    constructor(x : Int, y : Int, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
         if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        point = p
         for(s : StringDisplay in text){
             txt.add(s)
         }
         lines = txt.toLinesList()
         backgroundDrawer = background
     }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Double, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(s : StringDisplay in text){
+            txt.add(s)
+        }
+        lines = txt.toLinesList()
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Int, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(s : StringDisplay in text){
+            txt.add(s)
+        }
+        lines = txt.toLinesList()
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Double, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(s : StringDisplay in text){
+            txt.add(s)
+        }
+        lines = txt.toLinesList()
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(p : Point, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND)
+            : this(p.intx(), p.inty(), text, background)
 
     /**
      * Constructs a TextDisplayer with the given parameters.
@@ -103,7 +172,104 @@ abstract class TextDisplayer : Displayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : this(p, arrayListOf<StringDisplay>(text), background)
+    constructor(x : Int, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
+            : this(x, y, listOf<StringDisplay>(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a StringDisplay.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
+            : this(x, y, listOf<StringDisplay>(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a StringDisplay.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
+            : this(x, y, listOf<StringDisplay>(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a StringDisplay.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
+            : this(x, y, listOf<StringDisplay>(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a StringDisplay.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
+            : this(p, listOf<StringDisplay>(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a String.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a String.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a String.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a String.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
 
     /**
      * Constructs a TextDisplayer with the given parameters.
@@ -126,9 +292,8 @@ abstract class TextDisplayer : Displayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(p : Point, text : Text, background: GraphicAction = NO_BACKGROUND) : super(p){
+    constructor(x : Int, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
         if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        point = p
         for(line in text.asLines()){
             lines.add(line)
             for(sd in line){
@@ -139,12 +304,88 @@ abstract class TextDisplayer : Displayer {
     }
 
     /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Text object.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see Text
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(line in text.asLines()){
+            lines.add(line)
+            for(sd in line){
+                txt.add(sd)
+            }
+        }
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Text object.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see Text
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(line in text.asLines()){
+            lines.add(line)
+            for(sd in line){
+                txt.add(sd)
+            }
+        }
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Text object.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see Text
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
+        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+        for(line in text.asLines()){
+            lines.add(line)
+            for(sd in line){
+                txt.add(sd)
+            }
+        }
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextDisplayer with the given parameters.
+     * @param p The center Point of this TextDisplayer.
+     * @param text The displayed text, as a Text object.
+     * @param background The background of this TextDisplayer, as a GraphicAction.
+     * @see Point
+     * @see Text
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(p : Point, text : Text, background: GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), text, background)
+
+    /**
      * Sets the maximal line length for this TextDisplayer.
      * @see maxLineLength
      * @see forceMaxLineLength
      */
-    infix fun setMaxLineLength(length : Int){
+    infix fun setMaxLineLength(length : Int) : TextDisplayer{
         maxLineLength = length
+        return this
     }
 
     /**
@@ -152,7 +393,7 @@ abstract class TextDisplayer : Displayer {
      * @see maxLineLength
      * @see forceMaxLineLength
      */
-    infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
+    infix fun setMaxLineLength(length : Double) : TextDisplayer = setMaxLineLength(length.toInt())
 
     /**
      * Sets the side deltas to the given value.
@@ -162,12 +403,13 @@ abstract class TextDisplayer : Displayer {
      * @see leftDelta
      * @see rightDelta
      */
-    infix fun setSideDistance(delta : Int){
+    infix fun setSideDistance(delta : Int) : TextDisplayer{
         if(delta >= 0){
             upDelta = delta
             downDelta = delta
             leftDelta = delta
             rightDelta = delta
+            return this
         }else throw IllegalArgumentException("Negative sides delta : $delta")
     }
 
@@ -177,10 +419,11 @@ abstract class TextDisplayer : Displayer {
      * @see leftDelta
      * @see rightDelta
      */
-    infix fun setHorizontalDistance(delta : Int){
+    infix fun setHorizontalDistance(delta : Int) : TextDisplayer{
         if(delta >= 0){
             leftDelta = delta
             rightDelta = delta
+            return this
         }else throw IllegalArgumentException("Negative horizontal sides delta : $delta")
     }
 
@@ -190,10 +433,11 @@ abstract class TextDisplayer : Displayer {
      * @see upDelta
      * @see downDelta
      */
-    infix fun setVerticalDistance(delta: Int){
+    infix fun setVerticalDistance(delta: Int) : TextDisplayer{
         if(delta >= 0){
             upDelta = delta
             downDelta = delta
+            return this
         }else throw IllegalArgumentException("Negative vertical sides delta : $delta")
     }
 
@@ -202,9 +446,11 @@ abstract class TextDisplayer : Displayer {
      * @param delta The new delta, in pixels.
      * @see leftDelta
      */
-    infix fun setLeftDistance(delta : Int){
-        if(delta >= 0) upDelta = delta
-        else throw IllegalArgumentException("Negative left side delta : $delta")
+    infix fun setLeftDistance(delta : Int) : TextDisplayer{
+        if(delta >= 0){
+            upDelta = delta
+            return this
+        }else throw IllegalArgumentException("Negative left side delta : $delta")
     }
 
     /**
@@ -212,9 +458,11 @@ abstract class TextDisplayer : Displayer {
      * @param delta The new delta, in pixels.
      * @see rightDelta
      */
-    infix fun setRightDistance(delta : Int){
-        if(delta >= 0) rightDelta = delta
-        else throw IllegalArgumentException("Negative right side delta : $delta")
+    infix fun setRightDistance(delta : Int) : TextDisplayer{
+        if(delta >= 0){
+            rightDelta = delta
+            return this
+        }else throw IllegalArgumentException("Negative right side delta : $delta")
     }
 
     /**
@@ -222,9 +470,11 @@ abstract class TextDisplayer : Displayer {
      * @param delta The new delta, in pixels.
      * @see upDelta
      */
-    infix fun setTopDistance(delta : Int){
-        if(delta >= 0) upDelta = delta
-        else throw IllegalArgumentException("Negative up side delta : $delta")
+    infix fun setTopDistance(delta : Int) : TextDisplayer{
+        if(delta >= 0){
+            upDelta = delta
+            return this
+        }else throw IllegalArgumentException("Negative up side delta : $delta")
     }
 
     /**
@@ -232,9 +482,11 @@ abstract class TextDisplayer : Displayer {
      * @param delta The new delta, in pixels.
      * @see downDelta
      */
-    infix fun setBottomDistance(delta : Int){
-        if(delta >= 0) downDelta = delta
-        else throw IllegalArgumentException("Negative down side delta : $delta")
+    infix fun setBottomDistance(delta : Int) : TextDisplayer{
+        if(delta >= 0){
+            downDelta = delta
+            return this
+        }else throw IllegalArgumentException("Negative down side delta : $delta")
     }
 
     /**
@@ -344,10 +596,11 @@ abstract class TextDisplayer : Displayer {
      * @param text The displayed text, as a Collection of StringDisplays.
      * @see StringDisplay
      */
-    infix fun setDisplayedText(text : Collection<StringDisplay>){
+    infix fun setDisplayedText(text : Collection<StringDisplay>) : TextDisplayer{
         txt = if(text is MutableCollection<StringDisplay>) text else text.toMutableCollection()
         lines = txt.toLinesList()
         initphase = true
+        return this
     }
 
     /**
@@ -355,26 +608,27 @@ abstract class TextDisplayer : Displayer {
      * @param text The displayed text, as a StringDisplay.
      * @see StringDisplay
      */
-    infix fun setDisplayedText(text : StringDisplay) = this setDisplayedText arrayListOf(text)
+    infix fun setDisplayedText(text : StringDisplay) : TextDisplayer = this setDisplayedText arrayListOf(text)
 
     /**
      * Sets the displayed text.
      * @param text The displayed text, as a String.
      */
-    infix fun setDisplayedText(text : String) = this setDisplayedText StringDisplay(text)
+    infix fun setDisplayedText(text : String) : TextDisplayer = this setDisplayedText StringDisplay(text)
 
     /**
      * Sets the displayed text.
      * @param text The displayed text, as a Text object.
      * @see Text
      */
-    infix fun setDisplayedText(text : Text){
+    infix fun setDisplayedText(text : Text) : TextDisplayer{
         txt = mutableListOf()
         for(line in text.asLines()){
             txt.addAll(line)
         }
         lines = text.asLines().toMutableCollection()
         initphase = true
+        return this
     }
 
     /**
@@ -382,10 +636,11 @@ abstract class TextDisplayer : Displayer {
      * @param g The Graphics context.
      */
     protected infix fun computeTotalHeight(g : Graphics){
-        h = upDelta + downDelta
+        var computedH = upDelta + downDelta
         for(line : List<StringDisplay> in lines){
-            h += line.lineHeight(g)
+            computedH += line.lineHeight(g)
         }
+        h.value = computedH
     }
 
     /**
@@ -400,7 +655,7 @@ abstract class TextDisplayer : Displayer {
                 maxLength = lineLength
             }
         }
-        w = maxLength + leftDelta + rightDelta
+        w.value = maxLength + leftDelta + rightDelta
     }
 
     /**
@@ -408,7 +663,7 @@ abstract class TextDisplayer : Displayer {
      * @param g The Graphics context.
      * @see backgroundDrawer
      */
-    private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
+    private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, width(), height())
 
     override fun drawDisplayer(g : Graphics){
         drawBackground(g)

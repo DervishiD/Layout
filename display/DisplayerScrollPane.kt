@@ -70,12 +70,9 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      */
     private val scrollPaneObjects : MutableList<ScrollPaneObject> = mutableListOf()
 
-    /**
-     * The zero point of the computation of the ScrollPaneObjects' positions
-     * @see Point
-     * @see ScrollPaneObject
-     */
-    private var startingPoint : Point
+    private var startingX : Int
+
+    private var startingY : Int
 
     /**
      * Draws the background of this DisplayerScrollPane.
@@ -84,17 +81,19 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
     private val backgroundDrawer : GraphicAction
 
     override var onWheelMoved : MouseWheelAction = {units : Int -> run{
-        startingPoint += if(isVertical()){
-            Vector(0, -units * SCROLL_DELTA)
+        if(isVertical()){
+            startingY -= units * SCROLL_DELTA
         }else{
-            Vector(-units * SCROLL_DELTA, 0)
+            startingX -= units * SCROLL_DELTA
         }
+
         verifyPosition()
     }}
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
-     * @param p The center point of this DisplayerScrollPane.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
      * @param width The width of this DisplayerScrollPane, in pixels.
      * @param height The height of this DisplayerScrollPane, in pixels.
      * @param scrollDirection The direction of scrolling
@@ -106,11 +105,24 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @see ScrollType
      * @see parts
      */
-    constructor(p : Point, width : Int, height : Int, scrollDirection : ScrollType = Companion.ScrollType.VERTICAL, parts : Collection<Displayer> = listOf(), background : GraphicAction = NO_BACKGROUND) : super(p){
-        w = width
-        h = height
+    constructor(
+            x : Int,
+            y : Int,
+            width : Int,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        w.value = width
+        h.value = height
         this.scrollDirection = scrollDirection
-        startingPoint = if(isVertical()) Point(w/2, 0) else Point(0, h/2)
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
         for(part : Displayer in parts){
             this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
         }
@@ -132,7 +144,29 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @see ScrollType
      * @see parts
      */
-    constructor(x : Int, y : Int, width : Int, height : Int, scrollDirection : ScrollType = Companion.ScrollType.VERTICAL, parts : Collection<Displayer> = listOf(), background : GraphicAction = NO_BACKGROUND) : this(Point(x, y), width, height, scrollDirection, parts, background)
+    constructor(
+            x : Int,
+            y : Double,
+            width : Int,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        w.value = width
+        h.value = height
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
@@ -149,7 +183,29 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @see ScrollType
      * @see parts
      */
-    constructor(x : Int, y : Double, width : Int, height : Int, scrollDirection : ScrollType = Companion.ScrollType.VERTICAL, parts : Collection<Displayer> = listOf(), background : GraphicAction = NO_BACKGROUND) : this(Point(x, y), width, height, scrollDirection, parts, background)
+    constructor(
+            x : Double,
+            y : Int,
+            width : Int,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        w.value = width
+        h.value = height
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
@@ -166,12 +222,33 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @see ScrollType
      * @see parts
      */
-    constructor(x : Double, y : Int, width : Int, height : Int, scrollDirection : ScrollType = Companion.ScrollType.VERTICAL, parts : Collection<Displayer> = listOf(), background : GraphicAction = NO_BACKGROUND) : this(Point(x, y), width, height, scrollDirection, parts, background)
+    constructor(
+            x : Double,
+            y : Double,
+            width : Int,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y){
+        w.value = width
+        h.value = height
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
+     * @param p The center point of this DisplayerScrollPane.
      * @param width The width of this DisplayerScrollPane, in pixels.
      * @param height The height of this DisplayerScrollPane, in pixels.
      * @param scrollDirection The direction of scrolling
@@ -183,7 +260,13 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @see ScrollType
      * @see parts
      */
-    constructor(x : Double, y : Double, width : Int, height : Int, scrollDirection : ScrollType = Companion.ScrollType.VERTICAL, parts : Collection<Displayer> = listOf(), background : GraphicAction = NO_BACKGROUND) : this(Point(x, y), width, height, scrollDirection, parts, background)
+    constructor(
+            p : Point,
+            width : Int,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
 
     /**
      * Adds a Displayer to the structure of the ScrollPane
@@ -192,26 +275,27 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      * @param perpendicularDelta The distance between this Displayer and the center of the ScrollPane
      *                          in the direction perpendicular to the scrolling
      */
-    fun addToScrollPane(part : Displayer, directionalDelta : Int = 0, perpendicularDelta : Int = 0){
+    fun addToScrollPane(part : Displayer, directionalDelta : Int = 0, perpendicularDelta : Int = 0) : DisplayerScrollPane{
         scrollPaneObjects.add(ScrollPaneObject(part, abs(directionalDelta), perpendicularDelta))
         (this as JLabel).add(part)
         part.onAdd(this)
+        return this
     }
 
     override fun loadParameters(g: Graphics) {
         if(scrollPaneObjects.size > 0){
             var last : Displayer = scrollPaneObjects[0].first
             if(isVertical()){
-                scrollPaneObjects[0].first.moveTo(startingPoint.x + scrollPaneObjects[0].third, startingPoint.y + scrollPaneObjects[0].second + scrollPaneObjects[0].first.height()/2)
+                scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].third, startingY + scrollPaneObjects[0].second + scrollPaneObjects[0].first.height()/2)
                 for(i : Int in 1 until scrollPaneObjects.size){
-                    scrollPaneObjects[i].first setx startingPoint.x + scrollPaneObjects[i].third
+                    scrollPaneObjects[i].first setx startingX + scrollPaneObjects[i].third
                     scrollPaneObjects[i].first.alignUpToDown(last, scrollPaneObjects[i].second)
                     last = scrollPaneObjects[i].first
                 }
             }else{
-                scrollPaneObjects[0].first.moveTo(startingPoint.x + scrollPaneObjects[0].second + scrollPaneObjects[0].first.width()/2, startingPoint.y + scrollPaneObjects[0].third)
+                scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].second + scrollPaneObjects[0].first.width()/2, startingY + scrollPaneObjects[0].third)
                 for(i : Int in 1 until parts.size){
-                    scrollPaneObjects[i].first sety startingPoint.y + scrollPaneObjects[i].third
+                    scrollPaneObjects[i].first sety startingY + scrollPaneObjects[i].third
                     scrollPaneObjects[i].first.alignLeftToRight(last, scrollPaneObjects[i].second)
                     last = scrollPaneObjects[i].first
                 }
@@ -222,16 +306,16 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
     override fun drawDisplayer(g: Graphics) {
         if(scrollPaneObjects.size > 0){
             if(isVertical()){
-                scrollPaneObjects[0].first.moveTo(startingPoint.x + scrollPaneObjects[0].third, startingPoint.y + scrollPaneObjects[0].second + scrollPaneObjects[0].first.height()/2)
+                scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].third, startingY + scrollPaneObjects[0].second + scrollPaneObjects[0].first.height()/2)
             }else{
-                scrollPaneObjects[0].first.moveTo(startingPoint.x + scrollPaneObjects[0].second + scrollPaneObjects[0].first.width()/2, startingPoint.y + scrollPaneObjects[0].third)
+                scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].second + scrollPaneObjects[0].first.width()/2, startingY + scrollPaneObjects[0].third)
             }
         }
         for(part : ScrollPaneObject in scrollPaneObjects){
             part.first.paintComponent(g)
         }
-        g.clearRect(0, 0, w, h)
-        backgroundDrawer.invoke(g, w, h)
+        g.clearRect(0, 0, width(), height())
+        backgroundDrawer.invoke(g, width(), height())
     }
 
     /**
@@ -240,16 +324,16 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      */
     private fun verifyPosition(){
         if(isVertical()){
-            if(startingPoint.y < 0){
-                startingPoint sety 0
-            }else if(startingPoint.y > maxScroll()){
-                startingPoint sety maxScroll()
+            if(startingY < 0){
+                startingY = 0
+            }else if(startingY > maxScroll()){
+                startingY = maxScroll()
             }
         }else{
-            if(startingPoint.x < 0){
-                startingPoint setx 0
-            }else if(startingPoint.x > maxScroll()){
-                startingPoint setx maxScroll()
+            if(startingX < 0){
+                startingX = 0
+            }else if(startingX > maxScroll()){
+                startingX = maxScroll()
             }
         }
     }
@@ -263,12 +347,12 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             for(part : ScrollPaneObject in scrollPaneObjects){
                 result += part.second + part.first.height()
             }
-            if(result < h) result = 0
+            if(result < height()) result = 0
         }else{
             for(part : ScrollPaneObject in scrollPaneObjects){
                 result += part.second + part.first.width()
             }
-            if(result < w) result = 0
+            if(result < width()) result = 0
         }
         return result
     }

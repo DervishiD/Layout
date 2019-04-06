@@ -22,6 +22,54 @@ class Label : TextDisplayer {
 
     /**
      * Constructs a Label with the given parameters.
+     * @param x The x coordinate of this Label's center Point.
+     * @param y The y coordinate of this Label's center Point.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this Label, as a GraphicAction.
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Double, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
+
+    /**
+     * Constructs a Label with the given parameters.
+     * @param x The x coordinate of this Label's center Point.
+     * @param y The y coordinate of this Label's center Point.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this Label, as a GraphicAction.
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Double, y : Int, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
+
+    /**
+     * Constructs a Label with the given parameters.
+     * @param x The x coordinate of this Label's center Point.
+     * @param y The y coordinate of this Label's center Point.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this Label, as a GraphicAction.
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Double, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
+
+    /**
+     * Constructs a Label with the given parameters.
+     * @param x The x coordinate of this Label's center Point.
+     * @param y The y coordinate of this Label's center Point.
+     * @param text The displayed text, as a Collection of StringDisplays.
+     * @param background The background of this Label, as a GraphicAction.
+     * @see StringDisplay
+     * @see GraphicAction
+     * @see backgroundDrawer
+     */
+    constructor(x : Int, y : Int, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
+
+    /**
+     * Constructs a Label with the given parameters.
      * @param p The center point of this Label.
      * @param text The displayed text, as a Collection of StringDisplays.
      * @param background The background of this Label, as a GraphicAction.
@@ -31,54 +79,6 @@ class Label : TextDisplayer {
      * @see Point
      */
     constructor(p : Point, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param x The x coordinate of this Label's center Point.
-     * @param y The y coordinate of this Label's center Point.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Double, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param x The x coordinate of this Label's center Point.
-     * @param y The y coordinate of this Label's center Point.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Int, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param x The x coordinate of this Label's center Point.
-     * @param y The y coordinate of this Label's center Point.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Double, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param x The x coordinate of this Label's center Point.
-     * @param y The y coordinate of this Label's center Point.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Int, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -102,7 +102,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -114,7 +114,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -126,7 +126,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -138,7 +138,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -160,7 +160,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -171,7 +171,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -182,7 +182,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -193,7 +193,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -217,7 +217,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -229,7 +229,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Int, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Int, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -241,7 +241,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     /**
      * Constructs a Label with the given parameters.
@@ -253,7 +253,7 @@ class Label : TextDisplayer {
      * @see GraphicAction
      * @see backgroundDrawer
      */
-    constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(Point(x, y), text, background)
+    constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
     override fun loadParameters(g : Graphics){
         forceMaxLineLength(g)

@@ -32,24 +32,27 @@ interface AbstractSelector<T> {
      * Adds an option to the list.
      * @see options
      */
-    infix fun addOption(option : T){
+    infix fun addOption(option : T) : AbstractSelector<T>{
         options.add(option)
+        return this
     }
 
     /**
      * Adds a Collection of options to the list.
      * @see options
      */
-    infix fun addOptionsList(options : Collection<T>){
+    infix fun addOptionsList(options : Collection<T>) : AbstractSelector<T>{
         this.options.addAll(options)
+        return this
     }
 
     /**
      * Adds a vararg Collection of options to the list.
      * @see options
      */
-    fun addOptionsList(vararg options : T){
+    fun addOptionsList(vararg options : T) : AbstractSelector<T>{
         this.options.addAll(options)
+        return this
     }
 
 }

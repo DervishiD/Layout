@@ -68,26 +68,32 @@ class Point {
     /**
      * Sets the x coordinate
      */
-    infix fun setx(x : Double){
+    infix fun setx(x : Double) : Point{
         this.x = x
+        return this
     }
 
     /**
      * Sets the x coordinate
      */
-    infix fun setx(x : Int) = setx(x.toDouble())
+    infix fun setx(x : Int) : Point = setx(x.toDouble())
+
+    infix fun setx(x : Float) : Point = setx(x.toDouble())
 
     /**
      * Sets the y coordinate
      */
-    infix fun sety(y : Double){
+    infix fun sety(y : Double) : Point{
         this.y = y
+        return this
     }
 
     /**
      * Sets the y coordinate
      */
-    infix fun sety(y : Int) = sety(y.toDouble())
+    infix fun sety(y : Int) : Point = sety(y.toDouble())
+
+    infix fun sety(y : Float) : Point = sety(y.toDouble())
 
     /**
      * Addition of a Vector to a Point, corresponds to moving the Point along the Vector.
@@ -124,12 +130,13 @@ class Point {
      * @param i The index to change
      * @param value The new value of the coordinate
      */
-    operator fun set(i : Int, value : Double) {
+    operator fun set(i : Int, value : Double) : Point {
         when (i) {
             0 -> x = value
             1 -> y = value
             else -> throw IndexOutOfBoundsException("A Vector only has two coordinates")
         }
+        return this
     }
 
     /**
@@ -137,7 +144,7 @@ class Point {
      * @param i The index to change
      * @param value The new value of the coordinate
      */
-    operator fun set(i : Int, value : Int) = set(i, value.toDouble())
+    operator fun set(i : Int, value : Int) : Point = set(i, value.toDouble())
 
     /**
      * Checks whether this Point is the same as the compared stuff.

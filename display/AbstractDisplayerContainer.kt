@@ -1,15 +1,29 @@
 package display
 
 import geometry.Point
+import utilities.LProperty
 import java.awt.Component
 
 /**
  * An abstract Displayer that implements the CustomContainer interface.
- * @param p The position of this AbstractDisplayerContainer, as a Point.
  * @see Displayer
  * @see CustomContainer
  */
-abstract class AbstractDisplayerContainer(p : Point) : Displayer(p), CustomContainer{
+abstract class AbstractDisplayerContainer : Displayer, CustomContainer{
+
+    override var w : LProperty<Int> = LProperty(0)
+
+    override var h : LProperty<Int> = LProperty(0)
+
+    constructor(x : Int, y : Int) : super(x, y)
+
+    constructor(x : Int, y : Double) : super(x, y)
+
+    constructor(x : Double, y : Int) : super(x, y)
+
+    constructor(x : Double, y : Double) : super(x, y)
+
+    constructor(p : Point) : super(p)
 
     override fun mouseClick(x : Int, y : Int){}
     override fun mousePress(x : Int, y : Int){}
@@ -19,6 +33,10 @@ abstract class AbstractDisplayerContainer(p : Point) : Displayer(p), CustomConta
     override fun mouseDrag(x : Int, y : Int){}
     override fun mouseMoved(x : Int, y : Int){}
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){}
+
+    override fun width() : Int = super<Displayer>.width()
+
+    override fun height() : Int = super<Displayer>.height()
 
     /**
      * Returns the Displayer at the given coordinates, relative to itself.

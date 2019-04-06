@@ -28,8 +28,8 @@ class GridDisplayer : Displayer {
     private var mesh : Int = DEFAULT_MESH_SIZE
 
     constructor(p : Point, width : Int, height : Int) : super(p){
-        this.w = width
-        this.h = height
+        w.value = width
+        h.value = height
     }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : this(Point(x, y), width, height)
@@ -83,7 +83,7 @@ class GridDisplayer : Displayer {
         val proportionaldx : Double = correspondingGridPoint.x / mesh - column
         val proportionaldy : Double = correspondingGridPoint.y / mesh - line
         mesh += meshVariation
-        val newGridPoint : Point = Point((column + proportionaldx) * mesh, (line + proportionaldy) * mesh)
+        val newGridPoint = Point((column + proportionaldx) * mesh, (line + proportionaldy) * mesh)
         origin += newGridPoint..correspondingGridPoint
     }
 

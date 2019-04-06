@@ -85,7 +85,8 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
      * @param options The options of this TextArrowSelector.
      * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
      * @param background The background of this TextArrowSelector.
@@ -93,7 +94,12 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(p : Point, options : Collection<Pair<Text, T>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options.seconds(), isHorizontal){
+    constructor(
+            x : Int,
+            y : Int,
+            options : Collection<Pair<Text, T>>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.seconds(), isHorizontal){
         fillLinesList(options.firsts())
         backgroundDrawer = background
     }
@@ -109,7 +115,15 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Int, y : Int, options : Collection<Pair<Text, T>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Int,
+            y : Double,
+            options : Collection<Pair<Text, T>>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.seconds(), isHorizontal){
+        fillLinesList(options.firsts())
+        backgroundDrawer = background
+    }
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -122,7 +136,15 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Double, y : Int, options : Collection<Pair<Text, T>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Double,
+            y : Int,
+            options : Collection<Pair<Text, T>>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.seconds(), isHorizontal){
+        fillLinesList(options.firsts())
+        backgroundDrawer = background
+    }
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -135,20 +157,15 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Int, y : Double, options : Collection<Pair<Text, T>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Double, y : Double, options : Collection<Pair<Text, T>>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Double,
+            y : Double,
+            options : Collection<Pair<Text, T>>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.seconds(), isHorizontal){
+        fillLinesList(options.firsts())
+        backgroundDrawer = background
+    }
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -160,7 +177,31 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(p : Point, keys : Collection<Text>, values : Collection<T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, values, isHorizontal){
+    constructor(
+            p : Point,
+            options : Collection<Pair<Text, T>>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND)
+        : this(p.intx(), p.inty(), options, isHorizontal, background)
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            keys : Collection<Text>,
+            values : Collection<T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, values, isHorizontal){
         if(keys.size != values.size) throw IllegalArgumentException("Asymetric lists of keys (${keys.size}) and values (${values.size})")
         fillLinesList(keys)
         backgroundDrawer = background
@@ -177,123 +218,15 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Int, y : Int, keys : Collection<Text>, values : Collection<T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Double, y : Int, keys : Collection<Text>, values : Collection<T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Int, y : Double, keys : Collection<Text>, values : Collection<T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Double, y : Double, keys : Collection<Text>, values : Collection<T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), keys, values, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(p : Point, vararg options : Pair<Text, T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(p, options.asList(), isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Int, y : Int, vararg options : Pair<Text, T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Double, y : Int, vararg options : Pair<Text, T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Int, y : Double, vararg options : Pair<Text, T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param x The x coordinate of this TextArrowSelector's center.
-     * @param y The y coordinate of this TextArrowSelector's center.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(x : Double, y : Double, vararg options : Pair<Text, T>, isHorizontal : Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), *options, isHorizontal = isHorizontal, background = background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(p : Point, options : Map<Text, T>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : super(p, options.seconds(), isHorizontal){
-        fillLinesList(options.firsts())
+    constructor(
+            x : Int,
+            y : Double,
+            keys : Collection<Text>,
+            values : Collection<T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, values, isHorizontal){
+        if(keys.size != values.size) throw IllegalArgumentException("Asymetric lists of keys (${keys.size}) and values (${values.size})")
+        fillLinesList(keys)
         backgroundDrawer = background
     }
 
@@ -308,7 +241,17 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Int, y : Int, options : Map<Text, T>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Double,
+            y : Int,
+            keys : Collection<Text>,
+            values : Collection<T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, values, isHorizontal){
+        if(keys.size != values.size) throw IllegalArgumentException("Asymetric lists of keys (${keys.size}) and values (${values.size})")
+        fillLinesList(keys)
+        backgroundDrawer = background
+    }
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -321,7 +264,35 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Double, y : Int, options : Map<Text, T>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Double,
+            y : Double,
+            keys : Collection<Text>,
+            values : Collection<T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, values, isHorizontal){
+        if(keys.size != values.size) throw IllegalArgumentException("Asymetric lists of keys (${keys.size}) and values (${values.size})")
+        fillLinesList(keys)
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param p The center Point of this TextArrowSelector.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            p : Point,
+            keys : Collection<Text>,
+            values : Collection<T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND)
+        : this(p.intx(), p.inty(), keys, values, isHorizontal, background)
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -334,7 +305,12 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Int, y : Double, options : Map<Text, T>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Int,
+            y : Int,
+            vararg options : Pair<Text, T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(x, y, options.asList(), isHorizontal, background)
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -347,7 +323,164 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see GraphicAction
      * @see options
      */
-    constructor(x : Double, y : Double, options : Map<Text, T>, isHorizontal: Boolean = true, background : GraphicAction = DEFAULT_BACKGROUND) : this(Point(x, y), options, isHorizontal, background)
+    constructor(
+            x : Int,
+            y : Double,
+            vararg options : Pair<Text, T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(x, y, options.asList(), isHorizontal, background)
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            vararg options : Pair<Text, T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(x, y, options.asList(), isHorizontal, background)
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            vararg options : Pair<Text, T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(x, y, options.asList(), isHorizontal, background)
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param p The center Point of this TextArrowSelector.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            p : Point,
+            vararg options : Pair<Text, T>,
+            isHorizontal : Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(p, options.asList(), isHorizontal, background)
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            options : Map<Text, T>,
+            isHorizontal: Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.values, isHorizontal){
+        fillLinesList(options.keys)
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Int,
+            y : Double,
+            options : Map<Text, T>,
+            isHorizontal: Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.values, isHorizontal){
+        fillLinesList(options.keys)
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            options : Map<Text, T>,
+            isHorizontal: Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.values, isHorizontal){
+        fillLinesList(options.keys)
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param x The x coordinate of this TextArrowSelector's center.
+     * @param y The y coordinate of this TextArrowSelector's center.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            options : Map<Text, T>,
+            isHorizontal: Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : super(x, y, options.values, isHorizontal){
+        fillLinesList(options.keys)
+        backgroundDrawer = background
+    }
+
+    /**
+     * Constructs a TextArrowSelector with the given parameters.
+     * @param p The center Point of this TextArrowSelector.
+     * @param options The options of this TextArrowSelector.
+     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
+     * @param background The background of this TextArrowSelector.
+     * @see Point
+     * @see GraphicAction
+     * @see options
+     */
+    constructor(
+            p : Point,
+            options : Map<Text, T>,
+            isHorizontal: Boolean = true,
+            background : GraphicAction = DEFAULT_BACKGROUND) : this(p.intx(), p.inty(), options, isHorizontal, background)
 
     /**
      * Fills the list of lines according to the entered options.
@@ -365,8 +498,9 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @param background The new background to be drawn.
      * @see GraphicAction
      */
-    infix fun setBackground(background : GraphicAction){
+    infix fun setBackground(background : GraphicAction) : TextArrowSelector<T>{
         backgroundDrawer = background
+        return this
     }
 
     /**
@@ -375,19 +509,12 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see maxLineLength
      * @see forceMaxLineLength
      */
-    infix fun setMaxLineLength(length : Int){
+    infix fun setMaxLineLength(length : Int) : TextArrowSelector<T>{
         maxLineLength = length
         initphase = true
         dimensionsComputed = false
+        return this
     }
-
-    /**
-     * Sets the maximal length for this Component
-     * @param length The maximal length of this component.
-     * @see maxLineLength
-     * @see forceMaxLineLength
-     */
-    infix fun setMaxLineLength(length : Double) = setMaxLineLength(length.toInt())
 
     override fun next(){
         super.next()
@@ -404,8 +531,8 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see linesList
      */
     private fun reloadDimensions(){
-        w = linesList[currentOption].second
-        h = linesList[currentOption].third
+        w.value = linesList[currentOption].second
+        h.value = linesList[currentOption].third
     }
 
     /**
@@ -555,7 +682,7 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see backgroundDrawer
      * @see GraphicAction
      */
-    private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, w, h)
+    private fun drawBackground(g : Graphics) = backgroundDrawer.invoke(g, width(), height())
 
     /**
      * Draws the text of the displayer.

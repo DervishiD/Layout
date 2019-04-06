@@ -2,8 +2,6 @@ package gamepackage.gamegeometry
 
 import geometry.Point
 import geometry.Vector
-import main.FRAMEX
-import main.FRAMEY
 
 /**
  * The class that represents a game grid
@@ -40,7 +38,6 @@ class Grid {
     constructor(lines : Int, columns : Int){
         this.lines = lines
         this.columns = columns
-        resetOrigin()
         refillGrid()
     }
 
@@ -128,14 +125,6 @@ class Grid {
             return grid[line][column]
         }else throw IndexOutOfBoundsException("The cell you're looking for at ($line, $column) doesn't exist \n" +
                                               "This Grid has $lines lines and $columns columns")
-    }
-
-    /**
-     * Resets the position of the origin
-     */
-    private fun resetOrigin(){
-        origin setx (FRAMEX / 2) - (columns / 2) * mesh
-        origin sety (FRAMEY / 2) - (lines / 2) * mesh
     }
 
     /**

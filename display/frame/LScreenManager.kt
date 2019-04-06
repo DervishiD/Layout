@@ -9,11 +9,12 @@ import main.Action
  */
 internal class LScreenManager {
 
-    companion object {
-        private const val SCREEN_CHANGE_LISTENER_KEY : String = "ScreenManager::SCREEN_CHANGE_LISTENER_KEY"
-    }
-
-    private val screenChangeAction : Action = {if(currentScreen.nextScreen.value != null) setScreen(currentScreen.nextScreen.value!!)}
+    /**
+     * The Action executed to change a Screen.
+     * @see Action
+     * @see Screen
+     */
+    private val screenChangeAction : Action = {if(currentScreen.nextScreen() != null) setScreen(currentScreen.nextScreen()!!)}
 
     /**
      * The Screen that is currently displayed.
@@ -21,6 +22,10 @@ internal class LScreenManager {
      */
     private var currentScreen : Screen
 
+    /**
+     * This LScreenManager's LFrame.
+     * @see LFrame
+     */
     private val frame : LFrame
 
     /**
@@ -30,9 +35,17 @@ internal class LScreenManager {
      */
     private val pressedKeys : MutableSet<Int> = mutableSetOf()
 
+    /**
+     * Constructs a LScreenManager for the given LFrame with the given starting Screen.
+     * @param frame This LScreenManager's LFrame.
+     * @param firstScreen The first Screen.
+     * @see LFrame
+     * @see Screen
+     */
     internal constructor(frame : LFrame, firstScreen : Screen){
         this.frame = frame
         currentScreen = firstScreen
+        setCurrentScreenBounds()
         addScreenChangeListener(currentScreen)
     }
 
@@ -66,10 +79,11 @@ internal class LScreenManager {
      * @see Screen.initialization
      * @see currentScreen
      */
-    infix fun setScreen(screen : Screen){
+    private infix fun setScreen(screen : Screen){
         removeScreenChangeListener(currentScreen)
         currentScreen.save()
         currentScreen = screen
+        setCurrentScreenBounds()
         addScreenChangeListener(currentScreen)
         currentScreen.load()
         frame.contentPane = currentScreen
@@ -83,6 +97,15 @@ internal class LScreenManager {
      * @see Screen.escape
      */
     fun escape() = currentScreen.escape()
+
+    /**
+     * Sets the current Screen's bounds to fit the frame's.
+     * @see currentScreen
+     * @see frame
+     * @see Screen
+     * @see LFrame
+     */
+    internal fun setCurrentScreenBounds() = currentScreen.setBounds(frame.width, frame.height)
 
     /**
      * Transmits the event to the current Screen.
@@ -189,8 +212,20 @@ internal class LScreenManager {
      */
     fun mouseWheelMoved(x : Int, y : Int, units : Int) = currentScreen.mouseWheelMoved(x, y, units)
 
-    private infix fun addScreenChangeListener(screen : Screen) = screen.nextScreen.addListener(SCREEN_CHANGE_LISTENER_KEY, screenChangeAction)
+    /**
+     * Adds a listener to the given Screen's nextScreen property.
+     * @see currentScreen
+     * @see Screen
+     * @see Screen.nextScreen
+     */
+    private infix fun addScreenChangeListener(screen : Screen) = screen.addScreenChangeListener(this, screenChangeAction)
 
-    private infix fun removeScreenChangeListener(screen : Screen) = screen.nextScreen.removeListener(SCREEN_CHANGE_LISTENER_KEY)
+    /**
+     * Removes a listener from the given Screen's nextScreen property.
+     * @see currentScreen
+     * @see Screen
+     * @see Screen.nextScreen
+     */
+    private infix fun removeScreenChangeListener(screen : Screen) = screen.removeScreenChangeListener(this)
 
 }
