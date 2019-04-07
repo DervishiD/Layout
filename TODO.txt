@@ -14,11 +14,9 @@ Test negative coordinates
 
 L
 
-Proportions for doubles for width, height where needed
+Proportions for doubles for width, height in TextField, GridDisplayer
 
 Properties
-
-Displayable interface
 
 Drawable, or something
 

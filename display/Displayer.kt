@@ -46,9 +46,9 @@ abstract class Displayer : JLabel, MouseInteractable {
 
     private var requestCoordinateUpdate : LProperty<Boolean> = LProperty(true)
 
-    protected var absoluteX : Int = 0
+    protected var absoluteX : LProperty<Int> = LProperty(0)
 
-    protected var absoluteY : Int = 0
+    protected var absoluteY : LProperty<Int> = LProperty(0)
 
     protected var relativeX : Double? = null
 
@@ -161,18 +161,18 @@ abstract class Displayer : JLabel, MouseInteractable {
     override var onWheelMoved : MouseWheelAction = {_ -> }
 
     constructor(x : Int, y : Int){
-        absoluteX = x
-        absoluteY = y
+        absoluteX.value = x
+        absoluteY.value = y
     }
 
     constructor(x : Int, y : Double){
-        absoluteX = x
+        absoluteX.value = x
         relativeY = y
     }
 
     constructor(x : Double, y : Int){
         relativeX = x
-        absoluteY = y
+        absoluteY.value = y
     }
 
     constructor(x : Double, y : Double){
@@ -182,15 +182,15 @@ abstract class Displayer : JLabel, MouseInteractable {
 
     constructor(p : Point) : this(p.intx(), p.inty())
 
-    internal fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayer{
+    internal open fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayer{
         updateRelativeCoordinates(frameWidth, frameHeight)
         updateRelativeAlignment(frameWidth, frameHeight)
         return this
     }
 
     private fun updateRelativeCoordinates(frameWidth: Int, frameHeight: Int){
-        if(relativeX != null) absoluteX = (frameWidth * relativeX!!).toInt()
-        if(relativeY != null) absoluteY = (frameHeight * relativeY!!).toInt()
+        if(relativeX != null) absoluteX.value = (frameWidth * relativeX!!).toInt()
+        if(relativeY != null) absoluteY.value = (frameHeight * relativeY!!).toInt()
     }
 
     private fun updateRelativeAlignment(frameWidth: Int, frameHeight: Int){
@@ -209,7 +209,7 @@ abstract class Displayer : JLabel, MouseInteractable {
     internal fun addRequestUpdateListener(key : Any?, action : Action) = requestCoordinateUpdate.addListener(key, action)
     internal fun removeRequestUpdateListener(key : Any?) = requestCoordinateUpdate.removeListener(key)
 
-    private fun requestCoordinateUpdate(){
+    protected fun requestCoordinateUpdate(){
         requestCoordinateUpdate.value = !requestCoordinateUpdate.value
     }
 
@@ -481,35 +481,39 @@ abstract class Displayer : JLabel, MouseInteractable {
         return this
     }
 
+    fun centerX() : Int = absoluteX.value
+
+    fun centerY() : Int = absoluteY.value
+
     /**
      * The position of this Displayer, i.e. its center Point, as a Point.
      * @return The center Point of this Displayer.
      */
-    fun center() : Point = Point(absoluteX, absoluteY)
+    fun center() : Point = Point(centerX(), centerY())
 
     /**
      * The upper left cornet of this Displayer, as a Point.
      * @return The upper left corner of this Displayer.
      */
-    fun upperLeftCorner() : Point = Point(absoluteX - width() / 2, absoluteY - height() / 2)
+    fun upperLeftCorner() : Point = Point(centerX() - width() / 2, centerY() - height() / 2)
 
     /**
      * The upper right cornet of this Displayer, as a Point.
      * @return The upper right corner of this Displayer.
      */
-    fun upperRightCorner() : Point = Point(absoluteX + width() / 2, absoluteY - height() / 2)
+    fun upperRightCorner() : Point = Point(centerX() + width() / 2, centerY() - height() / 2)
 
     /**
      * The lower left cornet of this Displayer, as a Point.
      * @return The lower left corner of this Displayer.
      */
-    fun lowerLeftCorner() : Point = Point(absoluteX - width() / 2, absoluteY + height() / 2)
+    fun lowerLeftCorner() : Point = Point(centerX() - width() / 2, centerY() + height() / 2)
 
     /**
      * The lower right cornet of this Displayer, as a Point.
      * @return The lower right corner of this Displayer.
      */
-    fun lowerRightCorner() : Point = Point(absoluteX + width() / 2, absoluteY + height() / 2)
+    fun lowerRightCorner() : Point = Point(centerX() + width() / 2, centerY() + height() / 2)
 
     /**
      * This Displayer's width.
@@ -524,22 +528,22 @@ abstract class Displayer : JLabel, MouseInteractable {
     /**
      * The lowest y coordinate of this Displayer.
      */
-    open fun lowestY() : Int = absoluteY - height() / 2
+    open fun lowestY() : Int = centerY() - height() / 2
 
     /**
      * The highest y coordinate of this Displayer.
      */
-    open fun highestY() : Int = absoluteY + height() / 2
+    open fun highestY() : Int = centerY() + height() / 2
 
     /**
      * The lowest x coordinate of this Displayer.
      */
-    open fun lowestX() : Int = absoluteX - width() / 2
+    open fun lowestX() : Int = centerX() - width() / 2
 
     /**
      * The highest x coordinate of this Displayer.
      */
-    open fun highestX() : Int = absoluteX + width() / 2
+    open fun highestX() : Int = centerX() + width() / 2
 
     /**
      * Forces the initialization of this Displayer.
@@ -569,9 +573,9 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @see align
      */
     fun moveTo(x : Int, y : Int) : Displayer{
-        if(x != absoluteX || y != absoluteY){
-            absoluteX = x
-            absoluteY = y
+        if(x != centerX() || y != centerY()){
+            absoluteX.value = x
+            absoluteY.value = y
             relativeX = null
             relativeY = null
             resetAlignment()
@@ -589,9 +593,9 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @see align
      */
     fun moveTo(x : Double, y : Int) : Displayer{
-        if(x != relativeX || y != absoluteY){
+        if(x != relativeX || y != centerY()){
             relativeX = x
-            absoluteY = y
+            absoluteY.value = y
             relativeY = null
             resetAlignment()
             requestCoordinateUpdate()
@@ -609,8 +613,8 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @see align
      */
     fun moveTo(x : Int, y : Double) : Displayer{
-        if(x != absoluteX || y != relativeY){
-            absoluteX = x
+        if(x != centerX() || y != relativeY){
+            absoluteX.value = x
             relativeY = y
             relativeX = null
             resetAlignment()
@@ -647,8 +651,8 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @see align
      */
     infix fun setx(x : Int) : Displayer{
-        if(x != absoluteX){
-            absoluteX = x
+        if(x != centerX()){
+            absoluteX.value = x
             relativeX = null
             resetAlignment()
             loadBounds()
@@ -683,8 +687,8 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @see align
      */
     infix fun sety(y : Int) : Displayer{
-        if(y != absoluteY){
-            absoluteY = y
+        if(y != centerY()){
+            absoluteY.value = y
             relativeY = null
             resetAlignment()
             loadBounds()
@@ -721,8 +725,8 @@ abstract class Displayer : JLabel, MouseInteractable {
      */
     infix fun moveAlong(v : Vector) : Displayer{
         if(v != NULL){
-            absoluteX += v.x.toInt()
-            absoluteY += v.y.toInt()
+            absoluteX.value += v.x.toInt()
+            absoluteY.value += v.y.toInt()
             relativeX = null
             relativeY = null
             resetAlignment()
@@ -733,8 +737,8 @@ abstract class Displayer : JLabel, MouseInteractable {
 
     fun moveAlong(x : Int, y : Int) : Displayer{
         if(x != 0 || y != 0){
-            absoluteX += x
-            absoluteY += y
+            absoluteX.value += x
+            absoluteY.value += y
             relativeX = null
             relativeY = null
             resetAlignment()
@@ -745,7 +749,7 @@ abstract class Displayer : JLabel, MouseInteractable {
 
     infix fun moveAlongX(x : Int) : Displayer{
         if(x != 0){
-            absoluteX += x
+            absoluteX.value += x
             relativeX = null
             resetAlignment()
             loadBounds()
@@ -755,11 +759,51 @@ abstract class Displayer : JLabel, MouseInteractable {
 
     infix fun moveAlongY(y : Int) : Displayer{
         if(y != 0){
-            absoluteY += y
+            absoluteY.value += y
             relativeY = null
             resetAlignment()
             loadBounds()
         }
+        return this
+    }
+
+    fun addXListener(key : Any?, action : Action) : Displayer{
+        absoluteX.addListener(key, action)
+        return this
+    }
+
+    fun addYListener(key : Any?, action : Action) : Displayer{
+        absoluteY.addListener(key, action)
+        return this
+    }
+
+    fun addWidthListener(key : Any?, action : Action) : Displayer{
+        w.addListener(key, action)
+        return this
+    }
+
+    fun addHeightListener(key : Any?, action : Action) : Displayer{
+        h.addListener(key, action)
+        return this
+    }
+
+    infix fun removeXListener(key : Any?) : Displayer{
+        absoluteX.removeListener(key)
+        return this
+    }
+
+    infix fun removeYListener(key : Any?) : Displayer{
+        absoluteY.removeListener(key)
+        return this
+    }
+
+    infix fun removeWidthListener(key : Any?) : Displayer{
+        w.removeListener(key)
+        return this
+    }
+
+    infix fun removeHeightListener(key : Any?) : Displayer{
+        h.removeListener(key)
         return this
     }
 
@@ -812,9 +856,9 @@ abstract class Displayer : JLabel, MouseInteractable {
      */
     private fun alignLateral(){
         if(absoluteAlignLeftTo != null){
-            absoluteX = absoluteAlignLeftTo!! + width() / 2
+            absoluteX.value = absoluteAlignLeftTo!! + width() / 2
         }else if(absoluteAlignRightTo != null){
-            absoluteX = absoluteAlignRightTo!! - width() / 2
+            absoluteX.value = absoluteAlignRightTo!! - width() / 2
         }
     }
 
@@ -824,9 +868,9 @@ abstract class Displayer : JLabel, MouseInteractable {
      */
     private fun alignVertical(){
         if(absoluteAlignUpTo != null){
-            absoluteY = absoluteAlignUpTo!! + height() / 2
+            absoluteY.value = absoluteAlignUpTo!! + height() / 2
         }else if(absoluteAlignDownTo != null){
-            absoluteY = absoluteAlignDownTo!! - height() / 2
+            absoluteY.value = absoluteAlignDownTo!! - height() / 2
         }
     }
 
@@ -834,7 +878,7 @@ abstract class Displayer : JLabel, MouseInteractable {
      * Sets this component's bounds.
      * @see setBounds
      */
-    private fun loadBounds() = setBounds(absoluteX - width() / 2, absoluteY - height() / 2, width(), height())
+    private fun loadBounds() = setBounds(centerX() - width() / 2, centerY() - height() / 2, width(), height())
 
     /**
      * A function called when the Displayer is added to a CustomContainer.

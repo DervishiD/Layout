@@ -15,15 +15,130 @@ abstract class AbstractDisplayerContainer : Displayer, CustomContainer{
 
     override var h : LProperty<Int> = LProperty(0)
 
-    constructor(x : Int, y : Int) : super(x, y)
+    private var relativeW : Double? = null
 
-    constructor(x : Int, y : Double) : super(x, y)
+    private var relativeH : Double? = null
 
-    constructor(x : Double, y : Int) : super(x, y)
+    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){
+        w.value = width
+        h.value = height
+    }
 
-    constructor(x : Double, y : Double) : super(x, y)
+    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y){
+        w.value = width
+        h.value = height
+    }
 
-    constructor(p : Point) : super(p)
+    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y){
+        w.value = width
+        h.value = height
+    }
+
+    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y){
+        w.value = width
+        h.value = height
+    }
+
+    constructor(p : Point, width : Int, height : Int) : super(p){
+        w.value = width
+        h.value = height
+    }
+
+    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y){
+        relativeW = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y){
+        relativeW = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y){
+        relativeW = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y){
+        relativeW = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(p : Point, width : Double, height : Int) : super(p){
+        relativeW = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(p : Point, width : Double, height : Double) : super(p){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y){
+        w.value = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y){
+        w.value = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y){
+        w.value = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y){
+        w.value = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    constructor(p : Point, width : Int, height : Double) : super(p){
+        w.value = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
+        if(relativeW != null) w.value = (relativeW!! * frameWidth).toInt()
+        if(relativeH != null) h.value = (relativeH!! * frameHeight).toInt()
+        return super.updateRelativeValues(frameWidth, frameHeight)
+    }
 
     override fun mouseClick(x : Int, y : Int){}
     override fun mousePress(x : Int, y : Int){}

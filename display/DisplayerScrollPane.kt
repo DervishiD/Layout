@@ -1,7 +1,6 @@
 package display
 
 import geometry.Point
-import geometry.Vector
 import main.GraphicAction
 import main.MouseWheelAction
 import java.awt.Graphics
@@ -112,9 +111,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             height : Int,
             scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
             parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        w.value = width
-        h.value = height
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
         this.scrollDirection = scrollDirection
         if(isVertical()){
             startingX = width / 2
@@ -151,9 +148,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             height : Int,
             scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
             parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        w.value = width
-        h.value = height
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
         this.scrollDirection = scrollDirection
         if(isVertical()){
             startingX = width / 2
@@ -190,9 +185,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             height : Int,
             scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
             parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        w.value = width
-        h.value = height
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
         this.scrollDirection = scrollDirection
         if(isVertical()){
             startingX = width / 2
@@ -229,9 +222,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             height : Int,
             scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
             parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        w.value = width
-        h.value = height
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
         this.scrollDirection = scrollDirection
         if(isVertical()){
             startingX = width / 2
@@ -264,6 +255,516 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             p : Point,
             width : Int,
             height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            width : Double,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Double,
+            width : Double,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            width : Double,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            width : Double,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param p The center point of this DisplayerScrollPane.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            p : Point,
+            width : Double,
+            height : Int,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            width : Int,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Double,
+            width : Int,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            width : Int,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            width : Int,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param p The center point of this DisplayerScrollPane.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            p : Point,
+            width : Int,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            width : Double,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Int,
+            y : Double,
+            width : Double,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            width : Double,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param x The center point's x coordinate.
+     * @param y The center point's y coordinate.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            width : Double,
+            height : Double,
+            scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
+            parts : Collection<Displayer> = listOf(),
+            background : GraphicAction = NO_BACKGROUND) : super(x, y, width, height){
+        this.scrollDirection = scrollDirection
+        if(isVertical()){
+            startingX = width() / 2
+            startingY = 0
+        }else{
+            startingX = 0
+            startingY = height() / 2
+        }
+        for(part : Displayer in parts){
+            this.scrollPaneObjects.add(ScrollPaneObject(part, 0, 0))
+        }
+        this.backgroundDrawer = background
+    }
+
+    /**
+     * Creates a DisplayerScrollPane with the given parameters.
+     * @param p The center point of this DisplayerScrollPane.
+     * @param width The width of this DisplayerScrollPane, in pixels.
+     * @param height The height of this DisplayerScrollPane, in pixels.
+     * @param scrollDirection The direction of scrolling
+     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
+     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
+     * @see Point
+     * @see Displayer
+     * @see ScrollPaneObject
+     * @see ScrollType
+     * @see parts
+     */
+    constructor(
+            p : Point,
+            width : Double,
+            height : Double,
             scrollDirection : ScrollType = Companion.ScrollType.VERTICAL,
             parts : Collection<Displayer> = listOf(),
             background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)

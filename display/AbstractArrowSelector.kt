@@ -330,7 +330,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     private fun initializePreviousArrow() : ImageButton {
         return if(isHorizontal){
             ImageButton(
-                absoluteX, absoluteY,
+                centerX(), centerY(),
                 HORIZONTAL_ARROW_WIDTH,
                 HORIZONTAL_ARROW_HEIGHT,
                 previousAction,
@@ -338,7 +338,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             )
         }else{
             ImageButton(
-                absoluteX, absoluteY,
+                centerX(), centerY(),
                 VERTICAL_ARROW_WIDTH,
                 VERTICAL_ARROW_HEIGHT,
                 previousAction,
@@ -355,7 +355,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     private fun initializeNextArrow() : ImageButton {
         return if(isHorizontal){
             ImageButton(
-                absoluteX, absoluteY,
+                centerX(), centerY(),
                 HORIZONTAL_ARROW_WIDTH,
                 HORIZONTAL_ARROW_HEIGHT,
                 nextAction,
@@ -363,7 +363,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             )
         }else{
             ImageButton(
-                    absoluteX, absoluteY,
+                centerX(), centerY(),
                 VERTICAL_ARROW_WIDTH,
                 VERTICAL_ARROW_HEIGHT,
                 nextAction,
@@ -499,8 +499,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * correctly with this Selector
      */
     private fun setHorizontalArrowPosition(){
-        previousArrow.moveTo(absoluteX - width()/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, absoluteY)
-        nextArrow.moveTo(absoluteX + width()/2 + EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH /2, absoluteY)
+        previousArrow.moveTo(centerX() - width()/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, centerY())
+        nextArrow.moveTo(centerX() + width()/2 + EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH /2, centerY())
     }
 
     /**
@@ -508,8 +508,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * correctly with this Selector
      */
     private fun setVerticalArrowPosition(){
-        previousArrow.moveTo(absoluteX, absoluteY + height()/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)
-        nextArrow.moveTo(absoluteX, absoluteY - height()/2 - EXTERIOR_DELTA - VERTICAL_ARROW_HEIGHT /2)
+        previousArrow.moveTo(centerX(), centerY() + height()/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)
+        nextArrow.moveTo(centerX(), centerY() - height()/2 - EXTERIOR_DELTA - VERTICAL_ARROW_HEIGHT /2)
     }
 
 }
