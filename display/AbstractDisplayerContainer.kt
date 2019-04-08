@@ -1,7 +1,6 @@
 package display
 
 import geometry.Point
-import utilities.LProperty
 import java.awt.Component
 
 /**
@@ -10,10 +9,6 @@ import java.awt.Component
  * @see CustomContainer
  */
 abstract class AbstractDisplayerContainer : Displayer, CustomContainer{
-
-    override var w : LProperty<Int> = LProperty(0)
-
-    override var h : LProperty<Int> = LProperty(0)
 
     private var relativeW : Double? = null
 
@@ -148,10 +143,6 @@ abstract class AbstractDisplayerContainer : Displayer, CustomContainer{
     override fun mouseDrag(x : Int, y : Int){}
     override fun mouseMoved(x : Int, y : Int){}
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){}
-
-    override fun width() : Int = super<Displayer>.width()
-
-    override fun height() : Int = super<Displayer>.height()
 
     /**
      * Returns the Displayer at the given coordinates, relative to itself.

@@ -4,7 +4,6 @@ import geometry.Point
 import main.GraphicAction
 import main.MouseWheelAction
 import java.awt.Graphics
-import javax.swing.JLabel
 import kotlin.math.abs
 
 /**
@@ -777,9 +776,8 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      *                          in the direction perpendicular to the scrolling
      */
     fun addToScrollPane(part : Displayer, directionalDelta : Int = 0, perpendicularDelta : Int = 0) : DisplayerScrollPane{
+        add(part)
         scrollPaneObjects.add(ScrollPaneObject(part, abs(directionalDelta), perpendicularDelta))
-        (this as JLabel).add(part)
-        part.onAdd(this)
         return this
     }
 

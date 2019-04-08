@@ -140,8 +140,8 @@ val editorScreen : Screen = object : Screen() {
     private val TEXTFIELD_WIDTH : Int = ALLOWED_LEFT_WIDTH / 2
     private val DEFAULT_GRID_WIDTH : Int = 10
     private val DEFAULT_GRID_HEIGHT : Int = 10
-    private val WIDTH_TEXTFIELD : TextField = TextField(0, 0, TEXTFIELD_WIDTH, "$DEFAULT_GRID_WIDTH", "\\d")
-    private val HEIGHT_TEXTFIELD : TextField = TextField(0, 0, TEXTFIELD_WIDTH, "$DEFAULT_GRID_HEIGHT", "\\d")
+    private val WIDTH_TEXTFIELD : TextField = TextField(0, 0, 0.5, "$DEFAULT_GRID_WIDTH", "\\d")
+    private val HEIGHT_TEXTFIELD : TextField = TextField(0, 0, 0.5, "$DEFAULT_GRID_HEIGHT", "\\d")
 
     private val RECENTER_BUTTON_TEXT : String = "Recenter grid"
     private val RECENTER_BUTTON_ACTION : Action = { GRID_DISPLAYER.resetOrigin()}
@@ -323,7 +323,7 @@ val testScreen : Screen = object : Screen(){
     override var previousScreen: Screen = mainMenuScreen
 
     init{
-        val textField = TextField(210,500, 420, "Hello there!")
+        val textField = TextField(210,500, 0.5, "Hello there!")
         textField.alignLeftToRight(BACK_BUTTON,5)
         textField.alignDownToDown(BACK_BUTTON)
         add(textField)

@@ -2,10 +2,6 @@ Better TextField
 
 Slider
 
-Resizable frame, Resize Events
-
-More interfaces
-
 Pack methods to resize containers around contained Displayers
 
 More efficient GraphicActions
@@ -14,13 +10,11 @@ Test negative coordinates
 
 L
 
-Proportions for doubles for width, height in TextField, GridDisplayer
-
 Properties
 
-Drawable, or something
+Align with LProperties
 
-Remove FRAMEX, FRAMEY usages
+Drawable, or something
 
 DisplayerContainer.drawDisplayer() has a TODO
     -> Find a way to draw stuff on it

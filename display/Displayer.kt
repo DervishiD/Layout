@@ -42,7 +42,7 @@ private enum class AlignmentConstraintsType{
  * @see MouseInteractable
  * @see Point
  */
-abstract class Displayer : JLabel, MouseInteractable {
+abstract class Displayer : JLabel, MouseInteractable, HavingDimension {
 
     private var requestCoordinateUpdate : LProperty<Boolean> = LProperty(true)
 
@@ -57,12 +57,12 @@ abstract class Displayer : JLabel, MouseInteractable {
     /**
      * The width of this Displayer on its parent's graphical context.
      */
-    protected open var w : LProperty<Int> = LProperty(0)
+    override var w : LProperty<Int> = LProperty(0)
 
     /**
      * The height of this Displayer on its parent's graphical context.
      */
-    protected open var h : LProperty<Int> = LProperty(0)
+    override var h : LProperty<Int> = LProperty(0)
 
     /**
      * Encodes if this Displayer is in its initialization phase.
@@ -514,16 +514,6 @@ abstract class Displayer : JLabel, MouseInteractable {
      * @return The lower right corner of this Displayer.
      */
     fun lowerRightCorner() : Point = Point(centerX() + width() / 2, centerY() + height() / 2)
-
-    /**
-     * This Displayer's width.
-     */
-    open fun width() : Int = w.value
-
-    /**
-     * This Displayer's height.
-     */
-    open fun height() : Int = h.value
 
     /**
      * The lowest y coordinate of this Displayer.

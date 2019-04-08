@@ -30,9 +30,14 @@ class GridDisplayer : Displayer {
     constructor(p : Point, width : Int, height : Int) : super(p){
         w.value = width
         h.value = height
+        requestCoordinateUpdate()
     }
 
-    constructor(x : Int, y : Int, width : Int, height : Int) : this(Point(x, y), width, height)
+    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){
+        w.value = width
+        h.value = height
+        requestCoordinateUpdate()
+    }
 
     /**
      * Obtains the cell at the given position

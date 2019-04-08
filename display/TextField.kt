@@ -66,6 +66,8 @@ class TextField : Displayer{
      */
     private val regex : Regex
 
+    private var relativeW : Double? = null
+
     override var onRelease: Action = {focus()}
 
     /**
@@ -163,6 +165,111 @@ class TextField : Displayer{
             defaultText : String = "",
             regex : String = ".")
             : this(p.intx(), p.inty(), width, defaultText, regex)
+
+    /**
+     * Constructs a TextField with the given parameters.
+     * @param x The x coordinate of the center point of this TextDisplayer.
+     * @param y The y coordinate of the center point of this TextDisplayer.
+     * @param width The width of this TextField.
+     * @param defaultText The text that appears on this TextField.
+     * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see regex
+     */
+    constructor(
+            x : Int,
+            y : Int,
+            width : Double,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        relativeW = width
+        requestCoordinateUpdate()
+    }
+
+    /**
+     * Constructs a TextField with the given parameters.
+     * @param x The x coordinate of the center point of this TextDisplayer.
+     * @param y The y coordinate of the center point of this TextDisplayer.
+     * @param width The width of this TextField.
+     * @param defaultText The text that appears on this TextField.
+     * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see regex
+     */
+    constructor(
+            x : Int,
+            y : Double,
+            width : Double,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        relativeW = width
+        requestCoordinateUpdate()
+    }
+
+    /**
+     * Constructs a TextField with the given parameters.
+     * @param x The x coordinate of the center point of this TextDisplayer.
+     * @param y The y coordinate of the center point of this TextDisplayer.
+     * @param width The width of this TextField.
+     * @param defaultText The text that appears on this TextField.
+     * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see regex
+     */
+    constructor(
+            x : Double,
+            y : Int,
+            width : Double,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        relativeW = width
+        requestCoordinateUpdate()
+    }
+
+    /**
+     * Constructs a TextField with the given parameters.
+     * @param x The x coordinate of the center point of this TextDisplayer.
+     * @param y The y coordinate of the center point of this TextDisplayer.
+     * @param width The width of this TextField.
+     * @param defaultText The text that appears on this TextField.
+     * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see regex
+     */
+    constructor(
+            x : Double,
+            y : Double,
+            width : Double,
+            defaultText : String = "",
+            regex : String = ".") : super(x, y){
+        this.typedText = defaultText
+        this.regex = Regex(regex)
+        relativeW = width
+        requestCoordinateUpdate()
+    }
+
+    /**
+     * Constructs a TextField with the given parameters.
+     * @param p The center point of this TextDisplayer.
+     * @param width The width of this TextField.
+     * @param defaultText The text that appears on this TextField.
+     * @param regex A Regex that defines which characters can be typed in this TextField.
+     * @see Point
+     * @see regex
+     */
+    constructor(
+            p : Point,
+            width : Double,
+            defaultText : String = "",
+            regex : String = ".")
+            : this(p.intx(), p.inty(), width, defaultText, regex)
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
+        if(relativeW != null) w.value = (relativeW!! * frameWidth).toInt()
+        return super.updateRelativeValues(frameWidth, frameHeight)
+    }
 
     /**
      * Types the given character (as a keyCode) in this TextField.

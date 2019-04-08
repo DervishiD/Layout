@@ -16,21 +16,13 @@ import java.awt.Container
  * @see Screen
  * @see DisplayerScrollPane
  */
-interface CustomContainer {
-
-    var w : LProperty<Int>
-
-    var h : LProperty<Int>
+interface CustomContainer : HavingDimension{
 
     /**
      * The Displayers contained in this Container
      * @see Displayer
      */
     val parts : MutableCollection<Displayer>
-
-    fun width() : Int = w.value
-
-    fun height() : Int = h.value
 
     /**
      * Adds a Displayer to this CustomContainer.
