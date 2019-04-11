@@ -768,6 +768,16 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             parts : Collection<Displayer> = listOf(),
             background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
 
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
+        super.updateRelativeValues(frameWidth, frameHeight)
+        if(isVertical()){
+            startingX = width() / 2
+        }else{
+            startingY = height() / 2
+        }
+        return this
+    }
+
     /**
      * Adds a Displayer to the structure of the ScrollPane
      * @param directionalDelta The distance between this Displayer and the last one

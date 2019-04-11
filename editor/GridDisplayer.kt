@@ -5,8 +5,6 @@ import display.frame.LMouse
 import gamepackage.gamegeometry.Cell
 import gamepackage.gamegeometry.Grid
 import geometry.Point
-import main.FRAMEX
-import main.FRAMEY
 import java.awt.Graphics
 import kotlin.math.floor
 import java.awt.RenderingHints
@@ -27,6 +25,9 @@ class GridDisplayer : Displayer {
 
     private var mesh : Int = DEFAULT_MESH_SIZE
 
+    private var relativeW : Double? = null
+    private var relativeH : Double? = null
+
     constructor(p : Point, width : Int, height : Int) : super(p){
         w.value = width
         h.value = height
@@ -37,6 +38,18 @@ class GridDisplayer : Displayer {
         w.value = width
         h.value = height
         requestCoordinateUpdate()
+    }
+
+    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y){
+        relativeW = width
+        relativeH = height
+        requestCoordinateUpdate()
+    }
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
+        if(relativeW != null) w.value = (frameWidth * relativeW!!).toInt()
+        if(relativeH != null) h.value = (frameHeight * relativeH!!).toInt()
+        return super.updateRelativeValues(frameWidth, frameHeight)
     }
 
     /**
@@ -134,8 +147,8 @@ class GridDisplayer : Displayer {
      * Centers the displayed grid in the frame
      */
     fun resetOrigin(){
-        origin setx (FRAMEX / 2) - (gridWidth() / 2) * mesh
-        origin sety (FRAMEY / 2) - (gridHeight() / 2) * mesh
+        origin setx (width() / 2) - (gridWidth() / 2) * mesh
+        origin sety (height() / 2) - (gridHeight() / 2) * mesh
     }
 
     /**

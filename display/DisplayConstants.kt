@@ -4,7 +4,8 @@ import editor.GridDisplayer
 import editor.selections.AbstractGridSelector
 import editor.selections.ColumnSelector
 import editor.selections.LineSelector
-import main.*
+import main.Action
+import main.mainFrame
 import utilities.StringDisplay
 import utilities.Text
 import java.awt.Color
@@ -114,14 +115,12 @@ val mainMenuScreen : Screen = object : Screen() {
  */
 val editorScreen : Screen = object : Screen() {
 
-    private val ALLOWED_GRID_WIDTH : Int = FRAMEX * 4/5
-    private val ALLOWED_GRID_HEIGHT : Int = FRAMEY * 3/4
-    private val ALLOWED_LEFT_WIDTH : Int = FRAMEX - ALLOWED_GRID_WIDTH
-    private val ALLOWED_LEFT_HEIGHT : Int = ALLOWED_GRID_HEIGHT
+    private val ALLOWED_GRID_WIDTH : Double = 4.0/5
+    private val ALLOWED_GRID_HEIGHT : Double = 3.0/4
+    private val ALLOWED_LEFT_WIDTH : Double = 1 - ALLOWED_GRID_WIDTH
+    private val ALLOWED_LEFT_HEIGHT : Double = ALLOWED_GRID_HEIGHT
 
-    private val GRID_DISPLAYER_X : Int = ALLOWED_LEFT_WIDTH + ALLOWED_GRID_WIDTH / 2
-    private val GRID_DISPLAYER_Y : Int = ALLOWED_GRID_HEIGHT / 2
-    private val GRID_DISPLAYER : GridDisplayer = GridDisplayer(GRID_DISPLAYER_X, GRID_DISPLAYER_Y, ALLOWED_GRID_WIDTH, ALLOWED_GRID_HEIGHT)
+    private val GRID_DISPLAYER : GridDisplayer = GridDisplayer(0, 0, ALLOWED_GRID_WIDTH, ALLOWED_GRID_HEIGHT)
 
     private val BACK_BUTTON_TEXT : String = "<-"
     private val BACK_BUTTON_ACTION : Action = {escape()}
@@ -137,11 +136,11 @@ val editorScreen : Screen = object : Screen() {
     private val WIDTH_TEXT : Label = Label(0, 0, WIDTH_TEXT_STRING)
     private val HEIGHT_TEXT : Label = Label(0, 0, HEIGHT_TEXT_STRING)
 
-    private val TEXTFIELD_WIDTH : Int = ALLOWED_LEFT_WIDTH / 2
+    private val TEXTFIELD_WIDTH : Double = 0.5
     private val DEFAULT_GRID_WIDTH : Int = 10
     private val DEFAULT_GRID_HEIGHT : Int = 10
-    private val WIDTH_TEXTFIELD : TextField = TextField(0, 0, 0.5, "$DEFAULT_GRID_WIDTH", "\\d")
-    private val HEIGHT_TEXTFIELD : TextField = TextField(0, 0, 0.5, "$DEFAULT_GRID_HEIGHT", "\\d")
+    private val WIDTH_TEXTFIELD : TextField = TextField(0, 0, TEXTFIELD_WIDTH, "$DEFAULT_GRID_WIDTH", "\\d")
+    private val HEIGHT_TEXTFIELD : TextField = TextField(0, 0, TEXTFIELD_WIDTH, "$DEFAULT_GRID_HEIGHT", "\\d")
 
     private val RECENTER_BUTTON_TEXT : String = "Recenter grid"
     private val RECENTER_BUTTON_ACTION : Action = { GRID_DISPLAYER.resetOrigin()}
@@ -174,7 +173,7 @@ val editorScreen : Screen = object : Screen() {
     private val SELECTOR_SELECTOR_TEXT_DELTA : Int = 50
     private val CELL_SELECTOR_SELECTOR_DELTA : Int = 10
     private val LEFT_SCROLL_PANE : DisplayerScrollPane =
-        DisplayerScrollPane(ALLOWED_LEFT_WIDTH/2, ALLOWED_LEFT_HEIGHT/2, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT)
+        DisplayerScrollPane(0, 0, ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT)
             .addToScrollPane(WIDTH_TEXT, WIDTH_TEXT_DELTA)
             .addToScrollPane(WIDTH_TEXTFIELD, WIDTH_FIELD_DELTA)
             .addToScrollPane(HEIGHT_TEXT, HEIGHT_TEXT_DELTA)
@@ -183,7 +182,10 @@ val editorScreen : Screen = object : Screen() {
             .addToScrollPane(BRUSH_SELECTOR_TEXT, BRUSH_SELECTOR_TEXT_DELTA)
             .addToScrollPane(BRUSH_SIZE_SELECTOR, BRUSH_SIZE_SELECTOR_DELTA)
             .addToScrollPane(SELECTOR_SELECTOR_TEXT, SELECTOR_SELECTOR_TEXT_DELTA)
-            .addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA)
+            .addToScrollPane(CELL_SELECTOR_SELECTOR, CELL_SELECTOR_SELECTOR_DELTA).also{
+                    it.alignUpTo(0).alignLeftTo(0)
+                    GRID_DISPLAYER.alignUpTo(0).alignLeftToRight(it)
+                }
 
     override var previousScreen: Screen = mainMenuScreen
 
@@ -198,10 +200,12 @@ val editorScreen : Screen = object : Screen() {
     }
 
     override fun drawBackground(g: Graphics) {
+        /*
         val separatorLineThickness = 24
         g.color = DEFAULT_COLOR
         g.fillRect(ALLOWED_LEFT_WIDTH - separatorLineThickness/2, 0, separatorLineThickness, ALLOWED_GRID_HEIGHT)
         g.fillRect(ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT - separatorLineThickness / 2, ALLOWED_GRID_WIDTH, separatorLineThickness)
+        */
     }
 
     override fun pressKey(key: Int) {
