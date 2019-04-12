@@ -33,6 +33,7 @@ internal class LTimer(private val frame: LFrame, private val period: Long = DEFA
      */
     fun start() = timer.scheduleAtFixedRate(object : TimerTask(){
         override fun run() {
+            frame.onTimerTick()
             frame.repaint()
         }
     }, 0, period)

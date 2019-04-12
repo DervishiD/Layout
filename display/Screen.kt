@@ -20,7 +20,7 @@ import utilities.LProperty
  * @see JPanel
  * @see LFrame
  */
-abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
+abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpdatable {
 
     override var w : LProperty<Int> = LProperty(0)
 
@@ -213,6 +213,13 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable {
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseWheelMoved(units)
             is Displayer -> component.mouseWheelMoved(units)
         }
+    }
+
+    override fun onTimerTick(): LTimerUpdatable {
+        for(d : Displayer in parts){
+            d.onTimerTick()
+        }
+        return super.onTimerTick()
     }
 
 }

@@ -200,12 +200,10 @@ val editorScreen : Screen = object : Screen() {
     }
 
     override fun drawBackground(g: Graphics) {
-        /*
         val separatorLineThickness = 24
         g.color = DEFAULT_COLOR
-        g.fillRect(ALLOWED_LEFT_WIDTH - separatorLineThickness/2, 0, separatorLineThickness, ALLOWED_GRID_HEIGHT)
-        g.fillRect(ALLOWED_LEFT_WIDTH, ALLOWED_LEFT_HEIGHT - separatorLineThickness / 2, ALLOWED_GRID_WIDTH, separatorLineThickness)
-        */
+        g.fillRect((ALLOWED_LEFT_WIDTH * width()).toInt() - separatorLineThickness/2, 0, separatorLineThickness, (ALLOWED_GRID_HEIGHT * height()).toInt())
+        g.fillRect((ALLOWED_LEFT_WIDTH * width()).toInt(), (ALLOWED_LEFT_HEIGHT * height() - separatorLineThickness / 2).toInt(), (ALLOWED_GRID_WIDTH * width()).toInt(), separatorLineThickness)
     }
 
     override fun pressKey(key: Int) {

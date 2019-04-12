@@ -1,5 +1,6 @@
 package display.frame
 
+import display.LTimerUpdatable
 import display.Screen
 import java.awt.Frame
 import java.awt.event.*
@@ -11,7 +12,7 @@ import javax.swing.JFrame
  * @see LTimer
  * @see LFrameBuilder
  */
-class LFrame : JFrame {
+class LFrame : JFrame, LTimerUpdatable{
 
     /**
      * This LFrame's LScreenManager.
@@ -154,6 +155,11 @@ class LFrame : JFrame {
         screenManager.start()
         setVisible()
         timer.start()
+    }
+
+    override fun onTimerTick(): LTimerUpdatable {
+        screenManager.onTimerTick()
+        return super.onTimerTick()
     }
 
 }

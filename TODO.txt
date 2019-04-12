@@ -10,16 +10,7 @@ Test negative coordinates
 
 L
 
-Properties
-
 Align with LProperties
-    Change absolute alignments to LProperties in Displayer
-    Change lowest/highest xy to LProperties
-    in an init block, add xywh listeners in lowest/highest xy
-    displayer alignment becomes giving a listener to a LProperty
-    Do not fuck up ArrowSelectors.
-
-Update and repaint methods treated separately by LTimer : two methods called
 
 Drawable, or something
 
@@ -31,3 +22,31 @@ Comment again
 Graph
 
 Console
+
+Canvas
+    Draw line
+    Draw rectangles
+    Draw squares
+    Draw circles
+    Draw ovals
+    Draw arc
+    Draw image
+    Draw roundRect
+    Draw string
+    Draw StringDisplay
+    Draw Text
+    Draw triangles
+    Draw regular polygons
+    Draw polygons
+    Fill rectangles
+    Fill Squares
+    Fill circles
+    Fill ovals
+    Fill arcs
+    Fill round rect
+    Fill triangle
+    Fill regular polygons
+    Fill polygons
+
+LProperty
+    Add listener without key

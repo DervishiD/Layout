@@ -1,5 +1,6 @@
 package display.frame
 
+import display.LTimerUpdatable
 import display.Screen
 import main.Action
 
@@ -7,7 +8,7 @@ import main.Action
  * A class that manages the transition between screens.
  * @see Screen
  */
-internal class LScreenManager {
+internal class LScreenManager : LTimerUpdatable {
 
     /**
      * The Action executed to change a Screen.
@@ -227,5 +228,10 @@ internal class LScreenManager {
      * @see Screen.nextScreen
      */
     private infix fun removeScreenChangeListener(screen : Screen) = screen.removeScreenChangeListener(this)
+
+    override fun onTimerTick(): LTimerUpdatable {
+        currentScreen.onTimerTick()
+        return super.onTimerTick()
+    }
 
 }
