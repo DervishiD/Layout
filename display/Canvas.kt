@@ -10,7 +10,7 @@ interface Canvas : HavingDimension {
 
     var graphics : MutableMap<Any?, GraphicAction>
 
-    fun draw(g : Graphics) : Canvas{
+    fun drawBackground(g : Graphics) : Canvas{
         for(graphicAction : GraphicAction in graphics.values){
             graphicAction.invoke(g, width(), height())
         }
@@ -445,5 +445,741 @@ interface Canvas : HavingDimension {
 
     fun drawLine(fromPoint : Point, toPoint : Point, color: Color = BLACK) : Canvas =
             drawLine(fromPoint.intx(), fromPoint.inty(), toPoint.intx(), toPoint.inty(), color)
+
+    fun drawPoint2(x : Int, y : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x, y, 2, 2)
+        }}
+        return this
+    }
+
+    fun drawPoint2(x : Int, y : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), 2, 2)
+        }}
+        return this
+    }
+
+    fun drawPoint2(x : Double, y : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, 2, 2)
+        }}
+        return this
+    }
+
+    fun drawPoint2(x : Double, y : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), 2, 2)
+        }}
+        return this
+    }
+
+    fun drawPoint2(point : Point, key : Any?, color: Color = BLACK) : Canvas = drawPoint2(point.intx(), point.inty(), key, color)
+
+    fun drawPoint2(x : Int, y : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x, y, 2, 2)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint2(x : Int, y : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), 2, 2)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint2(x : Double, y : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, 2, 2)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint2(x : Double, y : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), 2, 2)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint2(point : Point, color: Color = BLACK) : Canvas = drawPoint2(point.intx(), point.inty(), color)
+
+    fun drawPoint3(x : Int, y : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x - 1, y - 1, 3, 3)
+        }}
+        return this
+    }
+
+    fun drawPoint3(x : Int, y : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x - 1, (y * h).toInt() - 1, 3, 3)
+        }}
+        return this
+    }
+
+    fun drawPoint3(x : Double, y : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt() - 1, y - 1, 3, 3)
+        }}
+        return this
+    }
+
+    fun drawPoint3(x : Double, y : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt() - 1, (y * h).toInt() - 1, 3, 3)
+        }}
+        return this
+    }
+
+    fun drawPoint3(point : Point, key : Any?, color: Color = BLACK) : Canvas = drawPoint3(point.intx(), point.inty(), key, color)
+
+    fun drawPoint3(x : Int, y : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x - 1, y - 1, 3, 3)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint3(x : Int, y : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x - 1, (y * h).toInt() - 1, 3, 3)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint3(x : Double, y : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt() - 1, y - 1, 3, 3)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint3(x : Double, y : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt() - 1, (y * h).toInt() - 1, 3, 3)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawPoint3(point : Point, color: Color = BLACK) : Canvas = drawPoint3(point.intx(), point.inty(), color)
+
+    fun drawRectangle(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.drawRect(x, y, width, height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, width, height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect(x, y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawRectangle(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawRectangle(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawRectangle(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawRectangle(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawRectangle(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.drawRect(x, y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect(x, y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Int, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(x : Double, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawRectangle(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun drawRectangle(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun drawRectangle(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun drawRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
+            drawRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun fillRectangle(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x, y, width, height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, width, height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect(x, y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillRectangle(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillRectangle(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillRectangle(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillRectangle(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillRectangle(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillRect(x, y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect(x, y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Int, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(x : Double, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillRect((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillRectangle(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun fillRectangle(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun fillRectangle(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun fillRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
+            fillRectangle(point.intx(), point.inty(), width, height, color)
 
 }

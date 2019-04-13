@@ -329,6 +329,13 @@ val testScreen : Screen = object : Screen(){
         textField.alignLeftToRight(BACK_BUTTON,5)
         textField.alignDownToDown(BACK_BUTTON)
         add(textField)
+
+        val canvas = CanvasDisplayer(0.5, 0.5, 0.5, 0.5)
+        canvas.drawRectangle(0.0, 0.0, 0.999, 0.999)
+        canvas.drawPoint(0.25, 0.25)
+        canvas.drawPoint3(22, 22)
+        canvas.drawLine(0.5, 0.5, 0.0, 1.0)
+        add(canvas)
     }
 
     override fun load() {

@@ -12,11 +12,6 @@ L
 
 Align with LProperties
 
-Drawable, or something
-
-DisplayerContainer.drawDisplayer() has a TODO
-    -> Find a way to draw stuff on it
-
 Comment again
 
 Graph
@@ -24,11 +19,10 @@ Graph
 Console
 
 Canvas
-    Draw line
-    Draw rectangles
     Draw squares
     Draw circles
     Draw ovals
+    Draw point of width 4? 5? n?
     Draw arc
     Draw image
     Draw roundRect
@@ -38,7 +32,6 @@ Canvas
     Draw triangles
     Draw regular polygons
     Draw polygons
-    Fill rectangles
     Fill Squares
     Fill circles
     Fill ovals
@@ -47,6 +40,15 @@ Canvas
     Fill triangle
     Fill regular polygons
     Fill polygons
+    Draw and fill rectangles from center point
+    Fix  the 0.999 problem
+    Implement it
+        Screen
+        DisplayerContainer (Contains a TODO)
 
 LProperty
     Add listener without key
+
+Modify LFrame size at will
+
+Interface for HavingRelativeDimensions
