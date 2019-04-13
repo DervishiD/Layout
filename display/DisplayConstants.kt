@@ -335,6 +335,7 @@ val testScreen : Screen = object : Screen(){
         canvas.drawPoint(0.25, 0.25)
         canvas.drawPoint3(22, 22)
         canvas.drawLine(0.5, 0.5, 0.0, 1.0)
+        canvas.drawOval(0.8, 0.8, 25, 25)
         add(canvas)
     }
 

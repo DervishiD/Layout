@@ -21,7 +21,6 @@ Console
 Canvas
     Draw squares
     Draw circles
-    Draw ovals
     Draw point of width 4? 5? n?
     Draw arc
     Draw image
@@ -34,13 +33,12 @@ Canvas
     Draw polygons
     Fill Squares
     Fill circles
-    Fill ovals
     Fill arcs
     Fill round rect
     Fill triangle
     Fill regular polygons
     Fill polygons
-    Draw and fill rectangles from center point
+    Draw and fill rectangles and ovals from center point
     Fix  the 0.999 problem
     Implement it
         Screen

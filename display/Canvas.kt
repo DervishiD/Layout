@@ -886,6 +886,12 @@ interface Canvas : HavingDimension {
     fun drawRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
             drawRectangle(point.intx(), point.inty(), width, height, color)
 
+    fun drawRectangle(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
+            drawRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
+
+    fun drawRectangle(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
+            drawRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
+
     fun fillRectangle(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -1181,5 +1187,615 @@ interface Canvas : HavingDimension {
 
     fun fillRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
             fillRectangle(point.intx(), point.inty(), width, height, color)
+
+    fun fillRectangle(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
+            fillRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
+
+    fun fillRectangle(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
+            fillRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
+
+    fun drawOval(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.drawOval(x, y, width, height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, width, height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval(x, y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun drawOval(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawOval(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawOval(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawOval(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun drawOval(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.drawOval(x, y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval(x, y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Int, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(x : Double, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.drawOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun drawOval(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, color)
+
+    fun drawOval(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, color)
+
+    fun drawOval(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, color)
+
+    fun drawOval(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
+            drawOval(point.intx(), point.inty(), width, height, color)
+
+    fun drawOval(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
+            drawOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
+
+    fun drawOval(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
+            drawOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
+
+    fun fillOval(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillOval(x, y, width, height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, width, height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval(x, y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas{
+        graphics[key] = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        return this
+    }
+
+    fun fillOval(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillOval(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillOval(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillOval(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, key, color)
+
+    fun fillOval(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, _ -> run{
+            g.color = color
+            g.fillOval(x, y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = { g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval(x, y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Int, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), width, height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, _ -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, _, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Int, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval(x, (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Int, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), y, (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Int, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), width, (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Double, height : Int, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), height)
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(x : Double, y : Double, width : Double, height : Double, color : Color = BLACK) : Canvas{
+        val addedGraphics : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+            g.color = color
+            g.fillOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
+        }}
+        graphics[addedGraphics] = addedGraphics
+        return this
+    }
+
+    fun fillOval(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, color)
+
+    fun fillOval(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, color)
+
+    fun fillOval(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, color)
+
+    fun fillOval(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
+            fillOval(point.intx(), point.inty(), width, height, color)
+
+    fun fillOval(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
+            fillOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
+
+    fun fillOval(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
+            fillOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
 
 }
