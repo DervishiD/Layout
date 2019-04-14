@@ -50,8 +50,6 @@ Interface for HavingRelativeDimensions
 
 Rename Screen
 
-Probability distributions
-
 Probability distributions project
 
 Game of life project
