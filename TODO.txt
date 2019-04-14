@@ -50,3 +50,11 @@ LProperty
 Modify LFrame size at will
 
 Interface for HavingRelativeDimensions
+
+Probability distributions
+
+Probability distributions project
+
+Game of life
+
+Advanced calculator project
