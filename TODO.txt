@@ -44,12 +44,11 @@ Canvas
         Screen
         DisplayerContainer (Contains a TODO)
 
-LProperty
-    Add listener without key
-
 Modify LFrame size at will
 
 Interface for HavingRelativeDimensions
+
+Rename Screen
 
 Probability distributions
 

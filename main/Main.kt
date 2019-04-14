@@ -1,9 +1,11 @@
 package main
 
+import usages.rpg.rpgFrame
+
 fun main(){
     init()
 }
 
 private fun init(){
-    mainFrame.run()
+    rpgFrame.run()
 }
