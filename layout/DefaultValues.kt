@@ -9,6 +9,7 @@ import java.awt.Graphics
 typealias Action = () -> Unit
 typealias GraphicAction = (Graphics, Int, Int) -> Unit
 typealias MouseWheelAction = (Int) -> Unit
+typealias RealFunction = (Double) -> Double
 
 //FONTS-----------------------------------------------------------------------
 

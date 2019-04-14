@@ -54,6 +54,6 @@ Probability distributions
 
 Probability distributions project
 
-Game of life
+Game of life project
 
 Advanced calculator project
