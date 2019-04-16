@@ -46,12 +46,31 @@ Canvas
 
 Modify LFrame size at will
 
+Modify LFrame Timer tick at will
+
 Interface for HavingRelativeDimensions
 
 Rename Screen
 
 Probability distributions project
+    Homogeneous distribution
+        Implement dichotomic inverse search for strictly increasing continuous real functions
+        Add trust interval
+        Implement modified probability
+    Create a test system using a distribution of points on a Canvas
+    Create a test to find an ok trust interval
+    Other distributions
+        Gaussian
+        Exponential
+        Polynomial
+        Logarithmic
+        Root
+        Arcsin
+    Generalization of probability distributions for strictly increasing continuous real functions
+    Generalize the inverse search for any continuous real function, if possible
 
 Game of life project
 
 Advanced calculator project
+
+Bubbles screen project
