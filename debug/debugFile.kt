@@ -1,8 +1,11 @@
 package debug
 
+import layout.Action
+import layout.RealFunction
 import layout.utilities.*
+import kotlin.math.floor
 
-private fun <T> Collection<T>.print(){
+fun <T> Collection<T>.print(){
     var result = ""
     for(item in this){
         result += "(${item.toString()}) | "
@@ -10,7 +13,15 @@ private fun <T> Collection<T>.print(){
     println(result)
 }
 
-internal fun debugText(){
+fun IntArray.print(){
+    var result = ""
+    for(item in this){
+        result += "($item) | "
+    }
+    println(result)
+}
+
+fun debugText(){
     val t1 = Text(1)
     println(t1)
     println(t1.asString())
@@ -24,8 +35,32 @@ internal fun debugText(){
     }
 }
 
-internal fun debugCollectionCast(){
+fun debugCollectionCast(){
     val a : ArrayList<MutableList<Int>> = arrayListOf(mutableListOf(1, 2), mutableListOf(3, 4))
     val b = a.toCollectionOf<List<Int>, MutableList<Int>>()
     b.print()
+}
+
+fun debugInverseDichotomicSearch(){
+    val f : RealFunction = {x -> x*x}
+    println(f.inverseDichotomicSearch(3))
+}
+
+fun timeTest(method : Action){
+    println("-----  TimeTest running  -----")
+    val before : Long = System.currentTimeMillis()
+    method.invoke()
+    val after : Long = System.currentTimeMillis()
+    println("-----  ${after - before} milliseconds  -----")
+    println("-----  TimeTest finished -----")
+}
+
+fun debugHomogeneousDistribution(){
+    val array = IntArray(11)
+    val iterations = 10000000L // Ten millions
+    println("$iterations iterations of homogeneous distribution")
+    for(i : Long in 1L..iterations){
+        ++array[floor(randomHomogeneous(0.0, 10.0)).toInt()]
+    }
+    array.print()
 }

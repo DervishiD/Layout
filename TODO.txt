@@ -44,21 +44,14 @@ Canvas
         Screen
         DisplayerContainer (Contains a TODO)
 
-Modify LFrame size at will
-
-Modify LFrame Timer tick at will
-
 Interface for HavingRelativeDimensions
 
 Rename Screen
 
 Probability distributions project
     Homogeneous distribution
-        Implement dichotomic inverse search for strictly increasing continuous real functions
-        Add trust interval
-        Implement modified probability
     Create a test system using a distribution of points on a Canvas
-    Create a test to find an ok trust interval
+    Create a test to find an ok trust interval, maybe using buckets
     Other distributions
         Gaussian
         Exponential
@@ -66,11 +59,17 @@ Probability distributions project
         Logarithmic
         Root
         Arcsin
+        Double gaussian
+        Inverse Gaussian, Lots in borders, few in center
+        Sine curve
+        integral of sine curve plus constant, cosx + x -like
+        Poisson-like
     Generalization of probability distributions for strictly increasing continuous real functions
-    Generalize the inverse search for any continuous real function, if possible
 
 Game of life project
 
 Advanced calculator project
+
+General console project
 
 Bubbles screen project

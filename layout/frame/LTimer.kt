@@ -9,7 +9,7 @@ import java.util.*
  * @see java.util.Timer
  * @see LFrame
  */
-internal class LTimer(private val frame: LFrame, private val period: Long = DEFAULT_PERIOD) {
+internal class LTimer(private val frame: LFrame, private var period: Long = DEFAULT_PERIOD) {
 
     companion object {
 
@@ -18,6 +18,13 @@ internal class LTimer(private val frame: LFrame, private val period: Long = DEFA
          */
         private const val DEFAULT_PERIOD : Long = 30
 
+    }
+
+    private val task : TimerTask = object : TimerTask(){
+        override fun run() {
+            frame.onTimerTick()
+            frame.repaint()
+        }
     }
 
     /**
@@ -31,11 +38,12 @@ internal class LTimer(private val frame: LFrame, private val period: Long = DEFA
      * @see timer
      * @see period
      */
-    fun start() = timer.scheduleAtFixedRate(object : TimerTask(){
-        override fun run() {
-            frame.onTimerTick()
-            frame.repaint()
-        }
-    }, 0, period)
+    internal fun start() = timer.scheduleAtFixedRate(task, 0, period)
+
+    internal infix fun setPeriod(period : Long){
+        this.period = period
+        timer.cancel()
+        timer.scheduleAtFixedRate(task, 0, period)
+    }
 
 }

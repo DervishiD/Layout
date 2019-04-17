@@ -1,11 +1,15 @@
 package main
 
-import usages.rpg.rpgFrame
+import debug.*
+import usages.probability.probabilityApplication
+import usages.rpg.rpgApplication
 
 fun main(){
     init()
 }
 
 private fun init(){
-    rpgFrame.run()
+    //rpgApplication.run()
+    //probabilityApplication.run()
+    timeTest { debugHomogeneousDistribution() }
 }

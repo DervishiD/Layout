@@ -2,6 +2,7 @@ package usages.rpg
 
 import layout.*
 import layout.displayers.*
+import layout.frame.LApplication
 import layout.frame.LFrame
 import layout.frame.LFrameBuilder
 import layout.frame.Screen
@@ -14,6 +15,14 @@ import usages.rpg.editor.selections.LineSelector
 import java.awt.Component
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ENTER
+
+//APPLICATION-----------------------------------------------------------------
+
+val rpgApplication : LApplication = object : LApplication(){
+    override fun run() {
+        rpgFrame.run()
+    }
+}
 
 //LFRAME----------------------------------------------------------------------
 

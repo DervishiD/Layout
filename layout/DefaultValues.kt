@@ -40,4 +40,4 @@ internal val DEFAULT_COLOR : Color = Color.BLACK
 
 //NUMBERS----------------------------------------------------------------------
 
-const val DOUBLE_PRECISION : Double = 10e-2
+const val DOUBLE_PRECISION : Double = 1e-3
