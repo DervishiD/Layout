@@ -1,6 +1,8 @@
 package layout.displayers
 
+import layout.GraphicAction
 import layout.geometry.Point
+import layout.interfaces.Canvas
 import java.awt.Graphics
 
 /**
@@ -8,7 +10,9 @@ import java.awt.Graphics
  * @see Displayer
  * @see AbstractDisplayerContainer
  */
-class DisplayerContainer : AbstractDisplayerContainer {
+class DisplayerContainer : AbstractDisplayerContainer, Canvas {
+
+    override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
     override val parts: MutableCollection<Displayer> = mutableListOf()
 
@@ -615,7 +619,7 @@ class DisplayerContainer : AbstractDisplayerContainer {
     override fun loadParameters(g: Graphics) {}
 
     override fun drawDisplayer(g: Graphics) {
-        TODO("not implemented")
+        drawBackground(g)
     }
 
 }

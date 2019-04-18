@@ -22,6 +22,11 @@ interface Canvas : HavingDimension {
         return this
     }
 
+    fun clearBackground() : Canvas{
+        graphics.clear()
+        return this
+    }
+
     fun drawPoint(x : Int, y : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color

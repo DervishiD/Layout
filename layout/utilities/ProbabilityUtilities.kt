@@ -49,11 +49,15 @@ internal fun RealFunction.inverseDichotomicSearch(p : Int, precision: Double = D
 
 fun randomHomogeneous(low : Double, high : Double) : Double{
     return when{
-        low > high -> randomHomogeneous(high, low)
+        low > high -> ({x : Double -> (x - high)/(low - high)}.inverseDichotomicSearch(Random.nextDouble()))
         low == high -> low
         else -> ({x : Double -> (x - low)/(high - low)}.inverseDichotomicSearch(Random.nextDouble()))
     }
 }
+
+fun randomHomogeneous(low : Int, high : Double) : Double = randomHomogeneous(low.toDouble(), high)
+fun randomHomogeneous(low : Double, high : Int) : Double = randomHomogeneous(low, high.toDouble())
+fun randomHomogeneous(low : Int, high : Int) : Double = randomHomogeneous(low.toDouble(), high.toDouble())
 
 fun randomHomogeneous() : Double{
     return {x : Double -> x}.inverseDichotomicSearch(Random.nextDouble())

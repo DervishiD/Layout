@@ -10,6 +10,6 @@ fun main(){
 
 private fun init(){
     //rpgApplication.run()
-    //probabilityApplication.run()
-    timeTest { debugHomogeneousDistribution() }
+    probabilityApplication.run()
+    //timeTest { debugHomogeneousDistribution() }
 }

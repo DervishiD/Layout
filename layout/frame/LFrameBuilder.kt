@@ -77,6 +77,8 @@ class LFrameBuilder(private var contentPane: Screen) {
      */
     private var timerPeriod : Long = DEFAULT_TIMER_PERIOD
 
+    private var runningIfHidden : Boolean = false
+
     /**
      * Exits the application when the constructed LFrame is closed.
      * @return This LFrameBuilder.
@@ -302,7 +304,7 @@ class LFrameBuilder(private var contentPane: Screen) {
      * @see setFullScreen
      */
     infix fun setHeight(height : Double) : LFrameBuilder{
-        if(height >= 0) this.height = (SCREEN_WIDTH * height).toInt()
+        if(height >= 0) this.height = (SCREEN_HEIGHT * height).toInt()
         else throw IllegalArgumentException("The height of a LFrame must be positive.")
         return this
     }
@@ -347,12 +349,17 @@ class LFrameBuilder(private var contentPane: Screen) {
         return this
     }
 
+    infix fun isRunningIfHidden(runningIfHidden : Boolean) : LFrameBuilder{
+        this.runningIfHidden = runningIfHidden
+        return this
+    }
+
     /**
      * Builds the LFrame corresponding to the given options.
      * @see LFrame
      */
     fun build() : LFrame{
-        return LFrame(contentPane, x, y, width, height, onClose, isFullscreen, isDecorated, timerPeriod)
+        return LFrame(contentPane, x, y, width, height, onClose, isFullscreen, isDecorated, runningIfHidden, timerPeriod)
     }
 
 }

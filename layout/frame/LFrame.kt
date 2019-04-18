@@ -1,5 +1,6 @@
 package layout.frame
 
+import layout.Action
 import layout.interfaces.LTimerUpdatable
 import java.awt.Frame
 import java.awt.event.*
@@ -25,6 +26,10 @@ class LFrame : JFrame, LTimerUpdatable {
      */
     private val timer : LTimer
 
+    private var onCloseAdditionalAction : Action = {}
+
+    private val runningIfHidden : Boolean
+
     /**
      * An internal constructor, only used by LFrameBuilder.
      * @param contentPane The content pane of this LFrame.
@@ -49,6 +54,7 @@ class LFrame : JFrame, LTimerUpdatable {
             onClose : Int,
             isFullScreen : Boolean,
             isDecorated : Boolean,
+            runningIfHidden : Boolean,
             timerPeriod : Long
     ) : super(){
         defaultCloseOperation = onClose
@@ -61,6 +67,7 @@ class LFrame : JFrame, LTimerUpdatable {
         }
         screenManager = LScreenManager(this, contentPane)
         timer = LTimer(this, timerPeriod)
+        this.runningIfHidden = runningIfHidden
         addListeners()
     }
 
@@ -123,6 +130,7 @@ class LFrame : JFrame, LTimerUpdatable {
     fun setVisible() : LFrame{
         isVisible = true
         requestFocus()
+        timer.reset()
         return this
     }
 
@@ -132,6 +140,24 @@ class LFrame : JFrame, LTimerUpdatable {
     fun setInvisible() : LFrame{
         isVisible = false
         transferFocus()
+        if(!runningIfHidden) timer.pause()
+        return this
+    }
+
+    fun isHidden() : Boolean = !isVisible
+
+    fun pause() : LFrame{
+        timer.pause()
+        return this
+    }
+
+    fun resume() : LFrame{
+        timer.reset()
+        return this
+    }
+
+    infix fun setOnCloseAction(onCloseAction : Action) : LFrame{
+        onCloseAdditionalAction = onCloseAction
         return this
     }
 
@@ -139,6 +165,7 @@ class LFrame : JFrame, LTimerUpdatable {
      * Closes this LFrame.
      */
     fun close() : LFrame{
+        onCloseAdditionalAction.invoke()
         setInvisible()
         dispatchEvent(WindowEvent(this, WindowEvent.WINDOW_CLOSING))
         return this
@@ -153,7 +180,6 @@ class LFrame : JFrame, LTimerUpdatable {
     fun run(){
         screenManager.start()
         setVisible()
-        timer.start()
     }
 
     infix fun setTimerPeriod(period : Long) : LFrame {

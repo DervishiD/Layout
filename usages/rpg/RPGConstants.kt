@@ -184,13 +184,6 @@ val editorScreen : Screen = object : Screen() {
         GRID_DISPLAYER.setGridHeight(HEIGHT_TEXTFIELD.typedText().toInt())
     }
 
-    override fun drawBackground(g: Graphics) {
-        val separatorLineThickness = 24
-        g.color = DEFAULT_COLOR
-        g.fillRect((ALLOWED_LEFT_WIDTH * width()).toInt() - separatorLineThickness/2, 0, separatorLineThickness, (ALLOWED_GRID_HEIGHT * height()).toInt())
-        g.fillRect((ALLOWED_LEFT_WIDTH * width()).toInt(), (ALLOWED_LEFT_HEIGHT * height() - separatorLineThickness / 2).toInt(), (ALLOWED_GRID_WIDTH * width()).toInt(), separatorLineThickness)
-    }
-
     override fun pressKey(key: Int) {
         if(currentTextField != null){
             if(key == VK_ENTER){
@@ -235,6 +228,13 @@ val editorScreen : Screen = object : Screen() {
         this add BACK_BUTTON
         this add GRID_DISPLAYER
         this add LEFT_SCROLL_PANE
+        addGraphicAction({ g : Graphics, w : Int, h : Int -> run{
+            val separatorLineThickness = 24
+            g.color = DEFAULT_COLOR
+            g.fillRect((ALLOWED_LEFT_WIDTH * w).toInt() - separatorLineThickness/2, 0, separatorLineThickness, (ALLOWED_GRID_HEIGHT * h).toInt())
+            g.fillRect((ALLOWED_LEFT_WIDTH * w).toInt(), (ALLOWED_LEFT_HEIGHT * h - separatorLineThickness / 2).toInt(), (ALLOWED_GRID_WIDTH * w).toInt(), separatorLineThickness)
+        }}
+        , this)
     }
 
     override fun save() {
@@ -242,6 +242,7 @@ val editorScreen : Screen = object : Screen() {
         this remove BACK_BUTTON
         this remove GRID_DISPLAYER
         this remove LEFT_SCROLL_PANE
+        removeDrawing(this)
     }
 
 }

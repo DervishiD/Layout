@@ -3,6 +3,7 @@ package layout.frame
 import layout.*
 import layout.displayers.AbstractDisplayerContainer
 import layout.displayers.Displayer
+import layout.interfaces.Canvas
 import layout.interfaces.CustomContainer
 import layout.interfaces.LTimerUpdatable
 import layout.interfaces.MouseInteractable
@@ -22,11 +23,13 @@ import layout.utilities.LProperty
  * @see JPanel
  * @see LFrame
  */
-abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpdatable {
+abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpdatable, Canvas {
 
     override var w : LProperty<Int> = LProperty(0)
 
     override var h : LProperty<Int> = LProperty(0)
+
+    override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
     /**
      * The Screen that comes before this one in the program architecture.
@@ -75,12 +78,6 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         g!!.clearRect(0, 0, width, height)
         drawBackground(g)
     }
-
-    /**
-     * Draws the background image of this Screen.
-     * @param g the Graphics environment that draws it.
-     */
-    open fun drawBackground(g : Graphics){}
 
     /**
      * Saves the state of the Screen when it's removed from the main frame.
@@ -138,7 +135,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     fun nextScreen() : Screen? = nextScreen.value
 
     override fun mouseClick(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseClick()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseClick()
@@ -147,7 +144,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mousePress(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mousePress()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mousePress()
@@ -156,7 +153,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseRelease(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseRelease()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseRelease()
@@ -165,7 +162,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseEnter(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseEnter()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseEnter()
@@ -174,7 +171,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseExit(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseExit()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseExit()
@@ -183,7 +180,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseDrag(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseDrag()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseDrag()
@@ -192,7 +189,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseMoved(x : Int, y : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseMoved()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseMoved()
@@ -201,7 +198,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){
-        when(val component : Component = getComponentAt(x, y)){
+        when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseWheelMoved(units)
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseWheelMoved(units)
@@ -209,11 +206,11 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         }
     }
 
-    override fun onTimerTick(): LTimerUpdatable {
+    override fun onTimerTick(): Screen {
         for(d : Displayer in parts){
             d.onTimerTick()
         }
-        return super.onTimerTick()
+        return this
     }
 
 }

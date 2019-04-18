@@ -20,6 +20,8 @@ internal class LTimer(private val frame: LFrame, private var period: Long = DEFA
 
     }
 
+    private var isRunning : Boolean = false
+
     private val task : TimerTask = object : TimerTask(){
         override fun run() {
             frame.onTimerTick()
@@ -38,12 +40,26 @@ internal class LTimer(private val frame: LFrame, private var period: Long = DEFA
      * @see timer
      * @see period
      */
-    internal fun start() = timer.scheduleAtFixedRate(task, 0, period)
+    internal fun start(){
+        timer.scheduleAtFixedRate(task, 0, period)
+        isRunning = true
+    }
 
     internal infix fun setPeriod(period : Long){
         this.period = period
-        timer.cancel()
-        timer.scheduleAtFixedRate(task, 0, period)
+        reset()
+    }
+
+    internal fun reset(){
+        pause()
+        start()
+    }
+
+    internal fun pause(){
+        if(isRunning){
+            timer.cancel()
+            isRunning = false
+        }
     }
 
 }

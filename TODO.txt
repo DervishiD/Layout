@@ -38,19 +38,14 @@ Canvas
     Fill triangle
     Fill regular polygons
     Fill polygons
-    Draw and fill rectangles and ovals from center point
+    Draw and fill rectangles and ovals from center point and other points
     Fix  the 0.999 problem
-    Implement it
-        Screen
-        DisplayerContainer (Contains a TODO)
 
 Interface for HavingRelativeDimensions
 
 Rename Screen
 
 Probability distributions project
-    Homogeneous distribution
-    Create a test system using a distribution of points on a Canvas
     Create a test to find an ok trust interval, maybe using buckets
     Other distributions
         Gaussian
