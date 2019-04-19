@@ -5,6 +5,7 @@ import layout.Action
 import layout.interfaces.CustomContainer
 import layout.GraphicAction
 import layout.geometry.Point
+import layout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
 
@@ -119,7 +120,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     }
 
-    override var currentOption: Int = 0
+    override var currentOptionIndex: LProperty<Int> = LProperty(0)
 
     override val options: MutableList<T> = mutableListOf()
 
@@ -303,10 +304,10 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * Sets the current selection to the next value in the list.
      */
     protected open fun next(){
-        if(currentOption < optionsNumber() - 1){
-            currentOption++
+        if(currentOptionIndex.value < optionsNumber() - 1){
+            currentOptionIndex.value++
         }else{
-            currentOption = 0
+            currentOptionIndex.value = 0
         }
         initphase = true
     }
@@ -315,10 +316,10 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * Sets the current selection to the previous value in the list.
      */
     protected open fun previous(){
-        if(currentOption > 0){
-            currentOption--
+        if(currentOptionIndex.value > 0){
+            currentOptionIndex.value--
         }else{
-            currentOption = optionsNumber() - 1
+            currentOptionIndex.value = optionsNumber() - 1
         }
         initphase = true
     }

@@ -45,6 +45,14 @@ Interface for HavingRelativeDimensions
 
 Rename Screen
 
+Find out why decoration bugs and fix it
+
+Switch Displayer, between two values
+
+On/off Displayer
+
+Maybe override functions to return correct types
+
 Probability distributions project
     Create a test to find an ok trust interval, maybe using buckets
     Other distributions
@@ -57,8 +65,6 @@ Probability distributions project
         Double gaussian
         Inverse Gaussian, Lots in borders, few in center
         Sine curve
-        integral of sine curve plus constant, cosx + x -like
-        Poisson-like
     Generalization of probability distributions for strictly increasing continuous real functions
 
 Game of life project

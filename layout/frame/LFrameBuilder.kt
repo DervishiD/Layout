@@ -26,7 +26,7 @@ class LFrameBuilder(private var contentPane: Screen) {
         /**
          * The default period of the constructed LFrame's LTimer.
          */
-        private const val DEFAULT_TIMER_PERIOD : Long = 30
+        private const val DEFAULT_TIMER_PERIOD : Int = 30
 
     }
 
@@ -75,7 +75,7 @@ class LFrameBuilder(private var contentPane: Screen) {
      * The default period of the constructed LFrame's LTimer.
      * @see setTimerPeriod
      */
-    private var timerPeriod : Long = DEFAULT_TIMER_PERIOD
+    private var timerPeriod : Int = DEFAULT_TIMER_PERIOD
 
     private var runningIfHidden : Boolean = false
 
@@ -344,7 +344,7 @@ class LFrameBuilder(private var contentPane: Screen) {
      * @throws IllegalArgumentException If the given period is not strictly positive.
      * @see timerPeriod
      */
-    infix fun setTimerPeriod(period : Long) : LFrameBuilder{
+    infix fun setTimerPeriod(period : Int) : LFrameBuilder{
         if(period > 0) timerPeriod = period else throw IllegalArgumentException("The period of a timer must be positive.")
         return this
     }

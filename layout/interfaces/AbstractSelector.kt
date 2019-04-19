@@ -1,5 +1,8 @@
 package layout.interfaces
 
+import layout.Action
+import layout.utilities.LProperty
+
 /**
  * An interface implemented by discrete selector classes that let the user select something.
  * The type parameter T is the type of the selected objects.
@@ -10,7 +13,7 @@ interface AbstractSelector<T> {
      * The index of the current option.
      * @see options
      */
-    var currentOption : Int
+    var currentOptionIndex : LProperty<Int>
 
     /**
      * The list of options that the selector chooses from.
@@ -20,7 +23,17 @@ interface AbstractSelector<T> {
     /**
      * Returns the current selected option
      */
-    fun selectedOption() : T = options[currentOption]
+    fun selectedOption() : T = options[currentOptionIndex.value]
+
+    fun addSelectionListener(key : Any, action : Action) :AbstractSelector<T>{
+        currentOptionIndex.addListener(key, action)
+        return this
+    }
+
+    infix fun addSelectionListener(action : Action) : AbstractSelector<T>{
+        currentOptionIndex.addListener(action)
+        return this
+    }
 
     /**
      * Returns the number of options that this Selector can select.

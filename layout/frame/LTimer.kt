@@ -1,6 +1,6 @@
 package layout.frame
 
-import java.util.*
+import javax.swing.Timer
 
 /**
  * A decorator for the java.util.Timer, used by the LFrame class.
@@ -9,31 +9,25 @@ import java.util.*
  * @see java.util.Timer
  * @see LFrame
  */
-internal class LTimer(private val frame: LFrame, private var period: Long = DEFAULT_PERIOD) {
+internal class LTimer(private val frame: LFrame, private var period: Int = DEFAULT_PERIOD) {
 
     companion object {
 
         /**
          * The default period of a LTimer.
          */
-        private const val DEFAULT_PERIOD : Long = 30
+        private const val DEFAULT_PERIOD : Int = 30
 
-    }
-
-    private var isRunning : Boolean = false
-
-    private val task : TimerTask = object : TimerTask(){
-        override fun run() {
-            frame.onTimerTick()
-            frame.repaint()
-        }
     }
 
     /**
      * The inner java.util.Timer of this LTimer.
      * @see java.util.Timer
      */
-    private val timer : Timer = Timer(false)
+    private val timer : Timer = Timer(period){
+        frame.onTimerTick()
+        frame.repaint()
+    }
 
     /**
      * Starts this LTimer.
@@ -41,25 +35,15 @@ internal class LTimer(private val frame: LFrame, private var period: Long = DEFA
      * @see period
      */
     internal fun start(){
-        timer.scheduleAtFixedRate(task, 0, period)
-        isRunning = true
+        timer.start()
     }
 
-    internal infix fun setPeriod(period : Long){
-        this.period = period
-        reset()
-    }
-
-    internal fun reset(){
-        pause()
-        start()
+    internal infix fun setPeriod(period : Int){
+        timer.delay = period
     }
 
     internal fun pause(){
-        if(isRunning){
-            timer.cancel()
-            isRunning = false
-        }
+        timer.stop()
     }
 
 }

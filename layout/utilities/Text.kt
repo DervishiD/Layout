@@ -66,6 +66,10 @@ class Text {
      */
     constructor(text : Double) : this(text.toString())
 
+    constructor(text : Char) : this(text.toString())
+
+    constructor() : this("")
+
     /**
      * Returns the content of this Text object as a List of lines of StringDisplays.
      * @return The content of this Text object as a List of lines of StringDisplays.

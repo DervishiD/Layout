@@ -55,7 +55,7 @@ class LFrame : JFrame, LTimerUpdatable {
             isFullScreen : Boolean,
             isDecorated : Boolean,
             runningIfHidden : Boolean,
-            timerPeriod : Long
+            timerPeriod : Int
     ) : super(){
         defaultCloseOperation = onClose
         isUndecorated = !isDecorated
@@ -130,7 +130,7 @@ class LFrame : JFrame, LTimerUpdatable {
     fun setVisible() : LFrame{
         isVisible = true
         requestFocus()
-        timer.reset()
+        timer.start()
         return this
     }
 
@@ -152,7 +152,7 @@ class LFrame : JFrame, LTimerUpdatable {
     }
 
     fun resume() : LFrame{
-        timer.reset()
+        timer.start()
         return this
     }
 
@@ -182,12 +182,10 @@ class LFrame : JFrame, LTimerUpdatable {
         setVisible()
     }
 
-    infix fun setTimerPeriod(period : Long) : LFrame {
+    infix fun setTimerPeriod(period : Int) : LFrame {
         timer.setPeriod(period)
         return this
     }
-
-    infix fun setTimerPeriod(period : Int) : LFrame = setTimerPeriod(period.toLong())
 
     fun resizeAtFixedUpperLeft(width : Int, height : Int) : LFrame{
         setBounds(x, y, width, height)

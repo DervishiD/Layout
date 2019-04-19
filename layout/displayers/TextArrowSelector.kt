@@ -531,8 +531,8 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
      * @see linesList
      */
     private fun reloadDimensions(){
-        w.value = linesList[currentOption].second
-        h.value = linesList[currentOption].third
+        w.value = linesList[currentOptionIndex.value].second
+        h.value = linesList[currentOptionIndex.value].third
     }
 
     /**
@@ -692,7 +692,7 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         var currentX : Int = SIDE_DELTA
         var currentY : Int = SIDE_DELTA
 
-        for(line : Collection<StringDisplay> in linesList[currentOption].first){
+        for(line : Collection<StringDisplay> in linesList[currentOptionIndex.value].first){
             currentY += line.ascent(g)
             for(s : StringDisplay in line){
                 g.font = s.font
