@@ -1,16 +1,14 @@
 package usages.probability
 
-import layout.Action
-import layout.displayers.Label
-import layout.displayers.TextArrowSelector
-import layout.displayers.TextButton
-import layout.frame.LApplication
-import layout.frame.LFrame
-import layout.frame.LFrameBuilder
-import layout.frame.Screen
-import layout.utilities.Text
-import layout.utilities.randomCosPlusX
-import layout.utilities.randomHomogeneous
+import llayout.Action
+import llayout.displayers.Label
+import llayout.displayers.TextArrowSelector
+import llayout.displayers.TextButton
+import llayout.frame.LApplication
+import llayout.frame.LFrame
+import llayout.frame.LFrameBuilder
+import llayout.frame.Screen
+import llayout.utilities.*
 import kotlin.math.*
 
 val probabilityApplication : LApplication = object : LApplication(){
@@ -129,7 +127,14 @@ val mainScreen : Screen = object : Screen(){
 
     val randomTypes : Map<Text, () -> Double> = mapOf(
             Text("Homogeneous") to {randomHomogeneous()},
-            Text("cosx + x") to {randomCosPlusX()}
+            Text("cosx + x") to {randomCosPlusX()},
+            Text("exponential") to {randomExponential()},
+            Text("arcsin") to {randomArcsin()},
+            Text("root") to {randomRoot()},
+            Text("ln") to { randomln()},
+            Text("square") to { randomSquare()},
+            Text("cube") to { randomCube()},
+            Text("fourth") to { randomFourth()}
     )
 
     @Suppress("UNCHECKED_CAST")

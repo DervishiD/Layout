@@ -54,18 +54,9 @@ On/off Displayer
 Maybe override functions to return correct types
 
 Probability distributions project
-    Create a test to find an ok trust interval, maybe using buckets
     Other distributions
         Gaussian
-        Exponential
-        Polynomial
-        Logarithmic
-        Root
-        Arcsin
         Double gaussian
-        Inverse Gaussian, Lots in borders, few in center
-        Sine curve
-    Generalization of probability distributions for strictly increasing continuous real functions
 
 Game of life project
 
@@ -74,3 +65,7 @@ Advanced calculator project
 General console project
 
 Bubbles screen project
+
+XML and TXT upgrades
+
+OpenGL and 3D stuff

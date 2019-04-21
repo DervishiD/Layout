@@ -1,7 +1,7 @@
 package usages.rpg.gamepackage.gamegeometry
 
-import layout.geometry.Point
-import layout.geometry.Vector
+import llayout.geometry.Point
+import llayout.geometry.Vector
 
 /**
  * The class that represents a game grid

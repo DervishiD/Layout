@@ -1,11 +1,11 @@
 package usages.rpg.editor
 
-import layout.*
-import layout.displayers.Displayer
-import layout.frame.LMouse
+import llayout.*
+import llayout.displayers.Displayer
+import llayout.frame.LMouse
 import usages.rpg.gamepackage.gamegeometry.Cell
 import usages.rpg.gamepackage.gamegeometry.Grid
-import layout.geometry.Point
+import llayout.geometry.Point
 import usages.rpg.DEFAULT_GRID_MESH_SIZE
 import usages.rpg.GRID_IMAGE_SIZE_DELTA
 import usages.rpg.SMALLEST_GRID_IMAGE_SIZE
