@@ -3,6 +3,8 @@ package debug
 import llayout.Action
 import llayout.RealFunction
 import llayout.utilities.*
+import usages.probability.inverseDichotomicSearch
+import usages.probability.randomHomogeneous
 import kotlin.math.floor
 
 fun <T> Collection<T>.print(){

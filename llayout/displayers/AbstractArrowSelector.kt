@@ -1,47 +1,54 @@
 package llayout.displayers
 
-import llayout.interfaces.AbstractSelector
 import llayout.Action
-import llayout.interfaces.CustomContainer
-import llayout.GraphicAction
+import llayout.frame.LScene
 import llayout.geometry.Point
+import llayout.GraphicAction
+import llayout.interfaces.AbstractSelector
+import llayout.interfaces.LContainer
 import llayout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
 
 /**
  * An abstract implementation of an Abstract Selector, that is, an object that lets the user select
- * values from a list by using to arrows, 'next' and 'previous'.
- * It is a Displayer, meaning that it can be added to a Screen.
+ * values from a list by using two arrows, 'next' and 'previous'.
+ * It is a Displayer, meaning that it can be added to a LScene.
  * The type parameter T is the type of the options to choose from.
  * @see previous
  * @see next
  * @see Displayer
  * @see AbstractSelector
+ * @see LScene
  */
 abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     protected companion object {
+
         /**
          * The width of a horizontal arrow.
          */
         private const val HORIZONTAL_ARROW_WIDTH : Int = 30
+
         /**
          * The height of a horizontal arrow.
          */
         private const val HORIZONTAL_ARROW_HEIGHT : Int = 30
+
         /**
          * The width of a vertical arrow.
          */
         private const val VERTICAL_ARROW_WIDTH : Int = 30
+
         /**
          * The height of a vertical arrow.
          */
         private const val VERTICAL_ARROW_HEIGHT : Int = 30
+
         /**
          * The default Color of the arrows.
          */
-        private val DEFAULT_ARROW_COLOR : Color = Color(71, 200, 66)
+        private val DEFAULT_ARROW_COLOR : Color = Color(34, 139, 34)
 
         /**
          * A function that produces a GraphicAction that draws a left arrow from the given Color.
@@ -54,6 +61,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             g.color = color
             g.fillPolygon(intArrayOf(0, w, w), intArrayOf(h/2, 0, h), 3)
         }}
+
         /**
          * A function that produces a GraphicAction that draws a right arrow from the given Color.
          * @param color The Color of the given arrow.
@@ -65,6 +73,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             g.color = color
             g.fillPolygon(intArrayOf(0, 0, w), intArrayOf(0, h, h/2), 3)
         }}
+
         /**
          * A function that produces a GraphicAction that draws an up arrow from the given Color.
          * @param color The Color of the given arrow.
@@ -76,6 +85,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             g.color = color
             g.fillPolygon(intArrayOf(0, w/2, w), intArrayOf(h, 0, h), 3)
         }}
+
         /**
          * A function that produces a GraphicAction that draws a down arrow from the given Color.
          * @param color The Color of the given arrow.
@@ -92,25 +102,25 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
          * The default GraphicAction that draws a left arrow.
          * @see GraphicAction
          */
-        private val DEFAULT_LEFT_ARROW_DRAWER : GraphicAction =
-                leftArrowDrawer()
+        private val DEFAULT_LEFT_ARROW_DRAWER : GraphicAction = leftArrowDrawer()
+
         /**
          * The default GraphicAction that draws a right arrow.
          * @see GraphicAction
          */
-        private val DEFAULT_RIGHT_ARROW_DRAWER : GraphicAction =
-                rightArrowDrawer()
+        private val DEFAULT_RIGHT_ARROW_DRAWER : GraphicAction = rightArrowDrawer()
+
         /**
          * The default GraphicAction that draws an up arrow.
          * @see GraphicAction
          */
         private val DEFAULT_UP_ARROW_DRAWER : GraphicAction = upArrowDrawer()
+
         /**
          * The default GraphicAction that draws a down arrow.
          * @see GraphicAction
          */
-        private val DEFAULT_DOWN_ARROW_DRAWER : GraphicAction =
-                downArrowDrawer()
+        private val DEFAULT_DOWN_ARROW_DRAWER : GraphicAction = downArrowDrawer()
 
         /**
          * The distance, in pixels, between the border of this Displayer and the
@@ -130,6 +140,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
      * @see previous
      */
     private var previousAction : Action = {this.previous()}
+
     /**
      * The Action of the 'next' arrow, selects the option after the current
      * one in the list.
@@ -138,22 +149,27 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     private var nextAction : Action = {this.next()}
 
     /**
-     * Encodes if the arrows are placed horizontally or vertically
+     * True if the arrows are placed horizontally, false if they are placed vertically
      */
     private val isHorizontal : Boolean
+
     /**
-     * The 'previous' arrow
+     * The 'previous' arrow.
+     * @see previous
      */
     private var previousArrow : ImageButton
+
     /**
-     * The 'next' arrow
+     * The 'next' arrow.
+     * @see next
      */
     private var nextArrow : ImageButton
 
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, in pixels.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, in pixels.
      * @param options The list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -168,7 +184,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, in pixels.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, in pixels.
      * @param options The vararg list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -183,7 +200,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, in pixels.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, as a proportion of its container's height.
      * @param options The list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -198,7 +216,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, in pixels.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, as a proportion of its container's height.
      * @param options The vararg list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -213,7 +232,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, as a proportion of its container's width.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, in pixels.
      * @param options The list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -228,7 +248,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, as a proportion of its container's width.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, in pixels.
      * @param options The vararg list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -243,7 +264,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, as a proportion of its container's width.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, as a proportion of its container's height.
      * @param options The list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -258,7 +280,8 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param x The x coordinate of the center of this AbstractArrowSelector, as a proportion of its container's width.
+     * @param y The y coordinate of the center of this AbstractArrowSelector, as a proportion of its container's height.
      * @param options The vararg list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -273,7 +296,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param p The position of the Selector, as pixel coordinates on its container.
      * @param options The list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -288,7 +311,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     /**
      * Creates an ArrowSelector at the given position, with the given list of options, and
      * horizontal if isHorizontal is true.
-     * @param p The position of the Selector
+     * @param p The position of the Selector, as pixel coordinates on its container.
      * @param options The vararg list of options of this Selector.
      * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
      * @see Displayer
@@ -302,6 +325,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     /**
      * Sets the current selection to the next value in the list.
+     * @see options
      */
     protected open fun next(){
         if(currentOptionIndex.value < optionsNumber() - 1){
@@ -314,6 +338,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     /**
      * Sets the current selection to the previous value in the list.
+     * @see options
      */
     protected open fun previous(){
         if(currentOptionIndex.value > 0){
@@ -473,12 +498,12 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         return this
     }
 
-    override fun onAdd(source : CustomContainer) {
+    override fun onAdd(source : LContainer) {
         source add previousArrow
         source add nextArrow
     }
 
-    override fun onRemove(source : CustomContainer) {
+    override fun onRemove(source : LContainer) {
         source remove previousArrow
         source remove nextArrow
     }
@@ -498,7 +523,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     /**
      * Sets the position of the arrows if they're horizontally aligned, to align them
-     * correctly with this Selector
+     * correctly with this Selector.
      */
     private fun setHorizontalArrowPosition(){
         previousArrow.moveTo(centerX() - width()/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, centerY())
@@ -507,7 +532,7 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     /**
      * Sets the position of the arrows if they're vertically aligned, to align them
-     * correctly with this Selector
+     * correctly with this Selector.
      */
     private fun setVerticalArrowPosition(){
         previousArrow.moveTo(centerX(), centerY() + height()/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)

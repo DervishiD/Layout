@@ -6,17 +6,17 @@ import java.awt.Container
 /**
  * A custom Container class.
  * Java awt containers are objects that can include Components inside them. For example,
- * JFrames, JPanels and JLabels are Containers. This CustomContainer plays a similar
- * role for Displayers. A class implements the CustomContainer interface if it is
- * able to contain Displayers. Examples are the Screen class and the DisplayerScrollPane class.
+ * JFrames, JPanels and JLabels are Containers. This LContainer plays a similar
+ * role for Displayers. A class implements the LContainer interface if it is
+ * able to contain Displayers. Examples are the LScene class and the DisplayerScrollPane class.
  * Since this interface is seen as a type of extension to the awt Container class, it only makes
  * sense for a class to implement it if it is already an awt Container.
  * @see Container
  * @see Displayer
- * @see Screen
+ * @see LScene
  * @see DisplayerScrollPane
  */
-interface CustomContainer : HavingDimension {
+interface LContainer : HavingDimension {
 
     /**
      * The Displayers contained in this Container
@@ -25,13 +25,13 @@ interface CustomContainer : HavingDimension {
     val parts : MutableCollection<Displayer>
 
     /**
-     * Adds a Displayer to this CustomContainer.
-     * @param d The Displayer that will be added to this CustomContainer.
+     * Adds a Displayer to this LContainer.
+     * @param d The Displayer that will be added to this LContainer.
      * @see Displayer
      * @see Displayer.onAdd
      * @see parts
      */
-    infix fun add(d : Displayer) : CustomContainer {
+    infix fun add(d : Displayer) : LContainer {
         parts.add(d)
         (this as Container).add(d)
         d.updateRelativeValues(width(), height())
@@ -43,13 +43,13 @@ interface CustomContainer : HavingDimension {
     }
 
     /**
-     * Removes a Displayer from this CustomContainer.
-     * @param d The Displayer that will be removed from this CustomContainer.
+     * Removes a Displayer from this LContainer.
+     * @param d The Displayer that will be removed from this LContainer.
      * @see Displayer
      * @see Displayer.onRemove
      * @see parts
      */
-    infix fun remove(d : Displayer) : CustomContainer {
+    infix fun remove(d : Displayer) : LContainer {
         parts.remove(d)
         (this as Container).remove(d)
         w.removeListener(d)
@@ -88,56 +88,56 @@ interface CustomContainer : HavingDimension {
     fun releaseKey(key : Int){}
 
     /**
-     * Reacts to a mouse click event on this CustomContainer.
+     * Reacts to a mouse click event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseClick(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse press event on this CustomContainer.
+     * Reacts to a mouse press event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mousePress(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse release event on this CustomContainer.
+     * Reacts to a mouse release event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseRelease(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse enter event on this CustomContainer.
+     * Reacts to a mouse enter event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseEnter(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse exit event on this CustomContainer.
+     * Reacts to a mouse exit event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseExit(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse drag event on this CustomContainer.
+     * Reacts to a mouse drag event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseDrag(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse moved event on this CustomContainer.
+     * Reacts to a mouse moved event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
     fun mouseMoved(x : Int, y : Int)
 
     /**
-     * Reacts to a mouse wheel moved event on this CustomContainer.
+     * Reacts to a mouse wheel moved event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      * @param units The number of units scrolled by the mouse wheel.

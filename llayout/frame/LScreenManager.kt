@@ -5,22 +5,22 @@ import llayout.interfaces.LTimerUpdatable
 
 /**
  * A class that manages the transition between screens.
- * @see Screen
+ * @see LScene
  */
 internal class LScreenManager : LTimerUpdatable {
 
     /**
-     * The Action executed to change a Screen.
+     * The Action executed to change a LScene.
      * @see Action
-     * @see Screen
+     * @see LScene
      */
-    private val screenChangeAction : Action = {if(currentScreen.nextScreen() != null) setScreen(currentScreen.nextScreen()!!)}
+    private val screenChangeAction : Action = {if(currentLScene.nextScreen() != null) setScreen(currentLScene.nextScreen()!!)}
 
     /**
-     * The Screen that is currently displayed.
-     * @see Screen
+     * The LScene that is currently displayed.
+     * @see LScene
      */
-    private var currentScreen : Screen
+    private var currentLScene : LScene
 
     /**
      * This LScreenManager's LFrame.
@@ -36,184 +36,184 @@ internal class LScreenManager : LTimerUpdatable {
     private val pressedKeys : MutableSet<Int> = mutableSetOf()
 
     /**
-     * Constructs a LScreenManager for the given LFrame with the given starting Screen.
+     * Constructs a LScreenManager for the given LFrame with the given starting LScene.
      * @param frame This LScreenManager's LFrame.
-     * @param firstScreen The first Screen.
+     * @param firstLScene The first LScene.
      * @see LFrame
-     * @see Screen
+     * @see LScene
      */
-    internal constructor(frame : LFrame, firstScreen : Screen){
+    internal constructor(frame : LFrame, firstLScene : LScene){
         this.frame = frame
-        currentScreen = firstScreen
+        currentLScene = firstLScene
         setCurrentScreenBounds()
-        addScreenChangeListener(currentScreen)
+        addScreenChangeListener(currentLScene)
     }
 
     /**
-     * Displays the starting Screen.
-     * @see Screen
+     * Displays the starting LScene.
+     * @see LScene
      */
     fun start(){
-        currentScreen.load()
-        frame.contentPane = currentScreen
+        currentLScene.load()
+        frame.contentPane = currentLScene
     }
 
     /**
-     * Changes the current Screen.
+     * Changes the current LScene.
      * The methods starts by saving the old one, then loads the new one, and
      * finally initializes it.
-     * @param screen The new displayed Screen.
-     * @see Screen
-     * @see Screen.save
-     * @see Screen.load
-     * @see Screen.initialization
-     * @see currentScreen
+     * @param LScene The new displayed LScene.
+     * @see LScene
+     * @see LScene.save
+     * @see LScene.load
+     * @see LScene.initialization
+     * @see currentLScene
      */
-    private infix fun setScreen(screen : Screen){
-        removeScreenChangeListener(currentScreen)
-        currentScreen.save()
-        currentScreen = screen
+    private infix fun setScreen(LScene : LScene){
+        removeScreenChangeListener(currentLScene)
+        currentLScene.save()
+        currentLScene = LScene
         setCurrentScreenBounds()
-        addScreenChangeListener(currentScreen)
-        currentScreen.load()
-        frame.contentPane = currentScreen
-        currentScreen.initialization()
+        addScreenChangeListener(currentLScene)
+        currentLScene.load()
+        frame.contentPane = currentLScene
+        currentLScene.initialization()
     }
 
     /**
-     * Sets the current Screen's bounds to fit the frame's.
-     * @see currentScreen
+     * Sets the current LScene's bounds to fit the frame's.
+     * @see currentLScene
      * @see frame
-     * @see Screen
+     * @see LScene
      * @see LFrame
      */
-    private fun setCurrentScreenBounds() = currentScreen.setBounds(frame.width, frame.height)
+    private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.width, frame.height)
 
     internal fun resize() = setCurrentScreenBounds()
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param key The code of the pressed key.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.pressKey
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.pressKey
      */
     infix fun pressKey(key : Int){
         pressedKeys.add(key)
-        currentScreen.pressKey(key)
+        currentLScene.pressKey(key)
     }
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param key The code of the released key.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.releaseKey
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.releaseKey
      */
     infix fun releaseKey(key : Int){
         pressedKeys.remove(key)
-        currentScreen.releaseKey(key)
+        currentLScene.releaseKey(key)
     }
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseClick
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseClick
      */
-    fun mouseClick(x : Int, y : Int) = currentScreen.mouseClick(x, y)
+    fun mouseClick(x : Int, y : Int) = currentLScene.mouseClick(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mousePress
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mousePress
      */
-    fun mousePress(x : Int, y : Int) = currentScreen.mousePress(x, y)
+    fun mousePress(x : Int, y : Int) = currentLScene.mousePress(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseRelease
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseRelease
      */
-    fun mouseRelease(x : Int, y : Int) = currentScreen.mouseRelease(x, y)
+    fun mouseRelease(x : Int, y : Int) = currentLScene.mouseRelease(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseEnter
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseEnter
      */
-    fun mouseEnter(x : Int, y : Int) = currentScreen.mouseEnter(x, y)
+    fun mouseEnter(x : Int, y : Int) = currentLScene.mouseEnter(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseExit
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseExit
      */
-    fun mouseExit(x : Int, y : Int) = currentScreen.mouseExit(x, y)
+    fun mouseExit(x : Int, y : Int) = currentLScene.mouseExit(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseMoved
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseMoved
      */
-    fun mouseMoved(x : Int, y : Int) = currentScreen.mouseMoved(x, y)
+    fun mouseMoved(x : Int, y : Int) = currentLScene.mouseMoved(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseDrag
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseDrag
      */
-    fun mouseDrag(x : Int, y : Int) = currentScreen.mouseDrag(x, y)
+    fun mouseDrag(x : Int, y : Int) = currentLScene.mouseDrag(x, y)
 
     /**
-     * Transmits the event to the current Screen.
+     * Transmits the event to the current LScene.
      * @param x The x coordinate of the event.
      * @param y The y coordinate of the event.
      * @param units The number of units scrolled.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.mouseClick
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.mouseClick
      */
-    fun mouseWheelMoved(x : Int, y : Int, units : Int) = currentScreen.mouseWheelMoved(x, y, units)
+    fun mouseWheelMoved(x : Int, y : Int, units : Int) = currentLScene.mouseWheelMoved(x, y, units)
 
     /**
-     * Adds a listener to the given Screen's nextScreen property.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.nextScreen
+     * Adds a listener to the given LScene's nextScreen property.
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.nextScreen
      */
-    private infix fun addScreenChangeListener(screen : Screen) = screen.addScreenChangeListener(this, screenChangeAction)
+    private infix fun addScreenChangeListener(LScene : LScene) = LScene.addScreenChangeListener(this, screenChangeAction)
 
     /**
-     * Removes a listener from the given Screen's nextScreen property.
-     * @see currentScreen
-     * @see Screen
-     * @see Screen.nextScreen
+     * Removes a listener from the given LScene's nextScreen property.
+     * @see currentLScene
+     * @see LScene
+     * @see LScene.nextScreen
      */
-    private infix fun removeScreenChangeListener(screen : Screen) = screen.removeScreenChangeListener(this)
+    private infix fun removeScreenChangeListener(LScene : LScene) = LScene.removeScreenChangeListener(this)
 
     override fun onTimerTick(): LTimerUpdatable {
-        currentScreen.onTimerTick()
+        currentLScene.onTimerTick()
         return super.onTimerTick()
     }
 

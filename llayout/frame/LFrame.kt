@@ -41,12 +41,12 @@ class LFrame : JFrame, LTimerUpdatable {
      * @param isFullScreen True if this LFrame is on fullscreen.
      * @param isDecorated True if this LFrame is decorated.
      * @param timerPeriod The period of this LFrame's LTimer.
-     * @see Screen
+     * @see LScene
      * @see setDefaultCloseOperation
      * @see timer
      */
     internal constructor(
-            contentPane : Screen,
+            contentPane : LScene,
             x : Int,
             y : Int,
             width : Int,

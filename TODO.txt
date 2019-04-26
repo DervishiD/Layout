@@ -6,6 +6,8 @@ Test negative coordinates
 
 Comment again
 
+Dokka
+
 Canvas
     Draw squares
     Draw circles
@@ -29,13 +31,8 @@ Canvas
     Draw and fill rectangles and ovals from center point and other points
     Fix  the 0.999 problem
 
-Rename Screen
-
-Rename CustomContainer
-
-Check if Screen.previousScreen is useful
-
 Initialize Displayers in reverse?
+    if l listens to b, l must be added *before* b, which will cause mistakes
 
 Add default fonts and colors setters to LFrames / LFrameBuilders
 
@@ -45,8 +42,6 @@ Switch Displayer, between two values
 
 On/off Displayer
 
-Maybe override functions to return correct types
-
 Graph
 
 Projects
@@ -54,11 +49,12 @@ Projects
         Other distributions
             Gaussian
             Double gaussian
+    That square color thing
     Mean distance
     Game of life
     Calculator
     Console
-    Bubbles screen saver
+    Bubbles Screen saver
     XML and TXT
     Databases
     3D stuff

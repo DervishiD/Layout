@@ -1,4 +1,4 @@
-package llayout.utilities
+package usages.probability
 
 import llayout.DOUBLE_PRECISION
 import llayout.RealFunction

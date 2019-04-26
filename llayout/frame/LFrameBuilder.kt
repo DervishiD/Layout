@@ -7,9 +7,9 @@ import javax.swing.WindowConstants
  * A builder class that builds a LFrame according to the given settings.
  * @param contentPane The content pane of the constructed LFrame
  * @see LFrame
- * @see Screen
+ * @see LScene
  */
-class LFrameBuilder(private var contentPane: Screen) {
+class LFrameBuilder(private var contentPane: LScene) {
 
     companion object {
 
@@ -329,9 +329,9 @@ class LFrameBuilder(private var contentPane: Screen) {
      * Sets the content pane of the constructed LFrame.
      * @param contentPane The content pane of the constructed LFrame.
      * @return This LFrameBuilder.
-     * @see Screen
+     * @see LScene
      */
-    infix fun setContentPane(contentPane : Screen) : LFrameBuilder{
+    infix fun setContentPane(contentPane : LScene) : LFrameBuilder{
         this.contentPane = contentPane
         return this
     }

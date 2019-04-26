@@ -4,26 +4,25 @@ import llayout.*
 import llayout.displayers.AbstractDisplayerContainer
 import llayout.displayers.Displayer
 import llayout.interfaces.Canvas
-import llayout.interfaces.CustomContainer
+import llayout.interfaces.LContainer
 import llayout.interfaces.LTimerUpdatable
 import llayout.interfaces.MouseInteractable
 import java.awt.Component
 import java.awt.Graphics
-import java.awt.event.KeyEvent.VK_ESCAPE
 import javax.swing.JPanel
 import llayout.utilities.LProperty
 
 /**
- * The general abstraction for a Screen. A Screen is a special kind of JPanel that is used in this Layout.
- * Every scene that appears in a LFrame is a Screen.
- * @see CustomContainer
+ * The general abstraction for a LScene. A LScene is a special kind of JPanel that is used in this Layout.
+ * Every scene that appears in a LFrame is a LScene.
+ * @see LContainer
  * @see MouseInteractable
  * @see Displayer
  * @see LScreenManager
  * @see JPanel
  * @see LFrame
  */
-abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpdatable, Canvas {
+abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas {
 
     override var w : LProperty<Int> = LProperty(0)
 
@@ -32,23 +31,11 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
     /**
-     * The Screen that comes before this one in the program architecture.
-     */
-    protected abstract var previousScreen : Screen
-
-    /**
-     * The next Screen, as a LProperty.
+     * The next LScene, as a LProperty.
      * @see setNextScreen
      * @see LProperty
      */
-    private var nextScreen : LProperty<Screen?> = LProperty(null)
-
-    /**
-     * Returns the previous Screen
-     * @return The previous Screen in the program architecture.
-     * @see previousScreen
-     */
-    fun previousScreen() : Screen = previousScreen
+    private var nextLScene : LProperty<LScene?> = LProperty(null)
 
     override var parts : MutableCollection<Displayer> = mutableListOf()
 
@@ -62,13 +49,13 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     override var onWheelMoved : MouseWheelAction = { _ -> }
 
     /**
-     * Sets the next Screen to the given value.
-     * @param nextScreen The Screen that appears on the core LFrame after this one.
-     * @see nextScreen
+     * Sets the next LScene to the given value.
+     * @param nextLScene The LScene that appears on the core LFrame after this one.
+     * @see nextLScene
      * @see LFrame
      */
-    protected infix fun setNextScreen(nextScreen : Screen){
-        this.nextScreen.value = nextScreen
+    protected infix fun setNextScreen(nextLScene : LScene){
+        this.nextLScene.value = nextLScene
     }
 
     public override fun paintComponent(g: Graphics?) {
@@ -80,45 +67,34 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     /**
-     * Saves the state of the Screen when it's removed from the main frame.
+     * Saves the state of the LScene when it's removed from the main frame.
      * @see load
      */
     open fun save(){}
 
     /**
-     * Loads the Screen when it's added to the main frame.
+     * Loads the LScene when it's added to the main frame.
      * @see save
      */
     open fun load(){}
 
-    override fun releaseKey(key: Int) {
-        if(key == VK_ESCAPE) escape()
-    }
-
     /**
-     * Goes back to the previous Screen designed by the previousScreen attribute.
-     * @see previousScreen
-     * @see setNextScreen
-     */
-    open fun escape() = setNextScreen(previousScreen)
-
-    /**
-     * Adds a Screen change listener to the nextScreen LProperty.
+     * Adds a LScene change listener to the nextLScene LProperty.
      * @param key The key of the added listener.
      * @param action The Action executed by the listener.
-     * @see nextScreen
+     * @see nextLScene
      * @see LProperty
      * @see Action
      */
-    fun addScreenChangeListener(key : Any?, action : Action) = nextScreen.addListener(key, action)
+    fun addScreenChangeListener(key : Any?, action : Action) = nextLScene.addListener(key, action)
 
     /**
-     * Removes a Screen change listener from the nextScreen LProperty.
+     * Removes a LScene change listener from the nextLScene LProperty.
      * @param key The key of the listener to remove.
      * @see LProperty
-     * @see nextScreen
+     * @see nextLScene
      */
-    fun removeScreenChangeListener(key : Any?) = nextScreen.removeListener(key)
+    fun removeScreenChangeListener(key : Any?) = nextLScene.removeListener(key)
 
     fun setBounds(width : Int, height : Int) = setBounds(0, 0, width, height)
 
@@ -132,14 +108,14 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
     }
 
     /**
-     * The next Screen.
-     * @see nextScreen
+     * The next LScene.
+     * @see nextLScene
      */
-    fun nextScreen() : Screen? = nextScreen.value
+    fun nextScreen() : LScene? = nextLScene.value
 
     override fun mouseClick(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseClick()
+            is LScene -> mouseClick()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseClick()
             is Displayer -> component.mouseClick()
@@ -148,7 +124,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mousePress(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mousePress()
+            is LScene -> mousePress()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mousePress()
             is Displayer -> component.mousePress()
@@ -157,7 +133,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseRelease(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseRelease()
+            is LScene -> mouseRelease()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseRelease()
             is Displayer -> component.mouseRelease()
@@ -166,7 +142,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseEnter(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseEnter()
+            is LScene -> mouseEnter()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseEnter()
             is Displayer -> component.mouseEnter()
@@ -175,7 +151,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseExit(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseExit()
+            is LScene -> mouseExit()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseExit()
             is Displayer -> component.mouseExit()
@@ -184,7 +160,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseDrag(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseDrag()
+            is LScene -> mouseDrag()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseDrag()
             is Displayer -> component.mouseDrag()
@@ -193,7 +169,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseMoved(x : Int, y : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseMoved()
+            is LScene -> mouseMoved()
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseMoved()
             is Displayer -> component.mouseMoved()
@@ -202,14 +178,14 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
 
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){
         when(val component : Component? = getComponentAt(x, y)){
-            is Screen -> mouseWheelMoved(units)
+            is LScene -> mouseWheelMoved(units)
             is AbstractDisplayerContainer ->
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseWheelMoved(units)
             is Displayer -> component.mouseWheelMoved(units)
         }
     }
 
-    override fun onTimerTick(): Screen {
+    override fun onTimerTick(): LScene {
         for(d : Displayer in parts){
             d.onTimerTick()
         }

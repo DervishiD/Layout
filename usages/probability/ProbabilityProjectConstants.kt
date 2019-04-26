@@ -7,7 +7,7 @@ import llayout.displayers.TextButton
 import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LFrameBuilder
-import llayout.frame.Screen
+import llayout.frame.LScene
 import llayout.utilities.*
 import kotlin.math.*
 
@@ -19,7 +19,7 @@ val probabilityApplication : LApplication = object : LApplication(){
 }
 
 val mainFrame : LFrame by lazy {
-    LFrameBuilder(mainScreen)
+    LFrameBuilder(MAIN_L_SCENE)
             .exitOnClose()
             .setCenterXCoordinate(0.2)
             .setCenterYCoordinate(0.2)
@@ -44,11 +44,9 @@ val randomDistributionFrame : LFrame by lazy{
             .build()
 }
 
-class RandomDistributionScreen : Screen(){
+class RandomDistributionLScene : LScene(){
 
     private val exitButton = TextButton(0, 0, "X", { randomDistributionFrame.close()}).alignUpTo(0).alignLeftTo(0)
-
-    override var previousScreen: Screen = this
 
     private var firstGenerator : () -> Double = {0.0}
 
@@ -83,7 +81,7 @@ class RandomDistributionScreen : Screen(){
         currentGeometryDrawPoint = drawRadPoint
     }
 
-    override fun onTimerTick(): Screen {
+    override fun onTimerTick(): LScene {
         currentGeometryDrawPoint.invoke()
         return super.onTimerTick()
     }
@@ -98,9 +96,9 @@ class RandomDistributionScreen : Screen(){
 
 }
 
-val randomDistributionScreen : RandomDistributionScreen = RandomDistributionScreen()
+val randomDistributionScreen : RandomDistributionLScene = RandomDistributionLScene()
 
-val mainScreen : Screen = object : Screen(){
+val MAIN_L_SCENE : LScene = object : LScene(){
 
     val runButton : TextButton = TextButton(0.5, 0.85, "Run", {
         if(randomDistributionFrame.isHidden()) randomDistributionFrame.setVisible()
@@ -126,15 +124,15 @@ val mainScreen : Screen = object : Screen(){
     val secondCoordinate : Label = Label(0.2, 0.6, rectSecond)
 
     val randomTypes : Map<Text, () -> Double> = mapOf(
-            Text("Homogeneous") to {randomHomogeneous()},
-            Text("cosx + x") to {randomCosPlusX()},
-            Text("exponential") to {randomExponential()},
-            Text("arcsin") to {randomArcsin()},
-            Text("root") to {randomRoot()},
-            Text("ln") to { randomln()},
-            Text("square") to { randomSquare()},
-            Text("cube") to { randomCube()},
-            Text("fourth") to { randomFourth()}
+            Text("Homogeneous") to { randomHomogeneous() },
+            Text("cosx + x") to { randomCosPlusX() },
+            Text("exponential") to { randomExponential() },
+            Text("arcsin") to { randomArcsin() },
+            Text("root") to { randomRoot() },
+            Text("ln") to { randomln() },
+            Text("square") to { randomSquare() },
+            Text("cube") to { randomCube() },
+            Text("fourth") to { randomFourth() }
     )
 
     @Suppress("UNCHECKED_CAST")
@@ -160,8 +158,6 @@ val mainScreen : Screen = object : Screen(){
     val title : Label = Label(0.5, 0.1, "Random number generator")
 
     val exitButton = TextButton(0, 0, "X", {mainFrame.close()}).alignUpTo(0).alignLeftTo(0)
-
-    override var previousScreen: Screen = this
 
     override fun load() {
         add(title)
