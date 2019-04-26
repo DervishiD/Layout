@@ -52,13 +52,13 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * The absolute x coordinate of this Displayer.
      * @see LProperty
      */
-    private var absoluteX : LProperty<Int> = LProperty(0)
+    protected var absoluteX : LProperty<Int> = LProperty(0)
 
     /**
      * The absolute y coordinate of this Displayer.
      * @see LProperty
      */
-    private var absoluteY : LProperty<Int> = LProperty(0)
+    protected var absoluteY : LProperty<Int> = LProperty(0)
 
     /**
      * The relative x coordinate of this Displayer, as a proportion of its container's width.
@@ -153,7 +153,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see LProperty
      * @see alignLeftTo
      */
-    private var absoluteAlignLeftTo : LProperty<Int?> = LProperty(null)
+    protected var absoluteAlignLeftTo : LProperty<Int?> = LProperty(null)
 
     /**
      * Encodes the coordinate at which the right side of this Displayer is fixed.
@@ -163,7 +163,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see LProperty
      * @see alignRightTo
      */
-    private var absoluteAlignRightTo : LProperty<Int?> = LProperty(null)
+    protected var absoluteAlignRightTo : LProperty<Int?> = LProperty(null)
 
     /**
      * Encodes the coordinate at which the up side of this Displayer is fixed.
@@ -173,7 +173,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see LProperty
      * @see alignUpTo
      */
-    private var absoluteAlignUpTo : LProperty<Int?> = LProperty(null)
+    protected var absoluteAlignUpTo : LProperty<Int?> = LProperty(null)
 
     /**
      * Encodes the coordinate at which the down side of this Displayer is fixed.
@@ -183,7 +183,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see LProperty
      * @see alignDownTo
      */
-    private var absoluteAlignDownTo : LProperty<Int?> = LProperty(null)
+    protected var absoluteAlignDownTo : LProperty<Int?> = LProperty(null)
 
     init{
 
@@ -423,6 +423,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignLeftTo(position : Int) : Displayer {
         absoluteAlignLeftTo.value = position
+        absoluteX.value = absoluteAlignLeftTo.value!! + width() / 2
         return this
     }
 
@@ -435,6 +436,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignRightTo(position : Int) : Displayer {
         absoluteAlignRightTo.value = position
+        absoluteX.value = absoluteAlignRightTo.value!! - width() / 2
         return this
     }
 
@@ -447,6 +449,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignUpTo(position : Int) : Displayer {
         absoluteAlignUpTo.value = position
+        absoluteY.value = absoluteAlignUpTo.value!! + height() / 2
         return this
     }
 
@@ -459,6 +462,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignDownTo(position : Int) : Displayer {
         absoluteAlignDownTo.value = position
+        absoluteY.value = absoluteAlignDownTo.value!! - height() / 2
         return this
     }
 

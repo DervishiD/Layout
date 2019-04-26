@@ -174,6 +174,7 @@ abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable
                 component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseMoved()
             is Displayer -> component.mouseMoved()
         }
+        requestFocus()
     }
 
     override fun mouseWheelMoved(x : Int, y : Int, units : Int){

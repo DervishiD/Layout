@@ -115,10 +115,10 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     val RECTANGULAR : Int = 0
     val RADIAL : Int = 1
 
-    val rectFirst : String = "x : "
-    val rectSecond : String = "y : "
-    val radFirst : String = "ρ : "
-    val radSecond : String = "φ : "
+    val rectFirst : String = "x :"
+    val rectSecond : String = "y :"
+    val radFirst : String = "ρ :"
+    val radSecond : String = "φ :"
 
     val firstCoordinate : Label = Label(0.2, 0.5, rectFirst)
     val secondCoordinate : Label = Label(0.2, 0.6, rectSecond)

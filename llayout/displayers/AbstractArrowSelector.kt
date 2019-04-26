@@ -463,38 +463,26 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     override fun downSideY() : Int = super.downSideY() + if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
 
     override infix fun alignLeftTo(position : Int) : AbstractArrowSelector<T> {
-        if(isHorizontal){
-            super.alignLeftTo(position + HORIZONTAL_ARROW_WIDTH + EXTERIOR_DELTA)
-        }else{
-            super.alignLeftTo(position)
-        }
+        absoluteAlignLeftTo.value = position
+        if(isHorizontal) absoluteX.value = position + width() / 2 + HORIZONTAL_ARROW_WIDTH + EXTERIOR_DELTA
         return this
     }
 
     override infix fun alignRightTo(position : Int) : AbstractArrowSelector<T> {
-        if(isHorizontal){
-            super.alignRightTo(position - HORIZONTAL_ARROW_WIDTH - EXTERIOR_DELTA)
-        }else{
-            super.alignRightTo(position)
-        }
+        absoluteAlignLeftTo.value = position
+        if(isHorizontal) absoluteX.value = position - width() / 2 - HORIZONTAL_ARROW_WIDTH - EXTERIOR_DELTA
         return this
     }
 
     override infix fun alignUpTo(position : Int) : AbstractArrowSelector<T> {
-        if(isHorizontal){
-            super.alignUpTo(position)
-        }else{
-            super.alignUpTo(position + VERTICAL_ARROW_HEIGHT + EXTERIOR_DELTA)
-        }
+        absoluteAlignUpTo.value = position
+        if(!isHorizontal) absoluteY.value = position + height() / 2 + VERTICAL_ARROW_HEIGHT + EXTERIOR_DELTA
         return this
     }
 
     override infix fun alignDownTo(position : Int) : AbstractArrowSelector<T> {
-        if(isHorizontal){
-            super.alignDownTo(position)
-        }else{
-            super.alignDownTo(position - VERTICAL_ARROW_HEIGHT - EXTERIOR_DELTA)
-        }
+        absoluteAlignDownTo.value = position
+        if(!isHorizontal) absoluteY.value = position - height() / 2 - VERTICAL_ARROW_HEIGHT - EXTERIOR_DELTA
         return this
     }
 

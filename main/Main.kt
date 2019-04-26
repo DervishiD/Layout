@@ -6,7 +6,7 @@ import usages.rpg.rpgApplication
 
 fun main(){
     //rpgApplication.run()
-    //probabilityApplication.run()
+    probabilityApplication.run()
     //timeTest { debugHomogeneousDistribution() }
-    testApplication.run()
+    //testApplication.run()
 }
