@@ -158,7 +158,7 @@ abstract class AbstractDisplayerContainer : Displayer, CustomContainer {
             is AbstractDisplayerContainer -> {
                 if(component == this){
                     this
-                }else component.displayerAt(x - component.lowestX(), y - component.lowestY())
+                }else component.displayerAt(x - component.leftSideX(), y - component.upSideY())
             }
             is Displayer -> component
             else -> throw Exception("Something is really wrong in AbstractDisplayerContainer. The event handling" +

@@ -2,21 +2,9 @@ Better TextField
 
 Slider
 
-Pack methods to resize containers around contained Displayers
-
-More efficient GraphicActions
-
 Test negative coordinates
 
-L
-
-Align with LProperties
-
 Comment again
-
-Graph
-
-Console
 
 Canvas
     Draw squares
@@ -41,9 +29,15 @@ Canvas
     Draw and fill rectangles and ovals from center point and other points
     Fix  the 0.999 problem
 
-Interface for HavingRelativeDimensions
-
 Rename Screen
+
+Rename CustomContainer
+
+Check if Screen.previousScreen is useful
+
+Initialize Displayers in reverse?
+
+Add default fonts and colors setters to LFrames / LFrameBuilders
 
 Find out why decoration bugs and fix it
 
@@ -53,19 +47,18 @@ On/off Displayer
 
 Maybe override functions to return correct types
 
-Probability distributions project
-    Other distributions
-        Gaussian
-        Double gaussian
+Graph
 
-Game of life project
-
-Advanced calculator project
-
-General console project
-
-Bubbles screen project
-
-XML and TXT upgrades
-
-OpenGL and 3D stuff
+Projects
+    Probability distributions
+        Other distributions
+            Gaussian
+            Double gaussian
+    Mean distance
+    Game of life
+    Calculator
+    Console
+    Bubbles screen saver
+    XML and TXT
+    Databases
+    3D stuff

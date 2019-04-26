@@ -666,7 +666,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
             computeDimensions(g)
             dimensionsComputed = true
         }
-        align()
         reloadDimensions()
         setArrowsPosition()
     }

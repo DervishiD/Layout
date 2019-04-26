@@ -208,7 +208,7 @@ val editorScreen : Screen = object : Screen() {
         when(val component : Component = getComponentAt(x, y)){
             //is Screen -> mouseRelease() -- useless here
             is AbstractDisplayerContainer ->{
-                val bottom : Displayer = component.displayerAt(x - component.lowestX(), y - component.lowestY())
+                val bottom : Displayer = component.displayerAt(x - component.leftSideX(), y - component.upSideY())
                 if(bottom is TextField){
                     focusTextField(bottom)
                     bottom.mouseRelease()

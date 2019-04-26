@@ -189,7 +189,7 @@ class GridDisplayer : Displayer {
      * The lowest column index currently displayed on the screen
      */
     private fun lowestColumnIndexOnScreen() : Int{
-        val lowestColumnIndex : Int = floor((lowestX() - origin.x) / mesh).toInt()
+        val lowestColumnIndex : Int = floor((leftSideX() - origin.x) / mesh).toInt()
         return if(lowestColumnIndex <= 0) 0 else lowestColumnIndex
     }
 
@@ -197,7 +197,7 @@ class GridDisplayer : Displayer {
      * The highest column index currently displayed on the screen
      */
     private fun highestColumnIndexOnScreen() : Int{
-        val highestColumnIndex : Int = floor((highestX() - origin.x) / mesh).toInt()
+        val highestColumnIndex : Int = floor((rightSideX() - origin.x) / mesh).toInt()
         return if(highestColumnIndex >= grid.columns) grid.columns - 1 else highestColumnIndex
     }
 
@@ -205,7 +205,7 @@ class GridDisplayer : Displayer {
      * The lowest line index currently displayed on the screen
      */
     private fun lowestLineIndexOnScreen() : Int{
-        val lowestLineIndex : Int = floor((lowestY() - origin.y) / mesh).toInt()
+        val lowestLineIndex : Int = floor((upSideY() - origin.y) / mesh).toInt()
         return if(lowestLineIndex <= 0) 0 else lowestLineIndex
     }
 
@@ -213,7 +213,7 @@ class GridDisplayer : Displayer {
      * The highest line index currently displayed on the screen
      */
     private fun highestLineIndexOnScreen() : Int{
-        val highestLineIndex : Int = floor((highestY() - origin.y) / mesh).toInt()
+        val highestLineIndex : Int = floor((downSideY() - origin.y) / mesh).toInt()
         return if(highestLineIndex >= grid.lines) grid.lines - 1 else highestLineIndex
     }
 
@@ -233,8 +233,8 @@ class GridDisplayer : Displayer {
      * Draws a cell on the screen
      */
     private fun drawCell(g : Graphics, line : Int, column : Int){
-        val x : Int = cellLeftX(column) - lowestX()
-        val y : Int = cellUpY(line) - lowestY()
+        val x : Int = cellLeftX(column) - leftSideX()
+        val y : Int = cellUpY(line) - upSideY()
         val originalImage : BufferedImage = cellAt(line, column).image()
         g.drawImage(resizedImage(originalImage), x, y, null)
         g.color = DEFAULT_COLOR

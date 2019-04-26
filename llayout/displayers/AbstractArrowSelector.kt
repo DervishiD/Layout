@@ -429,13 +429,13 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         return this
     }
 
-    override fun lowestX() : Int = super.lowestX() - if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
+    override fun leftSideX() : Int = super.leftSideX() - if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
 
-    override fun highestX(): Int = super.highestX() + if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
+    override fun rightSideX(): Int = super.rightSideX() + if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
 
-    override fun lowestY() : Int = super.lowestY() - if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
+    override fun upSideY() : Int = super.upSideY() - if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
 
-    override fun highestY() : Int = super.highestY() + if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
+    override fun downSideY() : Int = super.downSideY() + if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
 
     override infix fun alignLeftTo(position : Int) : AbstractArrowSelector<T> {
         if(isHorizontal){

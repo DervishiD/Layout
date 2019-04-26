@@ -13,31 +13,6 @@ import java.awt.Graphics
 import javax.swing.JLabel
 
 /**
- * An alignment constraint to another Displayer.
- * It is composed of the other Displayer, an Int representing the distance between the
- * Displayers, in pixels, and an AlignmentConstraintType.
- * @see AlignmentConstraintsType
- * @see Displayer
- * @see Displayer.align
- */
-private typealias AlignmentConstraint = Triple<Displayer, Int, AlignmentConstraintsType>
-
-/**
- * The type of an alignment to another Displayer. For example, the UP_TO_DOWN type means
- * that the alignment is between the UP side of this Displayer and the DOWN side of
- * the other one.
- * @see AlignmentConstraint
- * @see Displayer
- * @see Displayer.align
- */
-private enum class AlignmentConstraintsType{
-    UP_TO_UP, UP_TO_DOWN,
-    LEFT_TO_LEFT, LEFT_TO_RIGHT,
-    RIGHT_TO_RIGHT, RIGHT_TO_LEFT,
-    DOWN_TO_DOWN, DOWN_TO_UP;
-}
-
-/**
  * A Displayer is the type of Component that is added on CustomContainer objects.
  * That is, everything that appears on a Screen must be a Displayer.
  * @see Screen
@@ -47,15 +22,21 @@ private enum class AlignmentConstraintsType{
  */
 abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpdatable {
 
+    companion object{
+        private var staticDisplayerIndex : Long = 0L
+    }
+
     private var requestCoordinateUpdate : LProperty<Boolean> = LProperty(true)
 
-    protected var absoluteX : LProperty<Int> = LProperty(0)
+    private var displayerIndex : Long
 
-    protected var absoluteY : LProperty<Int> = LProperty(0)
+    private var absoluteX : LProperty<Int> = LProperty(0)
 
-    protected var relativeX : Double? = null
+    private var absoluteY : LProperty<Int> = LProperty(0)
 
-    protected var relativeY : Double? = null
+    private var relativeX : Double? = null
+
+    private var relativeY : Double? = null
 
     /**
      * The width of this Displayer on its parent's graphical context.
@@ -67,27 +48,29 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     override var h : LProperty<Int> = LProperty(0)
 
-    protected var leftSideX : LProperty<Int> = LProperty(0)
-    protected var upSideY : LProperty<Int> = LProperty(0)
-    protected var rightSideX : LProperty<Int> = LProperty(0)
-    protected var downSideY : LProperty<Int> = LProperty(0)
+    private var leftSideX : LProperty<Int> = LProperty(0)
+    private var upSideY : LProperty<Int> = LProperty(0)
+    private var rightSideX : LProperty<Int> = LProperty(0)
+    private var downSideY : LProperty<Int> = LProperty(0)
 
     init{
 
         fun updateLowestHighestX(){
-            leftSideX.value = absoluteX.value -w.value
-            rightSideX.value = absoluteX.value +w.value
+            leftSideX.value = absoluteX.value -w.value / 2
+            rightSideX.value = absoluteX.value +w.value / 2
         }
 
         fun updateLowestHighestY(){
-            upSideY.value = absoluteY.value -h.value
-            downSideY.value = absoluteY.value +h.value
+            upSideY.value = absoluteY.value -h.value / 2
+            downSideY.value = absoluteY.value +h.value / 2
         }
 
         absoluteX.addListener{updateLowestHighestX()}
         absoluteY.addListener{updateLowestHighestY()}
         w.addListener{updateLowestHighestX()}
         h.addListener{updateLowestHighestY()}
+        displayerIndex = staticDisplayerIndex
+        staticDisplayerIndex++
     }
 
     /**
@@ -139,6 +122,51 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     private var absoluteAlignDownTo : LProperty<Int?> = LProperty(null)
 
+    init{
+        w.addListener{
+            if(absoluteAlignLeftTo.value != null){
+                alignLeftTo(absoluteAlignLeftTo.value!!)
+            }else if(absoluteAlignRightTo.value != null){
+                alignRightTo(absoluteAlignRightTo.value!!)
+            }
+        }
+        h.addListener{
+            if(absoluteAlignUpTo.value != null){
+                alignUpTo(absoluteAlignUpTo.value!!)
+            }else if(absoluteAlignDownTo.value != null){
+                alignDownTo(absoluteAlignDownTo.value!!)
+            }
+        }
+        absoluteAlignLeftTo.addListener {
+            if(absoluteAlignLeftTo.value != null){
+                absoluteAlignRightTo.value = null
+                relativeAlignRightTo = null
+                absoluteX.value = absoluteAlignLeftTo.value!! + width() / 2
+            }
+        }
+        absoluteAlignRightTo.addListener {
+            if(absoluteAlignRightTo.value != null){
+                absoluteAlignLeftTo.value = null
+                relativeAlignLeftTo = null
+                absoluteX.value = absoluteAlignRightTo.value!! - width() / 2
+            }
+        }
+        absoluteAlignUpTo.addListener {
+            if(absoluteAlignUpTo.value != null){
+                absoluteAlignDownTo.value = null
+                relativeAlignDownTo = null
+                absoluteY.value = absoluteAlignUpTo.value!! + height() / 2
+            }
+        }
+        absoluteAlignDownTo.addListener {
+            if(absoluteAlignDownTo.value != null){
+                absoluteAlignUpTo.value = null
+                relativeAlignUpTo = null
+                absoluteY.value = absoluteAlignDownTo.value!! - height() / 2
+            }
+        }
+    }
+
     private var relativeAlignLeftTo : Double? = null
 
     private var relativeAlignRightTo : Double? = null
@@ -147,25 +175,12 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
 
     private var relativeAlignDownTo : Double? = null
 
-    /**
-     * A vertical alignment to another Displayer is encoded in this variable.
-     * @see AlignmentConstraint
-     * @see AlignmentConstraintsType
-     * @see align
-     */
-    private var verticalDisplayerAlignment : AlignmentConstraint? = null
+    private var horizontalDisplayerAlignment : Displayer? = null
 
-    /**
-     * A horizontal alignment to another Displayer is encoded in this variable.
-     * @see AlignmentConstraint
-     * @see AlignmentConstraintsType
-     * @see align
-     */
-    private var horizontalDisplayerAlignment : AlignmentConstraint? = null
+    private var verticalDisplayerAlignment : Displayer? = null
 
-    private var horizontallyAlignedDisplayer : Displayer? = null
-
-    private var verticallyAlignedDisplayer : Displayer? = null
+    private var resetHorizontalDisplayerAlignment : Action = {}
+    private var resetVerticalDisplayerAlignment : Action = {}
 
     /**
      * The minimal width of this component. It is null if there is no minimal width.
@@ -252,8 +267,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignLeftTo(position : Int) : Displayer {
         absoluteAlignLeftTo.value = position
-        absoluteAlignRightTo.value = null
-        relativeAlignRightTo = null
         return this
     }
 
@@ -266,8 +279,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignRightTo(position : Int) : Displayer {
         absoluteAlignRightTo.value = position
-        absoluteAlignLeftTo.value = null
-        relativeAlignLeftTo = null
         return this
     }
 
@@ -280,8 +291,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignUpTo(position : Int) : Displayer {
         absoluteAlignUpTo.value = position
-        absoluteAlignDownTo.value = null
-        relativeAlignDownTo = null
         return this
     }
 
@@ -294,8 +303,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open infix fun alignDownTo(position : Int) : Displayer {
         absoluteAlignDownTo.value = position
-        absoluteAlignUpTo.value = null
-        relativeAlignUpTo = null
         return this
     }
 
@@ -374,7 +381,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignUpToUp(component : Displayer, delta : Int = 0) : Displayer {
-        verticalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.UP_TO_UP)
+        val key = "UP TO UP DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignUpTo(component.upSideY() + delta)
+        if(verticalDisplayerAlignment != null){
+            verticalDisplayerAlignment!!.removeUpSideListener(key)
+        }
+        verticalDisplayerAlignment = component.addUpSideListener(key){ alignUpTo(component.upSideY() + delta) }
+        resetVerticalDisplayerAlignment = {
+            if(verticalDisplayerAlignment != null){
+                verticalDisplayerAlignment!!.removeUpSideListener(key)
+                verticalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -385,7 +403,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignUpToDown(component : Displayer, delta : Int = 0) : Displayer {
-        verticalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.UP_TO_DOWN)
+        val key = "UP TO DOWN DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignUpTo(component.downSideY() + delta)
+        if(verticalDisplayerAlignment != null){
+            verticalDisplayerAlignment!!.removeDownSideListener(key)
+        }
+        verticalDisplayerAlignment = component.addDownSideListener(key){ alignUpTo(component.downSideY() + delta) }
+        resetVerticalDisplayerAlignment = {
+            if(verticalDisplayerAlignment != null){
+                verticalDisplayerAlignment!!.removeDownSideListener(key)
+                verticalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -396,7 +425,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignLeftToLeft(component : Displayer, delta : Int = 0) : Displayer {
-        horizontalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.LEFT_TO_LEFT)
+        val key = "LEFT TO LEFT DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignLeftTo(component.leftSideX() + delta)
+        if(horizontalDisplayerAlignment != null){
+            horizontalDisplayerAlignment!!.removeLeftSideListener(key)
+        }
+        horizontalDisplayerAlignment = component.addLeftSideListener(key){ alignLeftTo(component.leftSideX() + delta) }
+        resetHorizontalDisplayerAlignment = {
+            if(horizontalDisplayerAlignment != null){
+                horizontalDisplayerAlignment!!.removeLeftSideListener(key)
+                horizontalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -407,7 +447,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignLeftToRight(component : Displayer, delta : Int = 0) : Displayer {
-        horizontalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.LEFT_TO_RIGHT)
+        val key = "LEFT TO RIGHT DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignLeftTo(component.rightSideX() + delta)
+        if(horizontalDisplayerAlignment != null){
+            horizontalDisplayerAlignment!!.removeRightSideListener(key)
+        }
+        horizontalDisplayerAlignment = component.addRightSideListener(key){ alignLeftTo(component.rightSideX() + delta) }
+        resetHorizontalDisplayerAlignment = {
+            if(horizontalDisplayerAlignment != null){
+                horizontalDisplayerAlignment!!.removeRightSideListener(key)
+                horizontalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -418,7 +469,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignRightToLeft(component : Displayer, delta : Int = 0) : Displayer {
-        horizontalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.RIGHT_TO_LEFT)
+        val key = "RIGHT TO LEFT DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignRightTo(component.leftSideX() + delta)
+        if(horizontalDisplayerAlignment != null){
+            horizontalDisplayerAlignment!!.removeLeftSideListener(key)
+        }
+        horizontalDisplayerAlignment = component.addLeftSideListener(key){ alignRightTo(component.leftSideX() + delta) }
+        resetHorizontalDisplayerAlignment = {
+            if(horizontalDisplayerAlignment != null){
+                horizontalDisplayerAlignment!!.removeLeftSideListener(key)
+                horizontalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -429,7 +491,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignRightToRight(component : Displayer, delta : Int = 0) : Displayer {
-        horizontalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.RIGHT_TO_RIGHT)
+        val key = "RIGHT TO RIGHT DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignRightTo(component.rightSideX() + delta)
+        if(horizontalDisplayerAlignment != null){
+            horizontalDisplayerAlignment!!.removeRightSideListener(key)
+        }
+        horizontalDisplayerAlignment = component.addRightSideListener(key){ alignRightTo(component.rightSideX() + delta) }
+        resetHorizontalDisplayerAlignment = {
+            if(horizontalDisplayerAlignment != null){
+                horizontalDisplayerAlignment!!.removeRightSideListener(key)
+                horizontalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -440,7 +513,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignDownToDown(component : Displayer, delta : Int = 0) : Displayer {
-        verticalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.DOWN_TO_DOWN)
+        val key = "DOWN TO DOWN DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignDownTo(component.downSideY() + delta)
+        if(verticalDisplayerAlignment != null){
+            verticalDisplayerAlignment!!.removeDownSideListener(key)
+        }
+        verticalDisplayerAlignment = component.addDownSideListener(key){ alignDownTo(component.downSideY() + delta) }
+        resetVerticalDisplayerAlignment = {
+            if(verticalDisplayerAlignment != null){
+                verticalDisplayerAlignment!!.removeDownSideListener(key)
+                verticalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -451,7 +535,18 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @param delta The distance, in pixels, between the two edges.
      */
     fun alignDownToUp(component : Displayer, delta : Int = 0) : Displayer {
-        verticalDisplayerAlignment = AlignmentConstraint(component, delta, AlignmentConstraintsType.DOWN_TO_UP)
+        val key = "DOWN TO UP DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
+        alignDownTo(component.upSideY() + delta)
+        if(verticalDisplayerAlignment != null){
+            verticalDisplayerAlignment!!.removeUpSideListener(key)
+        }
+        verticalDisplayerAlignment = component.addUpSideListener(key){ alignDownTo(component.upSideY() + delta) }
+        resetVerticalDisplayerAlignment = {
+            if(verticalDisplayerAlignment != null){
+                verticalDisplayerAlignment!!.removeUpSideListener(key)
+                verticalDisplayerAlignment = null
+            }
+        }
         return this
     }
 
@@ -470,8 +565,8 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see resetAlignment
      */
     private fun resetDisplayerAlignment(){
-        verticalDisplayerAlignment = null
-        horizontalDisplayerAlignment = null
+        resetHorizontalDisplayerAlignment.invoke()
+        resetVerticalDisplayerAlignment.invoke()
     }
 
     /**
@@ -533,45 +628,45 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * The upper left cornet of this Displayer, as a Point.
      * @return The upper left corner of this Displayer.
      */
-    fun upperLeftCorner() : Point = Point(lowestX(), lowestY())
+    fun upperLeftCorner() : Point = Point(leftSideX(), upSideY())
 
     /**
      * The upper right cornet of this Displayer, as a Point.
      * @return The upper right corner of this Displayer.
      */
-    fun upperRightCorner() : Point = Point(highestX(), lowestY())
+    fun upperRightCorner() : Point = Point(rightSideX(), upSideY())
 
     /**
      * The lower left cornet of this Displayer, as a Point.
      * @return The lower left corner of this Displayer.
      */
-    fun lowerLeftCorner() : Point = Point(lowestX(), highestY())
+    fun lowerLeftCorner() : Point = Point(leftSideX(), downSideY())
 
     /**
      * The lower right cornet of this Displayer, as a Point.
      * @return The lower right corner of this Displayer.
      */
-    fun lowerRightCorner() : Point = Point(highestX(), highestY())
+    fun lowerRightCorner() : Point = Point(rightSideX(), downSideY())
 
     /**
      * The lowest y coordinate of this Displayer.
      */
-    open fun lowestY() : Int = centerY() - height() / 2
+    open fun upSideY() : Int = upSideY.value
 
     /**
      * The highest y coordinate of this Displayer.
      */
-    open fun highestY() : Int = centerY() + height() / 2
+    open fun downSideY() : Int = downSideY.value
 
     /**
      * The lowest x coordinate of this Displayer.
      */
-    open fun lowestX() : Int = centerX() - width() / 2
+    open fun leftSideX() : Int = leftSideX.value
 
     /**
      * The highest x coordinate of this Displayer.
      */
-    open fun highestX() : Int = centerX() + width() / 2
+    open fun rightSideX() : Int = rightSideX.value
 
     /**
      * Forces the initialization of this Displayer.
@@ -867,73 +962,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
     }
 
     /**
-     * Aligns this Displayer according to its alignment constraints.
-     * Any Displayer alignment overrides a coordinate alignment.
-     * @see performComponentAlignments
-     * @see alignLateral
-     * @see alignVertical
-     */
-    protected fun align(){
-        performComponentAlignments()
-        alignLateral()
-        alignVertical()
-    }
-
-    /**
-     * Aligns the component with the alignment constraints given by the component constraints.
-     * @see AlignmentConstraintsType
-     * @see AlignmentConstraint
-     * @see verticalDisplayerAlignment
-     * @see horizontalDisplayerAlignment
-     * @see align
-     */
-    private fun performComponentAlignments(){
-        if(verticalDisplayerAlignment != null){
-            when(verticalDisplayerAlignment!!.third){
-                AlignmentConstraintsType.UP_TO_UP -> this alignUpTo verticalDisplayerAlignment!!.first.lowestY() + verticalDisplayerAlignment!!.second
-                AlignmentConstraintsType.UP_TO_DOWN -> this alignUpTo verticalDisplayerAlignment!!.first.highestY() + verticalDisplayerAlignment!!.second
-                AlignmentConstraintsType.DOWN_TO_DOWN -> this alignDownTo verticalDisplayerAlignment!!.first.highestY() + verticalDisplayerAlignment!!.second
-                AlignmentConstraintsType.DOWN_TO_UP -> this alignDownTo verticalDisplayerAlignment!!.first.lowestY() + verticalDisplayerAlignment!!.second
-                else -> throw Exception("Catastrophic failure : a vertical alignment isn't vertical")
-            }
-        }
-
-        if(horizontalDisplayerAlignment != null){
-            when(horizontalDisplayerAlignment!!.third){
-                AlignmentConstraintsType.LEFT_TO_LEFT -> this alignLeftTo horizontalDisplayerAlignment!!.first.lowestX() + horizontalDisplayerAlignment!!.second
-                AlignmentConstraintsType.LEFT_TO_RIGHT -> this alignLeftTo horizontalDisplayerAlignment!!.first.highestX() + horizontalDisplayerAlignment!!.second
-                AlignmentConstraintsType.RIGHT_TO_RIGHT -> this alignRightTo horizontalDisplayerAlignment!!.first.highestX() + horizontalDisplayerAlignment!!.second
-                AlignmentConstraintsType.RIGHT_TO_LEFT -> this alignRightTo horizontalDisplayerAlignment!!.first.lowestX() + horizontalDisplayerAlignment!!.second
-                else -> throw Exception("Catastrophic failure : a horizontal alignment isn't horizontal")
-            }
-        }
-    }
-    
-    /**
-     * Aligns the component laterally with the coordinate constraints.
-     * @see align
-     */
-    private fun alignLateral(){
-        if(absoluteAlignLeftTo.value != null){
-            absoluteX.value = absoluteAlignLeftTo.value!! + width() / 2
-        }else if(absoluteAlignRightTo.value != null){
-            absoluteX.value = absoluteAlignRightTo.value!! - width() / 2
-        }
-    }
-
-    /**
-     * Aligns the component vertically with the coordinate constraints.
-     * @see align
-     */
-    private fun alignVertical(){
-        if(absoluteAlignUpTo.value != null){
-            absoluteY.value = absoluteAlignUpTo.value!! + height() / 2
-        }else if(absoluteAlignDownTo.value != null){
-            absoluteY.value = absoluteAlignDownTo.value!! - height() / 2
-        }
-    }
-
-    /**
      * Sets this component's bounds.
      * @see setBounds
      */
@@ -960,7 +988,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
             applyPreferredSize()
             initphase = false
         }
-        align()
         loadBounds()
         drawDisplayer(g!!)
     }

@@ -126,6 +126,9 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         super.setBounds(x, y, width, height)
         w.value = width
         h.value = height
+        for(d : Displayer in parts){
+            d.updateRelativeValues(width(), height())
+        }
     }
 
     /**
@@ -138,7 +141,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseClick()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseClick()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseClick()
             is Displayer -> component.mouseClick()
         }
     }
@@ -147,7 +150,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mousePress()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mousePress()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mousePress()
             is Displayer -> component.mousePress()
         }
     }
@@ -156,7 +159,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseRelease()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseRelease()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseRelease()
             is Displayer -> component.mouseRelease()
         }
     }
@@ -165,7 +168,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseEnter()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseEnter()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseEnter()
             is Displayer -> component.mouseEnter()
         }
     }
@@ -174,7 +177,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseExit()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseExit()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseExit()
             is Displayer -> component.mouseExit()
         }
     }
@@ -183,7 +186,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseDrag()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseDrag()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseDrag()
             is Displayer -> component.mouseDrag()
         }
     }
@@ -192,7 +195,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseMoved()
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseMoved()
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseMoved()
             is Displayer -> component.mouseMoved()
         }
     }
@@ -201,7 +204,7 @@ abstract class Screen : JPanel(), CustomContainer, MouseInteractable, LTimerUpda
         when(val component : Component? = getComponentAt(x, y)){
             is Screen -> mouseWheelMoved(units)
             is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.lowestX(), y - component.lowestY()).mouseWheelMoved(units)
+                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseWheelMoved(units)
             is Displayer -> component.mouseWheelMoved(units)
         }
     }
