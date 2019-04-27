@@ -12,49 +12,49 @@ interface MouseInteractable {
      * Action executed on a mouse click.
      * @see Action
      */
-    var onClick : Action
+    var onMouseClick : Action
 
     /**
      * Action executed on a mouse press.
      * @see Action
      */
-    var onPress : Action
+    var onMousePress : Action
 
     /**
      * Action executed on a mouse release.
      * @see Action
      */
-    var onRelease : Action
+    var onMouseRelease : Action
 
     /**
      * Action executed when the mouse enters the object.
      * @see Action
      */
-    var onEnter : Action
+    var onMouseEnter : Action
 
     /**
      * Action executed when the mouse exits the object.
      * @see Action
      */
-    var onExit : Action
+    var onMouseExit : Action
 
     /**
      * Action executed on a mouse drag.
      * @see Action
      */
-    var onDrag : Action
+    var onMouseDrag : Action
 
     /**
      * Action executed on a mouse movement on the object.
      * @see Action
      */
-    var onMove : Action
+    var onMouseMove : Action
 
     /**
      * Action executed when the mouse wheel moves on this object.
      * @see MouseWheelAction
      */
-    var onWheelMoved : MouseWheelAction
+    var onMouseWheelMoved : MouseWheelAction
 
     /**
      * Sets the Action invoked when this object is clicked.
@@ -62,8 +62,8 @@ interface MouseInteractable {
      * @see onClick
      * @see Action
      */
-    infix fun setOnClickAction(onClickAction : Action){
-        onClick = onClickAction
+    infix fun setOnMouseClickAction(onClickAction : Action){
+        onMouseClick = onClickAction
     }
 
     /**
@@ -72,8 +72,8 @@ interface MouseInteractable {
      * @see onPress
      * @see Action
      */
-    infix fun setOnPressAction(onPressAction : Action){
-        onPress = onPressAction
+    infix fun setOnMousePressAction(onPressAction : Action){
+        onMousePress = onPressAction
     }
 
     /**
@@ -82,8 +82,8 @@ interface MouseInteractable {
      * @see onRelease
      * @see Action
      */
-    infix fun setOnReleaseAction(onReleaseAction : Action){
-        onRelease = onReleaseAction
+    infix fun setOnMouseReleaseAction(onReleaseAction : Action){
+        onMouseRelease = onReleaseAction
     }
 
     /**
@@ -92,8 +92,8 @@ interface MouseInteractable {
      * @see onEnter
      * @see Action
      */
-    infix fun setOnEnterAction(onEnterAction : Action){
-        onEnter = onEnterAction
+    infix fun setOnMouseEnterAction(onEnterAction : Action){
+        onMouseEnter = onEnterAction
     }
 
     /**
@@ -102,8 +102,8 @@ interface MouseInteractable {
      * @see onExit
      * @see Action
      */
-    infix fun setOnExitAction(onExitAction : Action){
-        onExit = onExitAction
+    infix fun setOnMouseExitAction(onExitAction : Action){
+        onMouseExit = onExitAction
     }
 
     /**
@@ -112,8 +112,8 @@ interface MouseInteractable {
      * @see onDrag
      * @see Action
      */
-    infix fun setOnDragAction(onDragAction : Action){
-        onDrag = onDragAction
+    infix fun setOnMouseDragAction(onDragAction : Action){
+        onMouseDrag = onDragAction
     }
 
     /**
@@ -122,8 +122,8 @@ interface MouseInteractable {
      * @see onMove
      * @see Action
      */
-    infix fun setOnMoveAction(onMoveAction : Action){
-        onMove = onMoveAction
+    infix fun setOnMouseMoveAction(onMoveAction : Action){
+        onMouseMove = onMoveAction
     }
 
     /**
@@ -132,57 +132,57 @@ interface MouseInteractable {
      * @see onWheelMoved
      * @see MouseWheelAction
      */
-    infix fun setOnWheelMoveAction(onWheelMoveAction : MouseWheelAction){
-        onWheelMoved = onWheelMoveAction
+    infix fun setOnMouseWheelMoveAction(onWheelMoveAction : MouseWheelAction){
+        onMouseWheelMoved = onWheelMoveAction
     }
 
     /**
      * Reacts to a mouse click event.
      * @see onClick
      */
-    fun mouseClick() = onClick.invoke()
+    fun mouseClick() = onMouseClick.invoke()
 
     /**
      * Reacts to a mouse press event.
      * @see onPress
      */
-    fun mousePress() = onPress.invoke()
+    fun mousePress() = onMousePress.invoke()
 
     /**
      * Reacts to a mouse release event.
      * @see onRelease
      */
-    fun mouseRelease() = onRelease.invoke()
+    fun mouseRelease() = onMouseRelease.invoke()
 
     /**
      * Reacts to the mouse entering event.
      * @see onEnter
      */
-    fun mouseEnter() = onEnter.invoke()
+    fun mouseEnter() = onMouseEnter.invoke()
 
     /**
      * Reacts to the mouse exiting event.
      * @see onExit
      */
-    fun mouseExit() = onExit.invoke()
+    fun mouseExit() = onMouseExit.invoke()
 
     /**
      * Reacts to a mouse drag event.
      * @see onDrag
      */
-    fun mouseDrag() = onDrag.invoke()
+    fun mouseDrag() = onMouseDrag.invoke()
 
     /**
      * Reacts to a mouse movement event.
      * @see onMove
      */
-    fun mouseMoved() = onMove.invoke()
+    fun mouseMoved() = onMouseMove.invoke()
 
     /**
      * Reacts to a mouse wheel movement event.
      * @param units The number of scroll units.
      * @see onWheelMoved
      */
-    fun mouseWheelMoved(units : Int) = onWheelMoved.invoke(units)
+    infix fun mouseWheelMoved(units : Int) = onMouseWheelMoved.invoke(units)
 
 }

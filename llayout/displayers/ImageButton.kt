@@ -34,7 +34,7 @@ class ImageButton : Displayer {
     constructor(x : Int, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
         w.value = width
         h.value = height
-        setOnReleaseAction(onClick)
+        setOnMouseReleaseAction(onClick)
         this.image = image
     }
 
@@ -54,7 +54,7 @@ class ImageButton : Displayer {
     constructor(x : Int, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
         w.value = width
         h.value = height
-        setOnReleaseAction(onClick)
+        setOnMouseReleaseAction(onClick)
         this.image = image
     }
 
@@ -74,7 +74,7 @@ class ImageButton : Displayer {
     constructor(x : Double, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
         w.value = width
         h.value = height
-        setOnReleaseAction(onClick)
+        setOnMouseReleaseAction(onClick)
         this.image = image
     }
 
@@ -94,7 +94,7 @@ class ImageButton : Displayer {
     constructor(x : Double, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
         w.value = width
         h.value = height
-        setOnReleaseAction(onClick)
+        setOnMouseReleaseAction(onClick)
         this.image = image
     }
 

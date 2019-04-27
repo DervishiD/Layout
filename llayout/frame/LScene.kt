@@ -11,6 +11,8 @@ import java.awt.Component
 import java.awt.Graphics
 import javax.swing.JPanel
 import llayout.utilities.LProperty
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 
 /**
  * The general abstraction for a LScene. A LScene is a special kind of JPanel that is used in this Layout.
@@ -22,7 +24,7 @@ import llayout.utilities.LProperty
  * @see JPanel
  * @see LFrame
  */
-abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas {
+abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener {
 
     override var w : LProperty<Int> = LProperty(0)
 
@@ -39,14 +41,28 @@ abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable
 
     override var parts : MutableCollection<Displayer> = mutableListOf()
 
-    override var onClick : Action = {}
-    override var onPress : Action = {}
-    override var onRelease : Action = {}
-    override var onEnter : Action = {}
-    override var onExit : Action = {}
-    override var onDrag : Action = {}
-    override var onMove : Action = {}
-    override var onWheelMoved : MouseWheelAction = { _ -> }
+    override var onMouseClick : Action = {}
+    override var onMousePress : Action = {}
+    override var onMouseRelease : Action = {}
+    override var onMouseEnter : Action = {}
+    override var onMouseExit : Action = {}
+    override var onMouseDrag : Action = {}
+    override var onMouseMove : Action = {}
+    override var onMouseWheelMoved : MouseWheelAction = { _ -> }
+
+    protected open var onKeyPressed : LKeyEvent = { _ -> }
+    protected open var onKeyReleased : LKeyEvent = { _ -> }
+    protected open var onKeyTyped : LKeyEvent = { _ -> }
+
+    override fun keyPressed(e: KeyEvent?) = onKeyPressed.invoke(e!!.keyCode)
+
+    override fun keyReleased(e: KeyEvent?) = onKeyReleased.invoke(e!!.keyCode)
+
+    override fun keyTyped(e: KeyEvent?) = onKeyTyped.invoke(e!!.keyCode)
+
+    init{
+        addKeyListener(this)
+    }
 
     /**
      * Sets the next LScene to the given value.

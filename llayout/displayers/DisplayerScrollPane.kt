@@ -78,7 +78,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
      */
     private val backgroundDrawer : GraphicAction
 
-    override var onWheelMoved : MouseWheelAction = { units : Int -> run{
+    override var onMouseWheelMoved : MouseWheelAction = { units : Int -> run{
         if(isVertical()){
             startingY -= units * SCROLL_DELTA
         }else{

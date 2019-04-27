@@ -70,7 +70,7 @@ class TextField : Displayer {
 
     private var relativeW : Double? = null
 
-    override var onRelease: Action = {focus()}
+    override var onMouseRelease: Action = {focus()}
 
     /**
      * Constructs a TextField with the given parameters.

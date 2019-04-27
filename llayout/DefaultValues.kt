@@ -10,6 +10,7 @@ typealias Action = () -> Unit
 typealias GraphicAction = (Graphics, Int, Int) -> Unit
 typealias MouseWheelAction = (Int) -> Unit
 typealias RealFunction = (Double) -> Double
+typealias LKeyEvent = (Int) -> Unit
 
 //FONTS-----------------------------------------------------------------------
 

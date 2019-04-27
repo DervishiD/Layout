@@ -27,7 +27,7 @@ val rpgApplication : LApplication = object : LApplication(){
 
 //LFRAME----------------------------------------------------------------------
 
-val rpgFrame : LFrame by lazy{ LFrameBuilder(MAIN_MENU_L_SCENE).exitOnClose().setDecorated(false).setFullScreen(true).build()}
+val rpgFrame : LFrame by lazy{ LFrameBuilder(mainMenuScreen).exitOnClose().setDecorated(false).setFullScreen(true).build()}
 
 //NUMBERS----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ const val SMALLEST_GRID_IMAGE_SIZE : Int = 20
  * The Main Menu LScene.
  * @see LScene
  */
-val MAIN_MENU_L_SCENE : LScene = object : LScene() {
+val mainMenuScreen : LScene = object : LScene() {
 
     private val TITLE_X : Double = 0.5
     private val TITLE_Y : Double = 0.2
@@ -57,11 +57,11 @@ val MAIN_MENU_L_SCENE : LScene = object : LScene() {
     private val EDITOR_BUTTON_X : Double = 1.0/3
     private val EDITOR_BUTTON_Y : Double = 0.5
     private val EDITOR_BUTTON_TEXT : String = "Editor"
-    private val EDITOR_BUTTON_ACTION : Action = { setNextScreen(EDITOR_L_SCENE) }
+    private val EDITOR_BUTTON_ACTION : Action = { setNextScreen(editorScreen) }
     private val EDITOR_BUTTON : TextButton by lazy{ TextButton(EDITOR_BUTTON_X, EDITOR_BUTTON_Y, EDITOR_BUTTON_TEXT, EDITOR_BUTTON_ACTION) }
 
     private val EXIT_BUTTON_TEXT : String = "X"
-    private val EXIT_BUTTON_ACTION : Action = { setNextScreen(EXIT_PROGRAM_L_SCENE) }
+    private val EXIT_BUTTON_ACTION : Action = { setNextScreen(exitProgramScreen) }
     private val EXIT_BUTTON : TextButton by lazy{
         val result = TextButton(0, 0, EXIT_BUTTON_TEXT, EXIT_BUTTON_ACTION)
         result alignUpTo 0
@@ -72,8 +72,10 @@ val MAIN_MENU_L_SCENE : LScene = object : LScene() {
     private val TEST_BUTTON_X : Double = 0.5
     private val TEST_BUTTON_Y : Double = 0.8
     private val TEST_BUTTON_TEXT : String = "Test LScene"
-    private val TEST_BUTTON_ACTION : Action = {setNextScreen(TEST_L_SCENE)}
+    private val TEST_BUTTON_ACTION : Action = {setNextScreen(testScreen)}
     private val TEST_BUTTON : TextButton = TextButton(TEST_BUTTON_X, TEST_BUTTON_Y, TEST_BUTTON_TEXT, TEST_BUTTON_ACTION)
+
+    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(exitProgramScreen)}
 
     override fun load() {
         this add EDITOR_BUTTON
@@ -89,17 +91,13 @@ val MAIN_MENU_L_SCENE : LScene = object : LScene() {
         this remove EXIT_BUTTON
     }
 
-    override fun releaseKey(key: Int) {
-        if(key == VK_ESCAPE) setNextScreen(EXIT_PROGRAM_L_SCENE)
-    }
-
 }
 
 /**
  * The Editor LScene.
  * @see LScene
  */
-val EDITOR_L_SCENE : LScene = object : LScene() {
+val editorScreen : LScene = object : LScene() {
 
     private val ALLOWED_GRID_WIDTH : Double = 4.0/5
     private val ALLOWED_GRID_HEIGHT : Double = 3.0/4
@@ -109,7 +107,7 @@ val EDITOR_L_SCENE : LScene = object : LScene() {
     private val GRID_DISPLAYER : GridDisplayer = GridDisplayer(0, 0, ALLOWED_GRID_WIDTH, ALLOWED_GRID_HEIGHT)
 
     private val BACK_BUTTON_TEXT : String = "<-"
-    private val BACK_BUTTON_ACTION : Action = {setNextScreen(MAIN_MENU_L_SCENE)}
+    private val BACK_BUTTON_ACTION : Action = {setNextScreen(mainMenuScreen)}
     val BACK_BUTTON : TextButton by lazy{
         val result = TextButton(0, 0, BACK_BUTTON_TEXT, BACK_BUTTON_ACTION)
         result alignLeftTo 0
@@ -183,7 +181,7 @@ val EDITOR_L_SCENE : LScene = object : LScene() {
         GRID_DISPLAYER.setGridHeight(HEIGHT_TEXTFIELD.typedText().toInt())
     }
 
-    override fun pressKey(key: Int) {
+    override var onKeyPressed : LKeyEvent = {key ->
         if(currentTextField != null){
             if(key == VK_ENTER){
                 unfocusTextField()
@@ -192,9 +190,7 @@ val EDITOR_L_SCENE : LScene = object : LScene() {
         }
     }
 
-    override fun releaseKey(key: Int) {
-        if(key == VK_ESCAPE) setNextScreen(MAIN_MENU_L_SCENE)
-    }
+    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
 
     infix fun focusTextField(toFocus : TextField){
         currentTextField = toFocus
@@ -254,7 +250,7 @@ val EDITOR_L_SCENE : LScene = object : LScene() {
  * The LScene that exits the program.
  * @see LScene
  */
-val EXIT_PROGRAM_L_SCENE : LScene = object : LScene(){
+val exitProgramScreen : LScene = object : LScene(){
 
     private val EXIT_PROGRAM_BUTTON_X : Double = 1/3.0
     private val EXIT_PROGRAM_BUTTON_Y : Double = 2 / 3.0
@@ -265,7 +261,7 @@ val EXIT_PROGRAM_L_SCENE : LScene = object : LScene(){
     private val CANCEL_EXIT_BUTTON_X : Double = 2/3.0
     private val CANCEL_EXIT_BUTTON_Y : Double = EXIT_PROGRAM_BUTTON_Y
     private val CANCEL_EXIT_BUTTON_TEXT : String = "Cancel"
-    private val CANCEL_EXIT_BUTTON_ACTION : Action = {setNextScreen(MAIN_MENU_L_SCENE)}
+    private val CANCEL_EXIT_BUTTON_ACTION : Action = {setNextScreen(mainMenuScreen)}
     private val CANCEL_EXIT_BUTTON : TextButton by lazy{ TextButton(CANCEL_EXIT_BUTTON_X, CANCEL_EXIT_BUTTON_Y, CANCEL_EXIT_BUTTON_TEXT, CANCEL_EXIT_BUTTON_ACTION) }
 
     private val EXIT_PROGRAM_QUESTION_X : Double = 0.5
@@ -279,6 +275,8 @@ val EXIT_PROGRAM_L_SCENE : LScene = object : LScene(){
         )
     }
 
+    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
+
     override fun load() {
         this add EXIT_PROGRAM_QUESTION
         this add EXIT_PROGRAM_BUTTON
@@ -291,20 +289,16 @@ val EXIT_PROGRAM_L_SCENE : LScene = object : LScene(){
         this remove CANCEL_EXIT_BUTTON
     }
 
-    override fun releaseKey(key: Int) {
-        if(key == VK_ESCAPE) setNextScreen(MAIN_MENU_L_SCENE)
-    }
-
 }
 
 /**
  * A Test LScene, to test stuff.
  * @see LScene
  */
-val TEST_L_SCENE : LScene = object : LScene(){
+val testScreen : LScene = object : LScene(){
 
     private val BACK_BUTTON_TEXT : String = "<-"
-    private val BACK_BUTTON_ACTION : Action = {setNextScreen(MAIN_MENU_L_SCENE)}
+    private val BACK_BUTTON_ACTION : Action = {setNextScreen(mainMenuScreen)}
     val BACK_BUTTON : TextButton by lazy{
         val result = TextButton(0, 0, BACK_BUTTON_TEXT, BACK_BUTTON_ACTION)
         result alignLeftTo 0
@@ -327,16 +321,14 @@ val TEST_L_SCENE : LScene = object : LScene(){
         add(canvas)
     }
 
+    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
+
     override fun load() {
         this add BACK_BUTTON
     }
 
     override fun save() {
         this remove BACK_BUTTON
-    }
-
-    override fun releaseKey(key: Int) {
-        if(key == VK_ESCAPE) setNextScreen(MAIN_MENU_L_SCENE)
     }
 
 }

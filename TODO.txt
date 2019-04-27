@@ -31,6 +31,8 @@ Canvas
     Draw and fill rectangles and ovals from center point and other points
     Fix  the 0.999 problem
 
+StringDisplay text with numbers
+
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
 
@@ -49,8 +51,8 @@ Projects
         Other distributions
             Gaussian
             Double gaussian
-    That square color thing
-    Mean distance
+    Chibre
+        Make better one, more console-like
     Game of life
     Calculator
     Console
@@ -58,3 +60,6 @@ Projects
     XML and TXT
     Databases
     3D stuff
+    RPG
+    Physics simulator
+    3D physics simulator

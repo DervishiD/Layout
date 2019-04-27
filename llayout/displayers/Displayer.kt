@@ -297,14 +297,14 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     protected var preferredHeight : Int? = null
 
-    override var onClick : Action = {}
-    override var onPress : Action = {}
-    override var onRelease : Action = {}
-    override var onEnter : Action = {}
-    override var onExit : Action = {}
-    override var onDrag : Action = {}
-    override var onMove : Action = {}
-    override var onWheelMoved : MouseWheelAction = { _ -> }
+    override var onMouseClick : Action = {}
+    override var onMousePress : Action = {}
+    override var onMouseRelease : Action = {}
+    override var onMouseEnter : Action = {}
+    override var onMouseExit : Action = {}
+    override var onMouseDrag : Action = {}
+    override var onMouseMove : Action = {}
+    override var onMouseWheelMoved : MouseWheelAction = { _ -> }
 
     /**
      * Constructs a Displayer by its coordinates.

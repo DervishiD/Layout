@@ -84,7 +84,7 @@ class TextButton : TextDisplayer {
             text : Collection<StringDisplay>,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -105,7 +105,7 @@ class TextButton : TextDisplayer {
             text : Collection<StringDisplay>,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -126,7 +126,7 @@ class TextButton : TextDisplayer {
             text : Collection<StringDisplay>,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -147,7 +147,7 @@ class TextButton : TextDisplayer {
             text : Collection<StringDisplay>,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -186,7 +186,7 @@ class TextButton : TextDisplayer {
             text : StringDisplay,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -207,7 +207,7 @@ class TextButton : TextDisplayer {
             text : StringDisplay,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -228,7 +228,7 @@ class TextButton : TextDisplayer {
             text : StringDisplay,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -249,7 +249,7 @@ class TextButton : TextDisplayer {
             text : StringDisplay,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -287,7 +287,7 @@ class TextButton : TextDisplayer {
             text : String,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -307,7 +307,7 @@ class TextButton : TextDisplayer {
             text : String,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -327,7 +327,7 @@ class TextButton : TextDisplayer {
             text : String,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -347,7 +347,7 @@ class TextButton : TextDisplayer {
             text : String,
             action : Action,
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -385,7 +385,7 @@ class TextButton : TextDisplayer {
             text : Text,
             action : Action,
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -406,7 +406,7 @@ class TextButton : TextDisplayer {
             text : Text,
             action : Action,
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -427,7 +427,7 @@ class TextButton : TextDisplayer {
             text : Text,
             action : Action,
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
@@ -448,7 +448,7 @@ class TextButton : TextDisplayer {
             text : Text,
             action : Action,
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        this setOnReleaseAction action
+        this setOnMouseReleaseAction action
     }
 
     /**
