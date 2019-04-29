@@ -1,6 +1,5 @@
 package usages.chibre
 
-import llayout.LKeyEvent
 import llayout.displayers.Label
 import llayout.displayers.TextField
 import llayout.frame.LApplication
@@ -8,6 +7,7 @@ import llayout.frame.LFrame
 import llayout.frame.LFrameBuilder
 import llayout.frame.LScene
 import llayout.utilities.LProperty
+import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ENTER
 
 val chibreApplication : LApplication = object : LApplication(){
@@ -37,8 +37,8 @@ val screen : LScene = object : LScene(){
 
     var focusedField : TextField? = null
 
-    override var onKeyPressed : LKeyEvent = {key : Int -> run{
-        if(key == VK_ENTER){
+    override fun keyPressed(e: KeyEvent?) {
+        if(e!!.keyCode == VK_ENTER){
             if(field1.typedText() != "") team1score.value += field1.typedText().toInt()
             if(field2.typedText() != "") team2score.value += field2.typedText().toInt()
             field1.clear()
@@ -46,8 +46,8 @@ val screen : LScene = object : LScene(){
             focusedField?.unfocus()
             focusedField = null
         }
-        focusedField?.type(key)
-    } }
+        focusedField?.type(e)
+    }
 
     override fun mouseClick(x: Int, y: Int) {
         when(val c = getComponentAt(x, y)){

@@ -98,14 +98,6 @@ class LFrame : JFrame, LTimerUpdatable {
 
         })
 
-        addKeyListener(object : KeyAdapter() {
-
-            override fun keyPressed(e: KeyEvent?) = screenManager.pressKey(e!!.keyCode)
-
-            override fun keyReleased(e: KeyEvent?) = screenManager.releaseKey(e!!.keyCode)
-
-        })
-
         addMouseWheelListener { e -> screenManager.mouseWheelMoved(e!!.x, e.y, e.wheelRotation) }
 
         addMouseMotionListener(object : MouseMotionListener{

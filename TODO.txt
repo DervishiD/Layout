@@ -1,12 +1,4 @@
-Better TextField
-
-Slider
-
-Test negative coordinates
-
 Comment again
-
-Dokka
 
 Canvas
     Draw squares
@@ -40,11 +32,21 @@ Add default fonts and colors setters to LFrames / LFrameBuilders
 
 Find out why decoration bugs and fix it
 
-Switch Displayer, between two values
+Move LFrame correctly
 
-On/off Displayer
+StringBuilders everywhere
 
-Graph
+Displayers
+    Slider
+    TextArea
+    Switch between two values
+    On/off
+    Graph for Double-Double map
+    Console-like input
+    Scroll pane for text
+    TextField
+        Better alternative than override keyTyped and keyPressed
+        Add more default regex
 
 Projects
     Probability distributions
@@ -53,6 +55,7 @@ Projects
             Double gaussian
     Chibre
         Make better one, more console-like
+    Recipe stuff
     Game of life
     Calculator
     Console
@@ -60,6 +63,6 @@ Projects
     XML and TXT
     Databases
     3D stuff
-    RPG
+    2D RPG
     Physics simulator
     3D physics simulator

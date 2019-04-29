@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 
 /**
- * The general abstraction for a LScene. A LScene is a special kind of JPanel that is used in this Layout.
+ * The general abstraction for a background pane. A LScene is a special kind of JPanel that is used in this Layout.
  * Every scene that appears in a LFrame is a LScene.
  * @see LContainer
  * @see MouseInteractable
@@ -24,7 +24,7 @@ import java.awt.event.KeyListener
  * @see JPanel
  * @see LFrame
  */
-abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener {
+open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener {
 
     override var w : LProperty<Int> = LProperty(0)
 
@@ -50,15 +50,11 @@ abstract class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable
     override var onMouseMove : Action = {}
     override var onMouseWheelMoved : MouseWheelAction = { _ -> }
 
-    protected open var onKeyPressed : LKeyEvent = { _ -> }
-    protected open var onKeyReleased : LKeyEvent = { _ -> }
-    protected open var onKeyTyped : LKeyEvent = { _ -> }
+    override fun keyPressed(e: KeyEvent?){}
 
-    override fun keyPressed(e: KeyEvent?) = onKeyPressed.invoke(e!!.keyCode)
+    override fun keyReleased(e: KeyEvent?){}
 
-    override fun keyReleased(e: KeyEvent?) = onKeyReleased.invoke(e!!.keyCode)
-
-    override fun keyTyped(e: KeyEvent?) = onKeyTyped.invoke(e!!.keyCode)
+    override fun keyTyped(e: KeyEvent?){}
 
     init{
         addKeyListener(this)

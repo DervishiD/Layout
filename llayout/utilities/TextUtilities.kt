@@ -155,3 +155,9 @@ fun Collection<String>.toStringDisplays(font : Font) : MutableList<StringDisplay
  * Converts a List of Strings to a List of StringDisplays
  */
 fun Collection<String>.toStringDisplays() : MutableList<StringDisplay> = toStringDisplays(DEFAULT_FONT, DEFAULT_COLOR)
+
+fun Regex.matches(c : Char) : Boolean = matches(c.toString())
+
+fun Regex.matches(s : StringDisplay) : Boolean = matches(s.text)
+
+fun Regex.matches(t : Text) : Boolean = matches(t.asString())

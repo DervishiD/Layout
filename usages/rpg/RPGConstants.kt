@@ -14,6 +14,7 @@ import usages.rpg.editor.selections.ColumnSelector
 import usages.rpg.editor.selections.LineSelector
 import java.awt.Component
 import java.awt.Graphics
+import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ENTER
 import java.awt.event.KeyEvent.VK_ESCAPE
 
@@ -75,7 +76,9 @@ val mainMenuScreen : LScene = object : LScene() {
     private val TEST_BUTTON_ACTION : Action = {setNextScreen(testScreen)}
     private val TEST_BUTTON : TextButton = TextButton(TEST_BUTTON_X, TEST_BUTTON_Y, TEST_BUTTON_TEXT, TEST_BUTTON_ACTION)
 
-    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(exitProgramScreen)}
+    override fun keyReleased(e: KeyEvent?){
+        if(e!!.keyCode == VK_ESCAPE) setNextScreen(exitProgramScreen)
+    }
 
     override fun load() {
         this add EDITOR_BUTTON
@@ -181,16 +184,18 @@ val editorScreen : LScene = object : LScene() {
         GRID_DISPLAYER.setGridHeight(HEIGHT_TEXTFIELD.typedText().toInt())
     }
 
-    override var onKeyPressed : LKeyEvent = {key ->
+    override fun keyPressed(e: KeyEvent?) {
         if(currentTextField != null){
-            if(key == VK_ENTER){
+            if(e!!.keyCode == VK_ENTER){
                 unfocusTextField()
                 updateGrid()
-            }else currentTextField!!.type(key)
+            }else currentTextField!!.type(e)
         }
     }
 
-    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
+    override fun keyReleased(e: KeyEvent?) {
+        if(e!!.keyCode == VK_ESCAPE) setNextScreen(mainMenuScreen)
+    }
 
     infix fun focusTextField(toFocus : TextField){
         currentTextField = toFocus
@@ -275,7 +280,9 @@ val exitProgramScreen : LScene = object : LScene(){
         )
     }
 
-    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
+    override fun keyReleased(e: KeyEvent?) {
+        if(e!!.keyCode == VK_ESCAPE) setNextScreen(mainMenuScreen)
+    }
 
     override fun load() {
         this add EXIT_PROGRAM_QUESTION
@@ -321,7 +328,9 @@ val testScreen : LScene = object : LScene(){
         add(canvas)
     }
 
-    override var onKeyReleased: LKeyEvent = {key -> if(key == VK_ESCAPE) setNextScreen(mainMenuScreen)}
+    override fun keyReleased(e: KeyEvent?) {
+        if(e!!.keyCode == VK_ESCAPE) setNextScreen(mainMenuScreen)
+    }
 
     override fun load() {
         this add BACK_BUTTON

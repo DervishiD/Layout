@@ -11,8 +11,8 @@ fun main(){
     //rpgApplication.run()
     //probabilityApplication.run()
     //timeTest { debugHomogeneousDistribution() }
-    //testApplication.run()
+    testApplication.run()
     //chibreApplication.run()
     //colourSquareApplication.run()
-    meanDistanceApplication.run()
+    //meanDistanceApplication.run()
 }
