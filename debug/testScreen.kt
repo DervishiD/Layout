@@ -39,7 +39,7 @@ val testScreen : LScene = object : LScene(){
     }
 }
 
-val frame : LFrame = LFrameBuilder(testScreen).exitOnClose().setFullScreen(true).setDecorated(false).build()
+val frame : LFrame = LFrameBuilder(testScreen).build()
 
 val testApplication : LApplication = object : LApplication(){
     override fun run() {

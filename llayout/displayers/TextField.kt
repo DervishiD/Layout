@@ -58,6 +58,14 @@ class TextField : Displayer {
 
         private const val DIGITS_ONLY : String = "\\d"
 
+        private const val DOUBLES : String = "\\d|\\."
+
+        private const val WORD_CHARACTERS : String = "\\w"
+
+        private const val LETTERS : String = "[a-zA-Z]"
+
+        private const val LETTERS_OR_DIGITS : String = "$DIGITS_ONLY|$LETTERS"
+
     }
 
     /**
@@ -317,6 +325,26 @@ class TextField : Displayer {
 
     fun digitsOnly() : TextField{
         regex = Regex(DIGITS_ONLY)
+        return this
+    }
+
+    fun numbersOnly() : TextField{
+        regex = Regex(DOUBLES)
+        return this
+    }
+
+    fun wordsOnly() : TextField{
+        regex = Regex(WORD_CHARACTERS)
+        return this
+    }
+
+    fun lettersOnly() : TextField{
+        regex = Regex(LETTERS)
+        return this
+    }
+
+    fun lettersOrDigits() : TextField{
+        regex = Regex(LETTERS_OR_DIGITS)
         return this
     }
 

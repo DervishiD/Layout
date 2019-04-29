@@ -63,13 +63,13 @@ class LFrameBuilder(private var contentPane: LScene) {
      * The width of the constructed LFrame.
      * @see setWidth
      */
-    private var width : Int = SCREEN_WIDTH
+    private var width : Int = SCREEN_WIDTH * 2 / 3
 
     /**
      * The height of the constructed LFrame.
      * @see setHeight
      */
-    private var height : Int = SCREEN_HEIGHT
+    private var height : Int = SCREEN_HEIGHT * 2 / 3
 
     /**
      * The default period of the constructed LFrame's LTimer.

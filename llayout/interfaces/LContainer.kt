@@ -1,6 +1,8 @@
 package llayout.interfaces
 
 import llayout.displayers.Displayer
+import llayout.displayers.DisplayerScrollPane
+import llayout.frame.LScene
 import java.awt.Container
 
 /**
@@ -92,49 +94,49 @@ interface LContainer : HavingDimension {
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseClick(x : Int, y : Int)
+    fun mouseClick(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse press event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mousePress(x : Int, y : Int)
+    fun mousePress(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse release event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseRelease(x : Int, y : Int)
+    fun mouseRelease(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse enter event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseEnter(x : Int, y : Int)
+    fun mouseEnter(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse exit event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseExit(x : Int, y : Int)
+    fun mouseExit(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse drag event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseDrag(x : Int, y : Int)
+    fun mouseDrag(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse moved event on this LContainer.
      * @param x The x coordinate of the mouse event.
      * @param y The y coordinate of the mouse event.
      */
-    fun mouseMoved(x : Int, y : Int)
+    fun mouseMoved(x : Int, y : Int){}
 
     /**
      * Reacts to a mouse wheel moved event on this LContainer.
@@ -142,6 +144,6 @@ interface LContainer : HavingDimension {
      * @param y The y coordinate of the mouse event.
      * @param units The number of units scrolled by the mouse wheel.
      */
-    fun mouseWheelMoved(x : Int, y : Int, units : Int)
+    fun mouseWheelMoved(x : Int, y : Int, units : Int){}
 
 }

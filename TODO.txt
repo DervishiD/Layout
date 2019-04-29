@@ -28,11 +28,7 @@ StringDisplay text with numbers
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
 
-Add default fonts and colors setters to LFrames / LFrameBuilders
-
-Find out why decoration bugs and fix it
-
-Move LFrame correctly
+Add default fonts and colors setters to LFrames / LFrameBuilders?
 
 StringBuilders everywhere
 
@@ -46,7 +42,6 @@ Displayers
     Scroll pane for text
     TextField
         Better alternative than override keyTyped and keyPressed
-        Add more default regex
 
 Projects
     Probability distributions

@@ -919,6 +919,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     open fun rightSideX() : Int = rightSideX.value
 
+
     /**
      * Initializes this Displayer.
      * A Displayer is initialized if it must recalculate some parameters the
