@@ -16,18 +16,19 @@ import java.awt.Color.BLACK
 import java.awt.Graphics
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ESCAPE
+import java.awt.event.MouseEvent
 
 val TicTacToeApplication : LApplication = LApplication { frame.run() }
 
-private class Cell(x: Double, y: Double, w: Double, h: Double) : CanvasDisplayer(x, y, w, h) {
+private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : Int, private val j : Int) : CanvasDisplayer(x, y, w, h) {
 
     companion object{
-        private val X : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+        private val XDrawing : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
             g.color = BLACK
             g.drawLine(0, 0, w, h)
             g.drawLine(0, h, w, 0)
         }}
-        private val O : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+        private val ODrawing : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
             g.color = BLACK
             g.drawOval(0, 0, w, h)
         }}
@@ -36,34 +37,76 @@ private class Cell(x: Double, y: Double, w: Double, h: Double) : CanvasDisplayer
             g.drawRect(0, 0, w - 1, h - 1)
         }}
         private const val KEY : Int = 12
+
+        enum class Type{X, O, BLANK}
+
     }
+
+    private var type : LProperty<Type> = LProperty(Companion.Type.BLANK)
 
     init{
         addGraphicAction(BOX)
+        type.addListener{
+            when(type.value){
+                Companion.Type.X -> addGraphicAction(XDrawing, KEY)
+                Companion.Type.O -> addGraphicAction(ODrawing, KEY)
+                Companion.Type.BLANK -> removeDrawing(KEY)
+            }
+        }
     }
 
-    fun checked() : Boolean = graphics.containsKey(KEY)
+    fun unChecked() : Boolean = type.value == Companion.Type.BLANK
 
     fun writeX(){
-        if(!checked()) addGraphicAction(X, KEY)
+        if(unChecked()) type.value = Companion.Type.X
     }
 
     fun writeO(){
-        if(!checked()) addGraphicAction(O, KEY)
+        if(unChecked()) type.value = Companion.Type.O
     }
 
     override fun mouseRelease(){
-        if(!checked()){
+        if(unChecked() && running){
             if(isFirst.value) writeX() else writeO()
-            nextPlayer()
+            testEnd()
         }
     }
 
     fun unCkeck(){
-        removeDrawing(KEY)
+        type.value = Companion.Type.BLANK
+    }
+
+    fun type() : Type = type.value
+
+    private fun testEnd(){
+        if(fullLine(i) || fullColumn(j) || diagonal(i, j)){
+            running = false
+        }else{
+            nextPlayer()
+        }
     }
 
 }
+
+private var running : Boolean = true
+
+private fun fullLine(i : Int) : Boolean{
+    return cells[i][0].type() == cells[i][1].type() && cells[i][1].type() == cells[i][2].type()
+}
+
+private fun fullColumn(j : Int) : Boolean{
+    return cells[0][j].type() == cells[1][j].type() && cells[1][j].type() == cells[2][j].type()
+}
+
+private fun diagonal(i : Int, j : Int) : Boolean{
+    return when {
+        i == j -> cells[0][0].type() == cells[1][1].type() && cells[1][1].type() == cells[2][2].type()
+        i + j == 2 -> cells[0][2].type() == cells[1][1].type() && cells[1][1].type() == cells[2][0].type()
+        else -> false
+    }
+}
+
+private val cells : Array<Array<Cell>> = Array(3) {Array(3){Cell(0.0, 0.0, 0.0, 0.0, 0, 0)}}
 
 private var isFirst : LProperty<Boolean> = LProperty(true)
 
@@ -82,8 +125,6 @@ private val scene : LScene = object : LScene(){
 
     private val player : Label = Label(0.25, 0.5, FIRST)
 
-    private val cells : MutableCollection<Cell> = mutableSetOf()
-
     private val resetButton : TextButton = TextButton(0.25, 0.8, "Reset", {reset()})
 
     override fun keyReleased(e: KeyEvent?){
@@ -98,12 +139,15 @@ private val scene : LScene = object : LScene(){
         add(player)
         for(i : Int in 0..2){
             for(j : Int in 0..2){
-                add(Cell(
+                cells[i][j] = Cell(
                         7.0/12 + i * 1.0/6,
                         1.0/6 + j * 1.0/3,
                         1.0/6,
-                        1.0/3
-                ))
+                        1.0/3,
+                        i,
+                        j
+                )
+                add(cells[i][j])
             }
         }
     }
@@ -113,8 +157,9 @@ private val scene : LScene = object : LScene(){
     }
 
     private fun reset(){
-        for(c : Cell in cells) c.unCkeck()
+        for(a : Array<Cell> in cells) for(c : Cell in a) c.unCkeck()
         isFirst.value = true
+        running = true
     }
 
 }

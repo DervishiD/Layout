@@ -1,5 +1,7 @@
 Comment again
 
+Quick tutorial on how to use this
+
 Version
 
 Canvas
@@ -39,7 +41,15 @@ Iterables
 Clean mouse stuff, too many overridable things
 
 Displayable interface
-    And Dsplayer Grid
+    And Displayer Grids
+    What does a Displayable have?
+        --updateRelativeValues()
+        --is LTimerUpdatable
+        --paintComponent() or such
+        --onAdd(), onRemove()
+        if component, added on container
+        --requestUpdate method, and listeners
+        --initialize() method
 
 Displayers
     Debug DisplayerScrollPane
