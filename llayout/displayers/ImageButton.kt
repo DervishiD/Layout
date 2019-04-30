@@ -10,7 +10,7 @@ import java.awt.Graphics
  * @see TextButton
  * @see Displayer
  */
-class ImageButton : Displayer {
+class ImageButton : ResizableDisplayer {
 
     /**
      * The image of this button, as a GraphicAction.
@@ -31,9 +31,7 @@ class ImageButton : Displayer {
      * @see GraphicAction
      * @see MouseInteractable
      */
-    constructor(x : Int, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
-        w.value = width
-        h.value = height
+    constructor(x : Int, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
         setOnMouseReleaseAction(onClick)
         this.image = image
     }
@@ -51,9 +49,7 @@ class ImageButton : Displayer {
      * @see GraphicAction
      * @see MouseInteractable
      */
-    constructor(x : Int, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
-        w.value = width
-        h.value = height
+    constructor(x : Int, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
         setOnMouseReleaseAction(onClick)
         this.image = image
     }
@@ -71,9 +67,7 @@ class ImageButton : Displayer {
      * @see GraphicAction
      * @see MouseInteractable
      */
-    constructor(x : Double, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
-        w.value = width
-        h.value = height
+    constructor(x : Double, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
         setOnMouseReleaseAction(onClick)
         this.image = image
     }
@@ -91,9 +85,7 @@ class ImageButton : Displayer {
      * @see GraphicAction
      * @see MouseInteractable
      */
-    constructor(x : Double, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y){
-        w.value = width
-        h.value = height
+    constructor(x : Double, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
         setOnMouseReleaseAction(onClick)
         this.image = image
     }
@@ -111,80 +103,6 @@ class ImageButton : Displayer {
      * @see MouseInteractable
      */
     constructor(p : Point, width : Int, height : Int, image : GraphicAction, onClick : Action) : this(p.intx(), p.inty(), width, height, image, onClick)
-
-    /**
-     * Creates a button from the given parameters.
-     * @param p The center point of this ImageButton
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(p : Point, width : Int, height : Int, onClick : Action, image : GraphicAction) : this(p, width, height, image, onClick)
-
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int, onClick : Action, image : GraphicAction) : this(Point(x, y), width, height, image, onClick)
-
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int, onClick : Action, image : GraphicAction) : this(Point(x, y), width, height, image, onClick)
-
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int, onClick : Action, image : GraphicAction) : this(Point(x, y), width, height, image, onClick)
-
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int, onClick : Action, image : GraphicAction) : this(Point(x, y), width, height, image, onClick)
 
     /**
      * Sets a new image for this ImageButton.

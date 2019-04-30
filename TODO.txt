@@ -1,5 +1,7 @@
 Comment again
 
+Version
+
 Canvas
     Draw squares
     Draw circles
@@ -32,14 +34,22 @@ Add default fonts and colors setters to LFrames / LFrameBuilders?
 
 StringBuilders everywhere
 
+Iterables
+
+Clean mouse stuff, too many overridable things
+
+Displayable interface
+    And Dsplayer Grid
+
 Displayers
+    Debug DisplayerScrollPane
+    Scroll pane for text
     Slider
     TextArea
     Switch between two values
     On/off
     Graph for Double-Double map
     Console-like input
-    Scroll pane for text
     TextField
         Better alternative than override keyTyped and keyPressed
 
@@ -50,6 +60,10 @@ Projects
             Double gaussian
     Chibre
         Make better one, more console-like
+    That game Schinz made that day
+    Tic-Tac-Toe
+        Tic-Tac_Toe
+        n-Tic-Tac-Toe
     Recipe stuff
     Game of life
     Calculator

@@ -4,12 +4,9 @@ import llayout.frame.LApplication
 import kotlin.math.sqrt
 import kotlin.random.Random
 
-val meanDistanceApplication : LApplication = object : LApplication(){
-    private val n = 5000
-    override fun run() {
-        Simulation.simulateForN(n)
-    }
-}
+private const val N : Int = 5000
+
+val meanDistanceApplication : LApplication = LApplication { Simulation.simulateForN(N) }
 
 class Simulation(n : Int){
 

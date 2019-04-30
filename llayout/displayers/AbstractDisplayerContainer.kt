@@ -9,17 +9,7 @@ import java.awt.Component
  * @see Displayer
  * @see LContainer
  */
-abstract class AbstractDisplayerContainer : Displayer, LContainer {
-
-    /**
-     * The width of this AbstractDisplayerContainer, as a proportion of its container's width.
-     */
-    private var relativeW : Double? = null
-
-    /**
-     * The height of this AbstractDisplayerContainer, as a proportion of its container's height.
-     */
-    private var relativeH : Double? = null
+abstract class AbstractDisplayerContainer : ResizableDisplayer, LContainer {
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -28,10 +18,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){
-        w.value = width
-        h.value = height
-    }
+    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -40,10 +27,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y){
-        w.value = width
-        h.value = height
-    }
+    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -52,10 +36,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y){
-        w.value = width
-        h.value = height
-    }
+    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -64,10 +45,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y){
-        w.value = width
-        h.value = height
-    }
+    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -76,10 +54,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      * @see Point
      */
-    constructor(p : Point, width : Int, height : Int) : super(p){
-        w.value = width
-        h.value = height
-    }
+    constructor(p : Point, width : Int, height : Int) : super(p, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -88,11 +63,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y){
-        relativeW = width
-        h.value = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -101,11 +72,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y){
-        relativeW = width
-        h.value = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -114,11 +81,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y){
-        relativeW = width
-        h.value = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -127,11 +90,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      */
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y){
-        relativeW = width
-        h.value = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -140,11 +99,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param height The height of this AbstractDisplayerContainer, in pixels.
      * @see Point
      */
-    constructor(p : Point, width : Double, height : Int) : super(p){
-        relativeW = width
-        h.value = height
-        requestCoordinateUpdate()
-    }
+    constructor(p : Point, width : Double, height : Int) : super(p, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -153,11 +108,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y){
-        relativeW = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -166,11 +117,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y){
-        relativeW = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -179,11 +126,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y){
-        relativeW = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -192,11 +135,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, as a proportion of its container's width.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y){
-        relativeW = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -205,11 +144,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      * @see Point
      */
-    constructor(p : Point, width : Double, height : Double) : super(p){
-        relativeW = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(p : Point, width : Double, height : Double) : super(p, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -218,11 +153,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y){
-        w.value = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -231,11 +162,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y){
-        w.value = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -244,11 +171,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y){
-        w.value = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -257,11 +180,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param width The width of this AbstractDisplayerContainer, in pixels.
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      */
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y){
-        w.value = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
+    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -270,17 +189,7 @@ abstract class AbstractDisplayerContainer : Displayer, LContainer {
      * @param height The height of this AbstractDisplayerContainer, as a proportion of its container's height.
      * @see Point
      */
-    constructor(p : Point, width : Int, height : Double) : super(p){
-        w.value = width
-        relativeH = height
-        requestCoordinateUpdate()
-    }
-
-    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
-        if(relativeW != null) w.value = (relativeW!! * frameWidth).toInt()
-        if(relativeH != null) h.value = (relativeH!! * frameHeight).toInt()
-        return super.updateRelativeValues(frameWidth, frameHeight)
-    }
+    constructor(p : Point, width : Int, height : Double) : super(p, width, height)
 
     override fun mouseClick(x : Int, y : Int){}
     override fun mousePress(x : Int, y : Int){}

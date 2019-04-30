@@ -8,13 +8,9 @@ import llayout.frame.LFrameBuilder
 import llayout.frame.LScene
 import llayout.utilities.LProperty
 import java.awt.event.KeyEvent
-import java.awt.event.KeyEvent.VK_ENTER
+import java.awt.event.MouseEvent
 
-val chibreApplication : LApplication = object : LApplication(){
-    override fun run() {
-        frame.run()
-    }
-}
+val chibreApplication : LApplication = LApplication { frame.run() }
 
 val screen : LScene = object : LScene(){
 
@@ -32,13 +28,13 @@ val screen : LScene = object : LScene(){
         team2score.addListener{team2scorelabel.setDisplayedText(team2score.value.toString())}
     }
 
-    val field1 : TextField = TextField(0.66, 0.33, regex = "\\d+")
-    val field2 : TextField = TextField(0.66, 0.66, regex = "\\d+")
+    val field1 : TextField = TextField(0.66, 0.33).digitsOnly()
+    val field2 : TextField = TextField(0.66, 0.66).digitsOnly()
 
     var focusedField : TextField? = null
 
-    override fun keyPressed(e: KeyEvent?) {
-        if(e!!.keyCode == VK_ENTER){
+    override fun keyTyped(e: KeyEvent?) {
+        if(e!!.keyChar == '\n'){
             if(field1.typedText() != "") team1score.value += field1.typedText().toInt()
             if(field2.typedText() != "") team2score.value += field2.typedText().toInt()
             field1.clear()
@@ -49,15 +45,15 @@ val screen : LScene = object : LScene(){
         focusedField?.type(e)
     }
 
-    override fun mouseClick(x: Int, y: Int) {
-        when(val c = getComponentAt(x, y)){
+    override fun mouseClicked(e: MouseEvent?) {
+        when(val c = getComponentAt(e!!.x, e.y)){
             is TextField -> focusedField = c
             else -> {
                 focusedField?.unfocus()
                 focusedField = null
             }
         }
-        super.mouseClick(x, y)
+        super.mouseClicked(e)
     }
 
     override fun load() {

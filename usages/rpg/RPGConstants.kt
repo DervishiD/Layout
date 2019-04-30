@@ -20,11 +20,7 @@ import java.awt.event.KeyEvent.VK_ESCAPE
 
 //APPLICATION-----------------------------------------------------------------
 
-val rpgApplication : LApplication = object : LApplication(){
-    override fun run() {
-        rpgFrame.run()
-    }
-}
+val rpgApplication : LApplication = LApplication { rpgFrame.run() }
 
 //LFRAME----------------------------------------------------------------------
 

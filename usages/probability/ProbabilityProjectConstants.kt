@@ -11,11 +11,9 @@ import llayout.frame.LScene
 import llayout.utilities.*
 import kotlin.math.*
 
-val probabilityApplication : LApplication = object : LApplication(){
-    override fun run() {
-        mainFrame.run()
-        randomDistributionFrame.run()
-    }
+val probabilityApplication : LApplication = LApplication {
+    mainFrame.run()
+    randomDistributionFrame.run()
 }
 
 val mainFrame : LFrame by lazy {

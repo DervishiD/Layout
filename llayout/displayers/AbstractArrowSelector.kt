@@ -360,16 +360,16 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
                     centerX(), centerY(),
                     HORIZONTAL_ARROW_WIDTH,
                     HORIZONTAL_ARROW_HEIGHT,
-                    previousAction,
-                    DEFAULT_LEFT_ARROW_DRAWER
+                    DEFAULT_LEFT_ARROW_DRAWER,
+                    previousAction
             )
         }else{
             ImageButton(
                     centerX(), centerY(),
                     VERTICAL_ARROW_WIDTH,
                     VERTICAL_ARROW_HEIGHT,
-                    previousAction,
-                    DEFAULT_DOWN_ARROW_DRAWER
+                    DEFAULT_DOWN_ARROW_DRAWER,
+                    previousAction
             )
         }
     }
@@ -385,16 +385,16 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
                     centerX(), centerY(),
                     HORIZONTAL_ARROW_WIDTH,
                     HORIZONTAL_ARROW_HEIGHT,
-                    nextAction,
-                    DEFAULT_RIGHT_ARROW_DRAWER
+                    DEFAULT_RIGHT_ARROW_DRAWER,
+                    nextAction
             )
         }else{
             ImageButton(
                     centerX(), centerY(),
                     VERTICAL_ARROW_WIDTH,
                     VERTICAL_ARROW_HEIGHT,
-                    nextAction,
-                    DEFAULT_UP_ARROW_DRAWER
+                    DEFAULT_UP_ARROW_DRAWER,
+                    nextAction
             )
         }
     }

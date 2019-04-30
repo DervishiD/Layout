@@ -1,5 +1,7 @@
 package llayout.frame
 
-abstract class LApplication {
-    abstract fun run()
+import llayout.Action
+
+open class LApplication(protected val onRun : Action = {}) : Runnable {
+    override fun run() = onRun()
 }

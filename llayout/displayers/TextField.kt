@@ -474,6 +474,7 @@ class TextField : Displayer {
      */
     fun clear() : TextField {
         typedText.clear()
+        initialize()
         return this
     }
 

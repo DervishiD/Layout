@@ -10,11 +10,7 @@ import java.awt.Color
 import java.awt.Graphics
 import kotlin.random.Random
 
-val colourSquareApplication : LApplication = object : LApplication(){
-    override fun run() {
-        frame.run()
-    }
-}
+val colourSquareApplication : LApplication = LApplication { frame.run() }
 
 val screen : LScene = object : LScene(){
 
