@@ -10,8 +10,8 @@ abstract class ResizableDisplayer : Displayer {
     private var relativeH : LProperty<Double?> = LProperty(null)
 
     init{
-        relativeW.addListener{requestCoordinateUpdate()}
-        relativeH.addListener{requestCoordinateUpdate()}
+        relativeW.addListener{requestUpdate()}
+        relativeH.addListener{requestUpdate()}
     }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){

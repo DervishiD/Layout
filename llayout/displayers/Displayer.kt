@@ -5,10 +5,7 @@ import llayout.frame.LScene
 import llayout.geometry.Point
 import llayout.geometry.Vector
 import llayout.geometry.Vector.Companion.NULL
-import llayout.interfaces.LContainer
-import llayout.interfaces.HavingDimension
-import llayout.interfaces.LTimerUpdatable
-import llayout.interfaces.MouseInteractable
+import llayout.interfaces.*
 import llayout.utilities.LProperty
 import java.awt.Graphics
 import javax.swing.JLabel
@@ -20,7 +17,7 @@ import javax.swing.JLabel
  * @see MouseInteractable
  * @see Point
  */
-abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpdatable {
+abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimension {
 
     companion object{
 
@@ -33,13 +30,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         @JvmStatic private var staticDisplayerIndex : Long = 0L
 
     }
-
-    /**
-     * A LProperty that is used to force the container to update this Displayer's relative coordinates.
-     * @see updateRelativeValues
-     * @see LContainer
-     */
-    private var requestCoordinateUpdate : LProperty<Boolean> = LProperty(true)
 
     /**
      * The index uniquely defines a Displayer. It is used to create unique LProperty keys, for example.
@@ -306,6 +296,8 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
     override var onMouseMove : Action = {}
     override var onMouseWheelMoved : MouseWheelAction = { _ -> }
 
+    override var requestUpdate: LProperty<Boolean> = LProperty(false)
+
     /**
      * Constructs a Displayer by its coordinates.
      * @param x The x coordinate of this Displayer's center, in pixels.
@@ -359,7 +351,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * @see updateRelativeCoordinates
      * @return This Displayer
      */
-    internal open fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayer {
+    override fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayer {
         updateRelativeCoordinates(frameWidth, frameHeight)
         updateRelativeAlignment(frameWidth, frameHeight)
         return this
@@ -393,25 +385,6 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         }else if(relativeAlignDownTo != null){
             absoluteAlignDownTo.value = (frameHeight * relativeAlignDownTo!!).toInt()
         }
-    }
-
-    /**
-     * Adds a listener that triggers when this Displayer requests an update.
-     * @see requestCoordinateUpdate
-     */
-    internal fun addRequestUpdateListener(key : Any?, action : Action) = requestCoordinateUpdate.addListener(key, action)
-
-    /**
-     * Removes a request update listener.
-     * @see addRequestUpdateListener
-     */
-    internal fun removeRequestUpdateListener(key : Any?) = requestCoordinateUpdate.removeListener(key)
-
-    /**
-     * Requests an update of this Displayer's relative values.
-     */
-    protected fun requestCoordinateUpdate(){
-        requestCoordinateUpdate.value = !requestCoordinateUpdate.value
     }
 
     /**
@@ -477,7 +450,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         relativeAlignLeftTo = position
         absoluteAlignRightTo.value = null
         relativeAlignRightTo = null
-        requestCoordinateUpdate()
+        requestUpdate()
         return this
     }
 
@@ -492,7 +465,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         relativeAlignRightTo = position
         absoluteAlignLeftTo.value = null
         relativeAlignLeftTo = null
-        requestCoordinateUpdate()
+        requestUpdate()
         return this
     }
 
@@ -507,7 +480,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         relativeAlignUpTo = position
         absoluteAlignDownTo.value = null
         relativeAlignDownTo = null
-        requestCoordinateUpdate()
+        requestUpdate()
         return this
     }
 
@@ -522,7 +495,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         relativeAlignDownTo = position
         absoluteAlignUpTo.value = null
         relativeAlignUpTo = null
-        requestCoordinateUpdate()
+        requestUpdate()
         return this
     }
 
@@ -926,7 +899,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      * next time it is drawn.
      * @see initphase
      */
-    fun initialize(){
+    override fun initialize(){
         initphase = true
     }
 
@@ -974,7 +947,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
             absoluteY.value = y
             relativeY = null
             resetAlignment()
-            requestCoordinateUpdate()
+            requestUpdate()
             loadBounds()
         }
         return this
@@ -994,7 +967,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
             relativeY = y
             relativeX = null
             resetAlignment()
-            requestCoordinateUpdate()
+            requestUpdate()
             loadBounds()
         }
         return this
@@ -1013,7 +986,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
             relativeX = x
             relativeY = y
             resetAlignment()
-            requestCoordinateUpdate()
+            requestUpdate()
             loadBounds()
         }
         return this
@@ -1047,7 +1020,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         if(x != relativeX){
             relativeX = x
             resetAlignment()
-            requestCoordinateUpdate()
+            requestUpdate()
             loadBounds()
         }
         return this
@@ -1090,7 +1063,7 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
         if(y != relativeY){
             relativeY = y
             resetAlignment()
-            requestCoordinateUpdate()
+            requestUpdate()
             loadBounds()
         }
         return this
@@ -1457,23 +1430,11 @@ abstract class Displayer : JLabel, MouseInteractable, HavingDimension, LTimerUpd
      */
     private fun loadBounds() = setBounds(centerX() - width() / 2, centerY() - height() / 2, width(), height())
 
-    /**
-     * A function called when the Displayer is added to a LContainer.
-     * The default function does nothing but can be overriden in subclasses.
-     * @see LContainer
-     */
-    internal open infix fun onAdd(source : LContainer){}
-
-    /**
-     * A function called when the Displayer is removed from a LContainer.
-     * The default function does nothing but can be overriden in subclasses.
-     * @see LContainer
-     */
-    internal open infix fun onRemove(source : LContainer){}
+    override fun drawDisplayable(g: Graphics) = paintComponent(g)
 
     public override fun paintComponent(g: Graphics?) {
         if(initphase){
-            requestCoordinateUpdate()
+            requestUpdate()
             loadParameters(g!!)
             applyPreferredSize()
             initphase = false

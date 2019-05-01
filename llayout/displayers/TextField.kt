@@ -226,7 +226,7 @@ class TextField : Displayer {
         typedText = StringBuilder(defaultText)
         this.regex = Regex(regex)
         relativeW = width
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     /**
@@ -247,7 +247,7 @@ class TextField : Displayer {
         typedText = StringBuilder(defaultText)
         this.regex = Regex(regex)
         relativeW = width
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     /**
@@ -268,7 +268,7 @@ class TextField : Displayer {
         typedText = StringBuilder(defaultText)
         this.regex = Regex(regex)
         relativeW = width
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     /**
@@ -289,7 +289,7 @@ class TextField : Displayer {
         typedText = StringBuilder(defaultText)
         this.regex = Regex(regex)
         relativeW = width
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     /**

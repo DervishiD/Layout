@@ -3,10 +3,7 @@ package llayout.frame
 import llayout.*
 import llayout.displayers.AbstractDisplayerContainer
 import llayout.displayers.Displayer
-import llayout.interfaces.Canvas
-import llayout.interfaces.LContainer
-import llayout.interfaces.LTimerUpdatable
-import llayout.interfaces.MouseInteractable
+import llayout.interfaces.*
 import java.awt.Component
 import java.awt.Graphics
 import javax.swing.JPanel
@@ -38,7 +35,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
      */
     private var nextLScene : LProperty<LScene?> = LProperty(null)
 
-    override var parts : MutableCollection<Displayer> = mutableListOf()
+    override var parts : MutableCollection<Displayable> = mutableListOf()
 
     override var onMouseClick : Action = {}
     override var onMousePress : Action = {}
@@ -67,8 +64,8 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
     }
 
     public override fun paintComponent(g: Graphics?) {
-        for(part : Displayer in parts){
-            part.paintComponent(g)
+        for(part : Displayable in parts){
+            part.drawDisplayable(g!!)
         }
         g!!.clearRect(0, 0, width, height)
         drawBackground(g)
@@ -110,7 +107,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
         super.setBounds(x, y, width, height)
         w.value = width
         h.value = height
-        for(d : Displayer in parts){
+        for(d : Displayable in parts){
             d.updateRelativeValues(width(), height())
         }
     }
@@ -122,7 +119,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
     fun nextScreen() : LScene? = nextLScene.value
 
     override fun onTimerTick(): LScene {
-        for(d : Displayer in parts){
+        for(d : Displayable in parts){
             d.onTimerTick()
         }
         return this

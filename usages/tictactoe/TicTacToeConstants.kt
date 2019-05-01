@@ -16,7 +16,6 @@ import java.awt.Color.BLACK
 import java.awt.Graphics
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ESCAPE
-import java.awt.event.MouseEvent
 
 val TicTacToeApplication : LApplication = LApplication { frame.run() }
 
@@ -55,13 +54,13 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
         }
     }
 
-    fun unChecked() : Boolean = type.value == Companion.Type.BLANK
+    private fun unChecked() : Boolean = type.value == Companion.Type.BLANK
 
-    fun writeX(){
+    private fun writeX(){
         if(unChecked()) type.value = Companion.Type.X
     }
 
-    fun writeO(){
+    private fun writeO(){
         if(unChecked()) type.value = Companion.Type.O
     }
 
@@ -72,7 +71,7 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
         }
     }
 
-    fun unCkeck(){
+    fun unCheck(){
         type.value = Companion.Type.BLANK
     }
 
@@ -106,7 +105,18 @@ private fun diagonal(i : Int, j : Int) : Boolean{
     }
 }
 
-private val cells : Array<Array<Cell>> = Array(3) {Array(3){Cell(0.0, 0.0, 0.0, 0.0, 0, 0)}}
+private const val STARTING_X : Double = 7.0/12
+private const val STARTING_Y : Double = 1.0/6
+private const val WIDTH : Double = 1.0/6
+private const val HEIGHT : Double = 1.0/3
+private const val DELTA_X : Double = WIDTH
+private const val DELTA_Y : Double = HEIGHT
+
+private val cells : Array<Array<Cell>> = Array(3) {
+    i -> Array(3){
+        j -> Cell(STARTING_X + i * DELTA_X, STARTING_Y + j * DELTA_Y, WIDTH, HEIGHT, i, j)
+    }
+}
 
 private var isFirst : LProperty<Boolean> = LProperty(true)
 
@@ -137,19 +147,7 @@ private val scene : LScene = object : LScene(){
         add(exitButton)
         add(resetButton)
         add(player)
-        for(i : Int in 0..2){
-            for(j : Int in 0..2){
-                cells[i][j] = Cell(
-                        7.0/12 + i * 1.0/6,
-                        1.0/6 + j * 1.0/3,
-                        1.0/6,
-                        1.0/3,
-                        i,
-                        j
-                )
-                add(cells[i][j])
-            }
-        }
+        for(a : Array<Cell> in cells) for(c : Cell in a) add(c)
     }
 
     private fun addPlayerListener(){
@@ -157,7 +155,7 @@ private val scene : LScene = object : LScene(){
     }
 
     private fun reset(){
-        for(a : Array<Cell> in cells) for(c : Cell in a) c.unCkeck()
+        for(a : Array<Cell> in cells) for(c : Cell in a) c.unCheck()
         isFirst.value = true
         running = true
     }

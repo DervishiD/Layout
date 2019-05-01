@@ -3,6 +3,7 @@ package llayout.displayers
 import llayout.GraphicAction
 import llayout.geometry.Point
 import llayout.interfaces.Canvas
+import llayout.interfaces.Displayable
 import java.awt.Graphics
 
 /**
@@ -13,8 +14,6 @@ import java.awt.Graphics
 class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
-
-    override val parts: MutableCollection<Displayer> = mutableListOf()
 
     /**
      * Constructs a DisplayerContainer with the given parameters.

@@ -35,19 +35,19 @@ class GridDisplayer : Displayer {
     constructor(p : Point, width : Int, height : Int) : super(p){
         w.value = width
         h.value = height
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){
         w.value = width
         h.value = height
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y){
         relativeW = width
         relativeH = height
-        requestCoordinateUpdate()
+        requestUpdate()
     }
 
     override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {

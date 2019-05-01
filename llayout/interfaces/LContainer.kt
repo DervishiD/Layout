@@ -3,6 +3,7 @@ package llayout.interfaces
 import llayout.displayers.Displayer
 import llayout.displayers.DisplayerScrollPane
 import llayout.frame.LScene
+import java.awt.Component
 import java.awt.Container
 
 /**
@@ -24,7 +25,7 @@ interface LContainer : HavingDimension {
      * The Displayers contained in this Container
      * @see Displayer
      */
-    val parts : MutableCollection<Displayer>
+    val parts : MutableCollection<Displayable>
 
     /**
      * Adds a Displayer to this LContainer.
@@ -33,9 +34,9 @@ interface LContainer : HavingDimension {
      * @see Displayer.onAdd
      * @see parts
      */
-    infix fun add(d : Displayer) : LContainer {
+    infix fun add(d : Displayable) : LContainer {
         parts.add(d)
-        (this as Container).add(d)
+        if(this is Container && d is Component) (this as Container).add(d)
         d.updateRelativeValues(width(), height())
         w.addListener(d){d.updateRelativeValues(width(), height())}
         h.addListener(d){d.updateRelativeValues(width(), height())}
@@ -51,15 +52,18 @@ interface LContainer : HavingDimension {
      * @see Displayer.onRemove
      * @see parts
      */
-    infix fun remove(d : Displayer) : LContainer {
+    infix fun remove(d : Displayable) : LContainer {
         parts.remove(d)
-        (this as Container).remove(d)
+        if(this is Container && d is Component) (this as Container).remove(d)
         w.removeListener(d)
         h.removeListener(d)
         d.removeRequestUpdateListener(this)
         d.onRemove(this)
         return this
     }
+
+    infix fun add(d : Displayer) : LContainer = add(d as Displayable)
+    infix fun remove(d : Displayer) : LContainer = remove(d as Displayable)
 
     /**
      * Forces the initialization of its Displayer components.
@@ -70,7 +74,7 @@ interface LContainer : HavingDimension {
      * @see parts
      */
     fun initialization(){
-        for(part : Displayer in parts){
+        for(part : Displayable in parts){
             part.initialize()
         }
     }

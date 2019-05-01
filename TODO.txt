@@ -40,16 +40,7 @@ Iterables
 
 Clean mouse stuff, too many overridable things
 
-Displayable interface
-    And Displayer Grids
-    What does a Displayable have?
-        --updateRelativeValues()
-        --is LTimerUpdatable
-        --paintComponent() or such
-        --onAdd(), onRemove()
-        if component, added on container
-        --requestUpdate method, and listeners
-        --initialize() method
+Displayer Groups and Grids
 
 Displayers
     Debug DisplayerScrollPane
@@ -60,8 +51,6 @@ Displayers
     On/off
     Graph for Double-Double map
     Console-like input
-    TextField
-        Better alternative than override keyTyped and keyPressed
 
 Projects
     Probability distributions
@@ -71,9 +60,7 @@ Projects
     Chibre
         Make better one, more console-like
     That game Schinz made that day
-    Tic-Tac-Toe
-        Tic-Tac_Toe
-        n-Tic-Tac-Toe
+    9x9 Tic-Tac-Toe
     Recipe stuff
     Game of life
     Calculator

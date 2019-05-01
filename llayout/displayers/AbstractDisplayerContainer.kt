@@ -2,6 +2,7 @@ package llayout.displayers
 
 import llayout.interfaces.LContainer
 import llayout.geometry.Point
+import llayout.interfaces.Displayable
 import java.awt.Component
 
 /**
@@ -10,6 +11,8 @@ import java.awt.Component
  * @see LContainer
  */
 abstract class AbstractDisplayerContainer : ResizableDisplayer, LContainer {
+
+    override val parts: MutableCollection<Displayable> = mutableListOf()
 
     /**
      * Constructs an AbstractDisplayerContainer with the given parameters.
@@ -208,8 +211,7 @@ abstract class AbstractDisplayerContainer : ResizableDisplayer, LContainer {
      * @throws Exception If the coordinates are out of the bounds of this AbstractDisplayerContainer.
      */
     fun displayerAt(x : Int, y : Int) : Displayer {
-        val component : Component = getComponentAt(x, y)
-        return when(component){
+        return when(val component : Component = getComponentAt(x, y)){
             is AbstractDisplayerContainer -> {
                 if(component == this){
                     this

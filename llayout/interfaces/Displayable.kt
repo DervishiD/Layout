@@ -6,19 +6,21 @@ import java.awt.Graphics
 
 interface Displayable : LTimerUpdatable {
 
-    override fun onTimerTick(): Displayable = this
-
     var requestUpdate : LProperty<Boolean>
 
     fun onAdd(container : LContainer){}
 
     fun onRemove(container : LContainer){}
 
-    fun updateRelativeValues(){}
+    fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayable = this
 
     fun addRequestUpdateListener(key : Any?, action : Action) : Displayable{
         requestUpdate.addListener(key, action)
         return this
+    }
+
+    fun requestUpdate(){
+        requestUpdate.value = true
     }
 
     fun addRequestUpdateListener(action : Action) : Displayable = addRequestUpdateListener(action, action)
@@ -27,6 +29,8 @@ interface Displayable : LTimerUpdatable {
         requestUpdate.removeListener(key)
         return this
     }
+
+    override fun onTimerTick(): Displayable = this
 
     fun drawDisplayable(g : Graphics)
 

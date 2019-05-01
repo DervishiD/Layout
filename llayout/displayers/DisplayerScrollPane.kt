@@ -53,8 +53,6 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
         @JvmStatic val NO_BACKGROUND : GraphicAction = { _, _, _ ->  }
     }
 
-    override val parts: MutableCollection<Displayer> = mutableListOf()
-
     /**
      * Encodes the direction of the Scrolling.
      * @see ScrollType
