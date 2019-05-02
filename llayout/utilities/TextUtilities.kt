@@ -21,8 +21,8 @@ fun Collection<StringDisplay>.collapse() : String{
 /**
  * Produces a list of the represented lines
  */
-fun Collection<StringDisplay>.toLinesList() : MutableList<List<StringDisplay>>{
-    val result : MutableList<List<StringDisplay>> = mutableListOf()
+fun Collection<StringDisplay>.toLinesList() : MutableList<MutableList<StringDisplay>>{
+    val result : MutableList<MutableList<StringDisplay>> = mutableListOf()
     var currentLine : MutableList<StringDisplay> = mutableListOf()
     for(s : StringDisplay in this){
         if(s.contains("\n")){
@@ -30,7 +30,7 @@ fun Collection<StringDisplay>.toLinesList() : MutableList<List<StringDisplay>>{
             currentLine.add(splitted[0])
             result.add(currentLine)
             for(i : Int in 1 until splitted.size - 1){
-                result.add(listOf(splitted[i]))
+                result.add(mutableListOf(splitted[i]))
             }
             currentLine = mutableListOf(splitted.last())
         }else{
@@ -164,12 +164,12 @@ fun Regex.matches(t : Text) : Boolean = matches(t.asString())
 
 fun FontMetrics.stringWidth(s : StringBuilder) : Int = stringWidth(s.toString())
 
-fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableList<List<StringDisplay>>{
+fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableList<MutableList<StringDisplay>>{
     if(maxLength <= 0) throw IllegalArgumentException("maxLength $maxLength in extension function Collection<StringDisplay>.toLines is invalid.")
 
-    val result : MutableList<List<StringDisplay>> = mutableListOf()
+    val result : MutableList<MutableList<StringDisplay>> = mutableListOf()
 
-    val lines : MutableList<List<StringDisplay>> = toLinesList()
+    val lines : MutableList<MutableList<StringDisplay>> = toLinesList()
 
     val temporaryLine : MutableList<StringDisplay> = mutableListOf()
 
@@ -199,7 +199,7 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
 
     fun wordFitsInNewLine(word : String, fm : FontMetrics) : Boolean = fm.stringWidth(word) <= maxLength
 
-    for(line : List<StringDisplay> in lines){ //For each line
+    for(line : MutableList<StringDisplay> in lines){ //For each line
         if(lineFits(line)){ //Line fits
             result.add(line)
         }else{ //Line doesn't fit
@@ -216,10 +216,10 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                     }
                     for(word : String in words){
                         when {
-                            wordAndTemporaryLineFit(word, fm) -> temporaryStringDisplay.push(word)
+                            temporaryLineSDAndCharFit(word, fm) -> temporaryStringDisplay.push(word)
                             wordFitsInNewLine(word, fm) -> {
                                 temporaryLine.add(temporaryStringDisplay.copy())
-                                result.add(temporaryLine.copy())
+                                result.add(temporaryLine.toMutableList())
                                 temporaryStringDisplay.clear()
                                 temporaryLine.clear()
                                 temporaryStringDisplay.push(word)
@@ -231,7 +231,7 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                                         temporaryStringDisplay.push(chars[0])
                                     }else{
                                         temporaryLine.add(temporaryStringDisplay.copy())
-                                        result.add(temporaryLine.copy())
+                                        result.add(temporaryLine.toMutableList())
                                         temporaryLine.clear()
                                         temporaryStringDisplay.text = chars[0]
                                     }
@@ -247,7 +247,7 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                 }
             }
             if(temporaryLine.isNotEmpty()){
-                result.add(temporaryLine.copy())
+                result.add(temporaryLine.toMutableList())
                 temporaryLine.clear()
             }
         }

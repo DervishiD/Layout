@@ -13,7 +13,7 @@ class Text {
      * @see StringDisplay
      * @see toLinesList
      */
-    private val asLines : List<List<StringDisplay>>
+    private val asLines : MutableList<MutableList<StringDisplay>>
 
     /**
      * The text stores a raw String representation of itself.
@@ -27,9 +27,9 @@ class Text {
     constructor(text : String){
         asString = text
         val lines = StringDisplay(text).toLines()
-        val textAsLines : MutableList<List<StringDisplay>> = mutableListOf()
+        val textAsLines : MutableList<MutableList<StringDisplay>> = mutableListOf()
         for(line in lines){
-            textAsLines.add(listOf(line))
+            textAsLines.add(mutableListOf(line))
         }
         asLines = textAsLines
     }
@@ -75,7 +75,7 @@ class Text {
      * @return The content of this Text object as a List of lines of StringDisplays.
      * @see StringDisplay
      */
-    fun asLines() : List<List<StringDisplay>> = asLines
+    fun asLines() : MutableList<MutableList<StringDisplay>> = asLines
 
     /**
      * Returns the content of this Text object as a String.

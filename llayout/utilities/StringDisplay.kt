@@ -57,10 +57,34 @@ class StringDisplay : Iterable<Char> {
     constructor(text : Double, color : Color) : this(text, DEFAULT_FONT, color)
     constructor(text : Double, font : Font) : this(text, font, DEFAULT_COLOR)
     constructor(text : Double) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Float, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Float, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Float, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Float) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Short, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Short, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Short, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Short) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Long, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Long, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Long, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Long) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Byte, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Byte, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Byte, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Byte) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Boolean, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Boolean, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Boolean, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Boolean) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
     constructor(text : StringBuilder, font : Font, color : Color) : this(text.toString(), font, color)
     constructor(text : StringBuilder, color : Color) : this(text, DEFAULT_FONT, color)
     constructor(text : StringBuilder, font : Font) : this(text, font, DEFAULT_COLOR)
     constructor(text : StringBuilder) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Char, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Char, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Char, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Char) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
     constructor(s : StringDisplay){
         text = s.text
         color = s.color
@@ -120,6 +144,8 @@ class StringDisplay : Iterable<Char> {
      * Creates a copy of this StringDisplay
      */
     fun copy() : StringDisplay = StringDisplay(text, font, color)
+
+    fun parametersMatch(s : StringDisplay) : Boolean = font == s.font && color == s.color
 
     operator fun plus(other : StringDisplay) : String = this.text + other.text
     operator fun plus(other : String) : String = this.text + other

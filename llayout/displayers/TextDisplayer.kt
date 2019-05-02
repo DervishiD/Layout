@@ -3,7 +3,6 @@ package llayout.displayers
 import llayout.GraphicAction
 import llayout.geometry.Point
 import llayout.utilities.*
-import java.awt.FontMetrics
 import java.awt.Graphics
 
 /**
@@ -37,7 +36,7 @@ abstract class TextDisplayer : Displayer {
      * @see toLinesList
      * @see StringDisplay
      */
-    private var lines : MutableCollection<List<StringDisplay>> = mutableListOf()
+    private var lines : MutableCollection<MutableList<StringDisplay>> = mutableListOf()
 
     /**
      * The maximal allowed line length of this TextDisplayer.
@@ -386,7 +385,9 @@ abstract class TextDisplayer : Displayer {
      * @see forceMaxLineLength
      */
     infix fun setMaxLineLength(length : Int) : TextDisplayer {
+        if(length <= 0) throw IllegalArgumentException("length $length in Textdisplayer.setMaxLineLength is invalid.")
         maxLineLength = length
+        initialize()
         return this
     }
 
@@ -398,6 +399,7 @@ abstract class TextDisplayer : Displayer {
     infix fun setMaxLineLength(length : Double) : TextDisplayer{
         relativeMaxLineLength = length
         requestUpdate()
+        initialize()
         return this
     }
 
@@ -501,101 +503,6 @@ abstract class TextDisplayer : Displayer {
      * @see txt
      */
     fun text() : String = txt.collapse()
-
-    /**
-     * Forces the max line length constraint, i.e. The TextDisplayer must fit in the given width.
-     * @param g The Graphics context of the Selector.
-     * @see maxLineLength
-     */
-    private infix fun forceMaxLineLength(g : Graphics){ //IF IT WORKS, DON'T TOUCH IT
-        if(maxLineLength != null){
-            val result : MutableList<List<StringDisplay>> = mutableListOf()
-            val currentLine : MutableList<StringDisplay> = mutableListOf()
-            var currentDisplay : StringDisplay
-            var fm : FontMetrics
-            var currentLineLength : Int = leftDelta + rightDelta
-            val currentWord : StringBuilder = StringBuilder("")
-            var currentWordAndSpace : String
-            var charLength : Int
-            var wordLength : Int
-            var wordAndSpaceLength : Int
-            var words : List<String>
-            var chars : List<String>
-
-            for(line : List<StringDisplay> in lines){
-                for(s : StringDisplay in line){
-                    fm = g.getFontMetrics(s.font)
-                    words = s.text.split(" ")
-                    currentDisplay = StringDisplay("", s.font, s.color)
-                    for(i : Int in 0 until words.size){
-                        currentWord.set(words[i])
-                        currentWordAndSpace = " $currentWord"
-                        wordLength = fm.stringWidth(currentWord)
-                        wordAndSpaceLength = fm.stringWidth(currentWordAndSpace)
-                        if(currentLineLength + wordAndSpaceLength <= maxLineLength!!){
-                            if(i == 0){
-                                currentDisplay.push(currentWord.toString())
-                                currentLineLength += wordLength
-                            }else{
-                                currentDisplay.push(currentWordAndSpace)
-                                currentLineLength += wordAndSpaceLength
-                            }
-                        }else{
-                            if(i == 0 && currentLineLength + wordLength <= maxLineLength!!){
-                                currentDisplay.push(currentWord.toString())
-                                currentLine.add(currentDisplay.copy())
-                                result.add(currentLine.copy())
-                                currentLine.clear()
-                                currentDisplay.clear()
-                                currentLineLength = leftDelta + rightDelta
-                            }else if(wordLength <= maxLineLength!!){
-                                currentLine.add(currentDisplay.copy())
-                                result.add(currentLine.copy())
-                                currentLine.clear()
-                                currentDisplay.clear()
-                                currentDisplay.push(currentWord.toString())
-                                currentLineLength = leftDelta + rightDelta + wordLength
-                            }else{
-                                chars = currentWord.split("")
-                                if(i != 0){
-                                    val spaceLength = fm.stringWidth(" ")
-                                    if(currentLineLength + spaceLength <= maxLineLength!!){
-                                        currentDisplay.push(" ")
-                                        currentLineLength += spaceLength
-                                    }else{
-                                        currentLine.add(currentDisplay.copy())
-                                        result.add(currentLine.copy())
-                                        currentLine.clear()
-                                        currentDisplay.clear()
-                                        currentLineLength = leftDelta + rightDelta
-                                    }
-                                }
-                                for(c : String in chars){
-                                    charLength = fm.stringWidth(c)
-                                    if(currentLineLength + charLength <= maxLineLength!!){
-                                        currentDisplay.push(c)
-                                        currentLineLength += charLength
-                                    }else{
-                                        currentLine.add(currentDisplay.copy())
-                                        result.add(currentLine.copy())
-                                        currentLine.clear()
-                                        currentDisplay.clear()
-                                        currentDisplay.push(c)
-                                        currentLineLength = leftDelta + rightDelta + charLength
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    currentLine.add(currentDisplay.copy())
-                }
-                result.add(currentLine.copy())
-                currentLine.clear()
-                currentLineLength = leftDelta + rightDelta
-            }
-            lines = result
-        }
-    }
 
     /**
      * Sets the displayed text.
@@ -704,7 +611,7 @@ abstract class TextDisplayer : Displayer {
     }
 
     override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g)
+        lines = if(maxLineLength != null) txt.toLines(maxLineLength!!, g) else txt.toLinesList()
         computeTotalHeight(g)
         computeMaxLength(g)
     }
