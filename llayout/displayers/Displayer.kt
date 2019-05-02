@@ -4,7 +4,6 @@ import llayout.*
 import llayout.frame.LScene
 import llayout.geometry.Point
 import llayout.geometry.Vector
-import llayout.geometry.Vector.Companion.NULL
 import llayout.interfaces.*
 import llayout.utilities.LProperty
 import java.awt.Graphics
@@ -17,7 +16,7 @@ import javax.swing.JLabel
  * @see MouseInteractable
  * @see Point
  */
-abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimension {
+abstract class Displayer : JLabel, Displayable, MouseInteractable {
 
     companion object{
 
@@ -732,9 +731,19 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetCoordinateAlignment
      * @see resetDisplayerAlignment
      */
-    private fun resetAlignment(){
+    fun resetAlignment(){
         resetDisplayerAlignment()
         resetCoordinateAlignment()
+    }
+
+    fun resetHorizontalAlignment(){
+        resetHorizontalCoordinateAlignment()
+        resetHorizontalDisplayerAlignment()
+    }
+
+    fun resetVerticalAlignment(){
+        resetVerticalCoordinateAlignment()
+        resetVerticalDisplayerAlignment()
     }
 
     /**
@@ -922,14 +931,17 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetAlignment
      */
     fun moveTo(x : Int, y : Int) : Displayer {
-        if(x != centerX() || y != centerY()){
+        if(x != centerX()){
             absoluteX.value = x
-            absoluteY.value = y
             relativeX = null
-            relativeY = null
-            resetAlignment()
-            loadBounds()
+            resetHorizontalAlignment()
         }
+        if(y != centerY()){
+            absoluteY.value = y
+            relativeY = null
+            resetVerticalAlignment()
+        }
+        loadBounds()
         return this
     }
 
@@ -942,14 +954,17 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetAlignment
      */
     fun moveTo(x : Double, y : Int) : Displayer {
-        if(x != relativeX || y != centerY()){
+        if(x != relativeX){
             relativeX = x
+            requestUpdate()
+            resetHorizontalAlignment()
+        }
+        if(y != centerY()){
             absoluteY.value = y
             relativeY = null
-            resetAlignment()
-            requestUpdate()
-            loadBounds()
+            resetVerticalAlignment()
         }
+        loadBounds()
         return this
     }
 
@@ -962,14 +977,17 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetAlignment
      */
     fun moveTo(x : Int, y : Double) : Displayer {
-        if(x != centerX() || y != relativeY){
+        if(x != centerX()){
             absoluteX.value = x
-            relativeY = y
             relativeX = null
-            resetAlignment()
-            requestUpdate()
-            loadBounds()
+            resetHorizontalAlignment()
         }
+        if( y != relativeY){
+            relativeY = y
+            requestUpdate()
+            resetVerticalAlignment()
+        }
+        loadBounds()
         return this
     }
 
@@ -982,13 +1000,16 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetAlignment
      */
     fun moveTo(x : Double, y : Double) : Displayer {
-        if(x != relativeX || y != relativeY){
+        if(x != relativeX){
             relativeX = x
-            relativeY = y
-            resetAlignment()
-            requestUpdate()
-            loadBounds()
+            resetHorizontalAlignment()
         }
+        if(y != relativeY){
+            relativeY = y
+            resetVerticalAlignment()
+        }
+        requestUpdate()
+        loadBounds()
         return this
     }
 
@@ -1003,7 +1024,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
         if(x != centerX()){
             absoluteX.value = x
             relativeX = null
-            resetAlignment()
+            resetHorizontalAlignment()
             loadBounds()
         }
         return this
@@ -1019,7 +1040,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
     infix fun setx(x : Double) : Displayer {
         if(x != relativeX){
             relativeX = x
-            resetAlignment()
+            resetHorizontalAlignment()
             requestUpdate()
             loadBounds()
         }
@@ -1046,7 +1067,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
         if(y != centerY()){
             absoluteY.value = y
             relativeY = null
-            resetAlignment()
+            resetVerticalAlignment()
             loadBounds()
         }
         return this
@@ -1062,7 +1083,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
     infix fun sety(y : Double) : Displayer {
         if(y != relativeY){
             relativeY = y
-            resetAlignment()
+            resetVerticalAlignment()
             requestUpdate()
             loadBounds()
         }
@@ -1086,17 +1107,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
      * @see resetAlignment
      * @see Vector
      */
-    infix fun moveAlong(v : Vector) : Displayer {
-        if(v != NULL){
-            absoluteX.value += v.x.toInt()
-            absoluteY.value += v.y.toInt()
-            relativeX = null
-            relativeY = null
-            resetAlignment()
-            loadBounds()
-        }
-        return this
-    }
+    infix fun moveAlong(v : Vector) : Displayer = moveAlong(v.x.toInt(), v.y.toInt())
 
     /**
      * Moves this Displayer along the given direction.
@@ -1109,12 +1120,15 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
     fun moveAlong(x : Int, y : Int) : Displayer {
         if(x != 0 || y != 0){
             absoluteX.value += x
-            absoluteY.value += y
             relativeX = null
-            relativeY = null
-            resetAlignment()
-            loadBounds()
+            resetHorizontalAlignment()
         }
+        if(y != 0){
+            absoluteY.value += y
+            relativeY = null
+            resetVerticalAlignment()
+        }
+        loadBounds()
         return this
     }
 
@@ -1129,7 +1143,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
         if(x != 0){
             absoluteX.value += x
             relativeX = null
-            resetAlignment()
+            resetHorizontalAlignment()
             loadBounds()
         }
         return this
@@ -1146,7 +1160,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable, HavingDimensi
         if(y != 0){
             absoluteY.value += y
             relativeY = null
-            resetAlignment()
+            resetVerticalAlignment()
             loadBounds()
         }
         return this

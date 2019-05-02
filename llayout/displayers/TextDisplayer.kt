@@ -37,7 +37,7 @@ abstract class TextDisplayer : Displayer {
      * @see toLinesList
      * @see StringDisplay
      */
-    protected var lines : MutableCollection<List<StringDisplay>> = mutableListOf()
+    private var lines : MutableCollection<List<StringDisplay>> = mutableListOf()
 
     /**
      * The maximal allowed line length of this TextDisplayer.
@@ -45,6 +45,8 @@ abstract class TextDisplayer : Displayer {
      * @see forceMaxLineLength
      */
     private var maxLineLength : Int? = null
+
+    private var relativeMaxLineLength : Double? = null
 
     /**
      * The GraphicAction that draws the background of this TextDisplayer.
@@ -393,7 +395,11 @@ abstract class TextDisplayer : Displayer {
      * @see maxLineLength
      * @see forceMaxLineLength
      */
-    infix fun setMaxLineLength(length : Double) : TextDisplayer = setMaxLineLength(length.toInt())
+    infix fun setMaxLineLength(length : Double) : TextDisplayer{
+        relativeMaxLineLength = length
+        requestUpdate()
+        return this
+    }
 
     /**
      * Sets the side deltas to the given value.
@@ -501,14 +507,14 @@ abstract class TextDisplayer : Displayer {
      * @param g The Graphics context of the Selector.
      * @see maxLineLength
      */
-    protected infix fun forceMaxLineLength(g : Graphics){ //IF IT WORKS, DON'T TOUCH IT
+    private infix fun forceMaxLineLength(g : Graphics){ //IF IT WORKS, DON'T TOUCH IT
         if(maxLineLength != null){
             val result : MutableList<List<StringDisplay>> = mutableListOf()
             val currentLine : MutableList<StringDisplay> = mutableListOf()
             var currentDisplay : StringDisplay
             var fm : FontMetrics
             var currentLineLength : Int = leftDelta + rightDelta
-            var currentWord : String
+            val currentWord : StringBuilder = StringBuilder("")
             var currentWordAndSpace : String
             var charLength : Int
             var wordLength : Int
@@ -522,13 +528,13 @@ abstract class TextDisplayer : Displayer {
                     words = s.text.split(" ")
                     currentDisplay = StringDisplay("", s.font, s.color)
                     for(i : Int in 0 until words.size){
-                        currentWord = words[i]
+                        currentWord.set(words[i])
                         currentWordAndSpace = " $currentWord"
                         wordLength = fm.stringWidth(currentWord)
                         wordAndSpaceLength = fm.stringWidth(currentWordAndSpace)
                         if(currentLineLength + wordAndSpaceLength <= maxLineLength!!){
                             if(i == 0){
-                                currentDisplay.push(currentWord)
+                                currentDisplay.push(currentWord.toString())
                                 currentLineLength += wordLength
                             }else{
                                 currentDisplay.push(currentWordAndSpace)
@@ -536,7 +542,7 @@ abstract class TextDisplayer : Displayer {
                             }
                         }else{
                             if(i == 0 && currentLineLength + wordLength <= maxLineLength!!){
-                                currentDisplay.push(currentWord)
+                                currentDisplay.push(currentWord.toString())
                                 currentLine.add(currentDisplay.copy())
                                 result.add(currentLine.copy())
                                 currentLine.clear()
@@ -547,7 +553,7 @@ abstract class TextDisplayer : Displayer {
                                 result.add(currentLine.copy())
                                 currentLine.clear()
                                 currentDisplay.clear()
-                                currentDisplay.push(currentWord)
+                                currentDisplay.push(currentWord.toString())
                                 currentLineLength = leftDelta + rightDelta + wordLength
                             }else{
                                 chars = currentWord.split("")
@@ -635,7 +641,7 @@ abstract class TextDisplayer : Displayer {
      * Computes the total height of the TextDisplayer.
      * @param g The Graphics context.
      */
-    protected infix fun computeTotalHeight(g : Graphics){
+    private infix fun computeTotalHeight(g : Graphics){
         var computedH = upDelta + downDelta
         for(line : List<StringDisplay> in lines){
             computedH += line.lineHeight(g)
@@ -647,7 +653,7 @@ abstract class TextDisplayer : Displayer {
      * Computes the maximal length of the StringDisplays' lines.
      * @param g The Graphics context.
      */
-    protected fun computeMaxLength(g : Graphics){
+    private fun computeMaxLength(g : Graphics){
         var maxLength = 0
         for(line : List<StringDisplay> in lines){
             val lineLength : Int = line.lineLength(g)
@@ -689,6 +695,18 @@ abstract class TextDisplayer : Displayer {
             currentX = leftDelta
             currentY += line.descent(g)
         }
+    }
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): TextDisplayer {
+        super.updateRelativeValues(frameWidth, frameHeight)
+        if(relativeMaxLineLength != null) maxLineLength = (relativeMaxLineLength!! * frameWidth).toInt()
+        return this
+    }
+
+    override fun loadParameters(g : Graphics){
+        forceMaxLineLength(g)
+        computeTotalHeight(g)
+        computeMaxLength(g)
     }
 
 }

@@ -27,7 +27,11 @@ Canvas
     Draw and fill rectangles and ovals from center point and other points
     Fix  the 0.999 problem
 
-StringDisplay text with numbers
+StringDisplay
+    Switch to StringBuilder
+    Implement CharSequence
+
+LinkedLists, Queues, Stacks?
 
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
@@ -36,14 +40,15 @@ Add default fonts and colors setters to LFrames / LFrameBuilders?
 
 StringBuilders everywhere
 
-Iterables
-
 Clean mouse stuff, too many overridable things
 
 Displayer Groups and Grids
 
 Displayers
+    Rename Displayer
     Debug DisplayerScrollPane
+    Rewrite forceMaxLineLength
+    PrefferedWH for doubles
     Scroll pane for text
     Slider
     TextArea
@@ -61,6 +66,7 @@ Projects
         Make better one, more console-like
     That game Schinz made that day
     9x9 Tic-Tac-Toe
+    Amazons
     Recipe stuff
     Game of life
     Calculator

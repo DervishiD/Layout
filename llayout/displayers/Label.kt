@@ -255,10 +255,4 @@ class Label : TextDisplayer {
      */
     constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
 
-    override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g)
-        computeTotalHeight(g)
-        computeMaxLength(g)
-    }
-
 }

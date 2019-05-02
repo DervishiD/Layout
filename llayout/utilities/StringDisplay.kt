@@ -8,7 +8,22 @@ import java.awt.Font
 /**
  * Class that represents a displayed String
  */
-class StringDisplay {
+class StringDisplay : Iterable<Char> {
+
+    companion object{
+        private class StringDisplayIterator(private val s : String) : Iterator<Char>{
+
+            var index : Int = 0
+
+            override fun hasNext(): Boolean = index < s.length
+
+            override fun next(): Char{
+                val result = s[index]
+                index++
+                return result
+            }
+        }
+    }
 
     /**
      * The displayed text
@@ -30,21 +45,27 @@ class StringDisplay {
         this.font = font
         this.color = color
     }
-    constructor(text : String, color : Color, font : Font) : this(text, font, color)
-    constructor(color : Color, font : Font, text : String) : this(text, font, color)
-    constructor(color : Color, text : String, font : Font) : this(text, font, color)
-    constructor(font : Font, text : String, color : Color) : this(text, font, color)
-    constructor(font : Font, color : Color, text : String) : this(text, font, color)
     constructor(text : String, color : Color) : this(text, DEFAULT_FONT, color)
-    constructor(color : Color, text : String) : this(text, DEFAULT_FONT, color)
     constructor(text : String, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(font : Font, text : String) : this(text, font, DEFAULT_COLOR)
     constructor(text : String) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
-    constructor(font : Font, color : Color) : this("", font, color)
-    constructor(color : Color, font : Font) : this("", font, color)
-    constructor(font : Font) : this("", font, DEFAULT_COLOR)
-    constructor(color : Color) : this("", DEFAULT_FONT, color)
     constructor() : this("", DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Int, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Int, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Int, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Int) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Double, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : Double, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Double, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : Double) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : StringBuilder, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : StringBuilder, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : StringBuilder, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : StringBuilder) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(s : StringDisplay){
+        text = s.text
+        color = s.color
+        font = s.font
+    }
 
     /**
      * String split function but for StringDisplay
@@ -53,7 +74,7 @@ class StringDisplay {
         val result : MutableList<StringDisplay> = mutableListOf()
         val splittedText : Collection<String> = text.split(separator)
         for(s : String in splittedText){
-            result.add(StringDisplay(s, color, font))
+            result.add(StringDisplay(s, font, color))
         }
         return result
     }
@@ -98,7 +119,7 @@ class StringDisplay {
     /**
      * Creates a copy of this StringDisplay
      */
-    fun copy() : StringDisplay = StringDisplay(text, color, font)
+    fun copy() : StringDisplay = StringDisplay(text, font, color)
 
     operator fun plus(other : StringDisplay) : String = this.text + other.text
     operator fun plus(other : String) : String = this.text + other
@@ -106,5 +127,7 @@ class StringDisplay {
     operator fun contains(other : String) : Boolean = text.contains(other)
 
     override fun toString(): String = text
+
+    override fun iterator(): Iterator<Char> = StringDisplayIterator(text)
 
 }

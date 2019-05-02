@@ -30,9 +30,9 @@ fun Collection<StringDisplay>.toLinesList() : MutableList<List<StringDisplay>>{
             currentLine.add(splitted[0])
             result.add(currentLine)
             for(i : Int in 1 until splitted.size - 1){
-                result.add(arrayListOf(splitted[i]))
+                result.add(listOf(splitted[i]))
             }
-            currentLine = arrayListOf(splitted.last())
+            currentLine = mutableListOf(splitted.last())
         }else{
             currentLine.add(s)
         }
@@ -161,3 +161,105 @@ fun Regex.matches(c : Char) : Boolean = matches(c.toString())
 fun Regex.matches(s : StringDisplay) : Boolean = matches(s.text)
 
 fun Regex.matches(t : Text) : Boolean = matches(t.asString())
+
+fun FontMetrics.stringWidth(s : StringBuilder) : Int = stringWidth(s.toString())
+
+fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableList<List<StringDisplay>>{
+    if(maxLength <= 0) throw IllegalArgumentException("maxLength $maxLength in extension function Collection<StringDisplay>.toLines is invalid.")
+
+    val result : MutableList<List<StringDisplay>> = mutableListOf()
+
+    val lines : MutableList<List<StringDisplay>> = toLinesList()
+
+    val temporaryLine : MutableList<StringDisplay> = mutableListOf()
+
+    val temporaryStringDisplay : StringDisplay = StringDisplay()
+
+    var fm : FontMetrics
+
+    var words : MutableList<String>
+
+    var chars : MutableList<String>
+
+    fun lineFits(line : List<StringDisplay>) : Boolean = line.lineLength(g) <= maxLength
+
+    fun stringDisplayAndTemporaryLineFit(sd : StringDisplay) : Boolean{
+        return temporaryLine.lineLength(g) + g.getFontMetrics(sd.font).stringWidth(sd.text) <= maxLength
+    }
+
+    fun splitStringDisplayIntoWords(sd : StringDisplay) : MutableList<String> = sd.text.split(" ").toMutableList()
+
+    fun wordAndTemporaryLineFit(word : String, fm : FontMetrics) : Boolean{
+        return temporaryLine.lineLength(g) + fm.stringWidth(word) <= maxLength
+    }
+
+    fun temporaryLineSDAndCharFit(char : String, fm : FontMetrics) : Boolean{
+        return temporaryLine.lineLength(g) + fm.stringWidth(temporaryStringDisplay.text) + fm.stringWidth(char) <= maxLength
+    }
+
+    fun wordFitsInNewLine(word : String, fm : FontMetrics) : Boolean = fm.stringWidth(word) <= maxLength
+
+    for(line : List<StringDisplay> in lines){ //For each line
+        if(lineFits(line)){ //Line fits
+            result.add(line)
+        }else{ //Line doesn't fit
+            for(stringDisplay : StringDisplay in line){ //For each StringDisplay in the line
+                if(stringDisplayAndTemporaryLineFit(stringDisplay)){ //StringDisplay fits in new line
+                    temporaryLine.add(stringDisplay)
+                }else{ //StringDisplay doesn't fit in new line
+                    words = splitStringDisplayIntoWords(stringDisplay)
+                    fm = g.getFontMetrics(stringDisplay.font)
+
+                    //A space is lost by split, but not for the first word
+                    for(i : Int in 1 until words.size){
+                        words[i] = " ${words[i]}"
+                    }
+                    for(word : String in words){
+                        when {
+                            wordAndTemporaryLineFit(word, fm) -> temporaryStringDisplay.push(word)
+                            wordFitsInNewLine(word, fm) -> {
+                                temporaryLine.add(temporaryStringDisplay.copy())
+                                result.add(temporaryLine.copy())
+                                temporaryStringDisplay.clear()
+                                temporaryLine.clear()
+                                temporaryStringDisplay.push(word)
+                            }
+                            else -> {
+                                chars = word.split("").toMutableList()
+                                while(chars.isNotEmpty()){
+                                    if(temporaryLineSDAndCharFit(chars[0], fm)){
+                                        temporaryStringDisplay.push(chars[0])
+                                    }else{
+                                        temporaryLine.add(temporaryStringDisplay.copy())
+                                        result.add(temporaryLine.copy())
+                                        temporaryLine.clear()
+                                        temporaryStringDisplay.text = chars[0]
+                                    }
+                                    chars.removeAt(0)
+                                }
+                            }
+                        }
+                    }
+                }
+                if(temporaryStringDisplay.text != ""){
+                    temporaryLine.add(temporaryStringDisplay.copy())
+                    temporaryStringDisplay.clear()
+                }
+            }
+            if(temporaryLine.isNotEmpty()){
+                result.add(temporaryLine.copy())
+                temporaryLine.clear()
+            }
+        }
+    }
+
+    return result
+}
+
+operator fun StringBuilder.plus(s : StringBuilder) : StringBuilder = append(s.toString())
+
+operator fun StringBuilder.plus(s : String) : StringBuilder = append(s)
+
+operator fun StringBuilder.plus(c : Char) : StringBuilder = append(c.toString())
+
+fun StringBuilder.set(s : String) : StringBuilder = clear().append(s)

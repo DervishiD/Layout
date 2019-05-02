@@ -1,5 +1,6 @@
 package debug
 
+import llayout.TITLE_FONT
 import llayout.displayers.Label
 import llayout.displayers.TextButton
 import llayout.displayers.TextField
@@ -7,6 +8,10 @@ import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LFrameBuilder
 import llayout.frame.LScene
+import llayout.utilities.StringDisplay
+import llayout.utilities.toLines
+import java.awt.Color
+import java.awt.Graphics
 import java.awt.event.KeyEvent
 
 val testScreen : LScene = object : LScene(){
@@ -37,6 +42,7 @@ val testScreen : LScene = object : LScene(){
         remove(l2)
         remove(f)
     }
+
 }
 
 val frame : LFrame = LFrameBuilder(testScreen).build()

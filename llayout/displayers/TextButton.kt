@@ -469,10 +469,4 @@ class TextButton : TextDisplayer {
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND)
         : this(p.intx(), p.inty(), text, action, background)
 
-    override fun loadParameters(g : Graphics){
-        forceMaxLineLength(g)
-        computeTotalHeight(g)
-        computeMaxLength(g)
-    }
-
 }

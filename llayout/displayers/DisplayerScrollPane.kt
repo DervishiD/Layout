@@ -41,7 +41,7 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
          * for each scrolled unit.
          * @see Displayer
          * @see ScrollPaneObject
-         * @see onWheelMoved
+         * @see onMouseWheelMoved
          */
         private const val SCROLL_DELTA : Int = 50
 

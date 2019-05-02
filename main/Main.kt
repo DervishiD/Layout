@@ -11,9 +11,9 @@ import usages.tictactoe.TicTacToeApplication
 fun main(){
     //rpgApplication.run()
     //probabilityApplication.run()
-    //testApplication.run()
+    testApplication.run()
     //chibreApplication.run()
     //colourSquareApplication.run()
     //meanDistanceApplication.run()
-    TicTacToeApplication.run()
+    //TicTacToeApplication.run()
 }

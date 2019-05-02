@@ -4,7 +4,7 @@ import llayout.Action
 import llayout.utilities.LProperty
 import java.awt.Graphics
 
-interface Displayable : LTimerUpdatable {
+interface Displayable : LTimerUpdatable, HavingDimension {
 
     var requestUpdate : LProperty<Boolean>
 

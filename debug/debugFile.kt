@@ -66,3 +66,16 @@ fun debugHomogeneousDistribution(){
     }
     array.print()
 }
+
+fun SDIteratorDebug(){
+    val sd : StringDisplay = StringDisplay("abcdefghijklmnopqrstuvwxyz")
+    for(c : Char in sd){
+        println(c)
+    }
+}
+
+fun MutableList<List<StringDisplay>>.print(){
+    for(l : List<StringDisplay> in this){
+        l.print()
+    }
+}
