@@ -41,6 +41,9 @@ Add default fonts and colors setters to LFrames / LFrameBuilders?
 StringBuilders everywhere
 
 Clean mouse stuff, too many overridable things
+    --> Wrapper?
+
+Optimized TextScrollPane for console, i.e. a single font. Optimizes computation of height for example
 
 Displayer Groups and Grids
 
@@ -48,14 +51,14 @@ Displayers
     Rename Displayer
     Debug DisplayerScrollPane
     Rewrite forceMaxLineLength
-    PrefferedWH for doubles
-    Scroll pane for text
+    PreferredWH for doubles
     Slider
     TextArea
     Switch between two values
     On/off
     Graph for Double-Double map
     Console-like input
+    TextScrollPane, add vararg write
 
 Projects
     Probability distributions

@@ -183,6 +183,6 @@ interface MouseInteractable {
      * @param units The number of scroll units.
      * @see onWheelMoved
      */
-    infix fun mouseWheelMoved(units : Int) = onMouseWheelMoved.invoke(units)
+    fun mouseWheelMoved(units : Int) = onMouseWheelMoved.invoke(units)
 
 }

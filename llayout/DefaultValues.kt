@@ -17,18 +17,18 @@ typealias RealFunction = (Double) -> Double
  * The default font used in the display system.
  * @see Font
  */
-internal val DEFAULT_FONT : Font = Font("Courier New", Font.BOLD, 16)
+internal val DEFAULT_FONT : Font = Font("Monospaced", Font.BOLD, 16)
 /**
  * The default font used in the questions asked to the User.
  * @see Font
  */
-internal val QUESTION_FONT : Font = Font("Courier New", Font.BOLD, 24)
+internal val QUESTION_FONT : Font = Font("Monospaced", Font.BOLD, 24)
 
 /**
  * The default font used in title-type displays.
  * @see Font
  */
-internal val TITLE_FONT : Font = Font("Courier New", Font.BOLD, 32)
+internal val TITLE_FONT : Font = Font("Monospaced", Font.BOLD, 32)
 
 //COLOURS----------------------------------------------------------------------
 

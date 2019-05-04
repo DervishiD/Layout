@@ -3,18 +3,22 @@ package debug
 import llayout.displayers.Label
 import llayout.displayers.TextButton
 import llayout.displayers.TextField
+import llayout.displayers.TextScrollPane
 import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LFrameBuilder
 import llayout.frame.LScene
+import llayout.utilities.StringDisplay
+import java.awt.Color.RED
 import java.awt.event.KeyEvent
 
 val testScreen : LScene = object : LScene(){
 
     val b : TextButton = TextButton(0.5, 0.5, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
-    val l : Label = Label(0, 0, "Label but actually it is more, it is so wonderful it will blow your MIIIIIND").also{it.alignUpToDown(b).alignRightToRight(b)}
+    val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
     val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
     val f : TextField = TextField(0, 0.5).alignLeftTo(0) as TextField
+    val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 400, 400)
 
     override fun keyTyped(e: KeyEvent?) {
         f.type(e!!)
@@ -29,6 +33,23 @@ val testScreen : LScene = object : LScene(){
         add(b)
         add(l2)
         add(f)
+        tsp.write(25)
+        tsp.writeln(122)
+        tsp.writeln(0.5)
+        tsp.write(" apples")
+        tsp.writeln(StringDisplay("Hello there", RED))
+        tsp.writeln("override fun key typed e KeyEvent f type e override fun load add l add b add l2 add f " +
+                "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
+                "tsp writeln override fun keytyped e keyevent f type e override fun load add l "+
+                "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
+                "tsp writeln override fun keytyped e keyevent f type e override fun load add l "+
+                "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
+                "tsp writeln override fun keytyped e keyevent f type e override fun load add l "+
+                "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
+                "tsp writeln override fun keytyped e keyevent f type e override fun load add l "+
+                "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
+                "tsp writeln override fun keytyped e keyevent f type e override fun load add l ")
+        add(tsp)
     }
 
     override fun save() {
@@ -36,6 +57,7 @@ val testScreen : LScene = object : LScene(){
         remove(l)
         remove(l2)
         remove(f)
+        remove(tsp)
     }
 
 }

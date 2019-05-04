@@ -26,7 +26,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable {
          * @see LProperty
          * @see displayerIndex
          */
-        @JvmStatic private var staticDisplayerIndex : Long = 0L
+        @JvmStatic private var staticDisplayerIndex : Int = 0
 
     }
 
@@ -35,7 +35,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable {
      * @see LProperty
      * @see staticDisplayerIndex
      */
-    private var displayerIndex : Long
+    private var displayerIndex : Int
 
     /**
      * The absolute x coordinate of this Displayer.
