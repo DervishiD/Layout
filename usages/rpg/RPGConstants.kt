@@ -47,7 +47,7 @@ val mainMenuScreen : LScene = object : LScene() {
         Label(
                 TITLE_X,
                 TITLE_Y,
-                StringDisplay(TITLE_TEXT, TITLE_FONT)
+                StringDisplay(TITLE_TEXT, DEFAULT_LARGE_FONT)
         )
     }
 
@@ -272,7 +272,7 @@ val exitProgramScreen : LScene = object : LScene(){
         Label(
                 EXIT_PROGRAM_QUESTION_X,
                 EXIT_PROGRAM_QUESTION_Y,
-                StringDisplay(EXIT_PROGRAM_QUESTION_TEXT, QUESTION_FONT)
+                StringDisplay(EXIT_PROGRAM_QUESTION_TEXT, DEFAULT_MEDIUM_FONT)
         )
     }
 

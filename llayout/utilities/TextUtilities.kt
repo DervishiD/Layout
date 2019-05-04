@@ -1,7 +1,7 @@
 package llayout.utilities
 
 import llayout.DEFAULT_COLOR
-import llayout.DEFAULT_FONT
+import llayout.DEFAULT_SMALL_FONT
 import java.awt.Color
 import java.awt.Font
 import java.awt.FontMetrics
@@ -144,7 +144,7 @@ fun Collection<String>.toStringDisplays(color : Color, font : Font) : MutableLis
 /**
  * Converts a List of Strings to a List of StringDisplays
  */
-fun Collection<String>.toStringDisplays(color : Color) : MutableList<StringDisplay> = toStringDisplays(DEFAULT_FONT, color)
+fun Collection<String>.toStringDisplays(color : Color) : MutableList<StringDisplay> = toStringDisplays(DEFAULT_SMALL_FONT, color)
 
 /**
  * Converts a List of Strings to a List of StringDisplays
@@ -154,7 +154,7 @@ fun Collection<String>.toStringDisplays(font : Font) : MutableList<StringDisplay
 /**
  * Converts a List of Strings to a List of StringDisplays
  */
-fun Collection<String>.toStringDisplays() : MutableList<StringDisplay> = toStringDisplays(DEFAULT_FONT, DEFAULT_COLOR)
+fun Collection<String>.toStringDisplays() : MutableList<StringDisplay> = toStringDisplays(DEFAULT_SMALL_FONT, DEFAULT_COLOR)
 
 fun Regex.matches(c : Char) : Boolean = matches(c.toString())
 

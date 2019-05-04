@@ -1,7 +1,7 @@
 package usages.tictactoe
 
 import llayout.GraphicAction
-import llayout.TITLE_FONT
+import llayout.DEFAULT_LARGE_FONT
 import llayout.displayers.CanvasDisplayer
 import llayout.displayers.Displayer
 import llayout.displayers.Label
@@ -129,7 +129,7 @@ private val scene : LScene = object : LScene(){
     private val FIRST : String = "x"
     private val SECOND : String = "o"
 
-    private val title : Label = Label(0.25, 0.33, StringDisplay("Tic-Tac-Toe", TITLE_FONT))
+    private val title : Label = Label(0.25, 0.33, StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT))
 
     private val exitButton : Displayer = TextButton(0, 0, "X", {frame.close()}).alignLeftTo(0).alignUpTo(0)
 

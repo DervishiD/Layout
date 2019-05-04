@@ -1,9 +1,6 @@
 package debug
 
-import llayout.displayers.Label
-import llayout.displayers.TextButton
-import llayout.displayers.TextField
-import llayout.displayers.TextScrollPane
+import llayout.displayers.*
 import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LFrameBuilder
@@ -19,6 +16,7 @@ val testScreen : LScene = object : LScene(){
     val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
     val f : TextField = TextField(0, 0.5).alignLeftTo(0) as TextField
     val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 400, 400)
+    val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
 
     override fun keyTyped(e: KeyEvent?) {
         f.type(e!!)
@@ -50,6 +48,13 @@ val testScreen : LScene = object : LScene(){
                 "tsp write 25 tsp writeln 122 tsp writeln 0.5 tsp write apples tsp writeln stringdisplay hello there red" +
                 "tsp writeln override fun keytyped e keyevent f type e override fun load add l ")
         add(tsp)
+        csp.alignLeftTo(0)
+        csp.alignDownTo(1.0)
+        csp.write(1)
+        for(i : Int in 2..20){
+            csp.writeln(i)
+        }
+        add(csp)
     }
 
     override fun save() {

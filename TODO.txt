@@ -4,6 +4,8 @@ Quick tutorial on how to use this
 
 Version
 
+Dokka
+
 Canvas
     Draw squares
     Draw circles
@@ -24,7 +26,7 @@ Canvas
     Fill triangle
     Fill regular polygons
     Fill polygons
-    Draw and fill rectangles and ovals from center point and other points
+    Draw and fill rectangles and ovals (and squares and circles) from center point and other points
     Fix  the 0.999 problem
 
 StringDisplay
@@ -42,6 +44,32 @@ StringBuilders everywhere
 
 Clean mouse stuff, too many overridable things
     --> Wrapper?
+
+
+
+
+
+
+
+
+
+
+
+In TextScrollPane, ConsoleScrollPane
+    When resize, unstable behaviour
+    Add other list of lists, to save what should be written, and regenerate lines entirely when resized
+
+
+
+
+
+
+
+
+
+
+
+
 
 Optimized TextScrollPane for console, i.e. a single font. Optimizes computation of height for example
 

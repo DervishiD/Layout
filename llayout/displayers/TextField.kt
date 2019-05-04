@@ -2,7 +2,7 @@ package llayout.displayers
 
 import llayout.Action
 import llayout.DEFAULT_COLOR
-import llayout.DEFAULT_FONT
+import llayout.DEFAULT_SMALL_FONT
 import llayout.frame.LMouse
 import llayout.geometry.Point
 import llayout.utilities.matches
@@ -479,7 +479,7 @@ class TextField : Displayer {
     }
 
     override fun loadParameters(g: Graphics) {
-        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
+        val fm : FontMetrics = g.getFontMetrics(DEFAULT_SMALL_FONT)
         h.value = fm.maxAscent + fm.maxDescent + 2 * (LINE_THICKNESS + DELTA)
         if(clicked){
             var s = ""
@@ -525,9 +525,9 @@ class TextField : Displayer {
      * @see typedText
      */
     private fun drawText(g : Graphics) : TextField{
-        val fm : FontMetrics = g.getFontMetrics(DEFAULT_FONT)
+        val fm : FontMetrics = g.getFontMetrics(DEFAULT_SMALL_FONT)
         g.color = if(isFocused) FOCUSED_COLOR else UNFOCUSED_COLOR
-        g.font = DEFAULT_FONT
+        g.font = DEFAULT_SMALL_FONT
         val stringWidth = fm.stringWidth(typedText())
         if(stringWidth <= width() - 2 * LINE_THICKNESS - 2 * DELTA){
             g.drawString(typedText(), LINE_THICKNESS + DELTA, fm.maxAscent)

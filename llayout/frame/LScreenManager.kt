@@ -87,7 +87,7 @@ internal class LScreenManager : LTimerUpdatable {
      * @see LScene
      * @see LFrame
      */
-    private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.width, frame.height)
+    private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.rootPane.width, frame.rootPane.height)
 
     internal fun resize() = setCurrentScreenBounds()
 

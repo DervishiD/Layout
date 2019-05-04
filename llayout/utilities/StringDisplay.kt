@@ -1,7 +1,7 @@
 package llayout.utilities
 
 import llayout.DEFAULT_COLOR
-import llayout.DEFAULT_FONT
+import llayout.DEFAULT_SMALL_FONT
 import java.awt.Color
 import java.awt.Font
 
@@ -45,46 +45,46 @@ class StringDisplay : Iterable<Char> {
         this.font = font
         this.color = color
     }
-    constructor(text : String, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : String, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : String, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : String) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
-    constructor() : this("", DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : String) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
+    constructor() : this("", DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Int, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Int, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Int, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Int, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Int) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Int) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Double, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Double, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Double, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Double, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Double) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Double) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Float, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Float, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Float, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Float, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Float) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Float) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Short, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Short, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Short, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Short, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Short) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Short) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Long, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Long, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Long, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Long, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Long) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Long) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Byte, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Byte, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Byte, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Byte, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Byte) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Byte) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Boolean, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Boolean, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Boolean, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Boolean, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Boolean) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Boolean) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : StringBuilder, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : StringBuilder, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : StringBuilder, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : StringBuilder, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : StringBuilder) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : StringBuilder) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Char, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : Char, color : Color) : this(text, DEFAULT_FONT, color)
+    constructor(text : Char, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Char, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : Char) : this(text, DEFAULT_FONT, DEFAULT_COLOR)
+    constructor(text : Char) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(s : StringDisplay){
         text = s.text
         color = s.color
