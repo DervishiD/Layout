@@ -207,6 +207,8 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                 if(stringDisplayAndTemporaryLineFit(stringDisplay)){ //StringDisplay fits in new line
                     temporaryLine.add(stringDisplay)
                 }else{ //StringDisplay doesn't fit in new line
+                    temporaryStringDisplay.font = stringDisplay.font
+                    temporaryStringDisplay.color = stringDisplay.color
                     words = splitStringDisplayIntoWords(stringDisplay)
                     fm = g.getFontMetrics(stringDisplay.font)
 

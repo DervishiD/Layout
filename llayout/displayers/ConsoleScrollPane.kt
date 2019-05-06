@@ -30,6 +30,8 @@ class ConsoleScrollPane : ResizableDisplayer {
      */
     private var totalHeight : Int = 0
 
+    private var stableText : MutableList<MutableList<StringDisplay>> = mutableListOf()
+
     /**
      * The lines of text displayed by this [ConsoleScrollPane].
      */
@@ -44,6 +46,8 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see initialize
      */
     private var indexToVerify : LProperty<Int?> = LProperty<Int?>(null).addListener{initialize()}
+
+    private var resetLines : Boolean = false
 
     /**
      * The 'level of scrolling' is encoded by the coordinate, in pixels, of a point. It is zero if the
@@ -81,7 +85,14 @@ class ConsoleScrollPane : ResizableDisplayer {
      * If the width is modified, all the lines must be rearranged.
      */
     init{
-        w.addListener{setlineToUpdate(0)}
+        w.addListener{
+            resetLines = true
+            initialize()
+        }
+        h.addListener{
+            recalculateDrawingParameters()
+            verifyScrollReference()
+        }
     }
 
     override var onMouseWheelMoved: MouseWheelAction = {units : Int -> run{
@@ -239,6 +250,7 @@ class ConsoleScrollPane : ResizableDisplayer {
      */
     fun writeln() : ConsoleScrollPane{
         lines.add(mutableListOf())
+        stableText.add(mutableListOf())
         setlineToUpdate(lines.size - 1)
         return this
     }
@@ -333,8 +345,10 @@ class ConsoleScrollPane : ResizableDisplayer {
      */
     fun write(s : StringDisplay) : ConsoleScrollPane{
         if(lines.size == 0) lines.add(mutableListOf())
+        if(stableText.size == 0) stableText.add(mutableListOf())
         s.font = textFont
         lines[lines.size - 1].add(s)
+        stableText[stableText.size - 1].add(s)
         setlineToUpdate(lines.size - 1)
         scrollToBottom()
         return this
@@ -411,6 +425,12 @@ class ConsoleScrollPane : ResizableDisplayer {
      */
     fun write(b : Boolean) : ConsoleScrollPane = this.write(StringDisplay(b))
 
+    fun clearConsole() : ConsoleScrollPane{
+        lines.clear()
+        stableText.clear()
+        return this
+    }
+
     /**
      * Scrolls to the bottom of the text.
      * @see lines
@@ -435,7 +455,7 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see scrollReference
      */
     private fun verifyScrollReference(){
-        if(scrollReference > 0){
+        if(scrollReference > 0 || totalHeight < height()){
             scrollReference = 0
         }else if(scrollReference < height() - totalHeight){
             scrollReference = height() - totalHeight
@@ -452,17 +472,29 @@ class ConsoleScrollPane : ResizableDisplayer {
 
     override fun loadParameters(g: Graphics) {
         if(lines.isNotEmpty()){
+            resetLines(g)
             setLinesParameters(g)
             verifyLines(g)
-            recalculateDrawingParameters()
         }
         recomputeTotalHeight()
+        verifyScrollReference()
+        recalculateDrawingParameters()
     }
 
     private fun setLinesParameters(g : Graphics){
         ascent = g.getFontMetrics(textFont).maxAscent
         descent = g.getFontMetrics(textFont).maxDescent
         lineHeight = ascent + descent
+    }
+
+    private fun resetLines(g : Graphics){
+        if(resetLines){
+            lines.clear()
+            for(line : MutableList<StringDisplay> in stableText){
+                lines.addAll(line.toLines(width(), g))
+            }
+            resetLines = false
+        }
     }
 
     /**

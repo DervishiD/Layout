@@ -26,7 +26,7 @@ class TextButton : TextDisplayer {
          * @see DEFAULT_BUTTON_BACKGROUND
          * @see GraphicAction
          */
-        private const val LINE_THICKNESS : Int = 5
+        private const val LINE_THICKNESS : Int = 2
 
         /**
          * The base side delta.

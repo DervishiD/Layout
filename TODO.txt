@@ -31,7 +31,6 @@ Canvas
 
 StringDisplay
     Switch to StringBuilder
-    Implement CharSequence
 
 LinkedLists, Queues, Stacks?
 
@@ -40,45 +39,16 @@ Initialize Displayers in reverse?
 
 Add default fonts and colors setters to LFrames / LFrameBuilders?
 
-StringBuilders everywhere
+StringBuilders, CharSequences everywhere
 
 Clean mouse stuff, too many overridable things
     --> Wrapper?
-
-
-
-
-
-
-
-
-
-
-
-In TextScrollPane, ConsoleScrollPane
-    When resize, unstable behaviour
-    Add other list of lists, to save what should be written, and regenerate lines entirely when resized
-
-
-
-
-
-
-
-
-
-
-
-
-
-Optimized TextScrollPane for console, i.e. a single font. Optimizes computation of height for example
 
 Displayer Groups and Grids
 
 Displayers
     Rename Displayer
     Debug DisplayerScrollPane
-    Rewrite forceMaxLineLength
     PreferredWH for doubles
     Slider
     TextArea
@@ -86,7 +56,6 @@ Displayers
     On/off
     Graph for Double-Double map
     Console-like input
-    TextScrollPane, add vararg write
 
 Projects
     Probability distributions

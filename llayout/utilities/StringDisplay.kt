@@ -39,7 +39,6 @@ class StringDisplay : Iterable<Char> {
      * Its font
      */
     var font : Font
-
     constructor(text : String, font : Font, color : Color){
         this.text = text
         this.font = font
@@ -77,10 +76,10 @@ class StringDisplay : Iterable<Char> {
     constructor(text : Boolean, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Boolean, font : Font) : this(text, font, DEFAULT_COLOR)
     constructor(text : Boolean) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
-    constructor(text : StringBuilder, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : StringBuilder, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
-    constructor(text : StringBuilder, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : StringBuilder) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
+    constructor(text : CharSequence, font : Font, color : Color) : this(text.toString(), font, color)
+    constructor(text : CharSequence, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
+    constructor(text : CharSequence, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : CharSequence) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Char, font : Font, color : Color) : this(text.toString(), font, color)
     constructor(text : Char, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Char, font : Font) : this(text, font, DEFAULT_COLOR)

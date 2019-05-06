@@ -27,6 +27,8 @@ class TextScrollPane : ResizableDisplayer{
      */
     private var totalHeight : Int = 0
 
+    private var stableText : MutableList<MutableList<StringDisplay>> = mutableListOf()
+
     /**
      * The lines of text displayed by this [TextScrollPane].
      */
@@ -41,6 +43,8 @@ class TextScrollPane : ResizableDisplayer{
      * @see initialize
      */
     private var indexToVerify : LProperty<Int?> = LProperty<Int?>(null).addListener{initialize()}
+
+    private var resetLines : Boolean = false
 
     /**
      * The 'level of scrolling' is encoded by the coordinate, in pixels, of a point. It is zero if the
@@ -81,7 +85,13 @@ class TextScrollPane : ResizableDisplayer{
      * If the width is modified, all the lines must be rearranged.
      */
     init{
-        w.addListener{setlineToUpdate(0)}
+        w.addListener{
+            resetLines = true
+            initialize()
+        }
+        h.addListener{
+            recalculateDrawingParameters.value = true
+        }
     }
 
     override var onMouseWheelMoved: MouseWheelAction = {units : Int -> run{
@@ -199,6 +209,7 @@ class TextScrollPane : ResizableDisplayer{
      */
     fun writeln() : TextScrollPane{
         lines.add(mutableListOf())
+        stableText.add(mutableListOf())
         setlineToUpdate(lines.size - 1)
         return this
     }
@@ -293,7 +304,9 @@ class TextScrollPane : ResizableDisplayer{
      */
     fun write(s : StringDisplay) : TextScrollPane{
         if(lines.size == 0) lines.add(mutableListOf())
+        if(stableText.size == 0) stableText.add(mutableListOf())
         lines[lines.size - 1].add(s)
+        stableText[stableText.size - 1].add(s)
         setlineToUpdate(lines.size - 1)
         scrollToBottom()
         return this
@@ -370,6 +383,11 @@ class TextScrollPane : ResizableDisplayer{
      */
     fun write(b : Boolean) : TextScrollPane = this.write(StringDisplay(b))
 
+    fun clear(){
+        lines.clear()
+        stableText.clear()
+    }
+
     /**
      * Scrolls to the bottom of the text.
      * @see lines
@@ -393,7 +411,7 @@ class TextScrollPane : ResizableDisplayer{
      * @see scrollReference
      */
     private fun verifyScrollReference(){
-        if(scrollReference > 0){
+        if(scrollReference > 0 || totalHeight < height()){
             scrollReference = 0
         }else if(scrollReference < height() - totalHeight){
             scrollReference = height - totalHeight
@@ -413,8 +431,21 @@ class TextScrollPane : ResizableDisplayer{
 
     override fun loadParameters(g: Graphics) {
         if(lines.isNotEmpty()){
+            resetLines(g)
             verifyLines(g)
-            recalculateDrawingParameters(g)
+        }
+        recomputeTotalHeight(g)
+        verifyScrollReference()
+        recalculateDrawingParameters(g)
+    }
+
+    private fun resetLines(g : Graphics){
+        if(resetLines){
+            lines.clear()
+            for(line : MutableList<StringDisplay> in stableText){
+                lines.addAll(line.toLines(width(), g))
+            }
+            resetLines = false
         }
     }
 
@@ -437,8 +468,6 @@ class TextScrollPane : ResizableDisplayer{
             for(lineToVerify : MutableList<StringDisplay> in linesToVerify){
                 lines.addAll(lineToVerify.toLines(width(), g))
             }
-
-            recomputeTotalHeight(g)
 
         }
     }
@@ -468,14 +497,12 @@ class TextScrollPane : ResizableDisplayer{
                     index++
                 }
             }
-            while(zero < height()){
+            while(zero < height() && index < lines.size){
                 zero += lines[index].lineHeight(g)
                 index++
             }
             higherDrawingIndex = if(index < lines.size) index else lines.size - 1
             recalculateDrawingParameters.value = false
-
-            recomputeTotalHeight(g)
 
         }
     }
