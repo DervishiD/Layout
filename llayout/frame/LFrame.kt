@@ -4,6 +4,7 @@ import llayout.Action
 import llayout.interfaces.LTimerUpdatable
 import java.awt.Frame
 import java.awt.event.*
+import java.lang.IllegalArgumentException
 import javax.swing.JFrame
 
 /**
@@ -133,6 +134,7 @@ class LFrame : JFrame, LTimerUpdatable {
     }
 
     infix fun changeTimerPeriod(period : Int) : LFrame {
+        if(period <= 0) throw IllegalArgumentException("Negative timer period")
         timer.setPeriod(period)
         return this
     }

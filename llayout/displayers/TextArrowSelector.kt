@@ -1,7 +1,6 @@
 package llayout.displayers
 
 import llayout.GraphicAction
-import llayout.geometry.Point
 import llayout.utilities.*
 import java.awt.Color
 import java.awt.Color.BLACK
@@ -169,23 +168,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(
-            p : Point,
-            options : Collection<Pair<Text, T>>,
-            isHorizontal : Boolean = true,
-            background : GraphicAction = DEFAULT_BACKGROUND)
-        : this(p.intx(), p.inty(), options, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
      * @param x The x coordinate of this TextArrowSelector's center.
      * @param y The y coordinate of this TextArrowSelector's center.
      * @param options The options of this TextArrowSelector.
@@ -278,24 +260,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(
-            p : Point,
-            keys : Collection<Text>,
-            values : Collection<T>,
-            isHorizontal : Boolean = true,
-            background : GraphicAction = DEFAULT_BACKGROUND)
-        : this(p.intx(), p.inty(), keys, values, isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
      * @param x The x coordinate of this TextArrowSelector's center.
      * @param y The y coordinate of this TextArrowSelector's center.
      * @param options The options of this TextArrowSelector.
@@ -365,22 +329,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
             vararg options : Pair<Text, T>,
             isHorizontal : Boolean = true,
             background : GraphicAction = DEFAULT_BACKGROUND) : this(x, y, options.asList(), isHorizontal, background)
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(
-            p : Point,
-            vararg options : Pair<Text, T>,
-            isHorizontal : Boolean = true,
-            background : GraphicAction = DEFAULT_BACKGROUND) : this(p, options.asList(), isHorizontal, background)
 
     /**
      * Constructs a TextArrowSelector with the given parameters.
@@ -465,22 +413,6 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         fillLinesList(options.keys)
         backgroundDrawer = background
     }
-
-    /**
-     * Constructs a TextArrowSelector with the given parameters.
-     * @param p The center Point of this TextArrowSelector.
-     * @param options The options of this TextArrowSelector.
-     * @param isHorizontal True if this TextArrowSelector has horizontal arrows.
-     * @param background The background of this TextArrowSelector.
-     * @see Point
-     * @see GraphicAction
-     * @see options
-     */
-    constructor(
-            p : Point,
-            options : Map<Text, T>,
-            isHorizontal: Boolean = true,
-            background : GraphicAction = DEFAULT_BACKGROUND) : this(p.intx(), p.inty(), options, isHorizontal, background)
 
     /**
      * Fills the list of lines according to the entered options.

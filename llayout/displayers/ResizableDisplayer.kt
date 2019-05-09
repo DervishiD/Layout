@@ -1,6 +1,5 @@
 package llayout.displayers
 
-import llayout.geometry.Point
 import llayout.utilities.LProperty
 
 abstract class ResizableDisplayer : Displayer {
@@ -34,11 +33,6 @@ abstract class ResizableDisplayer : Displayer {
         setHeight(height)
     }
 
-    constructor(p : Point, width : Int, height : Int) : super(p){
-        setWidth(width)
-        setHeight(height)
-    }
-
     constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y){
         setWidth(width)
         setHeight(height)
@@ -55,11 +49,6 @@ abstract class ResizableDisplayer : Displayer {
     }
 
     constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(p : Point, width : Double, height : Int) : super(p){
         setWidth(width)
         setHeight(height)
     }
@@ -84,11 +73,6 @@ abstract class ResizableDisplayer : Displayer {
         setHeight(height)
     }
 
-    constructor(p : Point, width : Double, height : Double) : super(p){
-        setWidth(width)
-        setHeight(height)
-    }
-
     constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y){
         setWidth(width)
         setHeight(height)
@@ -105,11 +89,6 @@ abstract class ResizableDisplayer : Displayer {
     }
 
     constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(p : Point, width : Int, height : Double) : super(p){
         setWidth(width)
         setHeight(height)
     }

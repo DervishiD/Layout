@@ -1,7 +1,6 @@
 package llayout.interfaces
 
 import llayout.GraphicAction
-import llayout.geometry.Point
 import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.Graphics
@@ -94,10 +93,6 @@ interface Canvas : HavingDimension {
         graphics[addedGraphicAction] = addedGraphicAction
         return this
     }
-
-    fun drawPoint(p : Point, key : Any?, color: Color = BLACK) : Canvas = drawPoint(p.intx(), p.inty(), key, color)
-
-    fun drawPoint(p : Point, color : Color = BLACK) : Canvas = drawPoint(p.intx(), p.inty(), color)
 
     fun fillBackground(color : Color, key : Any?) : Canvas {
         graphics[key] = {g : Graphics, w : Int, h : Int -> run{
@@ -397,60 +392,6 @@ interface Canvas : HavingDimension {
         return this
     }
 
-    fun drawLine(fromPoint : Point, toX : Int, toY : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, key, color)
-
-    fun drawLine(fromPoint : Point, toX : Double, toY : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, key, color)
-
-    fun drawLine(fromPoint : Point, toX : Int, toY : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, key, color)
-
-    fun drawLine(fromPoint : Point, toX : Double, toY : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, key, color)
-
-    fun drawLine(fromPoint : Point, toX : Int, toY : Int, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, color)
-
-    fun drawLine(fromPoint : Point, toX : Double, toY : Int, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, color)
-
-    fun drawLine(fromPoint : Point, toX : Int, toY : Double, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, color)
-
-    fun drawLine(fromPoint : Point, toX : Double, toY : Double, color : Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toX, toY, color)
-
-    fun drawLine(fromX : Int, fromY : Int, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), key, color)
-
-    fun drawLine(fromX : Double, fromY : Int, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), key, color)
-
-    fun drawLine(fromX : Int, fromY : Double, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), key, color)
-
-    fun drawLine(fromX : Double, fromY : Double, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), key, color)
-
-    fun drawLine(fromX : Int, fromY : Int, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), color)
-
-    fun drawLine(fromX : Double, fromY : Int, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), color)
-
-    fun drawLine(fromX : Int, fromY : Double, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), color)
-
-    fun drawLine(fromX : Double, fromY : Double, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawLine(fromX, fromY, toPoint.intx(), toPoint.inty(), color)
-
-    fun drawLine(fromPoint : Point, toPoint : Point, key : Any?, color: Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toPoint.intx(), toPoint.inty(), key, color)
-
-    fun drawLine(fromPoint : Point, toPoint : Point, color: Color = BLACK) : Canvas =
-            drawLine(fromPoint.intx(), fromPoint.inty(), toPoint.intx(), toPoint.inty(), color)
-
     fun drawPoint2(x : Int, y : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -482,8 +423,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun drawPoint2(point : Point, key : Any?, color: Color = BLACK) : Canvas = drawPoint2(point.intx(), point.inty(), key, color)
 
     fun drawPoint2(x : Int, y : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -521,8 +460,6 @@ interface Canvas : HavingDimension {
         return this
     }
 
-    fun drawPoint2(point : Point, color: Color = BLACK) : Canvas = drawPoint2(point.intx(), point.inty(), color)
-
     fun drawPoint3(x : Int, y : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -554,8 +491,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun drawPoint3(point : Point, key : Any?, color: Color = BLACK) : Canvas = drawPoint3(point.intx(), point.inty(), key, color)
 
     fun drawPoint3(x : Int, y : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -592,8 +527,6 @@ interface Canvas : HavingDimension {
         graphics[addedGraphics] = addedGraphics
         return this
     }
-
-    fun drawPoint3(point : Point, color: Color = BLACK) : Canvas = drawPoint3(point.intx(), point.inty(), color)
 
     fun drawRectangle(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
@@ -722,18 +655,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun drawRectangle(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawRectangle(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawRectangle(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawRectangle(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, key, color)
 
     fun drawRectangle(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -879,24 +800,6 @@ interface Canvas : HavingDimension {
         return this
     }
 
-    fun drawRectangle(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun drawRectangle(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun drawRectangle(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun drawRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
-            drawRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun drawRectangle(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
-
-    fun drawRectangle(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
-
     fun fillRectangle(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -1024,18 +927,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun fillRectangle(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillRectangle(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillRectangle(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillRectangle(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, key, color)
 
     fun fillRectangle(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -1181,24 +1072,6 @@ interface Canvas : HavingDimension {
         return this
     }
 
-    fun fillRectangle(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun fillRectangle(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun fillRectangle(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun fillRectangle(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
-            fillRectangle(point.intx(), point.inty(), width, height, color)
-
-    fun fillRectangle(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            fillRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
-
-    fun fillRectangle(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
-            fillRectangle(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
-
     fun drawOval(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -1326,18 +1199,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun drawOval(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawOval(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawOval(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun drawOval(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, key, color)
 
     fun drawOval(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -1483,24 +1344,6 @@ interface Canvas : HavingDimension {
         return this
     }
 
-    fun drawOval(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, color)
-
-    fun drawOval(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, color)
-
-    fun drawOval(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, color)
-
-    fun drawOval(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
-            drawOval(point.intx(), point.inty(), width, height, color)
-
-    fun drawOval(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            drawOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
-
-    fun drawOval(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
-            drawOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
-
     fun fillOval(x : Int, y : Int, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas {
         graphics[key] = {g : Graphics, _, _ -> run{
             g.color = color
@@ -1628,18 +1471,6 @@ interface Canvas : HavingDimension {
         }}
         return this
     }
-
-    fun fillOval(point : Point, width : Int, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillOval(point : Point, width : Double, height : Int, key : Any?, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillOval(point : Point, width : Int, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, key, color)
-
-    fun fillOval(point : Point, width : Double, height : Double, key : Any?, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, key, color)
 
     fun fillOval(x : Int, y : Int, width : Int, height : Int, color : Color = BLACK) : Canvas {
         val addedGraphics : GraphicAction = { g : Graphics, _, _ -> run{
@@ -1784,23 +1615,5 @@ interface Canvas : HavingDimension {
         graphics[addedGraphics] = addedGraphics
         return this
     }
-
-    fun fillOval(point : Point, width : Int, height : Int, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, color)
-
-    fun fillOval(point : Point, width : Double, height : Int, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, color)
-
-    fun fillOval(point : Point, width : Int, height : Double, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, color)
-
-    fun fillOval(point : Point, width : Double, height : Double, color : Color = BLACK) : Canvas =
-            fillOval(point.intx(), point.inty(), width, height, color)
-
-    fun fillOval(fromPoint : Point, toPoint : Point, key : Any?, color : Color = BLACK) : Canvas =
-            fillOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), key, color)
-
-    fun fillOval(fromPoint : Point, toPoint : Point, color : Color = BLACK) : Canvas =
-            fillOval(fromPoint.intx(), fromPoint.inty(), toPoint.intx() - fromPoint.intx(), toPoint.inty() - fromPoint.inty(), color)
 
 }

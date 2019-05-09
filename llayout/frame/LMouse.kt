@@ -1,8 +1,5 @@
 package llayout.frame
 
-import llayout.geometry.Point
-import llayout.geometry.Vector
-
 /**
  * A class representing the position and displacement of the mouse.
  */
@@ -13,40 +10,29 @@ class LMouse{
         /**
          * The mouse's position.
          */
-        private var mousePosition : Point = Point()
+        private var mouseX : Int = 0
 
-        /**
-         * The mouse's displacement.
-         */
-        private var displacement : Vector = Vector()
+        private var mouseY : Int = 0
 
-        /**
-         * The mouse's current position.
-         * @return The mouse's current position.
-         * @see Point
-         * @see mousePosition
-         */
-        fun mousePosition() : Point = mousePosition
+        private var mouseDisplacementX : Int = 0
 
-        /**
-         * The last displacement of the mouse.
-         * @return The mouse's last displacement.
-         * @see Vector
-         * @see displacement
-         */
-        fun mouseDisplacement() : Vector = displacement
+        private var mouseDisplacementY : Int = 0
 
         /**
          * The x coordinate of the mouse.
          * @see mousePosition
          */
-        fun mouseX() : Int = mousePosition.intx()
+        fun mouseX() : Int = mouseX
 
         /**
          * The y coordinate of the mouse.
          * @see mousePosition
          */
-        fun mouseY() : Int = mousePosition.inty()
+        fun mouseY() : Int = mouseY
+
+        fun mouseDisplacementX() : Int = mouseDisplacementX
+
+        fun mouseDisplacementY() : Int = mouseDisplacementY
 
         /**
          * Moves the mouse position at the given coordinates and saves the displacement.
@@ -54,10 +40,10 @@ class LMouse{
          * @see mouseDisplacement
          */
         internal fun setNewMousePosition(newx : Int, newy : Int){
-            displacement setx newx - mousePosition.x
-            displacement sety newy - mousePosition.y
-            mousePosition setx newx
-            mousePosition sety newy
+            mouseDisplacementX = newx - mouseX
+            mouseDisplacementY = newy - mouseY
+            mouseX = newx
+            mouseY = newy
         }
 
     }

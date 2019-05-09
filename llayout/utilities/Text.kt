@@ -26,12 +26,7 @@ class Text {
      */
     constructor(text : String){
         asString = text
-        val lines = StringDisplay(text).toLines()
-        val textAsLines : MutableList<MutableList<StringDisplay>> = mutableListOf()
-        for(line in lines){
-            textAsLines.add(mutableListOf(line))
-        }
-        asLines = textAsLines
+        asLines = listOf(text).toStringDisplayLines()
     }
 
     /**
@@ -42,6 +37,11 @@ class Text {
     constructor(text : StringDisplay){
         asString = text.text
         asLines = listOf(text).toLinesList()
+    }
+
+    constructor(text : CharSequence){
+        asString = text.toString()
+        asLines = listOf(StringDisplay(asString)).toLinesList()
     }
 
     /**
@@ -66,9 +66,24 @@ class Text {
      */
     constructor(text : Double) : this(text.toString())
 
+    constructor(text : Float) : this(text.toString())
+
     constructor(text : Char) : this(text.toString())
 
+    constructor(text : Short) : this(text.toString())
+
+    constructor(text : Long) : this(text.toString())
+
+    constructor(text : Byte) : this(text.toString())
+
+    constructor(text : Boolean) : this(text.toString())
+
     constructor() : this("")
+
+    constructor(text : Text){
+        asString = text.asString()
+        asLines = text.asLines()
+    }
 
     /**
      * Returns the content of this Text object as a List of lines of StringDisplays.

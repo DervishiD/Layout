@@ -4,7 +4,6 @@ import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.DEFAULT_SMALL_FONT
 import llayout.frame.LMouse
-import llayout.geometry.Point
 import llayout.utilities.matches
 import java.awt.Color
 import java.awt.FontMetrics
@@ -194,22 +193,6 @@ class TextField : Displayer {
 
     /**
      * Constructs a TextField with the given parameters.
-     * @param p The center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see Point
-     * @see regex
-     */
-    constructor(
-            p : Point,
-            width : Int = DEFAULT_WIDTH,
-            defaultText : String = "",
-            regex : String = NO_ENTER)
-            : this(p.intx(), p.inty(), width, defaultText, regex)
-
-    /**
-     * Constructs a TextField with the given parameters.
      * @param x The x coordinate of the center point of this TextDisplayer.
      * @param y The y coordinate of the center point of this TextDisplayer.
      * @param width The width of this TextField.
@@ -291,22 +274,6 @@ class TextField : Displayer {
         relativeW = width
         requestUpdate()
     }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param p The center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see Point
-     * @see regex
-     */
-    constructor(
-            p : Point,
-            width : Double,
-            defaultText : String = "",
-            regex : String = NO_ENTER)
-            : this(p.intx(), p.inty(), width, defaultText, regex)
 
     override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
         if(relativeW != null) w.value = (relativeW!! * frameWidth).toInt()

@@ -1,10 +1,8 @@
 package llayout.displayers
 
 import llayout.GraphicAction
-import llayout.geometry.Point
 import llayout.utilities.StringDisplay
 import llayout.utilities.Text
-import java.awt.Graphics
 
 /**
  * A Label is a Displayer that displays only text.
@@ -70,30 +68,6 @@ class Label : TextDisplayer {
 
     /**
      * Constructs a Label with the given parameters.
-     * @param p The center point of this Label.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     * @see Point
-     */
-    constructor(p : Point, text : Collection<StringDisplay>, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param p The center point of this Label.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     * @see Point
-     */
-    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
      * @param x The x coordinate of this Label's center Point.
      * @param y The y coordinate of this Label's center Point.
      * @param text The displayed text, as a StringDisplay.
@@ -142,17 +116,6 @@ class Label : TextDisplayer {
 
     /**
      * Constructs a Label with the given parameters.
-     * @param p The center point of this Label.
-     * @param text The displayed text, as a String.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see GraphicAction
-     * @see backgroundDrawer
-     * @see Point
-     */
-    constructor(p : Point, text : String, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
      * @param x The x coordinate of this Label's center Point.
      * @param y The y coordinate of this Label's center Point.
      * @param text The displayed text, as a String.
@@ -194,18 +157,6 @@ class Label : TextDisplayer {
      * @see backgroundDrawer
      */
     constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : super(x, y, text, background)
-
-    /**
-     * Constructs a Label with the given parameters.
-     * @param p The center point of this Label.
-     * @param text The displayed text, as a Text.
-     * @param background The background of this Label, as a GraphicAction.
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     * @see Point
-     */
-    constructor(p : Point, text : Text, background: GraphicAction = NO_BACKGROUND) : super(p, text, background)
 
     /**
      * Constructs a Label with the given parameters.

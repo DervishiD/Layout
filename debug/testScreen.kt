@@ -11,10 +11,10 @@ import java.awt.event.KeyEvent
 
 val testScreen : LScene = object : LScene(){
 
-    val b : TextButton = TextButton(0.5, 0.5, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
+    val b : TextButton = TextButton(0.5, 0.6, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
     val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
     val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
-    val f : TextField = TextField(0, 0.5).alignLeftTo(0) as TextField
+    val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
     val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
     val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
 

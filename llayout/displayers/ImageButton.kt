@@ -2,7 +2,6 @@ package llayout.displayers
 
 import llayout.Action
 import llayout.GraphicAction
-import llayout.geometry.Point
 import java.awt.Graphics
 
 /**
@@ -89,20 +88,6 @@ class ImageButton : ResizableDisplayer {
         setOnMouseReleaseAction(onClick)
         this.image = image
     }
-
-    /**
-     * Creates a button from the given parameters.
-     * @param p The center point of this ImageButton
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(p : Point, width : Int, height : Int, image : GraphicAction, onClick : Action) : this(p.intx(), p.inty(), width, height, image, onClick)
 
     /**
      * Sets a new image for this ImageButton.

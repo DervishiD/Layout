@@ -34,7 +34,7 @@ interface LContainer : HavingDimension {
      * @see Displayer.onAdd
      * @see parts
      */
-    infix fun add(d : Displayable) : LContainer {
+    fun add(d : Displayable) : LContainer {
         parts.add(d)
         if(this is Container && d is Component) (this as Container).add(d)
         d.updateRelativeValues(width(), height())
@@ -52,7 +52,7 @@ interface LContainer : HavingDimension {
      * @see Displayer.onRemove
      * @see parts
      */
-    infix fun remove(d : Displayable) : LContainer {
+    fun remove(d : Displayable) : LContainer {
         parts.remove(d)
         if(this is Container && d is Component) (this as Container).remove(d)
         w.removeListener(d)
@@ -62,8 +62,8 @@ interface LContainer : HavingDimension {
         return this
     }
 
-    infix fun add(d : Displayer) : LContainer = add(d as Displayable)
-    infix fun remove(d : Displayer) : LContainer = remove(d as Displayable)
+    fun add(d : Displayer) : LContainer = add(d as Displayable)
+    fun remove(d : Displayer) : LContainer = remove(d as Displayable)
 
     /**
      * Forces the initialization of its Displayer components.

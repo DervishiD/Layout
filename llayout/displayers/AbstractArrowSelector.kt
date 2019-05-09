@@ -2,7 +2,6 @@ package llayout.displayers
 
 import llayout.Action
 import llayout.frame.LScene
-import llayout.geometry.Point
 import llayout.GraphicAction
 import llayout.interfaces.AbstractSelector
 import llayout.interfaces.LContainer
@@ -294,36 +293,6 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
     }
 
     /**
-     * Creates an ArrowSelector at the given position, with the given list of options, and
-     * horizontal if isHorizontal is true.
-     * @param p The position of the Selector, as pixel coordinates on its container.
-     * @param options The list of options of this Selector.
-     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
-     * @see Displayer
-     */
-    constructor(p : Point, options : Collection<T>, isHorizontal : Boolean = true) : super(p){
-        addOptionsList(options)
-        this.isHorizontal = isHorizontal
-        previousArrow = initializePreviousArrow()
-        nextArrow = initializeNextArrow()
-    }
-
-    /**
-     * Creates an ArrowSelector at the given position, with the given list of options, and
-     * horizontal if isHorizontal is true.
-     * @param p The position of the Selector, as pixel coordinates on its container.
-     * @param options The vararg list of options of this Selector.
-     * @param isHorizontal True if the Selector is horizontal, false if it is vertical.
-     * @see Displayer
-     */
-    constructor(p : Point, vararg options : T, isHorizontal : Boolean = true) : super(p){
-        addOptionsList(*options)
-        this.isHorizontal = isHorizontal
-        previousArrow = initializePreviousArrow()
-        nextArrow = initializeNextArrow()
-    }
-
-    /**
      * Sets the current selection to the next value in the list.
      * @see options
      */
@@ -486,14 +455,14 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         return this
     }
 
-    override fun onAdd(source : LContainer) {
-        source add previousArrow
-        source add nextArrow
+    override fun onAdd(container : LContainer) {
+        container.add(previousArrow)
+        container.add(nextArrow)
     }
 
-    override fun onRemove(source : LContainer) {
-        source remove previousArrow
-        source remove nextArrow
+    override fun onRemove(container : LContainer) {
+        container.remove(previousArrow)
+        container.remove(nextArrow)
     }
 
     /**

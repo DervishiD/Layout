@@ -1,7 +1,6 @@
 package llayout.displayers
 
 import llayout.MouseWheelAction
-import llayout.geometry.Point
 import llayout.utilities.*
 import java.awt.Graphics
 
@@ -125,11 +124,6 @@ class TextScrollPane : ResizableDisplayer{
     /**
      * @see ResizableDisplayer
      */
-    constructor(p : Point, width : Int, height : Int) : super(p, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
     constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
 
     /**
@@ -146,11 +140,6 @@ class TextScrollPane : ResizableDisplayer{
      * @see ResizableDisplayer
      */
     constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(p : Point, width : Double, height : Int) : super(p, width, height)
 
     /**
      * @see ResizableDisplayer
@@ -175,11 +164,6 @@ class TextScrollPane : ResizableDisplayer{
     /**
      * @see ResizableDisplayer
      */
-    constructor(p : Point, width : Double, height : Double) : super(p, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
     constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
 
     /**
@@ -196,11 +180,6 @@ class TextScrollPane : ResizableDisplayer{
      * @see ResizableDisplayer
      */
     constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(p : Point, width : Int, height : Double) : super(p, width, height)
 
     /**
      * Adds a new line to the list.

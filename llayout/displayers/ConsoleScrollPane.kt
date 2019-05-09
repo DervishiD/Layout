@@ -2,11 +2,11 @@ package llayout.displayers
 
 import llayout.DEFAULT_SMALL_FONT
 import llayout.MouseWheelAction
-import llayout.geometry.Point
 import llayout.utilities.*
 import java.awt.Font
 import java.awt.FontMetrics
 import java.awt.Graphics
+import java.lang.IllegalArgumentException
 
 class ConsoleScrollPane : ResizableDisplayer {
 
@@ -81,6 +81,8 @@ class ConsoleScrollPane : ResizableDisplayer {
 
     private var lineHeight : Int = 0
 
+    private var prompt : Collection<StringDisplay> = setOf()
+
     /*
      * If the width is modified, all the lines must be rearranged.
      */
@@ -134,13 +136,6 @@ class ConsoleScrollPane : ResizableDisplayer {
     /**
      * @see ResizableDisplayer
      */
-    constructor(p : Point, width : Int, height : Int, font : Font = DEFAULT_FONT) : super(p, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
     constructor(x : Int, y : Int, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
         textFont = font
     }
@@ -163,13 +158,6 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see ResizableDisplayer
      */
     constructor(x : Double, y : Double, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(p : Point, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(p, width, height){
         textFont = font
     }
 
@@ -204,13 +192,6 @@ class ConsoleScrollPane : ResizableDisplayer {
     /**
      * @see ResizableDisplayer
      */
-    constructor(p : Point, width : Double, height : Double, font : Font = DEFAULT_FONT) : super(p, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
     constructor(x : Int, y : Int, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
         textFont = font
     }
@@ -237,20 +218,15 @@ class ConsoleScrollPane : ResizableDisplayer {
     }
 
     /**
-     * @see ResizableDisplayer
-     */
-    constructor(p : Point, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(p, width, height){
-        textFont = font
-    }
-
-    /**
      * Adds a new line to the list.
      * @return This ConsoleScrollPane
      * @see lines
      */
     fun writeln() : ConsoleScrollPane{
         lines.add(mutableListOf())
+        lines.last().addAll(prompt)
         stableText.add(mutableListOf())
+        stableText.last().addAll(prompt)
         setlineToUpdate(lines.size - 1)
         return this
     }
@@ -271,7 +247,7 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @return This ConsoleScrollPane
      * @see lines
      */
-    fun writeln(s : String) : ConsoleScrollPane = this.writeln(StringDisplay(s))
+    fun writeln(s : CharSequence) : ConsoleScrollPane = this.writeln(StringDisplay(s))
 
     /**
      * Adds a Char in a new line to the list.
@@ -279,14 +255,6 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see lines
      */
     fun writeln(c : Char) : ConsoleScrollPane = this.writeln(StringDisplay(c))
-
-    /**
-     * Adds a StringBuilder in a new line to the list.
-     * @return This ConsoleScrollPane
-     * @see lines
-     * @see StringBuilder
-     */
-    fun writeln(s : StringBuilder) : ConsoleScrollPane = this.writeln(StringDisplay(s))
 
     /**
      * Adds an Int in a new line to the list.
@@ -359,7 +327,7 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @return This ConsoleScrollPane
      * @see lines
      */
-    fun write(s : String) : ConsoleScrollPane = this.write(StringDisplay(s))
+    fun write(s : CharSequence) : ConsoleScrollPane = this.write(StringDisplay(s))
 
     /**
      * Adds a Char in the last line of the list.
@@ -367,14 +335,6 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see lines
      */
     fun write(c : Char) : ConsoleScrollPane = this.write(StringDisplay(c))
-
-    /**
-     * Adds a StringBuilder in the last line of the list.
-     * @return This ConsoleScrollPane
-     * @see lines
-     * @see StringBuilder
-     */
-    fun write(s : StringBuilder) : ConsoleScrollPane = this.write(StringDisplay(s))
 
     /**
      * Adds an Int in the last line of the list.
@@ -424,6 +384,32 @@ class ConsoleScrollPane : ResizableDisplayer {
      * @see lines
      */
     fun write(b : Boolean) : ConsoleScrollPane = this.write(StringDisplay(b))
+
+    fun setPrompt(vararg prompt : String) : ConsoleScrollPane{
+        for(sd : String in prompt){
+            if(sd.contains("\n")) throw IllegalArgumentException("Prompt contains a \"\\n\" character.")
+        }
+        this.prompt = prompt.asList().toStringDisplays(textFont)
+        return this
+    }
+
+    fun setPrompt(vararg prompt : StringDisplay) : ConsoleScrollPane{
+        for(sd : StringDisplay in prompt){
+            if(sd.contains("\n")) throw IllegalArgumentException("Prompt contains a \"\\n\" character.")
+            sd.font = textFont
+        }
+        this.prompt = prompt.asList()
+        return this
+    }
+
+    fun setPrompt(prompt : Collection<StringDisplay>) : ConsoleScrollPane{
+        for(sd : StringDisplay in prompt){
+            if(sd.contains("\n")) throw IllegalArgumentException("Prompt contains a \"\\n\" character.")
+            sd.font = textFont
+        }
+        this.prompt = prompt
+        return this
+    }
 
     fun clearConsole() : ConsoleScrollPane{
         lines.clear()
@@ -516,6 +502,7 @@ class ConsoleScrollPane : ResizableDisplayer {
             for(lineToVerify : MutableList<StringDisplay> in linesToVerify){
                 lines.addAll(lineToVerify.toLines(width(), g))
             }
+            indexToVerify.value = null
         }
     }
 

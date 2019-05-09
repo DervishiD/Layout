@@ -2,7 +2,6 @@ package llayout.displayers
 
 import llayout.GraphicAction
 import llayout.MouseWheelAction
-import llayout.geometry.Point
 import java.awt.Graphics
 import kotlin.math.abs
 
@@ -236,28 +235,6 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
-     * @param p The center point of this DisplayerScrollPane.
-     * @param width The width of this DisplayerScrollPane, in pixels.
-     * @param height The height of this DisplayerScrollPane, in pixels.
-     * @param scrollDirection The direction of scrolling
-     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
-     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
-     * @see Point
-     * @see Displayer
-     * @see ScrollPaneObject
-     * @see ScrollType
-     * @see parts
-     */
-    constructor(
-            p : Point,
-            width : Int,
-            height : Int,
-            scrollDirection : ScrollType = ScrollType.VERTICAL,
-            parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
-
-    /**
-     * Creates a DisplayerScrollPane with the given parameters.
      * @param x The center point's x coordinate.
      * @param y The center point's y coordinate.
      * @param width The width of this DisplayerScrollPane, in pixels.
@@ -403,28 +380,6 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
         }
         this.backgroundDrawer = background
     }
-
-    /**
-     * Creates a DisplayerScrollPane with the given parameters.
-     * @param p The center point of this DisplayerScrollPane.
-     * @param width The width of this DisplayerScrollPane, in pixels.
-     * @param height The height of this DisplayerScrollPane, in pixels.
-     * @param scrollDirection The direction of scrolling
-     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
-     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
-     * @see Point
-     * @see Displayer
-     * @see ScrollPaneObject
-     * @see ScrollType
-     * @see parts
-     */
-    constructor(
-            p : Point,
-            width : Double,
-            height : Int,
-            scrollDirection : ScrollType = ScrollType.VERTICAL,
-            parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
@@ -576,28 +531,6 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
 
     /**
      * Creates a DisplayerScrollPane with the given parameters.
-     * @param p The center point of this DisplayerScrollPane.
-     * @param width The width of this DisplayerScrollPane, in pixels.
-     * @param height The height of this DisplayerScrollPane, in pixels.
-     * @param scrollDirection The direction of scrolling
-     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
-     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
-     * @see Point
-     * @see Displayer
-     * @see ScrollPaneObject
-     * @see ScrollType
-     * @see parts
-     */
-    constructor(
-            p : Point,
-            width : Int,
-            height : Double,
-            scrollDirection : ScrollType = ScrollType.VERTICAL,
-            parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
-
-    /**
-     * Creates a DisplayerScrollPane with the given parameters.
      * @param x The center point's x coordinate.
      * @param y The center point's y coordinate.
      * @param width The width of this DisplayerScrollPane, in pixels.
@@ -743,28 +676,6 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
         }
         this.backgroundDrawer = background
     }
-
-    /**
-     * Creates a DisplayerScrollPane with the given parameters.
-     * @param p The center point of this DisplayerScrollPane.
-     * @param width The width of this DisplayerScrollPane, in pixels.
-     * @param height The height of this DisplayerScrollPane, in pixels.
-     * @param scrollDirection The direction of scrolling
-     * @param parts Displayers that will be added on the DisplayerScrollPane with default alignment.
-     * @param background The GraphicAction that draws the background of this DisplayerScrollPane.
-     * @see Point
-     * @see Displayer
-     * @see ScrollPaneObject
-     * @see ScrollType
-     * @see parts
-     */
-    constructor(
-            p : Point,
-            width : Double,
-            height : Double,
-            scrollDirection : ScrollType = ScrollType.VERTICAL,
-            parts : Collection<Displayer> = listOf(),
-            background : GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), width, height, scrollDirection, parts, background)
 
     override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
         super.updateRelativeValues(frameWidth, frameHeight)
@@ -795,14 +706,14 @@ class DisplayerScrollPane : AbstractDisplayerContainer {
             if(isVertical()){
                 scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].third, startingY + scrollPaneObjects[0].second + scrollPaneObjects[0].first.height()/2)
                 for(i : Int in 1 until scrollPaneObjects.size){
-                    scrollPaneObjects[i].first setx startingX + scrollPaneObjects[i].third
+                    scrollPaneObjects[i].first.setx(startingX + scrollPaneObjects[i].third)
                     scrollPaneObjects[i].first.alignUpToDown(last, scrollPaneObjects[i].second)
                     last = scrollPaneObjects[i].first
                 }
             }else{
                 scrollPaneObjects[0].first.moveTo(startingX + scrollPaneObjects[0].second + scrollPaneObjects[0].first.width()/2, startingY + scrollPaneObjects[0].third)
                 for(i : Int in 1 until parts.size){
-                    scrollPaneObjects[i].first sety startingY + scrollPaneObjects[i].third
+                    scrollPaneObjects[i].first.sety(startingY + scrollPaneObjects[i].third)
                     scrollPaneObjects[i].first.alignLeftToRight(last, scrollPaneObjects[i].second)
                     last = scrollPaneObjects[i].first
                 }

@@ -1,7 +1,6 @@
 package llayout.displayers
 
 import llayout.GraphicAction
-import llayout.geometry.Point
 import llayout.utilities.*
 import java.awt.Graphics
 
@@ -153,19 +152,6 @@ abstract class TextDisplayer : Displayer {
     /**
      * Constructs a TextDisplayer with the given parameters.
      * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(p : Point, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND)
-            : this(p.intx(), p.inty(), text, background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
      * @param text The displayed text, as a StringDisplay.
      * @param background The background of this TextDisplayer, as a GraphicAction.
      * @see Point
@@ -218,19 +204,6 @@ abstract class TextDisplayer : Displayer {
     /**
      * Constructs a TextDisplayer with the given parameters.
      * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(p : Point, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
-            : this(p, listOf<StringDisplay>(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
      * @param text The displayed text, as a String.
      * @param background The background of this TextDisplayer, as a GraphicAction.
      * @see Point
@@ -271,17 +244,6 @@ abstract class TextDisplayer : Displayer {
      * @see backgroundDrawer
      */
     constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a String.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(p : Point, text : String, background: GraphicAction = NO_BACKGROUND) : this(p, StringDisplay(text), background)
 
     /**
      * Constructs a TextDisplayer with the given parameters.
@@ -366,18 +328,6 @@ abstract class TextDisplayer : Displayer {
         }
         backgroundDrawer = background
     }
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Text object.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(p : Point, text : Text, background: GraphicAction = NO_BACKGROUND) : this(p.intx(), p.inty(), text, background)
 
     /**
      * Sets the maximal line length for this TextDisplayer.

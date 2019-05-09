@@ -1,9 +1,7 @@
 package llayout.displayers
 
 import llayout.GraphicAction
-import llayout.geometry.Point
 import llayout.interfaces.Canvas
-import llayout.interfaces.Displayable
 import java.awt.Graphics
 
 /**
@@ -77,18 +75,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Int, height : Int, displayers : Collection<Displayer>) : this(p.intx(), p.inty(), width, height, displayers)
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
      * @param x The x coordinate of the center of this DisplayerContainer.
      * @param y The y coordinate of the center of this DisplayerContainer.
      * @param width The width of this DisplayerContainer.
@@ -146,18 +132,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
     constructor(x : Double, y : Double, width : Int, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
         addDisplayers(*displayers)
     }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Int, height : Int, vararg displayers : Displayer) : this(p.intx(), p.inty(), width, height, *displayers)
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
@@ -221,18 +195,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Double, height : Int, displayers : Collection<Displayer>) : this(p.intx(), p.inty(), width, height, displayers)
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
      * @param x The x coordinate of the center of this DisplayerContainer.
      * @param y The y coordinate of the center of this DisplayerContainer.
      * @param width The width of this DisplayerContainer.
@@ -290,18 +252,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
     constructor(x : Double, y : Double, width : Double, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
         addDisplayers(*displayers)
     }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Double, height : Int, vararg displayers : Displayer) : this(p.intx(), p.inty(), width, height, *displayers)
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
@@ -365,18 +315,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Int, height : Double, displayers : Collection<Displayer>) : this(p.intx(), p.inty(), width, height, displayers)
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
      * @param x The x coordinate of the center of this DisplayerContainer.
      * @param y The y coordinate of the center of this DisplayerContainer.
      * @param width The width of this DisplayerContainer.
@@ -434,18 +372,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
     constructor(x : Double, y : Double, width : Int, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
         addDisplayers(*displayers)
     }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Int, height : Double, vararg displayers : Displayer) : this(p.intx(), p.inty(), width, height, *displayers)
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
@@ -509,18 +435,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     /**
      * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Double, height : Double, displayers : Collection<Displayer>) : this(p.intx(), p.inty(), width, height, displayers)
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
      * @param x The x coordinate of the center of this DisplayerContainer.
      * @param y The y coordinate of the center of this DisplayerContainer.
      * @param width The width of this DisplayerContainer.
@@ -578,18 +492,6 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
     constructor(x : Double, y : Double, width : Double, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
         addDisplayers(*displayers)
     }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param p The Point at the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(p : Point, width : Double, height : Double, vararg displayers : Displayer) : this(p.intx(), p.inty(), width, height, *displayers)
 
     /**
      * Adds the given displayers to this DisplayerContainer.

@@ -18,6 +18,8 @@ fun Collection<StringDisplay>.collapse() : String{
     return result
 }
 
+fun Collection<String>.toStringDisplayLines() : MutableList<MutableList<StringDisplay>> = toStringDisplays().toLinesList()
+
 /**
  * Produces a list of the represented lines
  */
@@ -164,7 +166,7 @@ fun Regex.matches(t : Text) : Boolean = matches(t.asString())
 
 fun FontMetrics.stringWidth(s : StringBuilder) : Int = stringWidth(s.toString())
 
-fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableList<MutableList<StringDisplay>>{
+fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics, trimSpaces : Boolean = true) : MutableList<MutableList<StringDisplay>>{
     if(maxLength <= 0) throw IllegalArgumentException("maxLength $maxLength in extension function Collection<StringDisplay>.toLines is invalid.")
 
     val result : MutableList<MutableList<StringDisplay>> = mutableListOf()
@@ -178,6 +180,8 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
     var fm : FontMetrics
 
     var words : MutableList<String>
+
+    var word : String
 
     var chars : MutableList<String>
 
@@ -216,7 +220,8 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                     for(i : Int in 1 until words.size){
                         words[i] = " ${words[i]}"
                     }
-                    for(word : String in words){
+                    for(i : Int in 0 until words.size){
+                        word = words[i]
                         when {
                             temporaryLineSDAndCharFit(word, fm) -> temporaryStringDisplay.push(word)
                             wordFitsInNewLine(word, fm) -> {
@@ -224,7 +229,11 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics) : MutableLi
                                 result.add(temporaryLine.toMutableList())
                                 temporaryStringDisplay.clear()
                                 temporaryLine.clear()
-                                temporaryStringDisplay.push(word)
+                                if(i == 0 || !trimSpaces){
+                                    temporaryStringDisplay.push(word)
+                                }else{
+                                    temporaryStringDisplay.push(word.substring(1, word.length))
+                                }
                             }
                             else -> {
                                 chars = word.split("").toMutableList()

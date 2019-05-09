@@ -3,7 +3,6 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.geometry.Point
 import llayout.utilities.StringDisplay
 import llayout.utilities.Text
 import java.awt.Color
@@ -153,24 +152,6 @@ class TextButton : TextDisplayer {
     /**
      * Constructs a TextButton with the given text at the given position with the given background
      * with the given action.
-     * @param p The position of this Button, as a Point.
-     * @param text The displayed text, as a list of StringDisplays.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     * @see Point
-     */
-    constructor(
-            p : Point,
-            text : Collection<StringDisplay>,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(p.intx(), p.inty(), text, action, background)
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
      * @param x The x coordinate of this Button.
      * @param y The y coordinate of this Button.
      * @param text The displayed text, as a StringDisplay.
@@ -255,24 +236,6 @@ class TextButton : TextDisplayer {
     /**
      * Constructs a TextButton with the given text at the given position with the given background
      * with the given action.
-     * @param p The position of this Button, as a Point.
-     * @param text The displayed text, as a StringDisplay.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     * @see Point
-     */
-    constructor(
-            p : Point,
-            text : StringDisplay,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(p.intx(), p.inty(), text, action, background)
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
      * @param x The x coordinate of this Button.
      * @param y The y coordinate of this Button.
      * @param text The displayed text, as a String.
@@ -349,23 +312,6 @@ class TextButton : TextDisplayer {
             background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
         this setOnMouseReleaseAction action
     }
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param p The position of this Button, as a Point.
-     * @param text The displayed text, as a String.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Point
-     */
-    constructor(
-            p : Point,
-            text : String,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : this(p.intx(), p.inty(), text, action, background)
 
     /**
      * Constructs a TextButton with the given text at the given position with the given background
@@ -450,23 +396,5 @@ class TextButton : TextDisplayer {
             background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
         this setOnMouseReleaseAction action
     }
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param p The position of this Button, as a Point.
-     * @param text The displayed text, as a Text object.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Text
-     */
-    constructor(
-            p : Point,
-            text : Text,
-            action : Action,
-            background: GraphicAction = DEFAULT_BUTTON_BACKGROUND)
-        : this(p.intx(), p.inty(), text, action, background)
 
 }

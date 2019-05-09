@@ -46,7 +46,15 @@ Clean mouse stuff, too many overridable things
 
 Displayer Groups and Grids
 
+LContainer
+    Add/remove methods in subInterface. The implementer must have a choice for the add/remove type
+
+Remove LFrameBuilder
+
+Actually draw a background in Buttons and such
+
 Displayers
+    relativeXYWH as LProperties
     Rename Displayer
     Debug DisplayerScrollPane
     PreferredWH for doubles
@@ -78,3 +86,5 @@ Projects
     2D RPG
     Physics simulator
     3D physics simulator
+    File explorer
+    Simulate heat equation solution
