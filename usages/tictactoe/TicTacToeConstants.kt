@@ -6,10 +6,7 @@ import llayout.displayers.CanvasDisplayer
 import llayout.displayers.Displayer
 import llayout.displayers.Label
 import llayout.displayers.TextButton
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import llayout.utilities.LProperty
 import llayout.utilities.StringDisplay
 import java.awt.Color.BLACK
@@ -162,4 +159,4 @@ private val scene : LScene = object : LScene(){
 
 }
 
-private val frame : LFrame = LFrameBuilder(scene).setFullScreen(true).setDecorated(false).build()
+private val frame : LFrame = LFrame(scene).setFullscreen()

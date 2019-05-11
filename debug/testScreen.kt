@@ -1,10 +1,7 @@
 package debug
 
 import llayout.displayers.*
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import llayout.utilities.StringDisplay
 import java.awt.Color.RED
 import java.awt.event.KeyEvent
@@ -65,7 +62,7 @@ val testScreen : LScene = object : LScene(){
 
 }
 
-val frame : LFrame = LFrameBuilder(testScreen).build()
+val frame : LFrame = LFrame(testScreen)
 
 val testApplication : LApplication = object : LApplication(){
     override fun run() {

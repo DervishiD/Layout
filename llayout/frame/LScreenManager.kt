@@ -24,9 +24,9 @@ internal class LScreenManager : LTimerUpdatable {
 
     /**
      * This LScreenManager's LFrame.
-     * @see LFrame
+     * @see LFrameCore
      */
-    private val frame : LFrame
+    private val frame : LFrameCore
 
     /**
      * The set of pressed keys.
@@ -39,10 +39,10 @@ internal class LScreenManager : LTimerUpdatable {
      * Constructs a LScreenManager for the given LFrame with the given starting LScene.
      * @param frame This LScreenManager's LFrame.
      * @param firstLScene The first LScene.
-     * @see LFrame
+     * @see LFrameCore
      * @see LScene
      */
-    internal constructor(frame : LFrame, firstLScene : LScene){
+    internal constructor(frame : LFrameCore, firstLScene : LScene){
         this.frame = frame
         currentLScene = firstLScene
         setCurrentScreenBounds()
@@ -85,7 +85,7 @@ internal class LScreenManager : LTimerUpdatable {
      * @see currentLScene
      * @see frame
      * @see LScene
-     * @see LFrame
+     * @see LFrameCore
      */
     private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.rootPane.width, frame.rootPane.height)
 

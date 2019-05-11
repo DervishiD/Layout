@@ -2,10 +2,7 @@ package usages.chibre
 
 import llayout.displayers.Label
 import llayout.displayers.TextField
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import llayout.utilities.LProperty
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
@@ -76,4 +73,4 @@ val screen : LScene = object : LScene(){
 
 }
 
-val frame : LFrame = LFrameBuilder(screen).setDecorated(false).setFullScreen(true).exitOnClose().build()
+val frame : LFrame = LFrame(screen).setFullscreen()

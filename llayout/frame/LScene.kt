@@ -18,7 +18,7 @@ import java.awt.event.*
  * @see Displayer
  * @see LScreenManager
  * @see JPanel
- * @see LFrame
+ * @see LFrameCore
  */
 open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -57,7 +57,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
      * Sets the next LScene to the given value.
      * @param nextLScene The LScene that appears on the core LFrame after this one.
      * @see nextLScene
-     * @see LFrame
+     * @see LFrameCore
      */
     protected infix fun setNextScreen(nextLScene : LScene){
         this.nextLScene.value = nextLScene

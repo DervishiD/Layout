@@ -1,7 +1,6 @@
 package llayout.interfaces
 
 import llayout.displayers.Displayer
-import llayout.displayers.DisplayerScrollPane
 import llayout.frame.LScene
 import java.awt.Component
 import java.awt.Container
@@ -17,7 +16,6 @@ import java.awt.Container
  * @see Container
  * @see Displayer
  * @see LScene
- * @see DisplayerScrollPane
  */
 interface LContainer : HavingDimension {
 

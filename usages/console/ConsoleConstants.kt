@@ -2,10 +2,7 @@ package usages.console
 
 import llayout.displayers.ConsoleScrollPane
 import llayout.displayers.TextField
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import llayout.utilities.StringDisplay
 import java.awt.Color.RED
 import java.awt.event.KeyEvent
@@ -48,4 +45,4 @@ private val scene : LScene = object : LScene(){
 
 }
 
-private val frame : LFrame = LFrameBuilder(scene).build()
+private val frame : LFrame = LFrame(scene)

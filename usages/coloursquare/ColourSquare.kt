@@ -2,10 +2,7 @@ package usages.coloursquare
 
 import llayout.displayers.CanvasDisplayer
 import llayout.displayers.TextButton
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.random.Random
@@ -61,11 +58,11 @@ val screen : LScene = object : LScene(){
     private fun addRandomColourStep() : LScene{
         when(Random.nextInt(0, 6)){
             0 -> addRed()
-            1 -> substractRed()
+            1 -> subtractRed()
             2 -> addGreen()
-            3 -> substractGreen()
+            3 -> subtractGreen()
             4 -> addBlue()
-            5 -> substractBlue()
+            5 -> subtractBlue()
         }
         return this
     }
@@ -74,7 +71,7 @@ val screen : LScene = object : LScene(){
         if(colour.red <= 255 - colourStep) colour = Color(colour.red + colourStep, colour.green, colour.blue)
     }
 
-    private fun substractRed(){
+    private fun subtractRed(){
         if(colour.red >= colourStep) colour = Color(colour.red - colourStep, colour.green, colour.blue)
     }
 
@@ -82,7 +79,7 @@ val screen : LScene = object : LScene(){
         if(colour.green <= 255 - colourStep) colour = Color(colour.red, colour.green + colourStep, colour.blue)
     }
 
-    private fun substractGreen(){
+    private fun subtractGreen(){
         if(colour.green >= colourStep) colour = Color(colour.red, colour.green - colourStep, colour.blue)
     }
 
@@ -90,10 +87,10 @@ val screen : LScene = object : LScene(){
         if(colour.blue <= 255 - colourStep) colour = Color(colour.red, colour.green, colour.blue + colourStep)
     }
 
-    private fun substractBlue(){
+    private fun subtractBlue(){
         if(colour.blue >= colourStep) colour = Color(colour.red, colour.green, colour.blue - colourStep)
     }
 
 }
 
-val frame : LFrame = LFrameBuilder(screen).exitOnClose().setFullScreen(true).setDecorated(false).build()
+val frame : LFrame = LFrame(screen)

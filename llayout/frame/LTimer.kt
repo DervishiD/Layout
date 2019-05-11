@@ -7,9 +7,9 @@ import javax.swing.Timer
  * @param frame This LTimer's LFrame.
  * @param period This LTimer's period.
  * @see java.util.Timer
- * @see LFrame
+ * @see LFrameCore
  */
-internal class LTimer(private val frame: LFrame, private var period: Int = DEFAULT_PERIOD) {
+internal class LTimer(private val frame: LFrameCore, private var period: Int = DEFAULT_PERIOD) {
 
     companion object {
 

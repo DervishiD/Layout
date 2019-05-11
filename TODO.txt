@@ -49,8 +49,6 @@ Displayer Groups and Grids
 LContainer
     Add/remove methods in subInterface. The implementer must have a choice for the add/remove type
 
-Remove LFrameBuilder
-
 Actually draw a background in Buttons and such
 
 Displayers
@@ -66,10 +64,6 @@ Displayers
     Console-like input
 
 Projects
-    Probability distributions
-        Other distributions
-            Gaussian
-            Double gaussian
     Chibre
         Make better one, more console-like
     That game Schinz made that day

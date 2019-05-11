@@ -4,42 +4,13 @@ import llayout.Action
 import llayout.displayers.Label
 import llayout.displayers.TextArrowSelector
 import llayout.displayers.TextButton
-import llayout.frame.LApplication
-import llayout.frame.LFrame
-import llayout.frame.LFrameBuilder
-import llayout.frame.LScene
+import llayout.frame.*
 import llayout.utilities.*
 import kotlin.math.*
 
 val probabilityApplication : LApplication = LApplication {
     mainFrame.run()
     randomDistributionFrame.run()
-}
-
-val mainFrame : LFrame by lazy {
-    LFrameBuilder(MAIN_L_SCENE)
-            .exitOnClose()
-            .setCenterXCoordinate(0.2)
-            .setCenterYCoordinate(0.2)
-            .setWidth(0.4)
-            .setHeight(0.5)
-            .setDecorated(false)
-            .setFullScreen(false)
-            .isRunningIfHidden(false)
-            .build()
-}
-
-val randomDistributionFrame : LFrame by lazy{
-    LFrameBuilder(randomDistributionScreen)
-            .hideOnClose()
-            .setFullScreen(false)
-            .setDecorated(false)
-            .setCenterXCoordinate(0.7)
-            .setCenterYCoordinate(0.5)
-            .setWidth(0.6)
-            .setHeight(1.0)
-            .isRunningIfHidden(false)
-            .build()
 }
 
 class RandomDistributionLScene : LScene(){
@@ -180,3 +151,7 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     }
 
 }
+
+val mainFrame : LFrame = LFrame(MAIN_L_SCENE).setX(0.2).setY(0.2).setWidth(0.4).setHeight(0.5).setUndecorated()
+
+val randomDistributionFrame : LFrame = LFrame(randomDistributionScreen).setUndecorated().setX(0.7).setY(0.5).setWidth(0.6).setHeight(1.0)

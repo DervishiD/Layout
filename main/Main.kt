@@ -11,11 +11,11 @@ import usages.tictactoe.TicTacToeApplication
 
 fun main(){
     //probabilityApplication.run()
-    //testApplication.run()
+    testApplication.run()
     //chibreApplication.run()
     //colourSquareApplication.run()
     //meanDistanceApplication.run()
     //TicTacToeApplication.run()
     //consoleApplication.run()
-    newton2DApplication.run()
+    //newton2DApplication.run()
 }
