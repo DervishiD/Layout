@@ -33,13 +33,13 @@ interface LContainer : HavingDimension {
      * @see parts
      */
     fun add(d : Displayable) : LContainer {
+        d.onAdd(this)
         parts.add(d)
         if(this is Container && d is Component) (this as Container).add(d)
         d.updateRelativeValues(width(), height())
         w.addListener(d){d.updateRelativeValues(width(), height())}
         h.addListener(d){d.updateRelativeValues(width(), height())}
         d.addRequestUpdateListener(this){d.updateRelativeValues(width(), height())}
-        d.onAdd(this)
         return this
     }
 
@@ -51,12 +51,12 @@ interface LContainer : HavingDimension {
      * @see parts
      */
     fun remove(d : Displayable) : LContainer {
+        d.onRemove(this)
         parts.remove(d)
         if(this is Container && d is Component) (this as Container).remove(d)
         w.removeListener(d)
         h.removeListener(d)
         d.removeRequestUpdateListener(this)
-        d.onRemove(this)
         return this
     }
 

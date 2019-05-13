@@ -138,6 +138,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
                 component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseMoved()
             is Displayer -> component.mouseMoved()
         }
+        LMouse.setNewMousePosition(e.x, e.y)
         requestFocusInWindow()
     }
 
@@ -157,6 +158,7 @@ open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Ca
                 component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseDrag()
             is Displayer -> component.mouseDrag()
         }
+        LMouse.setNewMousePosition(e.x, e.y)
     }
 
     override fun mouseReleased(e: MouseEvent?) {

@@ -39,5 +39,3 @@ internal val DEFAULT_LARGE_FONT : Font = Font("Monospaced", Font.BOLD, 32)
 internal val DEFAULT_COLOR : Color = Color.BLACK
 
 //NUMBERS----------------------------------------------------------------------
-
-const val DOUBLE_PRECISION : Double = 1e-3

@@ -1,9 +1,10 @@
 package usages.probability
 
-import llayout.DOUBLE_PRECISION
 import llayout.RealFunction
 import kotlin.math.*
 import kotlin.random.Random
+
+private const val DOUBLE_PRECISION : Double = 1e-3
 
 fun mean(x : Double, y : Double) : Double = (x + y) / 2.0
 

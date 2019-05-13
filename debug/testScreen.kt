@@ -14,16 +14,20 @@ val testScreen : LScene = object : LScene(){
     val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
     val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
     val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
+    val hds : HorizontalDoubleSlider =
+            HorizontalDoubleSlider(0.7, 0.8, 0.3, 20)
+                    .setMinimum(0)
+                    .setMaximum(5)
+                    .setPrecision(0.5)
+                    as HorizontalDoubleSlider
+    val vds : VerticalDoubleSlider =
+            VerticalDoubleSlider(0.5, 0.25, 30, 300)
+                    .setMinimum(0)
+                    .setMaximum(5)
+                    .setPrecision(0.5)
+                    as VerticalDoubleSlider
 
-    override fun keyTyped(e: KeyEvent?) {
-        f.type(e!!)
-    }
-
-    override fun keyPressed(e: KeyEvent?) {
-        f.type(e!!)
-    }
-
-    override fun load() {
+    init{
         add(l)
         add(b)
         add(l2)
@@ -50,14 +54,16 @@ val testScreen : LScene = object : LScene(){
         csp.write(1)
         csp.writeln("Now comes the time to finally know if, after about four minutes of a small edit, I can resize that scroll pane properly.")
         add(csp)
+        add(hds)
+        add(vds)
     }
 
-    override fun save() {
-        remove(b)
-        remove(l)
-        remove(l2)
-        remove(f)
-        remove(tsp)
+    override fun keyTyped(e: KeyEvent?) {
+        f.type(e!!)
+    }
+
+    override fun keyPressed(e: KeyEvent?) {
+        f.type(e!!)
     }
 
 }

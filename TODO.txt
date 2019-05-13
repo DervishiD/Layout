@@ -32,7 +32,7 @@ Canvas
 StringDisplay
     Switch to StringBuilder
 
-LinkedLists, Queues, Stacks?
+More functions, less constructor parameters
 
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
@@ -49,6 +49,8 @@ Displayer Groups and Grids
 LContainer
     Add/remove methods in subInterface. The implementer must have a choice for the add/remove type
 
+Decorate LScene
+
 Actually draw a background in Buttons and such
 
 Displayers
@@ -56,12 +58,12 @@ Displayers
     Rename Displayer
     Debug DisplayerScrollPane
     PreferredWH for doubles
-    Slider
     TextArea
     Switch between two values
     On/off
     Graph for Double-Double map
-    Console-like input
+    TextScrollPane, ConsoleScrollPane
+        Add lateral sliders
 
 Projects
     Chibre

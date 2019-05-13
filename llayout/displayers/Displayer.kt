@@ -12,7 +12,6 @@ import javax.swing.JLabel
  * @see LScene
  * @see LContainer
  * @see MouseInteractable
- * @see Point
  */
 abstract class Displayer : JLabel, Displayable, MouseInteractable {
 
