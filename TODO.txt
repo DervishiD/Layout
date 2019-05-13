@@ -33,25 +33,22 @@ StringDisplay
     Switch to StringBuilder
 
 More functions, less constructor parameters
+    Go through classes
 
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
 
-Add default fonts and colors setters to LFrames / LFrameBuilders?
+Add default fonts and colors setters to LFrames / LFrameBuilders
 
 StringBuilders, CharSequences everywhere
 
-Clean mouse stuff, too many overridable things
-    --> Wrapper?
+Frame minimal size and resizeable
 
 Displayer Groups and Grids
 
-LContainer
-    Add/remove methods in subInterface. The implementer must have a choice for the add/remove type
-
-Decorate LScene
-
 Actually draw a background in Buttons and such
+
+Remove focus in TextField
 
 Displayers
     relativeXYWH as LProperties
@@ -60,14 +57,13 @@ Displayers
     PreferredWH for doubles
     TextArea
     Switch between two values
-    On/off
     Graph for Double-Double map
     TextScrollPane, ConsoleScrollPane
         Add lateral sliders
 
 Projects
-    Chibre
-        Make better one, more console-like
+    Fractals
+    Better Chibre
     That game Schinz made that day
     9x9 Tic-Tac-Toe
     Amazons

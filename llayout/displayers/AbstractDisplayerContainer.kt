@@ -1,15 +1,15 @@
 package llayout.displayers
 
-import llayout.interfaces.LContainer
+import llayout.interfaces.StandardLContainer
 import llayout.interfaces.Displayable
 import java.awt.Component
 
 /**
- * An abstract Displayer that implements the LContainer interface.
+ * An abstract Displayer that implements the StandardLContainer interface.
  * @see Displayer
- * @see LContainer
+ * @see StandardLContainer
  */
-abstract class AbstractDisplayerContainer : ResizableDisplayer, LContainer {
+abstract class AbstractDisplayerContainer : ResizableDisplayer, StandardLContainer {
 
     override val parts: MutableCollection<Displayable> = mutableListOf()
 
@@ -157,14 +157,14 @@ abstract class AbstractDisplayerContainer : ResizableDisplayer, LContainer {
      */
     constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
 
-    override fun mouseClick(x : Int, y : Int){}
-    override fun mousePress(x : Int, y : Int){}
-    override fun mouseRelease(x : Int, y : Int){}
-    override fun mouseEnter(x : Int, y : Int){}
-    override fun mouseExit(x : Int, y : Int){}
-    override fun mouseDrag(x : Int, y : Int){}
-    override fun mouseMoved(x : Int, y : Int){}
-    override fun mouseWheelMoved(x : Int, y : Int, units : Int){}
+    override fun mouseClickAt(x : Int, y : Int){}
+    override fun mousePressAt(x : Int, y : Int){}
+    override fun mouseReleaseAt(x : Int, y : Int){}
+    override fun mouseEnterAt(x : Int, y : Int){}
+    override fun mouseExitAt(x : Int, y : Int){}
+    override fun mouseDragAt(x : Int, y : Int){}
+    override fun mouseMovedAt(x : Int, y : Int){}
+    override fun mouseWheelMovedAt(x : Int, y : Int, units : Int){}
 
     /**
      * Returns the Displayer at the given coordinates, relative to itself.

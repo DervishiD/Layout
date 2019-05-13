@@ -4,7 +4,7 @@ import llayout.Action
 import llayout.frame.LScene
 import llayout.GraphicAction
 import llayout.interfaces.AbstractSelector
-import llayout.interfaces.LContainer
+import llayout.interfaces.StandardLContainer
 import llayout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
@@ -455,12 +455,12 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         return this
     }
 
-    override fun onAdd(container : LContainer) {
+    override fun onAdd(container : StandardLContainer) {
         container.add(previousArrow)
         container.add(nextArrow)
     }
 
-    override fun onRemove(container : LContainer) {
+    override fun onRemove(container : StandardLContainer) {
         container.remove(previousArrow)
         container.remove(nextArrow)
     }

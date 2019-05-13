@@ -3,7 +3,7 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.interfaces.LContainer
+import llayout.interfaces.StandardLContainer
 import llayout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
@@ -178,11 +178,11 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
         currentValue.value = rounded(value)
     }
 
-    override fun onAdd(container: LContainer) {
+    override fun onAdd(container: StandardLContainer) {
         container.add(slider)
     }
 
-    override fun onRemove(container: LContainer) {
+    override fun onRemove(container: StandardLContainer) {
         container.remove(slider)
     }
 

@@ -8,9 +8,9 @@ import java.awt.Graphics
 import javax.swing.JLabel
 
 /**
- * A Displayer is the type of Component that is added on LContainer objects.
+ * A Displayer is the type of Component that is added on StandardLContainer objects.
  * @see LScene
- * @see LContainer
+ * @see StandardLContainer
  * @see MouseInteractable
  */
 abstract class Displayer : JLabel, Displayable, MouseInteractable {
@@ -127,7 +127,7 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable {
      * The Displayer must be initialized if some of its information must
      * be calculated the next time it is drawn on its container.
      * @see initialize
-     * @see LContainer.initialization
+     * @see StandardLContainer.initialization
      */
     protected var initphase : Boolean = true
 

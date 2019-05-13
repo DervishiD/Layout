@@ -15,7 +15,7 @@ val testScreen : LScene = object : LScene(){
     val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
     val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
     val hds : HorizontalDoubleSlider =
-            HorizontalDoubleSlider(0.7, 0.8, 0.3, 20)
+            HorizontalDoubleSlider(0.7, 0.8, 0.3, 30)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
@@ -26,6 +26,7 @@ val testScreen : LScene = object : LScene(){
                     .setMaximum(5)
                     .setPrecision(0.5)
                     as VerticalDoubleSlider
+    val s : Switch = Switch(0, 0, 45, 45).alignUpTo(0).alignRightTo(1.0) as Switch
 
     init{
         add(l)
@@ -56,6 +57,7 @@ val testScreen : LScene = object : LScene(){
         add(csp)
         add(hds)
         add(vds)
+        add(s)
     }
 
     override fun keyTyped(e: KeyEvent?) {

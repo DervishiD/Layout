@@ -13,14 +13,14 @@ import java.awt.event.*
 /**
  * The general abstraction for a background pane. A LScene is a special kind of JPanel that is used in this Layout.
  * Every scene that appears in a LFrame is a LScene.
- * @see LContainer
+ * @see StandardLContainer
  * @see MouseInteractable
  * @see Displayer
  * @see LScreenManager
  * @see JPanel
  * @see LFrameCore
  */
-open class LScene : JPanel(), LContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+open class LScene : JPanel(), StandardLContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     override var w : LProperty<Int> = LProperty(0)
 

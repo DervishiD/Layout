@@ -138,4 +138,9 @@ class LFrame(scene : LScene) {
         return this
     }
 
+    fun setTitle(title : CharSequence) : LFrame{
+        core.title = title.toString()
+        return this
+    }
+
 }

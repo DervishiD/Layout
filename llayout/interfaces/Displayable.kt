@@ -8,9 +8,9 @@ interface Displayable : LTimerUpdatable, HavingDimension {
 
     var requestUpdate : LProperty<Boolean>
 
-    fun onAdd(container : LContainer){}
+    fun onAdd(container : StandardLContainer){}
 
-    fun onRemove(container : LContainer){}
+    fun onRemove(container : StandardLContainer){}
 
     fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayable = this
 
