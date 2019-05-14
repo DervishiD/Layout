@@ -54,8 +54,8 @@ internal class LScreenManager : LTimerUpdatable {
      * @see LScene
      */
     fun start(){
-        currentLScene.load()
         frame.contentPane = currentLScene
+        currentLScene.load()
     }
 
     /**
@@ -75,8 +75,8 @@ internal class LScreenManager : LTimerUpdatable {
         currentLScene = LScene
         setCurrentScreenBounds()
         addScreenChangeListener(currentLScene)
-        currentLScene.load()
         frame.contentPane = currentLScene
+        currentLScene.load()
         currentLScene.initialization()
     }
 

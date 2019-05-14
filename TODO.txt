@@ -42,8 +42,6 @@ Add default fonts and colors setters to LFrames / LFrameBuilders
 
 StringBuilders, CharSequences everywhere
 
-Frame minimal size and resizeable
-
 Displayer Groups and Grids
 
 Actually draw a background in Buttons and such
@@ -53,7 +51,6 @@ Remove focus in TextField
 Displayers
     relativeXYWH as LProperties
     Rename Displayer
-    Debug DisplayerScrollPane
     PreferredWH for doubles
     TextArea
     Switch between two values
@@ -78,5 +75,3 @@ Projects
     2D RPG
     Physics simulator
     3D physics simulator
-    File explorer
-    Simulate heat equation solution

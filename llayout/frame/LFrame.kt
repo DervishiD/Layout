@@ -143,4 +143,134 @@ class LFrame(scene : LScene) {
         return this
     }
 
+    fun setResizable() : LFrame{
+        core.isResizable = true
+        return this
+    }
+
+    fun setUnResizable() : LFrame{
+        core.isResizable = false
+        return this
+    }
+
+    fun setMinimalWidth(width : Int) : LFrame{
+        if(width <= 0) throw IllegalArgumentException("Negative width $width in LFrame.setMinimalWidth")
+        core.minimumSize.width = width
+        return this
+    }
+
+    fun setMinimalHeight(height : Int) : LFrame{
+        if(height <= 0) throw IllegalArgumentException("Negative height $height in LFrame.setMinimalHeight")
+        core.minimumSize.height = height
+        return this
+    }
+
+    fun setMinimalWidth(width : Double) : LFrame = setMinimalWidth((width * SCREEN_WIDTH).toInt())
+
+    fun setMinimalHeight(height : Double) : LFrame = setMinimalHeight((height * SCREEN_HEIGHT).toInt())
+
+    fun setMinimalDimensions(width : Int, height : Int) : LFrame{
+        setMinimalWidth(width)
+        setMinimalHeight(height)
+        return this
+    }
+
+    fun setMinimalDimensions(width : Int, height : Double) : LFrame{
+        setMinimalWidth(width)
+        setMinimalHeight(height)
+        return this
+    }
+
+    fun setMinimalDimensions(width : Double, height : Int) : LFrame{
+        setMinimalWidth(width)
+        setMinimalHeight(height)
+        return this
+    }
+
+    fun setMinimalDimensions(width : Double, height : Double) : LFrame{
+        setMinimalWidth(width)
+        setMinimalHeight(height)
+        return this
+    }
+
+    fun setMaximalWidth(width : Int) : LFrame{
+        if(width <= 0) throw IllegalArgumentException("Negative width $width in LFrame.setMaximalWidth")
+        core.maximumSize.width = width
+        return this
+    }
+
+    fun setMaximalHeight(height : Int) : LFrame{
+        if(height <= 0) throw IllegalArgumentException("Negative height $height in LFrame.setMaximalHeight")
+        core.maximumSize.height = height
+        return this
+    }
+
+    fun setMaximalWidth(width : Double) : LFrame = setMaximalWidth((width * SCREEN_WIDTH).toInt())
+
+    fun setMaximalHeight(height : Double) : LFrame = setMaximalHeight((height * SCREEN_HEIGHT).toInt())
+
+    fun setMaximalDimensions(width : Int, height : Int) : LFrame{
+        setMaximalWidth(width)
+        setMaximalHeight(height)
+        return this
+    }
+
+    fun setMaximalDimensions(width : Int, height : Double) : LFrame{
+        setMaximalWidth(width)
+        setMaximalHeight(height)
+        return this
+    }
+
+    fun setMaximalDimensions(width : Double, height : Int) : LFrame{
+        setMaximalWidth(width)
+        setMaximalHeight(height)
+        return this
+    }
+
+    fun setMaximalDimensions(width : Double, height : Double) : LFrame{
+        setMaximalWidth(width)
+        setMaximalHeight(height)
+        return this
+    }
+
+    fun setPreferredWidth(width : Int) : LFrame{
+        if(width <= 0) throw IllegalArgumentException("Negative width $width in LFrame.setPreferredWidth")
+        core.preferredSize.width = width
+        return this
+    }
+
+    fun setPreferredHeight(height : Int) : LFrame{
+        if(height <= 0) throw IllegalArgumentException("Negative height $height in LFrame.setPreferredHeight")
+        core.preferredSize.height = height
+        return this
+    }
+
+    fun setPreferredWidth(width : Double) : LFrame = setPreferredWidth((width * SCREEN_WIDTH).toInt())
+
+    fun setPreferredHeight(height : Double) : LFrame = setPreferredHeight((height * SCREEN_HEIGHT).toInt())
+
+    fun setPreferredDimensions(width : Int, height : Int) : LFrame{
+        setPreferredWidth(width)
+        setPreferredHeight(height)
+        return this
+    }
+
+    fun setPreferredDimensions(width : Int, height : Double) : LFrame{
+        setPreferredWidth(width)
+        setPreferredHeight(height)
+        return this
+    }
+
+    fun setPreferredDimensions(width : Double, height : Int) : LFrame{
+        setPreferredWidth(width)
+        setPreferredHeight(height)
+        return this
+    }
+
+    fun setPreferredDimensions(width : Double, height : Double) : LFrame{
+        setPreferredWidth(width)
+        setPreferredHeight(height)
+        return this
+    }
+
 }

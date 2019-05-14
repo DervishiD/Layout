@@ -6,27 +6,27 @@ import llayout.utilities.StringDisplay
 import java.awt.Color.RED
 import java.awt.event.KeyEvent
 
-val testScreen : LScene = object : LScene(){
+private val testScreen : LScene = object : LScene(){
 
-    val b : TextButton = TextButton(0.5, 0.6, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
-    val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
-    val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
-    val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
-    val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
-    val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
-    val hds : HorizontalDoubleSlider =
+    private val b : TextButton = TextButton(0.5, 0.6, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
+    private val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
+    private val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
+    private val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
+    private val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
+    private val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
+    private val hds : HorizontalDoubleSlider =
             HorizontalDoubleSlider(0.7, 0.8, 0.3, 30)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
                     as HorizontalDoubleSlider
-    val vds : VerticalDoubleSlider =
+    private val vds : VerticalDoubleSlider =
             VerticalDoubleSlider(0.5, 0.25, 30, 300)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
                     as VerticalDoubleSlider
-    val s : Switch = Switch(0, 0, 45, 45).alignUpTo(0).alignRightTo(1.0) as Switch
+    private val s : Switch = Switch(0, 0, 45, 45).alignUpTo(0).alignRightTo(1.0) as Switch
 
     init{
         add(l)
@@ -70,10 +70,6 @@ val testScreen : LScene = object : LScene(){
 
 }
 
-val frame : LFrame = LFrame(testScreen)
+private val frame : LFrame = LFrame(testScreen)
 
-val testApplication : LApplication = object : LApplication(){
-    override fun run() {
-        frame.run()
-    }
-}
+val testApplication : LApplication = LApplication{ frame.run() }

@@ -36,7 +36,7 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     private var minimalValue : LProperty<Double> = LProperty(0.0)
 
-    private var maximalValue : LProperty<Double> = LProperty(0.0)
+    private var maximalValue : LProperty<Double> = LProperty(10.0)
 
     private var currentValue : LProperty<Double> = LProperty(minimalValue.value)
 
