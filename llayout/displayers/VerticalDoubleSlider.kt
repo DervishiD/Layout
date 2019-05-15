@@ -14,7 +14,6 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
             }else{
                 slider.setHeight(MINIMAL_SLIDER_SIZE)
             }
-            conserveSliderPositionOnResize()
         }
         slider.onMouseDrag = { slider.moveAlongY(LMouse.mouseDisplacementY()) }
         slider.addYListener{ updateValue() }
@@ -92,9 +91,17 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
     }
 
     override fun conserveSliderPositionOnResize(){
-        val proportion : Double = value() / range()
-        val newY : Int = downSideY() + (proportion * height()).toInt()
+        val proportion : Double = (value() - minimalValue()) / range()
+        val newY : Int = downSideY() - (proportion * height()).toInt()
+        val previousValue : Double = value()
         slider.sety(newY)
+        setValue(previousValue)
+    }
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): VerticalDoubleSlider {
+        super.updateRelativeValues(frameWidth, frameHeight)
+        conserveSliderPositionOnResize()
+        return this
     }
 
     override fun loadParameters(g: Graphics) {

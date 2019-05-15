@@ -14,7 +14,6 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
             }else{
                 slider.setWidth(MINIMAL_SLIDER_SIZE)
             }
-            conserveSliderPositionOnResize()
         }
         slider.onMouseDrag = { slider.moveAlongX(LMouse.mouseDisplacementX()) }
         slider.addXListener{ updateValue() }
@@ -92,9 +91,17 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
     }
 
     override fun conserveSliderPositionOnResize(){
-        val proportion : Double = value() / range()
+        val proportion : Double = (value() - minimalValue()) / range()
         val newX : Int = leftSideX() + (proportion * width()).toInt()
+        val previousValue : Double = value()
         slider.setx(newX)
+        setValue(previousValue)
+    }
+
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): HorizontalDoubleSlider {
+        super.updateRelativeValues(frameWidth, frameHeight)
+        conserveSliderPositionOnResize()
+        return this
     }
 
     override fun loadParameters(g: Graphics) {

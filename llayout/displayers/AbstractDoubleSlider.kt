@@ -12,7 +12,7 @@ import kotlin.math.ceil
 abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     protected companion object{
-        private const val DEFAULT_PRECISION : Double = 1e-1
+        private const val DEFAULT_PRECISION : Double = 0.1
         @JvmStatic protected val MINIMAL_SLIDER_SIZE : Int = 50
         @JvmStatic protected val DEFAULT_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             val lineThickness : Int = 2
@@ -108,10 +108,8 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
     fun setPrecision(precision : Double) : AbstractDoubleSlider{
         if(precision < 0) {
             throw IllegalArgumentException("Negative precision $precision in AbstractDoubleSlider.setPrecision")
-        }else if(precision > range()) {
-            throw IllegalArgumentException("Precision $precision greater than range ${range()} in AbstractDoubleSlider.setPrecision")
         }
-        this.precision.value = precision
+        this.precision.value = if(precision > range()) range() else precision
         return this
     }
 

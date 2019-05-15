@@ -27,6 +27,14 @@ private val testScreen : LScene = object : LScene(){
                     .setPrecision(0.5)
                     as VerticalDoubleSlider
     private val s : Switch = Switch(0, 0, 45, 45).alignUpTo(0).alignRightTo(1.0) as Switch
+    private val dc : DoubleCursor = DoubleCursor(0, 0, 0.2, 0.3)
+                    .setMinimalXValue(-2)
+                    .setMaximalXValue(2)
+                    .setMinimalYValue(0)
+                    .setMaximalYValue(5)
+                    .setXYPrecision(0.0)
+                    .alignUpTo(0)
+                    .alignLeftTo(0.1) as DoubleCursor
 
     init{
         add(l)
@@ -58,6 +66,7 @@ private val testScreen : LScene = object : LScene(){
         add(hds)
         add(vds)
         add(s)
+        add(dc)
     }
 
     override fun keyTyped(e: KeyEvent?) {
