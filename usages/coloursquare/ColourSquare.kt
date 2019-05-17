@@ -53,9 +53,9 @@ val screen : LScene = object : LScene(){
         remove(toggleButton)
     }
 
-    override fun onTimerTick(): LScene = addRandomColourStep()
+    override fun onTimerTick() = addRandomColourStep()
 
-    private fun addRandomColourStep() : LScene{
+    private fun addRandomColourStep(){
         when(Random.nextInt(0, 6)){
             0 -> addRed()
             1 -> subtractRed()
@@ -64,7 +64,6 @@ val screen : LScene = object : LScene(){
             4 -> addBlue()
             5 -> subtractBlue()
         }
-        return this
     }
 
     private fun addRed(){

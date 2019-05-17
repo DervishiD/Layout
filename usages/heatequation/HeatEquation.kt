@@ -101,9 +101,8 @@ private class GraphScene : LScene(){
         addPoints()
     }
 
-    override fun onTimerTick(): GraphScene {
+    override fun onTimerTick() {
         t += DELTA_T
-        return this
     }
 
 }

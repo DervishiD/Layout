@@ -189,11 +189,10 @@ open class LScene : JPanel(), StandardLContainer, LTimerUpdatable, Canvas {
      */
     fun nextScreen() : LScene? = nextLScene.value
 
-    override fun onTimerTick(): LScene {
+    override fun onTimerTick() {
         for(d : Displayable in parts){
             d.onTimerTick()
         }
-        return this
     }
 
 }

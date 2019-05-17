@@ -30,7 +30,7 @@ interface Displayable : LTimerUpdatable, HavingDimension {
         return this
     }
 
-    override fun onTimerTick(): Displayable = this
+    override fun onTimerTick(){}
 
     fun drawDisplayable(g : Graphics)
 

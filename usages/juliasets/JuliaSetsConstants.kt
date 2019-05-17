@@ -12,17 +12,13 @@ import java.awt.event.KeyEvent.*
 
 private const val PLOT_SIZE : Int = 800
 private const val ITERATIONS : Int = 100
-private const val RELOAD_PERIOD : Int = 1500
+private const val RELOAD_PERIOD : Int = 2000
 private const val ARROW_MOVEMENT : Int = 2
 
 /*
- * 0.3852 + 0.2017 i
+ * 0.3821 + 0.2001 i
  * 0.3730 + 0.0855 i
  * 0.3862 + 0.2818 i
- */
-
-/*
- * Zoom (drag)
  */
 
 val juliaSetsApplication : LApplication = LApplication{
@@ -105,9 +101,9 @@ private val graphScene = object : LScene(){
     private var maxY : Double = 1.5
 
     init{
-        addPoints()
         w.addListener{ reset() }
         h.addListener{ reset() }
+        setOnMouseWheelMovedAction { e -> zoom(e.x, e.y, e.unitsToScroll) }
     }
 
     fun reload(c : ComplexNumber){
@@ -147,17 +143,39 @@ private val graphScene = object : LScene(){
     private fun addPoints(){
         for(i : Int in 0..width()){
             for(j : Int in 0..height()){
-                val color : Color = iterateOn(xOfPixel(i), yOfPixel(j))
-                addGraphicAction{ g : Graphics, _, _ -> run{
-                    g.color = color
+                addGraphicAction{ g : Graphics, _, _ ->
+                    g.color = iterateOn(xOfPixel(i), yOfPixel(j))
                     g.fillRect(i, j, 1, 1)
-                }}
+                }
             }
         }
     }
 
     private fun reset(){
         clearBackground()
+        addPoints()
+    }
+
+    private fun zoom(i : Int, j : Int, units : Int){
+        val x : Double = xOfPixel(i)
+        val y : Double = yOfPixel(j)
+        val nextHalfXRange : Double
+        val nextHalfYRange : Double
+        if(units > 0){
+            nextHalfXRange = xRange()
+            nextHalfYRange = yRange()
+        }else{
+            nextHalfXRange = xRange() / 4
+            nextHalfYRange = yRange() / 4
+        }
+        minX = x - nextHalfXRange
+        maxX = x + nextHalfXRange
+        minY = y - nextHalfYRange
+        maxY = y + nextHalfYRange
+        reset()
+    }
+
+    override fun load() {
         addPoints()
     }
 

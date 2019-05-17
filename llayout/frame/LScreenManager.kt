@@ -107,9 +107,8 @@ internal class LScreenManager : LTimerUpdatable {
      */
     private infix fun removeScreenChangeListener(LScene : LScene) = LScene.removeScreenChangeListener(this)
 
-    override fun onTimerTick(): LScreenManager {
+    override fun onTimerTick() {
         currentLScene.onTimerTick()
-        return this
     }
 
 }

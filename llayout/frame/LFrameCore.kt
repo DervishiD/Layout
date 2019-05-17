@@ -136,9 +136,8 @@ internal class LFrameCore : JFrame, LTimerUpdatable {
         return this
     }
 
-    override fun onTimerTick(): LFrameCore {
+    override fun onTimerTick() {
         screenManager.onTimerTick()
-        return this
     }
 
     fun setCenterX(x : Int){

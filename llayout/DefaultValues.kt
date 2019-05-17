@@ -8,18 +8,7 @@ import java.awt.Graphics
 
 typealias Action = () -> Unit
 typealias GraphicAction = (Graphics, Int, Int) -> Unit
-typealias MouseWheelAction = (Int) -> Unit
 typealias RealFunction = (Double) -> Double
-
-operator fun Action.plus(other : Action) : Action = {
-    this()
-    other()
-}
-
-operator fun GraphicAction.plus(other : GraphicAction) : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
-    this(g, w, h)
-    other(g, w, h)
-}}
 
 //FONTS-----------------------------------------------------------------------
 

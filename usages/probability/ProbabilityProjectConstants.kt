@@ -50,9 +50,8 @@ class RandomDistributionLScene : LScene(){
         currentGeometryDrawPoint = drawRadPoint
     }
 
-    override fun onTimerTick(): LScene {
+    override fun onTimerTick() {
         currentGeometryDrawPoint.invoke()
-        return super.onTimerTick()
     }
 
     override fun load() {

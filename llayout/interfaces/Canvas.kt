@@ -35,11 +35,10 @@ interface Canvas : HavingDimension {
     }
 
     fun drawPoint(x : Int, y : Int, color : Color = BLACK) : Canvas {
-        val addedGraphicAction : GraphicAction = { g : Graphics, _, _ -> run{
+        addGraphicAction{ g : Graphics, _, _ -> run{
             g.color = color
             g.drawRect(x, y, 1, 1)
         }}
-        graphics[addedGraphicAction] = addedGraphicAction
         return this
     }
 

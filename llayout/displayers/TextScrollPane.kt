@@ -1,10 +1,7 @@
 package llayout.displayers
 
-import llayout.MouseWheelAction
 import llayout.utilities.*
 import java.awt.Graphics
-import java.awt.event.MouseWheelEvent
-import java.awt.event.MouseWheelListener
 
 /**
  * A scroll pane scrolling through lines of text, with methods to write at the end of its lines.
