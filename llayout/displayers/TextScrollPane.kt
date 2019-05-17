@@ -3,6 +3,8 @@ package llayout.displayers
 import llayout.MouseWheelAction
 import llayout.utilities.*
 import java.awt.Graphics
+import java.awt.event.MouseWheelEvent
+import java.awt.event.MouseWheelListener
 
 /**
  * A scroll pane scrolling through lines of text, with methods to write at the end of its lines.
@@ -91,15 +93,14 @@ class TextScrollPane : ResizableDisplayer{
         h.addListener{
             recalculateDrawingParameters.value = true
         }
+        setOnMouseWheelMovedAction { e -> run{
+            if(totalHeight > height()){
+                scrollReference -= e.unitsToScroll * PIXELS_PER_UNIT_SCROLLED
+                verifyScrollReference()
+            }
+            recalculateDrawingParameters.value = true
+        } }
     }
-
-    override var onMouseWheelMoved: MouseWheelAction = {units : Int -> run{
-        if(totalHeight > height()){
-            scrollReference -= units * PIXELS_PER_UNIT_SCROLLED
-            verifyScrollReference()
-        }
-        recalculateDrawingParameters.value = true
-    }}
 
     /**
      * @see ResizableDisplayer

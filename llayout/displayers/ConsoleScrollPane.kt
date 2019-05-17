@@ -1,7 +1,6 @@
 package llayout.displayers
 
 import llayout.DEFAULT_SMALL_FONT
-import llayout.MouseWheelAction
 import llayout.utilities.*
 import java.awt.Font
 import java.awt.FontMetrics
@@ -95,15 +94,14 @@ class ConsoleScrollPane : ResizableDisplayer {
             recalculateDrawingParameters()
             verifyScrollReference()
         }
+        setOnMouseWheelMovedAction { e -> run{
+            if(totalHeight > height()){
+                scrollReference -= e.unitsToScroll * PIXELS_PER_UNIT_SCROLLED
+                verifyScrollReference()
+            }
+            recalculateDrawingParameters()
+        } }
     }
-
-    override var onMouseWheelMoved: MouseWheelAction = {units : Int -> run{
-        if(totalHeight > height()){
-            scrollReference -= units * PIXELS_PER_UNIT_SCROLLED
-            verifyScrollReference()
-        }
-        recalculateDrawingParameters()
-    }}
 
     /**
      * @see ResizableDisplayer

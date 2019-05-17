@@ -5,6 +5,7 @@ import llayout.displayers.TextField
 import llayout.frame.*
 import llayout.utilities.LProperty
 import java.awt.event.KeyEvent
+import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
 val chibreApplication : LApplication = LApplication { frame.run() }
@@ -23,35 +24,32 @@ val screen : LScene = object : LScene(){
     init{
         team1score.addListener{team1scorelabel.setDisplayedText(team1score.value.toString())}
         team2score.addListener{team2scorelabel.setDisplayedText(team2score.value.toString())}
+        setOnMouseClickedAction{ e ->
+            when(val c = getComponentAt(e.x, e.y)){
+                is TextField -> focusedField = c
+                else -> {
+                    focusedField?.unfocus()
+                    focusedField = null
+                }
+            }
+        }
+        setOnKeyTypedAction { e -> run{
+            if(e.keyChar == '\n'){
+                if(field1.typedText() != "") team1score.value += field1.typedText().toInt()
+                if(field2.typedText() != "") team2score.value += field2.typedText().toInt()
+                field1.clear()
+                field2.clear()
+                focusedField?.unfocus()
+                focusedField = null
+            }
+            focusedField?.type(e)
+        } }
     }
 
     val field1 : TextField = TextField(0.66, 0.33).digitsOnly()
     val field2 : TextField = TextField(0.66, 0.66).digitsOnly()
 
     var focusedField : TextField? = null
-
-    override fun keyTyped(e: KeyEvent?) {
-        if(e!!.keyChar == '\n'){
-            if(field1.typedText() != "") team1score.value += field1.typedText().toInt()
-            if(field2.typedText() != "") team2score.value += field2.typedText().toInt()
-            field1.clear()
-            field2.clear()
-            focusedField?.unfocus()
-            focusedField = null
-        }
-        focusedField?.type(e)
-    }
-
-    override fun mouseClicked(e: MouseEvent?) {
-        when(val c = getComponentAt(e!!.x, e.y)){
-            is TextField -> focusedField = c
-            else -> {
-                focusedField?.unfocus()
-                focusedField = null
-            }
-        }
-        super.mouseClicked(e)
-    }
 
     override fun load() {
         add(team1scorelabel)

@@ -1,10 +1,8 @@
 package llayout.frame
 
 import llayout.*
-import llayout.displayers.AbstractDisplayerContainer
 import llayout.displayers.Displayer
 import llayout.interfaces.*
-import java.awt.Component
 import java.awt.Graphics
 import javax.swing.JPanel
 import llayout.utilities.LProperty
@@ -14,13 +12,12 @@ import java.awt.event.*
  * The general abstraction for a background pane. A LScene is a special kind of JPanel that is used in this Layout.
  * Every scene that appears in a LFrame is a LScene.
  * @see StandardLContainer
- * @see MouseInteractable
  * @see Displayer
  * @see LScreenManager
  * @see JPanel
  * @see LFrameCore
  */
-open class LScene : JPanel(), StandardLContainer, MouseInteractable, LTimerUpdatable, Canvas, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+open class LScene : JPanel(), StandardLContainer, LTimerUpdatable, Canvas {
 
     override var w : LProperty<Int> = LProperty(0)
 
@@ -37,20 +34,94 @@ open class LScene : JPanel(), StandardLContainer, MouseInteractable, LTimerUpdat
 
     override var parts : MutableCollection<Displayable> = mutableListOf()
 
-    override var onMouseClick : Action = {}
-    override var onMousePress : Action = {}
-    override var onMouseRelease : Action = {}
-    override var onMouseEnter : Action = {}
-    override var onMouseExit : Action = {}
-    override var onMouseDrag : Action = {}
-    override var onMouseMove : Action = {}
-    override var onMouseWheelMoved : MouseWheelAction = { _ -> }
+    private var onMouseClickedAction : (e : MouseEvent) -> Unit = {}
+    private var onMousePressedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseReleasedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseEnteredAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseExitedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseMovedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseDraggedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseWheelMovedAction : (e : MouseWheelEvent) -> Unit = {}
+    private var onKeyTypedAction : (e : KeyEvent) -> Unit = {}
+    private var onKeyPressedAction : (e : KeyEvent) -> Unit = {}
+    private var onKeyReleasedAction : (e : KeyEvent) -> Unit = {}
 
     init{
-        addKeyListener(this)
-        addMouseListener(this)
-        addMouseMotionListener(this)
-        addMouseWheelListener(this)
+        addMouseListener(object : MouseAdapter(){
+            override fun mouseClicked(e: MouseEvent?){
+                requestFocusInWindow()
+                onMouseClickedAction(e!!)
+            }
+            override fun mousePressed(e: MouseEvent?) = onMousePressedAction(e!!)
+            override fun mouseReleased(e: MouseEvent?) = onMouseReleasedAction(e!!)
+            override fun mouseEntered(e: MouseEvent?) = onMouseEnteredAction(e!!)
+            override fun mouseExited(e: MouseEvent?) = onMouseExitedAction(e!!)
+        })
+        addMouseMotionListener(object : MouseMotionListener{
+            override fun mouseMoved(e: MouseEvent?) = onMouseMovedAction(e!!)
+            override fun mouseDragged(e: MouseEvent?) = onMouseDraggedAction(e!!)
+        })
+        addMouseWheelListener { e -> onMouseWheelMovedAction(e!!) }
+        addKeyListener(object : KeyListener{
+            override fun keyTyped(e: KeyEvent?) = onKeyTypedAction(e!!)
+            override fun keyPressed(e: KeyEvent?) = onKeyPressedAction(e!!)
+            override fun keyReleased(e: KeyEvent?) = onKeyReleasedAction(e!!)
+        })
+    }
+
+    fun setOnMouseClickedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseClickedAction = action
+        return this
+    }
+
+    fun setOnMousePressedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMousePressedAction = action
+        return this
+    }
+
+    fun setOnMouseReleasedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseReleasedAction = action
+        return this
+    }
+
+    fun setOnMouseEnteredAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseEnteredAction = action
+        return this
+    }
+
+    fun setOnMouseExitedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseExitedAction = action
+        return this
+    }
+
+    fun setOnMouseMovedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseMovedAction = action
+        return this
+    }
+
+    fun setOnMouseDraggedAction(action : (e : MouseEvent) -> Unit) : LScene{
+        onMouseDraggedAction = action
+        return this
+    }
+
+    fun setOnMouseWheelMovedAction(action : (e : MouseWheelEvent) -> Unit) : LScene{
+        onMouseWheelMovedAction = action
+        return this
+    }
+
+    fun setOnKeyPressedAction(action : (e : KeyEvent) -> Unit) : LScene{
+        onKeyPressedAction = action
+        return this
+    }
+
+    fun setOnKeyReleasedAction(action : (e : KeyEvent) -> Unit) : LScene{
+        onKeyReleasedAction = action
+        return this
+    }
+
+    fun setOnKeyTypedAction(action : (e : KeyEvent) -> Unit) : LScene{
+        onKeyTypedAction = action
+        return this
     }
 
     /**
@@ -123,88 +194,6 @@ open class LScene : JPanel(), StandardLContainer, MouseInteractable, LTimerUpdat
             d.onTimerTick()
         }
         return this
-    }
-
-    override fun keyPressed(e: KeyEvent?){}
-
-    override fun keyReleased(e: KeyEvent?){}
-
-    override fun keyTyped(e: KeyEvent?){}
-
-    override fun mouseMoved(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseMoved()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseMoved()
-            is Displayer -> component.mouseMoved()
-        }
-        LMouse.setNewMousePosition(e.x, e.y)
-        requestFocusInWindow()
-    }
-
-    override fun mouseWheelMoved(e: MouseWheelEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseWheelMoved(e.unitsToScroll)
-            is AbstractDisplayerContainer ->
-                component.displayerAt(x - component.leftSideX(), y - component.upSideY()).mouseWheelMoved(e.unitsToScroll)
-            is Displayer -> component.mouseWheelMoved(e.unitsToScroll)
-        }
-    }
-
-    override fun mouseDragged(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseDrag()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseDrag()
-            is Displayer -> component.mouseDrag()
-        }
-        LMouse.setNewMousePosition(e.x, e.y)
-    }
-
-    override fun mouseReleased(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseRelease()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseRelease()
-            is Displayer -> component.mouseRelease()
-        }
-    }
-
-    override fun mouseEntered(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseEnter()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseEnter()
-            is Displayer -> component.mouseEnter()
-        }
-    }
-
-    override fun mouseClicked(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseClick()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseClick()
-            is Displayer -> component.mouseClick()
-        }
-        requestFocusInWindow()
-    }
-
-    override fun mouseExited(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mouseExit()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mouseExit()
-            is Displayer -> component.mouseExit()
-        }
-    }
-
-    override fun mousePressed(e: MouseEvent?) {
-        when(val component : Component? = getComponentAt(e!!.x, e.y)){
-            is LScene -> mousePress()
-            is AbstractDisplayerContainer ->
-                component.displayerAt(e.x - component.leftSideX(), e.y - component.upSideY()).mousePress()
-            is Displayer -> component.mousePress()
-        }
     }
 
 }

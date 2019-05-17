@@ -3,8 +3,6 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.frame.LMouse.Companion.mouseDisplacementX
-import llayout.frame.LMouse.Companion.mouseDisplacementY
 import llayout.interfaces.StandardLContainer
 import llayout.utilities.LProperty
 import java.awt.Color
@@ -92,13 +90,11 @@ class DoubleCursor : ResizableDisplayer {
                 cursor.setHeight(DEFAULT_CURSOR_SIDE_LENGTH)
             }
         }
-        cursor.onMouseDrag = {
-            cursor.moveAlong(mouseDisplacementX(), mouseDisplacementY())
-        }
         cursor.addXListener{ correctCursorXPosition() }
         cursor.addYListener{ correctCursorYPosition() }
         cursor.addXListener{ updateXValue() }
         cursor.addYListener{ updateYValue() }
+        cursor.setOnMouseDraggedAction { e -> cursor.moveTo(cursor.leftSideX() + e.x, cursor.upSideY() + e.y) }
     }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
@@ -220,6 +216,21 @@ class DoubleCursor : ResizableDisplayer {
 
     fun setCursorImage(image : GraphicAction) : DoubleCursor{
         cursor.addGraphicAction(image, this)
+        return this
+    }
+
+    fun moveCursor(x : Int, y : Int) : DoubleCursor{
+        cursor.moveAlong(x, y)
+        return this
+    }
+
+    fun moveCursorAlongX(x : Int) : DoubleCursor{
+        cursor.moveAlongX(x)
+        return this
+    }
+
+    fun moveCursorAlongY(y : Int) : DoubleCursor{
+        cursor.moveAlongY(y)
         return this
     }
 

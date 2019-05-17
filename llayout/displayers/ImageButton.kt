@@ -3,6 +3,8 @@ package llayout.displayers
 import llayout.Action
 import llayout.GraphicAction
 import java.awt.Graphics
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 
 /**
  * A Button with an image.
@@ -31,7 +33,7 @@ class ImageButton : ResizableDisplayer {
      * @see MouseInteractable
      */
     constructor(x : Int, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleaseAction(onClick)
+        setOnMouseReleasedAction { onClick() }
         this.image = image
     }
 
@@ -49,7 +51,7 @@ class ImageButton : ResizableDisplayer {
      * @see MouseInteractable
      */
     constructor(x : Int, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleaseAction(onClick)
+        setOnMouseReleasedAction { onClick() }
         this.image = image
     }
 
@@ -67,7 +69,7 @@ class ImageButton : ResizableDisplayer {
      * @see MouseInteractable
      */
     constructor(x : Double, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleaseAction(onClick)
+        setOnMouseReleasedAction { onClick() }
         this.image = image
     }
 
@@ -85,7 +87,7 @@ class ImageButton : ResizableDisplayer {
      * @see MouseInteractable
      */
     constructor(x : Double, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleaseAction(onClick)
+        setOnMouseReleasedAction { onClick() }
         this.image = image
     }
 

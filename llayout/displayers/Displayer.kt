@@ -5,15 +5,15 @@ import llayout.frame.LScene
 import llayout.interfaces.*
 import llayout.utilities.LProperty
 import java.awt.Graphics
+import java.awt.event.*
 import javax.swing.JLabel
 
 /**
  * A Displayer is the type of Component that is added on StandardLContainer objects.
  * @see LScene
  * @see StandardLContainer
- * @see MouseInteractable
  */
-abstract class Displayer : JLabel, Displayable, MouseInteractable {
+abstract class Displayer : JLabel, Displayable {
 
     companion object{
 
@@ -283,14 +283,40 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable {
      */
     protected var preferredHeight : Int? = null
 
-    override var onMouseClick : Action = {}
-    override var onMousePress : Action = {}
-    override var onMouseRelease : Action = {}
-    override var onMouseEnter : Action = {}
-    override var onMouseExit : Action = {}
-    override var onMouseDrag : Action = {}
-    override var onMouseMove : Action = {}
-    override var onMouseWheelMoved : MouseWheelAction = { _ -> }
+    private var onMouseClickedAction : (e : MouseEvent) -> Unit = {}
+    private var onMousePressedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseReleasedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseEnteredAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseExitedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseMovedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseDraggedAction : (e : MouseEvent) -> Unit = {}
+    private var onMouseWheelMovedAction : (e : MouseWheelEvent) -> Unit = {}
+    private var onKeyTypedAction : (e : KeyEvent) -> Unit = {}
+    private var onKeyPressedAction : (e : KeyEvent) -> Unit = {}
+    private var onKeyReleasedAction : (e : KeyEvent) -> Unit = {}
+
+    init{
+        addMouseListener(object : MouseAdapter(){
+            override fun mouseClicked(e: MouseEvent?){
+                requestFocusInWindow()
+                onMouseClickedAction(e!!)
+            }
+            override fun mousePressed(e: MouseEvent?) = onMousePressedAction(e!!)
+            override fun mouseReleased(e: MouseEvent?) = onMouseReleasedAction(e!!)
+            override fun mouseEntered(e: MouseEvent?) = onMouseEnteredAction(e!!)
+            override fun mouseExited(e: MouseEvent?) = onMouseExitedAction(e!!)
+        })
+        addMouseMotionListener(object : MouseMotionListener {
+            override fun mouseMoved(e: MouseEvent?) = onMouseMovedAction(e!!)
+            override fun mouseDragged(e: MouseEvent?) = onMouseDraggedAction(e!!)
+        })
+        addMouseWheelListener { e -> onMouseWheelMovedAction(e!!) }
+        addKeyListener(object : KeyListener{
+            override fun keyTyped(e: KeyEvent?) = onKeyTypedAction(e!!)
+            override fun keyPressed(e: KeyEvent?) = onKeyPressedAction(e!!)
+            override fun keyReleased(e: KeyEvent?) = onKeyReleasedAction(e!!)
+        })
+    }
 
     override var requestUpdate: LProperty<Boolean> = LProperty(false)
 
@@ -850,6 +876,60 @@ abstract class Displayer : JLabel, Displayable, MouseInteractable {
      */
     open fun rightSideX() : Int = rightSideX.value
 
+    fun setOnMouseClickedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseClickedAction = action
+        return this
+    }
+
+    fun setOnMousePressedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMousePressedAction = action
+        return this
+    }
+
+    fun setOnMouseReleasedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseReleasedAction = action
+        return this
+    }
+
+    fun setOnMouseEnteredAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseEnteredAction = action
+        return this
+    }
+
+    fun setOnMouseExitedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseExitedAction = action
+        return this
+    }
+
+    fun setOnMouseMovedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseMovedAction = action
+        return this
+    }
+
+    fun setOnMouseDraggedAction(action : (e : MouseEvent) -> Unit) : Displayer{
+        onMouseDraggedAction = action
+        return this
+    }
+
+    fun setOnMouseWheelMovedAction(action : (e : MouseWheelEvent) -> Unit) : Displayer{
+        onMouseWheelMovedAction = action
+        return this
+    }
+
+    fun setOnKeyPressedAction(action : (e : KeyEvent) -> Unit) : Displayer{
+        onKeyPressedAction = action
+        return this
+    }
+
+    fun setOnKeyReleasedAction(action : (e : KeyEvent) -> Unit) : Displayer{
+        onKeyReleasedAction = action
+        return this
+    }
+
+    fun setOnKeyTypedAction(action : (e : KeyEvent) -> Unit) : Displayer{
+        onKeyTypedAction = action
+        return this
+    }
 
     /**
      * Initializes this Displayer.

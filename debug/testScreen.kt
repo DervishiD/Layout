@@ -5,10 +5,12 @@ import llayout.frame.*
 import llayout.utilities.StringDisplay
 import java.awt.Color.RED
 import java.awt.event.KeyEvent
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 
 private val testScreen : LScene = object : LScene(){
 
-    private val b : TextButton = TextButton(0.5, 0.6, "Button", {}).also{ it.onMouseRelease = {it.moveAlong(-5, 5)} }
+    private val b : TextButton = TextButton(0.5, 0.6, "Button", {})
     private val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
     private val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
     private val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
@@ -21,7 +23,7 @@ private val testScreen : LScene = object : LScene(){
                     .setPrecision(0.5)
                     as HorizontalDoubleSlider
     private val vds : VerticalDoubleSlider =
-            VerticalDoubleSlider(0.5, 0.25, 30, 300)
+            VerticalDoubleSlider(0.5, 0.25, 30, 250)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
@@ -32,11 +34,16 @@ private val testScreen : LScene = object : LScene(){
                     .setMaximalXValue(2)
                     .setMinimalYValue(0)
                     .setMaximalYValue(5)
-                    .setXYPrecision(0.0)
+                    .setXYPrecision(0.25)
                     .alignUpTo(0)
                     .alignLeftTo(0.1) as DoubleCursor
 
     init{
+        b.addMouseListener(object : MouseAdapter(){
+            override fun mouseReleased(e: MouseEvent?) {
+                b.moveAlong(-5, 5)
+            }
+        })
         add(l)
         add(b)
         add(l2)
@@ -67,14 +74,8 @@ private val testScreen : LScene = object : LScene(){
         add(vds)
         add(s)
         add(dc)
-    }
-
-    override fun keyTyped(e: KeyEvent?) {
-        f.type(e!!)
-    }
-
-    override fun keyPressed(e: KeyEvent?) {
-        f.type(e!!)
+        setOnKeyPressedAction { e -> f.type(e.keyCode) }
+        setOnKeyTypedAction { e -> f.type(e.keyChar) }
     }
 
 }

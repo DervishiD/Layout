@@ -6,6 +6,8 @@ import llayout.GraphicAction
 import llayout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 
 class Switch : ResizableDisplayer {
 
@@ -32,7 +34,9 @@ class Switch : ResizableDisplayer {
 
     private var clickedBackground : GraphicAction = DEFAULT_CLICKED_BACKGROUND
 
-    override var onMouseRelease: Action = {switch()}
+    init{
+        setOnMouseReleasedAction { switch() }
+    }
 
     constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
 

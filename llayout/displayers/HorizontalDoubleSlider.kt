@@ -1,7 +1,8 @@
 package llayout.displayers
 
-import llayout.frame.LMouse
 import java.awt.Graphics
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 
 class HorizontalDoubleSlider : AbstractDoubleSlider {
 
@@ -15,7 +16,7 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
                 slider.setWidth(MINIMAL_SLIDER_SIZE)
             }
         }
-        slider.onMouseDrag = { slider.moveAlongX(LMouse.mouseDisplacementX()) }
+        slider.setOnMouseDraggedAction { e -> slider.moveTo(slider.leftSideX() + e.x, slider.centerY()) }
         slider.addXListener{ updateValue() }
         slider.addXListener{ correctSliderPosition() }
     }

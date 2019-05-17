@@ -236,12 +236,14 @@ class LFrame(scene : LScene) {
     fun setPreferredWidth(width : Int) : LFrame{
         if(width <= 0) throw IllegalArgumentException("Negative width $width in LFrame.setPreferredWidth")
         core.preferredSize.width = width
+        core.setW(width)
         return this
     }
 
     fun setPreferredHeight(height : Int) : LFrame{
         if(height <= 0) throw IllegalArgumentException("Negative height $height in LFrame.setPreferredHeight")
         core.preferredSize.height = height
+        core.setH(height)
         return this
     }
 

@@ -49,6 +49,12 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
                 Companion.Type.BLANK -> removeDrawing(KEY)
             }
         }
+        setOnMouseReleasedAction {
+            if(unChecked() && running){
+                if(isFirst.value) writeX() else writeO()
+                testEnd()
+            }
+        }
     }
 
     private fun unChecked() : Boolean = type.value == Companion.Type.BLANK
@@ -59,13 +65,6 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
 
     private fun writeO(){
         if(unChecked()) type.value = Companion.Type.O
-    }
-
-    override fun mouseRelease(){
-        if(unChecked() && running){
-            if(isFirst.value) writeX() else writeO()
-            testEnd()
-        }
     }
 
     fun unCheck(){
@@ -134,10 +133,6 @@ private val scene : LScene = object : LScene(){
 
     private val resetButton : TextButton = TextButton(0.25, 0.8, "Reset", {reset()})
 
-    override fun keyReleased(e: KeyEvent?){
-        if(e!!.keyCode == VK_ESCAPE) frame.close()
-    }
-
     init{
         addPlayerListener()
         add(title)
@@ -145,6 +140,7 @@ private val scene : LScene = object : LScene(){
         add(resetButton)
         add(player)
         for(a : Array<Cell> in cells) for(c : Cell in a) add(c)
+        setOnKeyReleasedAction { e -> if(e.keyCode == VK_ESCAPE) frame.close() }
     }
 
     private fun addPlayerListener(){

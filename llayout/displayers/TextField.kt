@@ -1,9 +1,7 @@
 package llayout.displayers
 
-import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.DEFAULT_SMALL_FONT
-import llayout.frame.LMouse
 import llayout.utilities.matches
 import java.awt.Color
 import java.awt.FontMetrics
@@ -104,11 +102,15 @@ class TextField : Displayer {
      */
     private var caretIndex : Int = -1
 
-    override var onMouseRelease: Action = {
-        focus()
-        clickAt = LMouse.mouseX() - leftSideX()
-        clicked = true
-        initialize()
+    init{
+        setOnMouseReleasedAction { e -> run{
+            focus()
+            clickAt = e.x
+            clicked = true
+            initialize()
+        } }
+        setOnKeyTypedAction { e -> type(e.keyChar) }
+        setOnKeyPressedAction { e -> type(e.keyCode) }
     }
 
     /**

@@ -25,6 +25,7 @@ class ComplexNumber {
     constructor(x : Double, y : Int) : this(x, y.toDouble())
     constructor(x : Int, y : Double) : this(x.toDouble(), y)
     constructor(x : Int, y : Int) : this(x.toDouble(), y.toDouble())
+    constructor() : this(0.0, 0.0)
 
     fun realPart() : Double = x
 
@@ -43,6 +44,8 @@ class ComplexNumber {
             return ComplexNumber(x() / (x() * x() + y() * y()), - y() / (x() * x() + y() + y()))
         }else throw IllegalArgumentException("Zero has no inverse")
     }
+
+    fun conjugate() : ComplexNumber = ComplexNumber(x, -y)
 
     operator fun plus(other : ComplexNumber) : ComplexNumber = ComplexNumber(x + other.realPart(), y + other.imaginaryPart())
 
