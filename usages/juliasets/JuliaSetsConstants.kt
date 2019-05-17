@@ -2,6 +2,7 @@ package usages.juliasets
 
 import llayout.displayers.DoubleCursor
 import llayout.displayers.Label
+import llayout.displayers.Switch
 import llayout.displayers.TextButton
 import llayout.frame.LApplication
 import llayout.frame.LFrame
@@ -11,14 +12,16 @@ import java.awt.Graphics
 import java.awt.event.KeyEvent.*
 
 private const val PLOT_SIZE : Int = 800
-private const val ITERATIONS : Int = 100
+private const val ITERATIONS : Int = 200
 private const val RELOAD_PERIOD : Int = 2000
 private const val ARROW_MOVEMENT : Int = 2
+private enum class FractalType{JULIA, MANDELBROT}
 
 /*
  * 0.3821 + 0.2001 i
  * 0.3730 + 0.0855 i
  * 0.3862 + 0.2818 i
+ * 0.3883 + 0.2378 i
  */
 
 val juliaSetsApplication : LApplication = LApplication{
@@ -45,8 +48,12 @@ private val mainScreen = object : LScene(){
             .alignUpToDown(xLabel)
             .alignLeftToRight(cursor) as Label
 
-    private val reloadButton : TextButton = TextButton(0, 0.5, "Reload", {reload()})
+    private val reloadButton : TextButton = TextButton(0, 0.3, "Reload", {reload()})
             .alignRightTo(1.0) as TextButton
+
+    private val switch : Switch = Switch(0, 0.6, 50, 50).alignLeftToRight(cursor) as Switch
+
+    private val typeLabel : Label = Label(0, 0, "Julia").alignLeftToRight(cursor).alignUpToDown(switch) as Label
 
     init{
         cursor.addXValueListener{ xLabel.setDisplayedText("x : ${cursor.xValue()}") }
@@ -67,6 +74,17 @@ private val mainScreen = object : LScene(){
         setOnMouseClickedAction { cursor.requestFocusInWindow() }
         xLabel.setOnMouseClickedAction { cursor.requestFocusInWindow() }
         yLabel.setOnMouseClickedAction { cursor.requestFocusInWindow() }
+        add(typeLabel)
+        add(switch)
+        switch.addValueListener {
+            if(switch.value()){
+                typeLabel.setDisplayedText("Mandelbrot")
+                graphScene.mandelbrot()
+            }else{
+                typeLabel.setDisplayedText("Julia")
+                graphScene.julia()
+            }
+        }
     }
 
     private fun selectedValue() : ComplexNumber = ComplexNumber(cursor.xValue(), cursor.yValue())
@@ -93,12 +111,24 @@ private val mainScreen = object : LScene(){
 
 private val graphScene = object : LScene(){
 
+    private val DEFAULT_JULIA_MIN_X : Double = -1.5
+    private val DEFAULT_JULIA_MIN_Y : Double = -1.5
+    private val DEFAULT_JULIA_MAX_X : Double = 1.5
+    private val DEFAULT_JULIA_MAX_Y : Double = 1.5
+
+    private val DEFAULT_MANDELBROT_MIN_X : Double = -2.0
+    private val DEFAULT_MANDELBROT_MIN_Y : Double = -2.0
+    private val DEFAULT_MANDELBROT_MAX_X : Double = 2.0
+    private val DEFAULT_MANDELBROT_MAX_Y : Double = 2.0
+
     private var c : ComplexNumber = ComplexNumber()
 
     private var minX : Double = -1.5
     private var minY : Double = -1.5
     private var maxX : Double = 1.5
     private var maxY : Double = 1.5
+
+    private var type : FractalType = FractalType.JULIA
 
     init{
         w.addListener{ reset() }
@@ -108,6 +138,24 @@ private val graphScene = object : LScene(){
 
     fun reload(c : ComplexNumber){
         this.c = c
+        reset()
+    }
+
+    fun julia(){
+        type = FractalType.JULIA
+        minX = DEFAULT_JULIA_MIN_X
+        maxX = DEFAULT_JULIA_MAX_X
+        minY = DEFAULT_JULIA_MIN_Y
+        maxY = DEFAULT_JULIA_MAX_Y
+        reset()
+    }
+
+    fun mandelbrot(){
+        type = FractalType.MANDELBROT
+        minX = DEFAULT_MANDELBROT_MIN_X
+        maxX = DEFAULT_MANDELBROT_MAX_X
+        minY = DEFAULT_MANDELBROT_MIN_Y
+        maxY = DEFAULT_MANDELBROT_MAX_Y
         reset()
     }
 
@@ -124,11 +172,21 @@ private val graphScene = object : LScene(){
     private fun xOfPixel(i : Int) : Double = (i * xRange() / width()) + minX()
     private fun yOfPixel(j : Int) : Double = maxY() - (j * yRange() / height())
 
-    private fun numberOfIterationsOf(x : Double, y : Double) : Int{
+    private fun juliaIterations(x : Double, y : Double) : Int{
         var number : ComplexNumber = ComplexNumber(x, y)
         for(i : Int in 0..ITERATIONS){
             if(number.modulus() >= 2) return i
             number = number * number + c()
+        }
+        return ITERATIONS
+    }
+
+    private fun mandelbrotIterations(x : Double, y : Double) : Int{
+        val z : ComplexNumber = ComplexNumber(x, y)
+        var number : ComplexNumber = ComplexNumber()
+        for(i : Int in 0..ITERATIONS){
+            if(number.modulus() >= 2) return i
+            number = number * number + z
         }
         return ITERATIONS
     }
@@ -138,7 +196,7 @@ private val graphScene = object : LScene(){
         return Color(level, level, level)
     }
 
-    private fun iterateOn(x : Double, y : Double) : Color = colorOf(numberOfIterationsOf(x, y))
+    private fun iterateOn(x : Double, y : Double) : Color = if(type == FractalType.JULIA) colorOf(juliaIterations(x, y)) else colorOf(mandelbrotIterations(x, y))
 
     private fun addPoints(){
         for(i : Int in 0..width()){
