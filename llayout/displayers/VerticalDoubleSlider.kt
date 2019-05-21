@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent
 class VerticalDoubleSlider : AbstractDoubleSlider {
 
     init{
-        addXListener{ slider.setx(centerX()) }
+        addXListener{ slider.setCenterX(centerX()) }
         addWidthListener{ slider.setWidth(width()) }
         addHeightListener{
             if(slider.height() > height()){
@@ -21,48 +21,24 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
         slider.addYListener{ correctSliderPosition() }
     }
 
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Int) : super(width, height)
 
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Double, height : Int) : super(width, height)
 
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Double) : super(width, height)
 
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
+    constructor(width : Double, height : Double) : super(width, height)
 
     private fun isTooFarUp() : Boolean = slider.upSideY() < upSideY()
 
     private fun isTooFarDown() : Boolean = slider.downSideY() > downSideY()
 
     private fun correctUp(){
-        slider.sety(upSideY() + slider.height() / 2)
+        slider.setCenterY(upSideY() + slider.height() / 2)
     }
 
     private fun correctDown(){
-        slider.sety(downSideY() - slider.height() / 2)
+        slider.setCenterY(downSideY() - slider.height() / 2)
     }
 
     override fun correctSliderPosition(){
@@ -73,7 +49,7 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
                 correctUp()
             }
         }else{
-            slider.sety(centerY())
+            slider.setCenterY(centerY())
         }
     }
 
@@ -95,7 +71,7 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
         val proportion : Double = (value() - minimalValue()) / range()
         val newY : Int = downSideY() - (proportion * height()).toInt()
         val previousValue : Double = value()
-        slider.sety(newY)
+        slider.setCenterY(newY)
         setValue(previousValue)
     }
 
@@ -107,7 +83,7 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
 
     override fun loadParameters(g: Graphics) {
         slider.setWidth(width())
-        slider.setx(centerX())
+        slider.setCenterX(centerX())
         slider.setHeight(MINIMAL_SLIDER_SIZE)
         conserveSliderPositionOnResize()
     }

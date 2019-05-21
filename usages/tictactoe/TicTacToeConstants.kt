@@ -11,12 +11,11 @@ import llayout.utilities.LProperty
 import llayout.utilities.StringDisplay
 import java.awt.Color.BLACK
 import java.awt.Graphics
-import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ESCAPE
 
 val TicTacToeApplication : LApplication = LApplication { frame.run() }
 
-private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : Int, private val j : Int) : CanvasDisplayer(x, y, w, h) {
+private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : Int, private val j : Int) : CanvasDisplayer(w, h) {
 
     companion object{
         private val XDrawing : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
@@ -41,6 +40,8 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
     private var type : LProperty<Type> = LProperty(Companion.Type.BLANK)
 
     init{
+        setCenterX(x)
+        setCenterY(y)
         addGraphicAction(BOX)
         type.addListener{
             when(type.value){
@@ -125,13 +126,13 @@ private val scene : LScene = object : LScene(){
     private val FIRST : String = "x"
     private val SECOND : String = "o"
 
-    private val title : Label = Label(0.25, 0.33, StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT))
+    private val title : Label = Label(StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT)).setCenterX(0.25).setCenterY(0.33) as Label
 
-    private val exitButton : Displayer = TextButton(0, 0, "X", {frame.close()}).alignLeftTo(0).alignUpTo(0)
+    private val exitButton : Displayer = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
 
-    private val player : Label = Label(0.25, 0.5, FIRST)
+    private val player : Label = Label(FIRST).setCenterX(0.25).setCenterY(0.5) as Label
 
-    private val resetButton : TextButton = TextButton(0.25, 0.8, "Reset", {reset()})
+    private val resetButton : TextButton = TextButton("Reset") {reset()}.setCenterX(0.25).setCenterY(0.8) as TextButton
 
     init{
         addPlayerListener()

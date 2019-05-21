@@ -11,20 +11,22 @@ val colourSquareApplication : LApplication = LApplication { frame.run() }
 
 val screen : LScene = object : LScene(){
 
-    val exitButton = TextButton(0, 0, "X", {frame.close()}).alignLeftTo(0).alignUpTo(0)
+    val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
 
     val colourStep : Int = 5
 
     var colour : Color = Color(125, 125, 125)
 
-    val variableSquare : CanvasDisplayer = CanvasDisplayer(0.5, 0.33, 0.25, 0.25).addGraphicAction{
+    val variableSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
+            .setCenterX(0.5).setCenterY(0.33) as CanvasDisplayer).addGraphicAction{
         g : Graphics, w : Int, h : Int -> run{
             g.color = colour
             g.fillRect(0, 0, w, h)
         }
     } as CanvasDisplayer
 
-    val constantSquare : CanvasDisplayer = CanvasDisplayer(0.5, 0.66, 0.25, 0.25).addGraphicAction{
+    val constantSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
+            .setCenterX(0.5).setCenterY(0.66) as CanvasDisplayer).addGraphicAction{
         g : Graphics, w : Int, h : Int -> run{
             g.color = if(following) colour else fixed
             g.fillRect(0, 0, w, h)
@@ -34,23 +36,16 @@ val screen : LScene = object : LScene(){
     var following : Boolean = true
     var fixed : Color = colour
 
-    val toggleButton : TextButton = TextButton(0.75, 0.5, "Toggle", {
+    val toggleButton : TextButton = TextButton("Toggle") {
         following = !following
         fixed = colour
-    })
+    }.setCenterX(0.75).setCenterY(0.5) as TextButton
 
-    override fun load(){
+    init{
         add(exitButton)
         add(variableSquare)
         add(constantSquare)
         add(toggleButton)
-    }
-
-    override fun save(){
-        remove(exitButton)
-        remove(variableSquare)
-        remove(constantSquare)
-        remove(toggleButton)
     }
 
     override fun onTimerTick() = addRandomColourStep()

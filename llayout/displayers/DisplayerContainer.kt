@@ -13,484 +13,44 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
+    constructor(width : Int, height : Int, vararg displayers: Displayer) : super(width, height){
         addDisplayers(*displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
+    constructor(width : Double, height : Int, vararg displayers: Displayer) : super(width, height){
         addDisplayers(*displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
+    constructor(width : Int, height : Double, vararg displayers: Displayer) : super(width, height){
         addDisplayers(*displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
+    constructor(width : Double, height : Double, vararg displayers: Displayer) : super(width, height){
         addDisplayers(*displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Double, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
+    constructor(width : Int, height : Int, displayers: Collection<Displayer>) : super(width, height){
         addDisplayers(displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Double, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
+    constructor(width : Double, height : Int, displayers: Collection<Displayer>) : super(width, height){
         addDisplayers(displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Double, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
+    constructor(width : Int, height : Double, displayers: Collection<Displayer>) : super(width, height){
         addDisplayers(displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Double, height : Int, displayers : Collection<Displayer>) : super(x, y, width, height){
+    constructor(width : Double, height : Double, displayers: Collection<Displayer>) : super(width, height){
         addDisplayers(displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Double, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
+    constructor(vararg displayers: Displayer) : super(){
         addDisplayers(*displayers)
     }
 
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Double, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Double, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Double, height : Int, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Int, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
+    constructor(displayers : Collection<Displayer>) : super(){
         addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Int, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Int, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Int, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Int, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Int, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Int, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Int, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Double, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Double, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Double, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Double, height : Double, displayers : Collection<Displayer>) : super(x, y, width, height){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Int, width : Double, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Int, y : Double, width : Double, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Int, width : Double, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
-    }
-
-    /**
-     * Constructs a DisplayerContainer with the given parameters.
-     * @param x The x coordinate of the center of this DisplayerContainer.
-     * @param y The y coordinate of the center of this DisplayerContainer.
-     * @param width The width of this DisplayerContainer.
-     * @param height The height of this DisplayerContainer.
-     * @param displayers The Displayers contained in this DisplayerContainer.
-     * @see Point
-     * @see Displayer
-     * @see addDisplayers
-     */
-    constructor(x : Double, y : Double, width : Double, height : Double, vararg displayers: Displayer) : super(x, y, width, height){
-        addDisplayers(*displayers)
     }
 
     /**
@@ -510,7 +70,7 @@ class DisplayerContainer : AbstractDisplayerContainer, Canvas {
      * @param displayers The added Displayers.
      * @see Displayer
      */
-    infix fun addDisplayers(displayers : Collection<Displayer>) : DisplayerContainer {
+    fun addDisplayers(displayers : Collection<Displayer>) : DisplayerContainer {
         for(d : Displayer in displayers){
             super.add(d)
         }

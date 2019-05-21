@@ -99,85 +99,13 @@ class TextScrollPane : ResizableDisplayer{
         } }
     }
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Int) : super(width, height)
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Double, height : Int) : super(width, height)
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Double) : super(width, height)
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
+    constructor(width : Double, height : Double) : super(width, height)
 
     /**
      * Adds a new line to the list.

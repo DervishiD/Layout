@@ -51,7 +51,7 @@ abstract class TextDisplayer : Displayer {
      * @see GraphicAction
      * @see drawBackground
      */
-    protected var backgroundDrawer : GraphicAction
+    protected var backgroundDrawer : GraphicAction = NO_BACKGROUND
 
     /**
      * The distance between the top of the text and the top of this TextDisplayer.
@@ -73,260 +73,45 @@ abstract class TextDisplayer : Displayer {
      */
     protected abstract var rightDelta : Int
 
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Int, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(s : StringDisplay in text){
-            txt.add(s)
-        }
-        lines = txt.toLinesList()
-        backgroundDrawer = background
-    }
+    protected constructor() : this("")
 
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Double, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(s : StringDisplay in text){
-            txt.add(s)
-        }
-        lines = txt.toLinesList()
-        backgroundDrawer = background
-    }
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Int, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(s : StringDisplay in text){
-            txt.add(s)
-        }
-        lines = txt.toLinesList()
-        backgroundDrawer = background
-    }
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Collection of StringDisplays.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Double, text : Collection<StringDisplay>, background : GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(s : StringDisplay in text){
-            txt.add(s)
-        }
-        lines = txt.toLinesList()
-        backgroundDrawer = background
-    }
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
-            : this(x, y, listOf<StringDisplay>(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
-            : this(x, y, listOf<StringDisplay>(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Int, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
-            : this(x, y, listOf<StringDisplay>(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a StringDisplay.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see StringDisplay
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Double, text : StringDisplay, background: GraphicAction = NO_BACKGROUND)
-            : this(x, y, listOf<StringDisplay>(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a String.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a String.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a String.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Int, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a String.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Double, text : String, background: GraphicAction = NO_BACKGROUND) : this(x, y, StringDisplay(text), background)
-
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Text object.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
+    protected constructor(text : Text) : super(){
         for(line in text.asLines()){
             lines.add(line)
             for(sd in line){
                 txt.add(sd)
             }
         }
-        backgroundDrawer = background
     }
 
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Text object.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Int, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(line in text.asLines()){
-            lines.add(line)
-            for(sd in line){
-                txt.add(sd)
-            }
-        }
-        backgroundDrawer = background
+    protected constructor(collection : Collection<StringDisplay>) : super(){
+        txt = collection.toMutableCollectionOf()
+        lines = txt.toLinesList()
     }
 
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Text object.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Int, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(line in text.asLines()){
-            lines.add(line)
-            for(sd in line){
-                txt.add(sd)
-            }
-        }
-        backgroundDrawer = background
-    }
+    protected constructor(text : StringDisplay) : this(listOf(text))
 
-    /**
-     * Constructs a TextDisplayer with the given parameters.
-     * @param p The center Point of this TextDisplayer.
-     * @param text The displayed text, as a Text object.
-     * @param background The background of this TextDisplayer, as a GraphicAction.
-     * @see Point
-     * @see Text
-     * @see GraphicAction
-     * @see backgroundDrawer
-     */
-    constructor(x : Double, y : Double, text : Text, background: GraphicAction = NO_BACKGROUND) : super(x, y){
-        if(text.isEmpty()) throw Exception("A text displayer must display text.")
-        for(line in text.asLines()){
-            lines.add(line)
-            for(sd in line){
-                txt.add(sd)
-            }
-        }
+    protected constructor(text : CharSequence) : this(StringDisplay(text))
+
+    protected constructor(text : Int) : this(text.toString())
+
+    protected constructor(text : Double) : this(text.toString())
+
+    protected constructor(text : Long) : this(text.toString())
+
+    protected constructor(text : Float) : this(text.toString())
+
+    protected constructor(text : Short) : this(text.toString())
+
+    protected constructor(text : Byte) : this(text.toString())
+
+    protected constructor(text : Boolean) : this(text.toString())
+
+    protected constructor(text : Char) : this(text.toString())
+
+    fun setBackground(background : GraphicAction) : TextDisplayer{
         backgroundDrawer = background
+        return this
     }
 
     /**

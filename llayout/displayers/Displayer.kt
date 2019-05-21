@@ -325,7 +325,7 @@ abstract class Displayer : JLabel, Displayable {
      * @param x The x coordinate of this Displayer's center, in pixels.
      * @param y The y coordinate of this Displayer's center, in pixels.
      */
-    constructor(x : Int, y : Int){
+    protected constructor(x : Int, y : Int){
         absoluteX.value = x
         absoluteY.value = y
     }
@@ -335,7 +335,7 @@ abstract class Displayer : JLabel, Displayable {
      * @param x The x coordinate of this Displayer's center, in pixels.
      * @param y The y coordinate of this Displayer's center, as a proportion of its container's height.
      */
-    constructor(x : Int, y : Double){
+    protected constructor(x : Int, y : Double){
         absoluteX.value = x
         relativeY = y
     }
@@ -345,7 +345,7 @@ abstract class Displayer : JLabel, Displayable {
      * @param x The x coordinate of this Displayer's center, as a proportion of its container's width.
      * @param y The y coordinate of this Displayer's center, in pixels.
      */
-    constructor(x : Double, y : Int){
+    protected constructor(x : Double, y : Int){
         relativeX = x
         absoluteY.value = y
     }
@@ -355,10 +355,12 @@ abstract class Displayer : JLabel, Displayable {
      * @param x The x coordinate of this Displayer's center, as a proportion of its container's width.
      * @param y The y coordinate of this Displayer's center, as a proportion of its container's height.
      */
-    constructor(x : Double, y : Double){
+    protected constructor(x : Double, y : Double){
         relativeX = x
         relativeY = y
     }
+
+    protected constructor() : this(0, 0)
 
     /**
      * Updates the relative values of this Displayer, using its container's width and height.
@@ -1039,7 +1041,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun setx(x : Int) : Displayer {
+    fun setCenterX(x : Int) : Displayer {
         if(x != centerX()){
             absoluteX.value = x
             relativeX = null
@@ -1056,7 +1058,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun setx(x : Double) : Displayer {
+    fun setCenterX(x : Double) : Displayer {
         if(x != relativeX){
             relativeX = x
             resetHorizontalAlignment()
@@ -1073,7 +1075,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun setx(x : Float) : Displayer = setx(x.toDouble())
+    fun setCenterX(x : Float) : Displayer = setCenterX(x.toDouble())
 
     /**
      * Change this Displayer's center's y coordinate.
@@ -1082,7 +1084,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun sety(y : Int) : Displayer {
+    fun setCenterY(y : Int) : Displayer {
         if(y != centerY()){
             absoluteY.value = y
             relativeY = null
@@ -1099,7 +1101,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun sety(y : Double) : Displayer {
+    fun setCenterY(y : Double) : Displayer {
         if(y != relativeY){
             relativeY = y
             resetVerticalAlignment()
@@ -1116,7 +1118,7 @@ abstract class Displayer : JLabel, Displayable {
      * @return This Displayer.
      * @see resetAlignment
      */
-    fun sety(y : Float) = sety(y.toDouble())
+    fun setCenterY(y : Float) = setCenterY(y.toDouble())
 
     /**
      * Moves this Displayer along the given direction.

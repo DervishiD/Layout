@@ -65,335 +65,59 @@ class TextButton : TextDisplayer {
     override var leftDelta: Int = DELTA
     override var rightDelta: Int = DELTA
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a list of StringDisplays.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            text : Collection<StringDisplay>,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    init{
+        backgroundDrawer = DEFAULT_BUTTON_BACKGROUND
+    }
+
+    constructor(text : CharSequence, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a list of StringDisplays.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            text : Collection<StringDisplay>,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : StringDisplay, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a list of StringDisplays.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            text : Collection<StringDisplay>,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Collection<StringDisplay>, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a list of StringDisplays.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            text : Collection<StringDisplay>,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Text, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a StringDisplay.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            text : StringDisplay,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(action : Action) : super(){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a StringDisplay.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            text : StringDisplay,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Int, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a StringDisplay.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            text : StringDisplay,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Double, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a StringDisplay.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see StringDisplay
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            text : StringDisplay,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Long, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a String.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            text : String,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Float, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a String.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            text : String,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Short, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a String.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            text : String,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Byte, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a String.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            text : String,
-            action : Action,
-            background : GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Boolean, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a Text object.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Text
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            text : Text,
-            action : Action,
-            background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        setOnMouseReleasedAction { action() }
-    }
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a Text object.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Text
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            text : Text,
-            action : Action,
-            background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        setOnMouseReleasedAction { action() }
-    }
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a Text object.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Text
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            text : Text,
-            action : Action,
-            background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
-        setOnMouseReleasedAction { action() }
-    }
-
-    /**
-     * Constructs a TextButton with the given text at the given position with the given background
-     * with the given action.
-     * @param x The x coordinate of this Button.
-     * @param y The y coordinate of this Button.
-     * @param text The displayed text, as a Text object.
-     * @param action The Action that is executed when this Button is clicked.
-     * @param background The background image of this component, as a GraphicAction.
-     * @see Action
-     * @see GraphicAction
-     * @see Text
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            text : Text,
-            action : Action,
-            background: GraphicAction = DEFAULT_BUTTON_BACKGROUND) : super(x, y, text, background){
+    constructor(text : Char, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 

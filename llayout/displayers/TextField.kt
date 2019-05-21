@@ -63,6 +63,8 @@ class TextField : Displayer {
 
         private const val LETTERS_OR_DIGITS : String = "$DIGITS_ONLY|$LETTERS"
 
+        private val DEFAULT_REGEX : Regex = Regex(NO_ENTER)
+
     }
 
     /**
@@ -81,7 +83,7 @@ class TextField : Displayer {
      * A Regex that defines which characters can be typed in this TextField.
      * @see type
      */
-    private var regex : Regex
+    private var regex : Regex = DEFAULT_REGEX
         set(value){
             field = value
             cleanTypedText()
@@ -113,166 +115,13 @@ class TextField : Displayer {
         setOnKeyPressedAction { e -> type(e.keyCode) }
     }
 
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            width : Int = DEFAULT_WIDTH,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
+    constructor(width : Int = DEFAULT_WIDTH, defaultText: CharSequence = "") : super(){
         typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
         w.value = width
     }
 
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            width : Int = DEFAULT_WIDTH,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
+    constructor(width : Double, defaultText: CharSequence = "") : super(){
         typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        w.value = width
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            width : Int = DEFAULT_WIDTH,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        w.value = width
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            width : Int = DEFAULT_WIDTH,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        w.value = width
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Int,
-            y : Int,
-            width : Double,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        relativeW = width
-        requestUpdate()
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Int,
-            y : Double,
-            width : Double,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        relativeW = width
-        requestUpdate()
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Double,
-            y : Int,
-            width : Double,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
-        relativeW = width
-        requestUpdate()
-    }
-
-    /**
-     * Constructs a TextField with the given parameters.
-     * @param x The x coordinate of the center point of this TextDisplayer.
-     * @param y The y coordinate of the center point of this TextDisplayer.
-     * @param width The width of this TextField.
-     * @param defaultText The text that appears on this TextField.
-     * @param regex A Regex that defines which characters can be typed in this TextField.
-     * @see regex
-     */
-    constructor(
-            x : Double,
-            y : Double,
-            width : Double,
-            defaultText : String = "",
-            regex : String = NO_ENTER) : super(x, y){
-        typedText = StringBuilder(defaultText)
-        this.regex = Regex(regex)
         relativeW = width
         requestUpdate()
     }

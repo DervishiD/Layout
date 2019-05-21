@@ -13,7 +13,7 @@ class ConsoleScrollPane : ResizableDisplayer {
 
         /**
          * The number of pixels scrolled per mouse scroll unit.
-         * @see onMouseWheelMoved
+         * @see onMouseWheelMovedAction
          */
         private const val PIXELS_PER_UNIT_SCROLLED : Int = 10
 
@@ -103,115 +103,19 @@ class ConsoleScrollPane : ResizableDisplayer {
         } }
     }
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
+    constructor(width : Int, height : Int, font : Font = DEFAULT_FONT) : super(width, height){
         textFont = font
     }
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
+    constructor(width : Double, height : Int, font : Font = DEFAULT_FONT) : super(width, height){
         textFont = font
     }
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
+    constructor(width : Int, height : Double, font : Font = DEFAULT_FONT) : super(width, height){
         textFont = font
     }
 
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Double, height : Int, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Double, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Double, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Double, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Double, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Int, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Int, y : Double, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Int, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
-        textFont = font
-    }
-
-    /**
-     * @see ResizableDisplayer
-     */
-    constructor(x : Double, y : Double, width : Int, height : Double, font : Font = DEFAULT_FONT) : super(x, y, width, height){
+    constructor(width : Double, height : Double, font : Font = DEFAULT_FONT) : super(width, height){
         textFont = font
     }
 
@@ -383,11 +287,15 @@ class ConsoleScrollPane : ResizableDisplayer {
      */
     fun write(b : Boolean) : ConsoleScrollPane = this.write(StringDisplay(b))
 
-    fun setPrompt(vararg prompt : String) : ConsoleScrollPane{
-        for(sd : String in prompt){
+    fun setPrompt(vararg prompt : CharSequence) : ConsoleScrollPane{
+        for(sd : CharSequence in prompt){
             if(sd.contains("\n")) throw IllegalArgumentException("Prompt contains a \"\\n\" character.")
         }
-        this.prompt = prompt.asList().toStringDisplays(textFont)
+        val newPrompt : MutableCollection<StringDisplay> = mutableSetOf()
+        for(p : CharSequence in prompt){
+            newPrompt.add(StringDisplay(p))
+        }
+        this.prompt = newPrompt
         return this
     }
 

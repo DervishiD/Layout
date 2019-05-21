@@ -54,7 +54,7 @@ class DoubleCursor : ResizableDisplayer {
 
     private var background : GraphicAction = DEFAULT_BACKGROUND
 
-    private val cursor : CanvasDisplayer = CanvasDisplayer(0, 0, DEFAULT_CURSOR_SIDE_LENGTH, DEFAULT_CURSOR_SIDE_LENGTH)
+    private val cursor : CanvasDisplayer = CanvasDisplayer(DEFAULT_CURSOR_SIDE_LENGTH, DEFAULT_CURSOR_SIDE_LENGTH)
 
     init{
         minimalXValue.addListener{
@@ -97,37 +97,13 @@ class DoubleCursor : ResizableDisplayer {
         cursor.setOnMouseDraggedAction { e -> cursor.moveTo(cursor.leftSideX() + e.x, cursor.upSideY() + e.y) }
     }
 
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Int) : super(width, height)
 
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Double, height : Int) : super(width, height)
 
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    constructor(width : Int, height : Double) : super(width, height)
 
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
+    constructor(width : Double, height : Double) : super(width, height)
 
     fun setMinimalXValue(minimum : Double) : DoubleCursor{
         minimalXValue.value = minimum
@@ -312,19 +288,19 @@ class DoubleCursor : ResizableDisplayer {
     private fun isTooFarRight() : Boolean = cursor.rightSideX() > rightSideX()
 
     private fun correctUp(){
-        cursor.sety(upSideY() + cursor.height() / 2)
+        cursor.setCenterY(upSideY() + cursor.height() / 2)
     }
 
     private fun correctDown(){
-        cursor.sety(downSideY() - cursor.height() / 2)
+        cursor.setCenterY(downSideY() - cursor.height() / 2)
     }
 
     private fun correctLeft(){
-        cursor.setx(leftSideX() + cursor.width() / 2)
+        cursor.setCenterX(leftSideX() + cursor.width() / 2)
     }
 
     private fun correctRight(){
-        cursor.setx(rightSideX() - cursor.width() / 2)
+        cursor.setCenterX(rightSideX() - cursor.width() / 2)
     }
 
     private fun correctCursorXPosition(){
@@ -335,7 +311,7 @@ class DoubleCursor : ResizableDisplayer {
                 correctRight()
             }
         }else{
-            cursor.setx(centerX())
+            cursor.setCenterX(centerX())
         }
     }
 
@@ -347,7 +323,7 @@ class DoubleCursor : ResizableDisplayer {
                 correctDown()
             }
         }else{
-            cursor.sety(centerY())
+            cursor.setCenterY(centerY())
         }
     }
 
@@ -371,12 +347,12 @@ class DoubleCursor : ResizableDisplayer {
         val xProportion : Double = (xValue() - minimalX()) / xRange()
         val newX : Int = leftSideX() + (xProportion * width()).toInt()
         var previousValue : Double = xValue()
-        cursor.setx(newX)
+        cursor.setCenterX(newX)
         setXValue(previousValue)
         val yProportion : Double = (yValue() - minimalY()) / yRange()
         val newY : Int = downSideY() - (yProportion * height()).toInt()
         previousValue = yValue()
-        cursor.sety(newY)
+        cursor.setCenterY(newY)
         setYValue(previousValue)
     }
 
@@ -391,8 +367,8 @@ class DoubleCursor : ResizableDisplayer {
     override fun loadParameters(g: Graphics) {
         cursor.setWidth(DEFAULT_CURSOR_SIDE_LENGTH)
         cursor.setHeight(DEFAULT_CURSOR_SIDE_LENGTH)
-        cursor.setx(centerX())
-        cursor.sety(centerY())
+        cursor.setCenterX(centerX())
+        cursor.setCenterY(centerY())
         conserveCursorPositionOnResize()
     }
 

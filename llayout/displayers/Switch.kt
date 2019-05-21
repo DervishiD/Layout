@@ -6,10 +6,8 @@ import llayout.GraphicAction
 import llayout.utilities.LProperty
 import java.awt.Color
 import java.awt.Graphics
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
 
-class Switch : ResizableDisplayer {
+class Switch : ResizableDisplayer(DEFAULT_SIZE, DEFAULT_SIZE) {
 
     private companion object{
         private val DEFAULT_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
@@ -26,6 +24,7 @@ class Switch : ResizableDisplayer {
             g.color = Color(0, 191, 255)
             g.fillRect(lateralDelta, lateralDelta, w - 2 * lateralDelta, h - 2 * lateralDelta)
         }}
+        private const val DEFAULT_SIZE : Int = 45
     }
 
     private val value : LProperty<Boolean> = LProperty(false)
@@ -37,38 +36,6 @@ class Switch : ResizableDisplayer {
     init{
         setOnMouseReleasedAction { switch() }
     }
-
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
 
     fun setTrue() : Switch{
         value.value = true

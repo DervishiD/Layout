@@ -32,8 +32,9 @@ Canvas
 StringDisplay
     Switch to StringBuilder
 
-More functions, less constructor parameters
-    Go through classes
+DisplayerContainer, Displayer to Displayable?
+
+TextArrowSelector, forceMaxLineLength to canonical one
 
 Initialize Displayers in reverse?
     if l listens to b, l must be added *before* b, which will cause mistakes
@@ -48,6 +49,10 @@ Actually draw a background in Buttons and such
 
 Remove focus in TextField
 
+Decorations to clean accessible methods and 'Use property access syntax' problem for WH?
+
+Refactor delta stuff in TextDisplayer
+
 Displayers
     relativeXYWH as LProperties
     Rename Displayer
@@ -59,7 +64,6 @@ Displayers
         Add lateral sliders
 
 Projects
-    Fractals
     Better Chibre
     That game Schinz made that day
     9x9 Tic-Tac-Toe

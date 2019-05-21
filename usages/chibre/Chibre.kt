@@ -15,11 +15,11 @@ val screen : LScene = object : LScene(){
     var team1score : LProperty<Int> = LProperty(0)
     var team2score : LProperty<Int> = LProperty(0)
 
-    val team1label : Label = Label(0.33, 0.33, "Team 1 : ")
-    val team2label : Label = Label(0.33, 0.66, "Team 2 : ")
+    val team1label : Label = Label("Team 1 : ").setCenterX(0.33).setCenterY(0.33) as Label
+    val team2label : Label = Label("Team 2 : ").setCenterX(0.33).setCenterY(0.66) as Label
 
-    val team1scorelabel : Label = Label(0, 0.33, "0").alignLeftToRight(team1label) as Label
-    val team2scorelabel : Label = Label(0, 0.66, "0").alignLeftToRight(team2label) as Label
+    val team1scorelabel : Label = Label("0").setCenterY(0.33).alignLeftToRight(team1label) as Label
+    val team2scorelabel : Label = Label("0").setCenterY(0.66).alignLeftToRight(team2label) as Label
 
     init{
         team1score.addListener{team1scorelabel.setDisplayedText(team1score.value.toString())}
@@ -46,8 +46,8 @@ val screen : LScene = object : LScene(){
         } }
     }
 
-    val field1 : TextField = TextField(0.66, 0.33).digitsOnly()
-    val field2 : TextField = TextField(0.66, 0.66).digitsOnly()
+    val field1 : TextField = TextField().digitsOnly().setCenterX(0.66).setCenterY(0.33) as TextField
+    val field2 : TextField = TextField().digitsOnly().setCenterX(0.66).setCenterY(0.66) as TextField
 
     var focusedField : TextField? = null
 

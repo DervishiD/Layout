@@ -15,7 +15,7 @@ val probabilityApplication : LApplication = LApplication {
 
 class RandomDistributionLScene : LScene(){
 
-    private val exitButton = TextButton(0, 0, "X", { randomDistributionFrame.close()}).alignUpTo(0).alignLeftTo(0)
+    private val exitButton = TextButton("X", { randomDistributionFrame.close()}).alignUpTo(0).alignLeftTo(0)
 
     private var firstGenerator : () -> Double = {0.0}
 
@@ -68,7 +68,7 @@ val randomDistributionScreen : RandomDistributionLScene = RandomDistributionLSce
 
 val MAIN_L_SCENE : LScene = object : LScene(){
 
-    val runButton : TextButton = TextButton(0.5, 0.85, "Run", {
+    val runButton : TextButton = TextButton("Run") {
         if(randomDistributionFrame.isHidden()) randomDistributionFrame.setVisible()
         randomDistributionScreen.setFirstGenerator(randomTypeSelector1.selectedOption())
         randomDistributionScreen.setSecondGenerator(randomTypeSelector2.selectedOption())
@@ -78,7 +78,7 @@ val MAIN_L_SCENE : LScene = object : LScene(){
             randomDistributionScreen.setRadial()
         }
         randomDistributionScreen.clear()
-    })
+    }.setCenterX(0.5).setCenterY(0.85) as TextButton
 
     val RECTANGULAR : Int = 0
     val RADIAL : Int = 1
@@ -88,8 +88,8 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     val radFirst : String = "ρ :"
     val radSecond : String = "φ :"
 
-    val firstCoordinate : Label = Label(0.2, 0.5, rectFirst)
-    val secondCoordinate : Label = Label(0.2, 0.6, rectSecond)
+    val firstCoordinate : Label = Label(rectFirst).setCenterX(0.2).setCenterY(0.5) as Label
+    val secondCoordinate : Label = Label(rectSecond).setCenterX(0.2).setCenterY(0.6) as Label
 
     val randomTypes : Map<Text, () -> Double> = mapOf(
             Text("Homogeneous") to { randomHomogeneous() },
@@ -104,14 +104,14 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     )
 
     @Suppress("UNCHECKED_CAST")
-    val randomTypeSelector1 = TextArrowSelector(0.33, 0.5, randomTypes).alignLeftToRight(firstCoordinate, 10) as TextArrowSelector<()->Double>
+    val randomTypeSelector1 = TextArrowSelector(randomTypes).setCenterY(0.5).alignLeftToRight(firstCoordinate, 10) as TextArrowSelector<()->Double>
 
     @Suppress("UNCHECKED_CAST")
-    val randomTypeSelector2 = TextArrowSelector(0.33, 0.6, randomTypes).alignLeftToRight(secondCoordinate, 10) as TextArrowSelector<()->Double>
+    val randomTypeSelector2 = TextArrowSelector(randomTypes).setCenterY(0.6).alignLeftToRight(secondCoordinate, 10) as TextArrowSelector<()->Double>
 
     val radialRectMap : Map<Text, Int> = mapOf(Text("Rectangular") to RECTANGULAR, Text("Radial") to RADIAL)
 
-    val radialRectSwitch : TextArrowSelector<Int> = TextArrowSelector(0.5, 0.3, radialRectMap).also{
+    val radialRectSwitch : TextArrowSelector<Int> = TextArrowSelector(radialRectMap).also{
         it.addSelectionListener{
             if(it.selectedOption() == RECTANGULAR){
                 firstCoordinate.setDisplayedText(rectFirst)
@@ -121,11 +121,13 @@ val MAIN_L_SCENE : LScene = object : LScene(){
                 secondCoordinate.setDisplayedText(radSecond)
             }
         }
+        it.setCenterX(0.5)
+        it.setCenterY(0.3)
     }
 
-    val title : Label = Label(0.5, 0.1, "Random number generator")
+    val title : Label = Label("Random number generator").setCenterX(0.5).setCenterY(0.1) as Label
 
-    val exitButton = TextButton(0, 0, "X", {mainFrame.close()}).alignUpTo(0).alignLeftTo(0)
+    val exitButton = TextButton("X", {mainFrame.close()}).alignUpTo(0).alignLeftTo(0)
 
     override fun load() {
         add(title)

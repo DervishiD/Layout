@@ -4,10 +4,21 @@ import llayout.GraphicAction
 import java.awt.Color
 import java.awt.Color.BLACK
 import java.awt.Graphics
+import java.awt.image.BufferedImage
+import java.awt.image.BufferedImage.TYPE_INT_ARGB
 
 interface Canvas : HavingDimension {
 
     var graphics : MutableMap<Any?, GraphicAction>
+
+    fun backgroundAsImage() : BufferedImage {
+        val image : BufferedImage = BufferedImage(width(), height(), TYPE_INT_ARGB)
+        val g : Graphics = image.graphics
+        for(drawing : GraphicAction in graphics.values){
+            drawing(g, width(), height())
+        }
+        return image
+    }
 
     fun drawBackground(g : Graphics) : Canvas {
         for(graphicAction : GraphicAction in graphics.values){

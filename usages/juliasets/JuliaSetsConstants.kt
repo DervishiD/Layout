@@ -31,7 +31,7 @@ val juliaSetsApplication : LApplication = LApplication{
 
 private val mainScreen = object : LScene(){
 
-    private val cursor : DoubleCursor = DoubleCursor(0, 0, 0.8, 1.0)
+    private val cursor : DoubleCursor = DoubleCursor(0.8, 1.0)
             .setMinimalYValue(-0.5)
             .setMinimalXValue(-0.5)
             .setMaximalXValue(0.5)
@@ -40,20 +40,19 @@ private val mainScreen = object : LScene(){
             .alignLeftTo(0)
             .alignUpTo(0) as DoubleCursor
 
-    private val xLabel : Label = Label(0, 0, "")
+    private val xLabel : Label = Label()
             .alignUpToUp(cursor)
             .alignLeftToRight(cursor) as Label
 
-    private val yLabel : Label = Label(0, 0, "")
+    private val yLabel : Label = Label()
             .alignUpToDown(xLabel)
             .alignLeftToRight(cursor) as Label
 
-    private val reloadButton : TextButton = TextButton(0, 0.3, "Reload", {reload()})
-            .alignRightTo(1.0) as TextButton
+    private val reloadButton : TextButton = TextButton("Reload") {reload()}.setCenterY(0.3).alignRightTo(1.0) as TextButton
 
-    private val switch : Switch = Switch(0, 0.6, 50, 50).alignLeftToRight(cursor) as Switch
+    private val switch : Switch = Switch().setWidth(50).setHeight(50).setCenterY(0.6).alignLeftToRight(cursor) as Switch
 
-    private val typeLabel : Label = Label(0, 0, "Julia").alignLeftToRight(cursor).alignUpToDown(switch) as Label
+    private val typeLabel : Label = Label("Julia").alignLeftToRight(cursor).alignUpToDown(switch) as Label
 
     init{
         cursor.addXValueListener{ xLabel.setDisplayedText("x : ${cursor.xValue()}") }

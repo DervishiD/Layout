@@ -42,7 +42,7 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     private var precision : LProperty<Double> = LProperty(DEFAULT_PRECISION)
 
-    protected val slider : CanvasDisplayer = CanvasDisplayer(0, 0, 0, 0)
+    protected val slider : CanvasDisplayer = CanvasDisplayer()
 
     private var background : GraphicAction = DEFAULT_BACKGROUND
 
@@ -59,37 +59,13 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
         setSliderImage(DEFAULT_SLIDER_BACKGROUND)
     }
 
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    protected constructor(width : Int, height : Int) : super(width, height)
 
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y, width, height)
+    protected constructor(width : Double, height : Int) : super(width, height)
 
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y, width, height)
+    protected constructor(width : Int, height : Double) : super(width, height)
 
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y, width, height)
-
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y, width, height)
+    protected constructor(width : Double, height : Double) : super(width, height)
 
     fun setMinimum(minimum : Double) : AbstractDoubleSlider{
         minimalValue.value = minimum

@@ -13,85 +13,27 @@ abstract class ResizableDisplayer : Displayer {
         relativeH.addListener{requestUpdate()}
     }
 
-    constructor(x : Int, y : Int, width : Int, height : Int) : super(x, y){
+    protected constructor(width : Int, height : Int) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    constructor(x : Int, y : Double, width : Int, height : Int) : super(x, y){
+    protected constructor(width : Int, height : Double) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    constructor(x : Double, y : Int, width : Int, height : Int) : super(x, y){
+    protected constructor(width : Double, height : Int) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    constructor(x : Double, y : Double, width : Int, height : Int) : super(x, y){
+    protected constructor(width : Double, height : Double) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    constructor(x : Int, y : Int, width : Double, height : Int) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Int, y : Double, width : Double, height : Int) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Int, width : Double, height : Int) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Double, width : Double, height : Int) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Int, y : Int, width : Double, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Int, y : Double, width : Double, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Int, width : Double, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Double, width : Double, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Int, y : Int, width : Int, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Int, y : Double, width : Int, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Int, width : Int, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
-
-    constructor(x : Double, y : Double, width : Int, height : Double) : super(x, y){
-        setWidth(width)
-        setHeight(height)
-    }
+    protected constructor() : this(1, 1)
 
     fun setWidth(width : Int) : ResizableDisplayer{
         w.value = width

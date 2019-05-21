@@ -4,32 +4,35 @@ import llayout.displayers.*
 import llayout.frame.*
 import llayout.utilities.StringDisplay
 import java.awt.Color.RED
-import java.awt.event.KeyEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
 private val testScreen : LScene = object : LScene(){
 
-    private val b : TextButton = TextButton(0.5, 0.6, "Button", {})
-    private val l : Label = Label(0, 0, "Label").also{it.alignUpToDown(b).alignRightToRight(b)}
-    private val l2 = Label(0, 0, "Label 2").alignLeftTo(0).alignUpTo(0)
-    private val f : TextField = TextField(0, 0.5, 0.5).alignLeftTo(0) as TextField
-    private val tsp : TextScrollPane = TextScrollPane(0.8, 0.5, 0.4, 0.4)
-    private val csp : ConsoleScrollPane = ConsoleScrollPane(0, 0, 0.4, 0.4)
+    private val b : TextButton = TextButton("Button"){}.setCenterX(0.5).setCenterY(0.6) as TextButton
+    private val l : Label = Label("Label").alignUpToDown(b).alignRightToRight(b) as Label
+    private val l2 = Label("Label 2").alignLeftTo(0).alignUpTo(0)
+    private val f : TextField = TextField(0.5).setCenterY(0.5).alignLeftTo(0) as TextField
+    private val tsp : TextScrollPane = TextScrollPane(0.4, 0.4).setCenterX(0.8).setCenterY(0.5) as TextScrollPane
+    private val csp : ConsoleScrollPane = ConsoleScrollPane(0.4, 0.4)
     private val hds : HorizontalDoubleSlider =
-            HorizontalDoubleSlider(0.7, 0.8, 0.3, 30)
+            HorizontalDoubleSlider(0.3, 30)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
+                    .setCenterX(0.7)
+                    .setCenterY(0.8)
                     as HorizontalDoubleSlider
     private val vds : VerticalDoubleSlider =
-            VerticalDoubleSlider(0.5, 0.25, 30, 250)
+            VerticalDoubleSlider(30, 250)
                     .setMinimum(0)
                     .setMaximum(5)
                     .setPrecision(0.5)
+                    .setCenterX(0.5)
+                    .setCenterY(0.25)
                     as VerticalDoubleSlider
-    private val s : Switch = Switch(0, 0, 45, 45).alignUpTo(0).alignRightTo(1.0) as Switch
-    private val dc : DoubleCursor = DoubleCursor(0, 0, 0.2, 0.3)
+    private val s : Switch = Switch().alignUpTo(0).alignRightTo(1.0) as Switch
+    private val dc : DoubleCursor = DoubleCursor(0.2, 0.3)
                     .setMinimalXValue(-2)
                     .setMaximalXValue(2)
                     .setMinimalYValue(0)

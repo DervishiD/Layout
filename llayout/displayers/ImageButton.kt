@@ -3,8 +3,6 @@ package llayout.displayers
 import llayout.Action
 import llayout.GraphicAction
 import java.awt.Graphics
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
 
 /**
  * A Button with an image.
@@ -19,76 +17,24 @@ class ImageButton : ResizableDisplayer {
      */
     private var image : GraphicAction
 
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Int, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleasedAction { onClick() }
+    constructor(width : Int, height : Int, image : GraphicAction, action : Action) : super(width, height){
         this.image = image
+        setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Int, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleasedAction { onClick() }
+    constructor(width : Double, height : Int, image : GraphicAction, action : Action) : super(width, height){
         this.image = image
+        setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Double, y : Int, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleasedAction { onClick() }
+    constructor(width : Int, height : Double, image : GraphicAction, action : Action) : super(width, height){
         this.image = image
+        setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Creates a button from the given parameters.
-     * @param x The center point's x coordinate.
-     * @param y The center point's y coordinate.
-     * @param width the width of this ImageButton, in pixels.
-     * @param height The height of this ImageButton, in pixels.
-     * @param image The image of this ImageButton, as a GraphicAction.
-     * @param onClick The Action executed on a mouse release.
-     * @see Action
-     * @see Point
-     * @see GraphicAction
-     * @see MouseInteractable
-     */
-    constructor(x : Double, y : Double, width : Int, height : Int, image : GraphicAction, onClick: Action) : super(x, y, width, height){
-        setOnMouseReleasedAction { onClick() }
+    constructor(width : Double, height : Double, image : GraphicAction, action : Action) : super(width, height){
         this.image = image
+        setOnMouseReleasedAction { action() }
     }
 
     /**

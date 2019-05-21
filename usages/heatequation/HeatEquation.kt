@@ -19,15 +19,15 @@ val heatEquationApplication : LApplication = LApplication{
 
 private val mainScene : LScene = object : LScene(){
 
-    private val kSlider : VerticalDoubleSlider = VerticalDoubleSlider(0.3, 0.5, 50, 0.9)
+    private val kSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9).setCenterX(0.3).setCenterY(0.5) as VerticalDoubleSlider
 
-    private val kLabel : Label = Label(0, 0.5, "k")
+    private val kLabel : Label = Label("k").setCenterY(0.5) as Label
 
-    private val rangeSlider : VerticalDoubleSlider = VerticalDoubleSlider(0.6, 0.5, 50, 0.9)
+    private val rangeSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9).setCenterX(0.6).setCenterY(0.5) as VerticalDoubleSlider
 
-    private val rangeLabel : Label = Label(0, 0.5, "Range")
+    private val rangeLabel : Label = Label("Range").setCenterY(0.5) as Label
 
-    private val reloadButton : TextButton = TextButton(0.8, 0.2, "Reload", {reload()})
+    private val reloadButton : TextButton = TextButton("Reload") {reload()}.setCenterX(0.8).setCenterY(0.2) as TextButton
 
     init{
         kSlider.setMinimum(0.05).setMaximum(5).setPrecision(0.05)
