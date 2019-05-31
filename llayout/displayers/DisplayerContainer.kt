@@ -1,86 +1,43 @@
 package llayout.displayers
 
-import llayout.GraphicAction
-import llayout.interfaces.Canvas
-import java.awt.Graphics
+abstract class DisplayerContainer : ResizableDisplayer {
 
-/**
- * A simple Displayer Container, nothing special.
- * @see Displayer
- * @see AbstractDisplayerContainer
- */
-class DisplayerContainer : AbstractDisplayerContainer, Canvas {
+    protected constructor(width : Int, height : Int) : super(width, height)
 
-    override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
+    protected constructor(width : Double, height : Int) : super(width, height)
 
-    constructor(width : Int, height : Int, vararg displayers: Displayer) : super(width, height){
-        addDisplayers(*displayers)
-    }
+    protected constructor(width : Int, height : Double) : super(width, height)
 
-    constructor(width : Double, height : Int, vararg displayers: Displayer) : super(width, height){
-        addDisplayers(*displayers)
-    }
+    protected constructor(width : Double, height : Double) : super(width, height)
 
-    constructor(width : Int, height : Double, vararg displayers: Displayer) : super(width, height){
-        addDisplayers(*displayers)
-    }
+    protected constructor() : super()
 
-    constructor(width : Double, height : Double, vararg displayers: Displayer) : super(width, height){
-        addDisplayers(*displayers)
-    }
-
-    constructor(width : Int, height : Int, displayers: Collection<Displayer>) : super(width, height){
-        addDisplayers(displayers)
-    }
-
-    constructor(width : Double, height : Int, displayers: Collection<Displayer>) : super(width, height){
-        addDisplayers(displayers)
-    }
-
-    constructor(width : Int, height : Double, displayers: Collection<Displayer>) : super(width, height){
-        addDisplayers(displayers)
-    }
-
-    constructor(width : Double, height : Double, displayers: Collection<Displayer>) : super(width, height){
-        addDisplayers(displayers)
-    }
-
-    constructor(vararg displayers: Displayer) : super(){
-        addDisplayers(*displayers)
-    }
-
-    constructor(displayers : Collection<Displayer>) : super(){
-        addDisplayers(displayers)
-    }
-
-    /**
-     * Adds the given displayers to this DisplayerContainer.
-     * @param displayers The added Displayers.
-     * @see Displayer
-     */
-    fun addDisplayers(vararg displayers : Displayer) : DisplayerContainer {
-        for(d : Displayer in displayers){
-            super.add(d)
+    fun add(vararg components : Displayer) : Displayer{
+        for(component : Displayer in components){
+            core.add(core(component))
         }
         return this
     }
 
-    /**
-     * Adds the given displayers to this DisplayerContainer.
-     * @param displayers The added Displayers.
-     * @see Displayer
-     */
-    fun addDisplayers(displayers : Collection<Displayer>) : DisplayerContainer {
-        for(d : Displayer in displayers){
-            super.add(d)
+    fun add(components : Collection<Displayer>) : Displayer{
+        for(component : Displayer in components){
+            core.add(core(component))
         }
         return this
     }
 
-    override fun loadParameters(g: Graphics) {}
+    fun remove(vararg components : Displayer) : Displayer{
+        for(component : Displayer in components){
+            core.remove(core(component))
+        }
+        return this
+    }
 
-    override fun drawDisplayer(g: Graphics) {
-        drawBackground(g)
+    fun remove(components : Collection<Displayer>) : Displayer{
+        for(component : Displayer in components){
+            core.remove(core(component))
+        }
+        return this
     }
 
 }

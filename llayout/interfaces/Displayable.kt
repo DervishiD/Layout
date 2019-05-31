@@ -1,36 +1,23 @@
 package llayout.interfaces
 
 import llayout.Action
-import llayout.utilities.LProperty
 import java.awt.Graphics
 
 interface Displayable : LTimerUpdatable, HavingDimension {
-
-    var requestUpdate : LProperty<Boolean>
 
     fun onAdd(container : StandardLContainer){}
 
     fun onRemove(container : StandardLContainer){}
 
-    fun updateRelativeValues(frameWidth : Int, frameHeight : Int) : Displayable = this
+    fun updateRelativeValues(frameWidth : Int, frameHeight : Int)
 
-    fun addRequestUpdateListener(key : Any?, action : Action) : Displayable{
-        requestUpdate.addListener(key, action)
-        return this
-    }
+    fun addRequestUpdateListener(key : Any?, action : Action) : Displayable
 
-    fun requestUpdate(){
-        requestUpdate.value = true
-    }
+    fun requestUpdate()
 
-    fun addRequestUpdateListener(action : Action) : Displayable = addRequestUpdateListener(action, action)
+    fun addRequestUpdateListener(action : Action) : Displayable
 
-    fun removeRequestUpdateListener(key : Any?) : Displayable{
-        requestUpdate.removeListener(key)
-        return this
-    }
-
-    override fun onTimerTick(){}
+    fun removeRequestUpdateListener(key : Any?) : Displayable
 
     fun drawDisplayable(g : Graphics)
 

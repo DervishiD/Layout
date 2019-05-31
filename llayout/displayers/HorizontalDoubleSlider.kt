@@ -5,7 +5,6 @@ import java.awt.Graphics
 class HorizontalDoubleSlider : AbstractDoubleSlider {
 
     init{
-        addYListener{ slider.setCenterY(centerY()) }
         addHeightListener{ slider.setHeight(height()) }
         addWidthListener{
             if(slider.width() > width()){
@@ -14,9 +13,10 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
                 slider.setWidth(MINIMAL_SLIDER_SIZE)
             }
         }
-        slider.setOnMouseDraggedAction { e -> slider.moveTo(slider.leftSideX() + e.x, slider.centerY()) }
-        slider.addXListener{ updateValue() }
+        slider.setY(0.5)
+        slider.setOnMouseDraggedAction { e -> slider.setX(slider.leftSideX() + e.x) }
         slider.addXListener{ correctSliderPosition() }
+        slider.addXListener{ updateValue() }
     }
 
     constructor(width : Int, height : Int) : super(width, height)
@@ -27,16 +27,16 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
 
     constructor(width : Double, height : Double) : super(width, height)
 
-    private fun isTooFarLeft() : Boolean = slider.leftSideX() < leftSideX()
+    private fun isTooFarLeft() : Boolean = slider.leftSideX() < 0
 
-    private fun isTooFarRight() : Boolean = slider.rightSideX() > rightSideX()
+    private fun isTooFarRight() : Boolean = slider.rightSideX() > width()
 
     private fun correctLeft(){
-        slider.setCenterX(leftSideX() + slider.width() / 2)
+        slider.setX(slider.width() / 2)
     }
 
     private fun correctRight(){
-        slider.setCenterX(rightSideX() - slider.width() / 2)
+        slider.setX(width() - slider.width() / 2)
     }
 
     override fun correctSliderPosition(){
@@ -47,7 +47,7 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
                 correctRight()
             }
         }else{
-            slider.setCenterX(centerX())
+            slider.setX(width() / 2)
         }
     }
 
@@ -61,29 +61,29 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
              * proportion is left x / W - w
              * minimal value + proportion * range
              */
-            setValue(minimalValue() + ( (slider.leftSideX().toDouble() - leftSideX()) / (width() - slider.width()) ) * range() )
+            setValue(minimalValue() + ( slider.leftSideX().toDouble() / (width() - slider.width()) ) * range() )
         }
     }
 
     override fun conserveSliderPositionOnResize(){
         val proportion : Double = (value() - minimalValue()) / range()
-        val newX : Int = leftSideX() + (proportion * width()).toInt()
+        val newX : Int = (proportion * width()).toInt()
         val previousValue : Double = value()
-        slider.setCenterX(newX)
+        slider.setX(newX)
         setValue(previousValue)
     }
 
-    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): HorizontalDoubleSlider {
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
         super.updateRelativeValues(frameWidth, frameHeight)
         conserveSliderPositionOnResize()
-        return this
     }
 
-    override fun loadParameters(g: Graphics) {
+    override fun initializeDrawingParameters(g: Graphics) {
+        super.initializeDrawingParameters(g)
         slider.setHeight(height())
-        slider.setCenterY(centerY())
         slider.setWidth(MINIMAL_SLIDER_SIZE)
         conserveSliderPositionOnResize()
+        correctSliderPosition()
     }
 
 }

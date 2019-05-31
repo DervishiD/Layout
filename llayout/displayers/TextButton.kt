@@ -5,76 +5,27 @@ import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
 import llayout.utilities.StringDisplay
 import llayout.utilities.Text
-import java.awt.Color
 import java.awt.Graphics
 
-/**
- * A TextButton is a Displayer that is constructed with an Action invoked when the mouse
- * is released on it.
- * @see Action
- * @see TextDisplayer
- * @see Displayer
- * @see ImageButton
- */
 class TextButton : TextDisplayer {
 
-    private companion object {
-
-        /**
-         * The thickness of the line in the default background of the TextButton.
-         * @see DEFAULT_BUTTON_BACKGROUND
-         * @see GraphicAction
-         */
+    private companion object{
+        private const val LABEL_LATERAL_DISTANCE : Int = 4
         private const val LINE_THICKNESS : Int = 2
-
-        /**
-         * The base side delta.
-         * @see TextDisplayer.upDelta
-         * @see TextDisplayer.downDelta
-         * @see TextDisplayer.leftDelta
-         * @see TextDisplayer.rightDelta
-         * @see DEFAULT_BUTTON_BACKGROUND
-         * @see GraphicAction
-         */
-        private const val DELTA : Int = LINE_THICKNESS + 2
-
-        /**
-         * The color of the line in the default background of the TextButton.
-         * @see DEFAULT_BUTTON_BACKGROUND
-         * @see GraphicAction
-         */
-        private val LINE_COLOR : Color = DEFAULT_COLOR
-
-        /**
-         * The default background of this TextButton.
-         * @see GraphicAction
-         */
-        private val DEFAULT_BUTTON_BACKGROUND : GraphicAction =
-            { g: Graphics, w: Int, h: Int -> run{
-                g.color = LINE_COLOR
-                g.fillRect(0, 0, LINE_THICKNESS, h)
-                g.fillRect(0, 0, w, LINE_THICKNESS)
-                g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)
-                g.fillRect(w - LINE_THICKNESS, 0, w, h)
-            }}
-
+        private val LINE_COLOR = DEFAULT_COLOR
+        private val DEFAULT_BUTTON_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int ->
+            g.color = LINE_COLOR
+            g.fillRect(0, 0, LINE_THICKNESS, h)
+            g.fillRect(0, 0, w, LINE_THICKNESS)
+            g.fillRect(0, h - LINE_THICKNESS, w, LINE_THICKNESS)
+            g.fillRect(w - LINE_THICKNESS, 0, w, h)
+        }
     }
 
-    override var upDelta: Int = DELTA
-    override var downDelta: Int = DELTA
-    override var leftDelta: Int = DELTA
-    override var rightDelta: Int = DELTA
+    override var lateralAdditionalDistance: Int = LABEL_LATERAL_DISTANCE
 
     init{
-        backgroundDrawer = DEFAULT_BUTTON_BACKGROUND
-    }
-
-    constructor(text : CharSequence, action : Action) : super(text){
-        setOnMouseReleasedAction { action() }
-    }
-
-    constructor(text : StringDisplay, action : Action) : super(text){
-        setOnMouseReleasedAction { action() }
+        core.addGraphicAction(DEFAULT_BUTTON_BACKGROUND)
     }
 
     constructor(text : Collection<StringDisplay>, action : Action) : super(text){
@@ -82,6 +33,14 @@ class TextButton : TextDisplayer {
     }
 
     constructor(text : Text, action : Action) : super(text){
+        setOnMouseReleasedAction { action() }
+    }
+
+    constructor(text : StringDisplay, action : Action) : super(text){
+        setOnMouseReleasedAction { action() }
+    }
+
+    constructor(text : CharSequence, action : Action) : super(text){
         setOnMouseReleasedAction { action() }
     }
 

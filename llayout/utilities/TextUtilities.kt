@@ -164,10 +164,11 @@ fun Regex.matches(s : StringDisplay) : Boolean = matches(s.text)
 
 fun Regex.matches(t : Text) : Boolean = matches(t.asString())
 
-fun FontMetrics.stringWidth(s : StringBuilder) : Int = stringWidth(s.toString())
+fun FontMetrics.stringWidth(s : CharSequence) : Int = stringWidth(s.toString())
 
 fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics, trimSpaces : Boolean = true) : MutableList<MutableList<StringDisplay>>{
-    if(maxLength <= 0) throw IllegalArgumentException("maxLength $maxLength in extension function Collection<StringDisplay>.toLines is invalid.")
+    if(maxLength <= 0)
+        throw IllegalArgumentException("maxLength $maxLength in extension function Collection<StringDisplay>.toLines is invalid.")
 
     val result : MutableList<MutableList<StringDisplay>> = mutableListOf()
 

@@ -1,7 +1,7 @@
 package llayout.interfaces
 
 import llayout.Action
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 
 /**
  * An interface implemented by discrete selector classes that let the user select something.
@@ -13,7 +13,7 @@ interface AbstractSelector<T> {
      * The index of the current option.
      * @see options
      */
-    var currentOptionIndex : LProperty<Int>
+    var currentOptionIndex : LObservable<Int>
 
     /**
      * The list of options that the selector chooses from.
@@ -30,7 +30,7 @@ interface AbstractSelector<T> {
         return this
     }
 
-    infix fun addSelectionListener(action : Action) : AbstractSelector<T>{
+    fun addSelectionListener(action : Action) : AbstractSelector<T>{
         currentOptionIndex.addListener(action)
         return this
     }
@@ -45,7 +45,7 @@ interface AbstractSelector<T> {
      * Adds an option to the list.
      * @see options
      */
-    infix fun addOption(option : T) : AbstractSelector<T> {
+    fun addOption(option : T) : AbstractSelector<T> {
         options.add(option)
         return this
     }
@@ -54,8 +54,10 @@ interface AbstractSelector<T> {
      * Adds a Collection of options to the list.
      * @see options
      */
-    infix fun addOptionsList(options : Collection<T>) : AbstractSelector<T> {
-        this.options.addAll(options)
+    fun addOptionsList(options : Collection<T>) : AbstractSelector<T> {
+        for(option : T in options){
+            addOption(option)
+        }
         return this
     }
 
@@ -64,7 +66,9 @@ interface AbstractSelector<T> {
      * @see options
      */
     fun addOptionsList(vararg options : T) : AbstractSelector<T> {
-        this.options.addAll(options)
+        for(option : T in options){
+            addOption(option)
+        }
         return this
     }
 

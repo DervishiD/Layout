@@ -1,174 +1,73 @@
 package llayout.displayers
 
-import llayout.Action
-import llayout.frame.LScene
 import llayout.GraphicAction
 import llayout.interfaces.AbstractSelector
-import llayout.interfaces.StandardLContainer
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 
-/**
- * An abstract implementation of an Abstract Selector, that is, an object that lets the user select
- * values from a list by using two arrows, 'next' and 'previous'.
- * It is a Displayer, meaning that it can be added to a LScene.
- * The type parameter T is the type of the options to choose from.
- * @see previous
- * @see next
- * @see Displayer
- * @see AbstractSelector
- * @see LScene
- */
-abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
+open class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
 
     protected companion object {
 
-        /**
-         * The width of a horizontal arrow.
-         */
-        private const val HORIZONTAL_ARROW_WIDTH : Int = 30
+        @JvmStatic protected val HORIZONTAL_ARROW_WIDTH : Int = 25
 
-        /**
-         * The height of a horizontal arrow.
-         */
-        private const val HORIZONTAL_ARROW_HEIGHT : Int = 30
+        private const val HORIZONTAL_ARROW_HEIGHT : Int = 25
 
-        /**
-         * The width of a vertical arrow.
-         */
-        private const val VERTICAL_ARROW_WIDTH : Int = 30
+        private const val VERTICAL_ARROW_WIDTH : Int = 25
 
-        /**
-         * The height of a vertical arrow.
-         */
-        private const val VERTICAL_ARROW_HEIGHT : Int = 30
+        @JvmStatic protected val VERTICAL_ARROW_HEIGHT : Int = 25
 
-        /**
-         * The default Color of the arrows.
-         */
         private val DEFAULT_ARROW_COLOR : Color = Color(34, 139, 34)
 
-        /**
-         * A function that produces a GraphicAction that draws a left arrow from the given Color.
-         * @param color The Color of the given arrow.
-         * @see HORIZONTAL_ARROW_WIDTH
-         * @see HORIZONTAL_ARROW_HEIGHT
-         * @see GraphicAction
-         */
         private fun leftArrowDrawer(color : Color = DEFAULT_ARROW_COLOR) : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             g.color = color
             g.fillPolygon(intArrayOf(0, w, w), intArrayOf(h/2, 0, h), 3)
         }}
 
-        /**
-         * A function that produces a GraphicAction that draws a right arrow from the given Color.
-         * @param color The Color of the given arrow.
-         * @see HORIZONTAL_ARROW_WIDTH
-         * @see HORIZONTAL_ARROW_HEIGHT
-         * @see GraphicAction
-         */
         private fun rightArrowDrawer(color : Color = DEFAULT_ARROW_COLOR) : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             g.color = color
             g.fillPolygon(intArrayOf(0, 0, w), intArrayOf(0, h, h/2), 3)
         }}
 
-        /**
-         * A function that produces a GraphicAction that draws an up arrow from the given Color.
-         * @param color The Color of the given arrow.
-         * @see VERTICAL_ARROW_WIDTH
-         * @see VERTICAL_ARROW_HEIGHT
-         * @see GraphicAction
-         */
         private fun upArrowDrawer(color : Color = DEFAULT_ARROW_COLOR) : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             g.color = color
             g.fillPolygon(intArrayOf(0, w/2, w), intArrayOf(h, 0, h), 3)
         }}
 
-        /**
-         * A function that produces a GraphicAction that draws a down arrow from the given Color.
-         * @param color The Color of the given arrow.
-         * @see VERTICAL_ARROW_WIDTH
-         * @see VERTICAL_ARROW_HEIGHT
-         * @see GraphicAction
-         */
         private fun downArrowDrawer(color : Color = DEFAULT_ARROW_COLOR) : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             g.color = color
             g.fillPolygon(intArrayOf(0, w/2, w), intArrayOf(0, h, 0), 3)
         }}
 
-        /**
-         * The default GraphicAction that draws a left arrow.
-         * @see GraphicAction
-         */
         private val DEFAULT_LEFT_ARROW_DRAWER : GraphicAction = leftArrowDrawer()
 
-        /**
-         * The default GraphicAction that draws a right arrow.
-         * @see GraphicAction
-         */
         private val DEFAULT_RIGHT_ARROW_DRAWER : GraphicAction = rightArrowDrawer()
 
-        /**
-         * The default GraphicAction that draws an up arrow.
-         * @see GraphicAction
-         */
         private val DEFAULT_UP_ARROW_DRAWER : GraphicAction = upArrowDrawer()
 
-        /**
-         * The default GraphicAction that draws a down arrow.
-         * @see GraphicAction
-         */
         private val DEFAULT_DOWN_ARROW_DRAWER : GraphicAction = downArrowDrawer()
 
-        /**
-         * The distance, in pixels, between the border of this Displayer and the
-         * border of the arrows.
-         */
-        protected const val EXTERIOR_DELTA : Int = 5
+        @JvmStatic protected val EXTERIOR_DELTA : Int = 5
 
     }
 
-    override var currentOptionIndex: LProperty<Int> = LProperty(0)
+    private val previousArrow : ImageButton
 
-    override val options: MutableList<T> = mutableListOf()
+    private val nextArrow : ImageButton
 
-    /**
-     * The Action of the 'previous' arrow, selects the option before the current
-     * one in the list.
-     * @see previous
-     */
-    private var previousAction : Action = {this.previous()}
-
-    /**
-     * The Action of the 'next' arrow, selects the option after the current
-     * one in the list.
-     * @see next
-     */
-    private var nextAction : Action = {this.next()}
-
-    /**
-     * True if the arrows are placed horizontally, false if they are placed vertically
-     */
     private val isHorizontal : Boolean
 
-    /**
-     * The 'previous' arrow.
-     * @see previous
-     */
-    private var previousArrow : ImageButton
+    override var currentOptionIndex: LObservable<Int> = LObservable(0)
 
-    /**
-     * The 'next' arrow.
-     * @see next
-     */
-    private var nextArrow : ImageButton
+    override val options: MutableList<T> = mutableListOf()
 
     protected constructor(vararg options : T, isHorizontal: Boolean = true) : super(){
         addOptionsList(*options)
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
         nextArrow = initializeNextArrow()
+        alignArrows()
     }
 
     protected constructor(options : Collection<T>, isHorizontal: Boolean = true) : super(){
@@ -176,65 +75,9 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         this.isHorizontal = isHorizontal
         previousArrow = initializePreviousArrow()
         nextArrow = initializeNextArrow()
+        alignArrows()
     }
 
-    /**
-     * Sets the current selection to the next value in the list.
-     * @see options
-     */
-    protected open fun next(){
-        if(currentOptionIndex.value < optionsNumber() - 1){
-            currentOptionIndex.value++
-        }else{
-            currentOptionIndex.value = 0
-        }
-        initphase = true
-    }
-
-    /**
-     * Sets the current selection to the previous value in the list.
-     * @see options
-     */
-    protected open fun previous(){
-        if(currentOptionIndex.value > 0){
-            currentOptionIndex.value--
-        }else{
-            currentOptionIndex.value = optionsNumber() - 1
-        }
-        initphase = true
-    }
-
-    /**
-     * Initializes the 'previous' arrow.
-     * @see previous
-     * @see isHorizontal
-     */
-    private fun initializePreviousArrow() : ImageButton {
-        return if(isHorizontal){
-            ImageButton(HORIZONTAL_ARROW_WIDTH, HORIZONTAL_ARROW_HEIGHT, DEFAULT_LEFT_ARROW_DRAWER, previousAction)
-        }else{
-            ImageButton(VERTICAL_ARROW_WIDTH, VERTICAL_ARROW_HEIGHT, DEFAULT_DOWN_ARROW_DRAWER, previousAction)
-        }
-    }
-
-    /**
-     * Initializes the 'next' arrow.
-     * @see next
-     * @see isHorizontal
-     */
-    private fun initializeNextArrow() : ImageButton {
-        return if(isHorizontal){
-            ImageButton(HORIZONTAL_ARROW_WIDTH, HORIZONTAL_ARROW_HEIGHT, DEFAULT_RIGHT_ARROW_DRAWER, nextAction)
-        }else{
-            ImageButton(VERTICAL_ARROW_WIDTH, VERTICAL_ARROW_HEIGHT, DEFAULT_UP_ARROW_DRAWER, nextAction)
-        }
-    }
-
-    /**
-     * Sets a new color for both arrows.
-     * @see setPreviousArrowColor
-     * @see setNextArrowColor
-     */
     fun setArrowsColor(color : Color) : AbstractArrowSelector<T> {
         setPreviousArrowColor(color)
         setNextArrowColor(color)
@@ -285,77 +128,61 @@ abstract class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
         return this
     }
 
-    override fun leftSideX() : Int = super.leftSideX() - if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
-
-    override fun rightSideX(): Int = super.rightSideX() + if(isHorizontal) EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH else 0
-
-    override fun upSideY() : Int = super.upSideY() - if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
-
-    override fun downSideY() : Int = super.downSideY() + if(!isHorizontal) EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT else 0
-
-    override fun alignLeftTo(position : Int) : AbstractArrowSelector<T> {
-        absoluteAlignLeftTo.value = position
-        if(isHorizontal) absoluteX.value = position + width() / 2 + HORIZONTAL_ARROW_WIDTH + EXTERIOR_DELTA
+    fun setPreviousArrowImage(image : GraphicAction) : AbstractArrowSelector<T>{
+        previousArrow.setImage(image, previousArrow.width(), previousArrow.height())
         return this
     }
 
-    override fun alignRightTo(position : Int) : AbstractArrowSelector<T> {
-        absoluteAlignLeftTo.value = position
-        if(isHorizontal) absoluteX.value = position - width() / 2 - HORIZONTAL_ARROW_WIDTH - EXTERIOR_DELTA
+    fun setNextArrowImage(image : GraphicAction) : AbstractArrowSelector<T>{
+        nextArrow.setImage(image, nextArrow.width(), nextArrow.height())
         return this
     }
 
-    override fun alignUpTo(position : Int) : AbstractArrowSelector<T> {
-        absoluteAlignUpTo.value = position
-        if(!isHorizontal) absoluteY.value = position + height() / 2 + VERTICAL_ARROW_HEIGHT + EXTERIOR_DELTA
-        return this
-    }
-
-    override fun alignDownTo(position : Int) : AbstractArrowSelector<T> {
-        absoluteAlignDownTo.value = position
-        if(!isHorizontal) absoluteY.value = position - height() / 2 - VERTICAL_ARROW_HEIGHT - EXTERIOR_DELTA
-        return this
-    }
-
-    override fun onAdd(container : StandardLContainer) {
-        container.add(previousArrow)
-        container.add(nextArrow)
-    }
-
-    override fun onRemove(container : StandardLContainer) {
-        container.remove(previousArrow)
-        container.remove(nextArrow)
-    }
-
-    /**
-     * Sets the position of the arrows to align them correctly with this Selector.
-     * @see setHorizontalArrowPosition
-     * @see setVerticalArrowPosition
-     */
-    protected fun setArrowsPosition(){
-        if(isHorizontal){
-            setHorizontalArrowPosition()
+    protected open fun next(){
+        if(currentOptionIndex.value < optionsNumber() - 1){
+            currentOptionIndex.value++
         }else{
-            setVerticalArrowPosition()
+            currentOptionIndex.value = 0
+        }
+        initialize()
+    }
+
+    protected open fun previous(){
+        if(currentOptionIndex.value > 0){
+            currentOptionIndex.value--
+        }else{
+            currentOptionIndex.value = optionsNumber() - 1
+        }
+        initialize()
+    }
+
+    protected fun isHorizontal() : Boolean = isHorizontal
+
+    private fun initializePreviousArrow() : ImageButton{
+        return if(isHorizontal){
+            ImageButton(HORIZONTAL_ARROW_WIDTH, HORIZONTAL_ARROW_HEIGHT, DEFAULT_LEFT_ARROW_DRAWER){previous()}
+        }else{
+            ImageButton(VERTICAL_ARROW_WIDTH, VERTICAL_ARROW_HEIGHT, DEFAULT_DOWN_ARROW_DRAWER){previous()}
         }
     }
 
-    /**
-     * Sets the position of the arrows if they're horizontally aligned, to align them
-     * correctly with this Selector.
-     */
-    private fun setHorizontalArrowPosition(){
-        previousArrow.moveTo(centerX() - width()/2 - EXTERIOR_DELTA - HORIZONTAL_ARROW_WIDTH /2, centerY())
-        nextArrow.moveTo(centerX() + width()/2 + EXTERIOR_DELTA + HORIZONTAL_ARROW_WIDTH /2, centerY())
+    private fun initializeNextArrow() : ImageButton{
+        return if(isHorizontal){
+            ImageButton(HORIZONTAL_ARROW_WIDTH, HORIZONTAL_ARROW_HEIGHT, DEFAULT_RIGHT_ARROW_DRAWER){next()}
+        }else{
+            ImageButton(VERTICAL_ARROW_WIDTH, VERTICAL_ARROW_HEIGHT, DEFAULT_UP_ARROW_DRAWER){next()}
+        }
     }
 
-    /**
-     * Sets the position of the arrows if they're vertically aligned, to align them
-     * correctly with this Selector.
-     */
-    private fun setVerticalArrowPosition(){
-        previousArrow.moveTo(centerX(), centerY() + height()/2 + EXTERIOR_DELTA + VERTICAL_ARROW_HEIGHT /2)
-        nextArrow.moveTo(centerX(), centerY() - height()/2 - EXTERIOR_DELTA - VERTICAL_ARROW_HEIGHT /2)
+    private fun alignArrows(){
+        core.addDisplayers(previousArrow, nextArrow)
+        if(isHorizontal){
+            previousArrow.setY(0.5).alignLeftTo(0.0)
+            nextArrow.setY(0.5).alignRightTo(1.0)
+        }else{
+            previousArrow.setX(0.5).alignDownTo(1.0)
+            nextArrow.setX(0.5).alignUpTo(0.0)
+        }
     }
 
 }

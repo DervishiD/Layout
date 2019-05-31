@@ -3,55 +3,35 @@ package usages.chibre
 import llayout.displayers.Label
 import llayout.displayers.TextField
 import llayout.frame.*
-import llayout.utilities.LProperty
-import java.awt.event.KeyEvent
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
+import llayout.utilities.LObservable
 
 val chibreApplication : LApplication = LApplication { frame.run() }
 
-val screen : LScene = object : LScene(){
+object Screen : LScene(){
 
-    var team1score : LProperty<Int> = LProperty(0)
-    var team2score : LProperty<Int> = LProperty(0)
+    var team1score : LObservable<Int> = LObservable(0)
+    var team2score : LObservable<Int> = LObservable(0)
 
-    val team1label : Label = Label("Team 1 : ").setCenterX(0.33).setCenterY(0.33) as Label
-    val team2label : Label = Label("Team 2 : ").setCenterX(0.33).setCenterY(0.66) as Label
+    val team1label : Label = Label("Team 1 : ").setX(0.33).setY(0.33) as Label
+    val team2label : Label = Label("Team 2 : ").setX(0.33).setY(0.66) as Label
 
-    val team1scorelabel : Label = Label("0").setCenterY(0.33).alignLeftToRight(team1label) as Label
-    val team2scorelabel : Label = Label("0").setCenterY(0.66).alignLeftToRight(team2label) as Label
+    val team1scorelabel : Label = Label("0").setY(0.33).alignLeftToRight(team1label) as Label
+    val team2scorelabel : Label = Label("0").setY(0.66).alignLeftToRight(team2label) as Label
+
+    val field1 : TextField = TextField().matchPositiveShort().setX(0.66).setY(0.33) as TextField
+    val field2 : TextField = TextField().matchPositiveShort().setX(0.66).setY(0.66) as TextField
 
     init{
-        team1score.addListener{team1scorelabel.setDisplayedText(team1score.value.toString())}
-        team2score.addListener{team2scorelabel.setDisplayedText(team2score.value.toString())}
-        setOnMouseClickedAction{ e ->
-            when(val c = getComponentAt(e.x, e.y)){
-                is TextField -> focusedField = c
-                else -> {
-                    focusedField?.unfocus()
-                    focusedField = null
-                }
-            }
+        team1score.addListener{team1scorelabel.setText(team1score.value)}
+        team2score.addListener{team2scorelabel.setText(team2score.value)}
+        field1.setOnEnterAction {
+            team1score.value += field1.text().toInt()
+            field1.clear()
         }
-        setOnKeyTypedAction { e -> run{
-            if(e.keyChar == '\n'){
-                if(field1.typedText() != "") team1score.value += field1.typedText().toInt()
-                if(field2.typedText() != "") team2score.value += field2.typedText().toInt()
-                field1.clear()
-                field2.clear()
-                focusedField?.unfocus()
-                focusedField = null
-            }
-            focusedField?.type(e)
-        } }
-    }
-
-    val field1 : TextField = TextField().digitsOnly().setCenterX(0.66).setCenterY(0.33) as TextField
-    val field2 : TextField = TextField().digitsOnly().setCenterX(0.66).setCenterY(0.66) as TextField
-
-    var focusedField : TextField? = null
-
-    override fun load() {
+        field2.setOnEnterAction {
+            team2score.value += field2.text().toInt()
+            field2.clear()
+        }
         add(team1scorelabel)
         add(team2scorelabel)
         add(team1label)
@@ -60,15 +40,6 @@ val screen : LScene = object : LScene(){
         add(field2)
     }
 
-    override fun save() {
-        remove(team1scorelabel)
-        remove(team2scorelabel)
-        remove(team1label)
-        remove(team2label)
-        remove(field1)
-        remove(field2)
-    }
-
 }
 
-val frame : LFrame = LFrame(screen).setFullscreen()
+val frame : LFrame = LFrame(Screen).setFullscreen()

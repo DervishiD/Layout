@@ -1,9 +1,7 @@
 package usages.probability
 
 import llayout.Action
-import llayout.displayers.Label
-import llayout.displayers.TextArrowSelector
-import llayout.displayers.TextButton
+import llayout.displayers.*
 import llayout.frame.*
 import llayout.utilities.*
 import kotlin.math.*
@@ -13,7 +11,7 @@ val probabilityApplication : LApplication = LApplication {
     randomDistributionFrame.run()
 }
 
-class RandomDistributionLScene : LScene(){
+object RandomDistributionScreen : LScene(){
 
     private val exitButton = TextButton("X", { randomDistributionFrame.close()}).alignUpTo(0).alignLeftTo(0)
 
@@ -32,11 +30,15 @@ class RandomDistributionLScene : LScene(){
 
     private var currentGeometryDrawPoint : Action = drawRectPoint
 
-    infix fun setFirstGenerator(generator : () -> Double){
+    init{
+        add(exitButton)
+    }
+
+    fun setFirstGenerator(generator : () -> Double){
         firstGenerator = generator
     }
 
-    infix fun setSecondGenerator(generator: () -> Double){
+    fun setSecondGenerator(generator: () -> Double){
         secondGenerator = generator
     }
 
@@ -54,31 +56,21 @@ class RandomDistributionLScene : LScene(){
         currentGeometryDrawPoint.invoke()
     }
 
-    override fun load() {
-        add(exitButton)
-    }
-
-    override fun save() {
-        remove(exitButton)
-    }
-
 }
 
-val randomDistributionScreen : RandomDistributionLScene = RandomDistributionLScene()
-
-val MAIN_L_SCENE : LScene = object : LScene(){
+object MainScreen : LScene(){
 
     val runButton : TextButton = TextButton("Run") {
         if(randomDistributionFrame.isHidden()) randomDistributionFrame.setVisible()
-        randomDistributionScreen.setFirstGenerator(randomTypeSelector1.selectedOption())
-        randomDistributionScreen.setSecondGenerator(randomTypeSelector2.selectedOption())
+        RandomDistributionScreen.setFirstGenerator(randomTypeSelector1.selectedOption())
+        RandomDistributionScreen.setSecondGenerator(randomTypeSelector2.selectedOption())
         if(radialRectSwitch.selectedOption() == RECTANGULAR){
-            randomDistributionScreen.setRectangular()
+            RandomDistributionScreen.setRectangular()
         }else{
-            randomDistributionScreen.setRadial()
+            RandomDistributionScreen.setRadial()
         }
-        randomDistributionScreen.clear()
-    }.setCenterX(0.5).setCenterY(0.85) as TextButton
+        RandomDistributionScreen.clear()
+    }.setX(0.5).setY(0.85) as TextButton
 
     val RECTANGULAR : Int = 0
     val RADIAL : Int = 1
@@ -88,8 +80,8 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     val radFirst : String = "ρ :"
     val radSecond : String = "φ :"
 
-    val firstCoordinate : Label = Label(rectFirst).setCenterX(0.2).setCenterY(0.5) as Label
-    val secondCoordinate : Label = Label(rectSecond).setCenterX(0.2).setCenterY(0.6) as Label
+    val firstCoordinate : Label = Label(rectFirst).setX(0.2).setY(0.5) as Label
+    val secondCoordinate : Label = Label(rectSecond).setX(0.2).setY(0.6) as Label
 
     val randomTypes : Map<Text, () -> Double> = mapOf(
             Text("Homogeneous") to { randomHomogeneous() },
@@ -104,32 +96,34 @@ val MAIN_L_SCENE : LScene = object : LScene(){
     )
 
     @Suppress("UNCHECKED_CAST")
-    val randomTypeSelector1 = TextArrowSelector(randomTypes).setCenterY(0.5).alignLeftToRight(firstCoordinate, 10) as TextArrowSelector<()->Double>
+    val randomTypeSelector1 = TextArrowSelector(randomTypes)
+            .setY(0.5).alignLeftToRight(firstCoordinate, 10) as TextArrowSelector<()->Double>
 
     @Suppress("UNCHECKED_CAST")
-    val randomTypeSelector2 = TextArrowSelector(randomTypes).setCenterY(0.6).alignLeftToRight(secondCoordinate, 10) as TextArrowSelector<()->Double>
+    val randomTypeSelector2 = TextArrowSelector(randomTypes)
+            .setY(0.6).alignLeftToRight(secondCoordinate, 10) as TextArrowSelector<()->Double>
 
     val radialRectMap : Map<Text, Int> = mapOf(Text("Rectangular") to RECTANGULAR, Text("Radial") to RADIAL)
 
     val radialRectSwitch : TextArrowSelector<Int> = TextArrowSelector(radialRectMap).also{
         it.addSelectionListener{
             if(it.selectedOption() == RECTANGULAR){
-                firstCoordinate.setDisplayedText(rectFirst)
-                secondCoordinate.setDisplayedText(rectSecond)
+                firstCoordinate.setText(rectFirst)
+                secondCoordinate.setText(rectSecond)
             }else{
-                firstCoordinate.setDisplayedText(radFirst)
-                secondCoordinate.setDisplayedText(radSecond)
+                firstCoordinate.setText(radFirst)
+                secondCoordinate.setText(radSecond)
             }
         }
-        it.setCenterX(0.5)
-        it.setCenterY(0.3)
+        it.setX(0.5)
+        it.setY(0.3)
     }
 
-    val title : Label = Label("Random number generator").setCenterX(0.5).setCenterY(0.1) as Label
+    val title : Label = Label("Random number generator").setX(0.5).setY(0.1) as Label
 
     val exitButton = TextButton("X", {mainFrame.close()}).alignUpTo(0).alignLeftTo(0)
 
-    override fun load() {
+    init{
         add(title)
         add(runButton)
         add(firstCoordinate)
@@ -140,19 +134,8 @@ val MAIN_L_SCENE : LScene = object : LScene(){
         add(exitButton)
     }
 
-    override fun save() {
-        remove(title)
-        remove(runButton)
-        remove(firstCoordinate)
-        remove(secondCoordinate)
-        remove(radialRectSwitch)
-        remove(randomTypeSelector1)
-        remove(randomTypeSelector2)
-        remove(exitButton)
-    }
-
 }
 
-val mainFrame : LFrame = LFrame(MAIN_L_SCENE).setX(0.2).setY(0.2).setWidth(0.4).setHeight(0.5).setUndecorated()
+val mainFrame : LFrame = LFrame(MainScreen).setX(0.2).setY(0.2).setWidth(0.4).setHeight(0.5).setUndecorated()
 
-val randomDistributionFrame : LFrame = LFrame(randomDistributionScreen).setUndecorated().setX(0.7).setY(0.5).setWidth(0.6).setHeight(1.0)
+val randomDistributionFrame : LFrame = LFrame(RandomDistributionScreen).setUndecorated().setX(0.7).setY(0.5).setWidth(0.6).setHeight(1.0)

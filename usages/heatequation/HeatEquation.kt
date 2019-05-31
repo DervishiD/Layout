@@ -1,9 +1,7 @@
 package usages.heatequation
 
 import llayout.DEFAULT_COLOR
-import llayout.displayers.Label
-import llayout.displayers.TextButton
-import llayout.displayers.VerticalDoubleSlider
+import llayout.displayers.*
 import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LScene
@@ -17,17 +15,20 @@ val heatEquationApplication : LApplication = LApplication{
     graphFrame.run()
 }
 
-private val mainScene : LScene = object : LScene(){
+object MainScene : LScene(){
 
-    private val kSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9).setCenterX(0.3).setCenterY(0.5) as VerticalDoubleSlider
+    private val kSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9)
+            .setX(0.3).setY(0.5) as VerticalDoubleSlider
 
-    private val kLabel : Label = Label("k").setCenterY(0.5) as Label
+    private val kLabel : Label = Label("k").setY(0.5) as Label
 
-    private val rangeSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9).setCenterX(0.6).setCenterY(0.5) as VerticalDoubleSlider
+    private val rangeSlider : VerticalDoubleSlider = VerticalDoubleSlider(50, 0.9)
+            .setX(0.6).setY(0.5) as VerticalDoubleSlider
 
-    private val rangeLabel : Label = Label("Range").setCenterY(0.5) as Label
+    private val rangeLabel : Label = Label("Range").setY(0.5) as Label
 
-    private val reloadButton : TextButton = TextButton("Reload") {reload()}.setCenterX(0.8).setCenterY(0.2) as TextButton
+    private val reloadButton : TextButton = TextButton("Reload") {reload()}
+            .setX(0.8).setY(0.2) as TextButton
 
     init{
         kSlider.setMinimum(0.05).setMaximum(5).setPrecision(0.05)
@@ -45,7 +46,7 @@ private val mainScene : LScene = object : LScene(){
 
 }
 
-private val mainFrame : LFrame = LFrame(mainScene)
+private val mainFrame : LFrame = LFrame(MainScene)
 
 private class GraphScene : LScene(){
 
@@ -63,8 +64,8 @@ private class GraphScene : LScene(){
     private var range : Double = DEFAULT_RANGE
 
     init{
-        w.addListener{addPoints()}
-        h.addListener{addPoints()}
+        addDimensionListener { addPoints() }
+        setOnLoadAction { addPoints() }
     }
 
     private fun k() : Double = k
@@ -84,10 +85,10 @@ private class GraphScene : LScene(){
     fun addPoints(){
         graphics.clear()
         for(i : Int in 0..width()){
-            addGraphicAction{g : Graphics, _, _ -> run{
+            addGraphicAction({g : Graphics, _, _ -> run{
                 g.color = DEFAULT_COLOR
                 g.fillRect(i, pixelYToY(f(xOfPixel(i))), 1, 1)
-            }}
+            }})
         }
     }
 
@@ -95,10 +96,6 @@ private class GraphScene : LScene(){
         this.k = k
         this.range = range
         t = DEFAULT_TIME
-    }
-
-    override fun load(){
-        addPoints()
     }
 
     override fun onTimerTick() {

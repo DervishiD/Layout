@@ -1,29 +1,18 @@
 package llayout.displayers
 
-import llayout.utilities.LProperty
-
-abstract class ResizableDisplayer : Displayer {
-
-    private var relativeW : LProperty<Double?> = LProperty(null)
-
-    private var relativeH : LProperty<Double?> = LProperty(null)
-
-    init{
-        relativeW.addListener{requestUpdate()}
-        relativeH.addListener{requestUpdate()}
-    }
+open class ResizableDisplayer : Displayer {
 
     protected constructor(width : Int, height : Int) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    protected constructor(width : Int, height : Double) : super(){
+    protected constructor(width : Double, height : Int) : super(){
         setWidth(width)
         setHeight(height)
     }
 
-    protected constructor(width : Double, height : Int) : super(){
+    protected constructor(width : Int, height : Double) : super(){
         setWidth(width)
         setHeight(height)
     }
@@ -36,33 +25,27 @@ abstract class ResizableDisplayer : Displayer {
     protected constructor() : this(1, 1)
 
     fun setWidth(width : Int) : ResizableDisplayer{
-        w.value = width
+        //DON'T USE PROPERTY ACCESS SYNTAX
+        core.setWidth(width)
         return this
     }
 
     fun setWidth(width : Double) : ResizableDisplayer{
-        relativeW.value = width
+        //DON'T USE PROPERTY ACCESS SYNTAX
+        core.setWidth(width)
         return this
     }
 
-    fun setWidth(width : Float) : ResizableDisplayer = setWidth(width.toDouble())
-
     fun setHeight(height : Int) : ResizableDisplayer{
-        h.value = height
+        //DON'T USE PROPERTY ACCESS SYNTAX
+        core.setHeight(height)
         return this
     }
 
     fun setHeight(height : Double) : ResizableDisplayer{
-        relativeH.value = height
+        //DON'T USE PROPERTY ACCESS SYNTAX
+        core.setHeight(height)
         return this
-    }
-
-    fun setHeight(height : Float) : ResizableDisplayer = setHeight(height.toDouble())
-
-    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): Displayer {
-        if(relativeW.value != null) w.value = (relativeW.value!! * frameWidth).toInt()
-        if(relativeH.value != null) h.value = (relativeH.value!! * frameHeight).toInt()
-        return super.updateRelativeValues(frameWidth, frameHeight)
     }
 
 }

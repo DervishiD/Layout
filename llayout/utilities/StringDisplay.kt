@@ -39,14 +39,14 @@ class StringDisplay : Iterable<Char> {
      * Its font
      */
     var font : Font
-    constructor(text : String, font : Font, color : Color){
-        this.text = text
+    constructor(text : CharSequence, font : Font, color : Color){
+        this.text = text.toString()
         this.font = font
         this.color = color
     }
-    constructor(text : String, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
-    constructor(text : String, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : String) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
+    constructor(text : CharSequence, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
+    constructor(text : CharSequence, font : Font) : this(text, font, DEFAULT_COLOR)
+    constructor(text : CharSequence) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor() : this("", DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Int, font : Font, color : Color) : this(text.toString(), font, color)
     constructor(text : Int, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
@@ -76,10 +76,6 @@ class StringDisplay : Iterable<Char> {
     constructor(text : Boolean, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Boolean, font : Font) : this(text, font, DEFAULT_COLOR)
     constructor(text : Boolean) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
-    constructor(text : CharSequence, font : Font, color : Color) : this(text.toString(), font, color)
-    constructor(text : CharSequence, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
-    constructor(text : CharSequence, font : Font) : this(text, font, DEFAULT_COLOR)
-    constructor(text : CharSequence) : this(text, DEFAULT_SMALL_FONT, DEFAULT_COLOR)
     constructor(text : Char, font : Font, color : Color) : this(text.toString(), font, color)
     constructor(text : Char, color : Color) : this(text, DEFAULT_SMALL_FONT, color)
     constructor(text : Char, font : Font) : this(text, font, DEFAULT_COLOR)

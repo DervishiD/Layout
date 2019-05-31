@@ -34,10 +34,10 @@ internal class LFrameCore : JFrame, LTimerUpdatable {
     }
 
     /**
-     * This LFrame's LScreenManager.
-     * @see LScreenManager
+     * This LFrame's LSceneManager.
+     * @see LSceneManager
      */
-    private val screenManager : LScreenManager
+    private val screenManager : LSceneManager
 
     /**
      * This LFrame's LTimer.
@@ -62,8 +62,8 @@ internal class LFrameCore : JFrame, LTimerUpdatable {
         setBounds()
     }
 
-    constructor(scene : LScene) : super(){
-        screenManager = LScreenManager(this, scene)
+    constructor(scene : LSceneCore) : super(){
+        screenManager = LSceneManager(this, scene)
         timer = LTimer(this)
         addResizeListener()
     }
@@ -122,7 +122,7 @@ internal class LFrameCore : JFrame, LTimerUpdatable {
     /**
      * Starts the LTimer of this LFrame and calls the setVisible() method.
      * @see setVisible
-     * @see LScreenManager.start
+     * @see LSceneManager.start
      * @see LTimer.start
      */
     fun run(){

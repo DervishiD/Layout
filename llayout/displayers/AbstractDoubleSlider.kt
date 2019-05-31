@@ -3,8 +3,7 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.interfaces.StandardLContainer
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.ceil
@@ -32,19 +31,18 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
             g.fillRect(0, h - lineThickness, w, lineThickness)
             g.fillRect(w - lineThickness, 0, lineThickness, h)
         }}
+        private const val CORE_BACKGROUND_KEY : String = "DEFAULT CORE BACKGROUND"
     }
 
-    private var minimalValue : LProperty<Double> = LProperty(0.0)
+    private var minimalValue : LObservable<Double> = LObservable(0.0)
 
-    private var maximalValue : LProperty<Double> = LProperty(10.0)
+    private var maximalValue : LObservable<Double> = LObservable(10.0)
 
-    private var currentValue : LProperty<Double> = LProperty(minimalValue.value)
+    private var currentValue : LObservable<Double> = LObservable(minimalValue.value)
 
-    private var precision : LProperty<Double> = LProperty(DEFAULT_PRECISION)
+    private var precision : LObservable<Double> = LObservable(DEFAULT_PRECISION)
 
     protected val slider : CanvasDisplayer = CanvasDisplayer()
-
-    private var background : GraphicAction = DEFAULT_BACKGROUND
 
     init{
         minimalValue.addListener{
@@ -57,6 +55,8 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
         }
         precision.addListener{ setValue(value()) }
         setSliderImage(DEFAULT_SLIDER_BACKGROUND)
+        core.addGraphicAction(DEFAULT_BACKGROUND, CORE_BACKGROUND_KEY)
+        core.add(slider)
     }
 
     protected constructor(width : Int, height : Int) : super(width, height)
@@ -107,7 +107,7 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
     }
 
     fun setBackground(background : GraphicAction) : AbstractDoubleSlider{
-        this.background = background
+        core.addGraphicAction(background, CORE_BACKGROUND_KEY)
         return this
     }
 
@@ -150,18 +150,6 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     protected fun setValue(value : Double){
         currentValue.value = rounded(value)
-    }
-
-    override fun onAdd(container: StandardLContainer) {
-        container.add(slider)
-    }
-
-    override fun onRemove(container: StandardLContainer) {
-        container.remove(slider)
-    }
-
-    override fun drawDisplayer(g: Graphics) {
-        background.invoke(g, width(), height())
     }
 
     protected abstract fun correctSliderPosition()

@@ -1,198 +1,155 @@
 package llayout.frame
 
-import llayout.*
-import llayout.displayers.Displayer
-import llayout.interfaces.*
-import java.awt.Graphics
-import javax.swing.JPanel
-import llayout.utilities.LProperty
-import java.awt.event.*
+import llayout.Action
+import llayout.GraphicAction
+import llayout.interfaces.Canvas
+import llayout.interfaces.Displayable
+import llayout.interfaces.HavingDimension
+import llayout.interfaces.LTimerUpdatable
+import java.awt.event.KeyEvent
+import java.awt.event.MouseEvent
+import java.awt.event.MouseWheelEvent
 
-/**
- * The general abstraction for a background pane. A LScene is a special kind of JPanel that is used in this Layout.
- * Every scene that appears in a LFrame is a LScene.
- * @see StandardLContainer
- * @see Displayer
- * @see LScreenManager
- * @see JPanel
- * @see LFrameCore
- */
-open class LScene : JPanel(), StandardLContainer, LTimerUpdatable, Canvas {
+open class LScene : HavingDimension, LTimerUpdatable, Canvas {
 
-    override var w : LProperty<Int> = LProperty(0)
-
-    override var h : LProperty<Int> = LProperty(0)
+    private val core : LSceneCore = LSceneCore()
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
-    /**
-     * The next LScene, as a LProperty.
-     * @see setNextScreen
-     * @see LProperty
-     */
-    private var nextLScene : LProperty<LScene?> = LProperty(null)
-
-    override var parts : MutableCollection<Displayable> = mutableListOf()
-
-    private var onMouseClickedAction : (e : MouseEvent) -> Unit = {}
-    private var onMousePressedAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseReleasedAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseEnteredAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseExitedAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseMovedAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseDraggedAction : (e : MouseEvent) -> Unit = {}
-    private var onMouseWheelMovedAction : (e : MouseWheelEvent) -> Unit = {}
-    private var onKeyTypedAction : (e : KeyEvent) -> Unit = {}
-    private var onKeyPressedAction : (e : KeyEvent) -> Unit = {}
-    private var onKeyReleasedAction : (e : KeyEvent) -> Unit = {}
-
-    init{
-        addMouseListener(object : MouseAdapter(){
-            override fun mouseClicked(e: MouseEvent?){
-                requestFocusInWindow()
-                onMouseClickedAction(e!!)
-            }
-            override fun mousePressed(e: MouseEvent?) = onMousePressedAction(e!!)
-            override fun mouseReleased(e: MouseEvent?) = onMouseReleasedAction(e!!)
-            override fun mouseEntered(e: MouseEvent?) = onMouseEnteredAction(e!!)
-            override fun mouseExited(e: MouseEvent?) = onMouseExitedAction(e!!)
-        })
-        addMouseMotionListener(object : MouseMotionListener{
-            override fun mouseMoved(e: MouseEvent?) = onMouseMovedAction(e!!)
-            override fun mouseDragged(e: MouseEvent?) = onMouseDraggedAction(e!!)
-        })
-        addMouseWheelListener { e -> onMouseWheelMovedAction(e!!) }
-        addKeyListener(object : KeyListener{
-            override fun keyTyped(e: KeyEvent?) = onKeyTypedAction(e!!)
-            override fun keyPressed(e: KeyEvent?) = onKeyPressedAction(e!!)
-            override fun keyReleased(e: KeyEvent?) = onKeyReleasedAction(e!!)
-        })
+    fun setNextScene(nextScene : LScene) : LScene{
+        core.setNextScreen(nextScene.core)
+        return this
     }
 
     fun setOnMouseClickedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseClickedAction = action
+        core.setOnMouseClickedAction(action)
         return this
     }
 
     fun setOnMousePressedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMousePressedAction = action
+        core.setOnMousePressedAction(action)
         return this
     }
 
     fun setOnMouseReleasedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseReleasedAction = action
+        core.setOnMouseReleasedAction(action)
         return this
     }
 
     fun setOnMouseEnteredAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseEnteredAction = action
+        core.setOnMouseEnteredAction(action)
         return this
     }
 
     fun setOnMouseExitedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseExitedAction = action
+        core.setOnMouseExitedAction(action)
         return this
     }
 
     fun setOnMouseMovedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseMovedAction = action
+        core.setOnMouseMovedAction(action)
         return this
     }
 
     fun setOnMouseDraggedAction(action : (e : MouseEvent) -> Unit) : LScene{
-        onMouseDraggedAction = action
+        core.setOnMouseDraggedAction(action)
         return this
     }
 
     fun setOnMouseWheelMovedAction(action : (e : MouseWheelEvent) -> Unit) : LScene{
-        onMouseWheelMovedAction = action
+        core.setOnMouseWheelMovedAction(action)
         return this
     }
 
     fun setOnKeyPressedAction(action : (e : KeyEvent) -> Unit) : LScene{
-        onKeyPressedAction = action
+        core.setOnKeyPressedAction(action)
         return this
     }
 
     fun setOnKeyReleasedAction(action : (e : KeyEvent) -> Unit) : LScene{
-        onKeyReleasedAction = action
+        core.setOnKeyReleasedAction(action)
         return this
     }
 
     fun setOnKeyTypedAction(action : (e : KeyEvent) -> Unit) : LScene{
-        onKeyTypedAction = action
+        core.setOnKeyTypedAction(action)
         return this
     }
 
-    /**
-     * Sets the next LScene to the given value.
-     * @param nextLScene The LScene that appears on the core LFrame after this one.
-     * @see nextLScene
-     * @see LFrameCore
-     */
-    protected infix fun setNextScreen(nextLScene : LScene){
-        this.nextLScene.value = nextLScene
+    fun addWidthListener(key : Any?, action : Action) : LScene{
+        core.addWidthListener(key, action)
+        return this
     }
 
-    public override fun paintComponent(g: Graphics?) {
-        for(part : Displayable in parts){
-            part.drawDisplayable(g!!)
+    fun addWidthListener(action : Action) : LScene{
+        core.addWidthListener(action)
+        return this
+    }
+
+    fun addHeightListener(key : Any?, action : Action) : LScene{
+        core.addHeightListener(key, action)
+        return this
+    }
+
+    fun addHeightListener(action : Action) : LScene{
+        core.addHeightListener(action)
+        return this
+    }
+
+    fun addDimensionListener(key : Any?, action : Action) : LScene = addWidthListener(key, action).addHeightListener(key, action)
+
+    fun addDimensionListener(action : Action) : LScene = addWidthListener(action).addHeightListener(action)
+
+    fun removeWidthListener(key : Any?) : LScene{
+        core.removeWidthListener(key)
+        return this
+    }
+
+    fun removeHeightListener(key : Any?) : LScene{
+        core.removeHeightListener(key)
+        return this
+    }
+
+    fun removeDimensionListener(key : Any?) : LScene = removeWidthListener(key).removeHeightListener(key)
+
+    fun add(vararg displayables : Displayable) : LScene{
+        for(d : Displayable in displayables){
+            core.add(d)
         }
-        g!!.clearRect(0, 0, width, height)
-        drawBackground(g)
+        return this
     }
 
-    /**
-     * Saves the state of the LScene when it's removed from the main frame.
-     * @see load
-     */
-    open fun save(){}
-
-    /**
-     * Loads the LScene when it's added to the main frame.
-     * @see save
-     */
-    open fun load(){}
-
-    /**
-     * Adds a LScene change listener to the nextLScene LProperty.
-     * @param key The key of the added listener.
-     * @param action The Action executed by the listener.
-     * @see nextLScene
-     * @see LProperty
-     * @see Action
-     */
-    fun addScreenChangeListener(key : Any?, action : Action) = nextLScene.addListener(key, action)
-
-    /**
-     * Removes a LScene change listener from the nextLScene LProperty.
-     * @param key The key of the listener to remove.
-     * @see LProperty
-     * @see nextLScene
-     */
-    fun removeScreenChangeListener(key : Any?) = nextLScene.removeListener(key)
-
-    fun setBounds(width : Int, height : Int) = setBounds(0, 0, width, height)
-
-    override fun setBounds(x: Int, y: Int, width: Int, height: Int) {
-        super.setBounds(x, y, width, height)
-        w.value = width
-        h.value = height
-        for(d : Displayable in parts){
-            d.updateRelativeValues(width(), height())
+    fun remove(vararg displayables : Displayable) : LScene{
+        for(d : Displayable in displayables){
+            core.remove(d)
         }
+        return this
     }
 
-    /**
-     * The next LScene.
-     * @see nextLScene
-     */
-    fun nextScreen() : LScene? = nextLScene.value
+    fun setOnSaveAction(action : Action) : LScene{
+        core.setOnSaveAction(action)
+        return this
+    }
+
+    fun setOnLoadAction(action : Action) : LScene{
+        core.setOnLoadAction(action)
+        return this
+    }
+
+    override fun addGraphicAction(graphicAction: GraphicAction, key: Any?): LScene {
+        core.addGraphicAction(graphicAction, key)
+        return this
+    }
+
+    override fun width() : Int = core.width()
+
+    override fun height(): Int = core.height()
 
     override fun onTimerTick() {
-        for(d : Displayable in parts){
-            d.onTimerTick()
-        }
+        super.onTimerTick()
+        core.onTimerTick()
     }
+
+    internal fun core() : LSceneCore = core
 
 }

@@ -2,7 +2,7 @@ package llayout.utilities
 
 import llayout.Action
 
-class LProperty<T>(value: T) {
+class LObservable<T>(value: T) {
 
     var value : T = value
         set(newValue) {
@@ -14,16 +14,16 @@ class LProperty<T>(value: T) {
 
     private val listeners : MutableMap<Any?, Action> = mutableMapOf()
 
-    fun addListener(key : Any?, action : Action) : LProperty<T>{
+    fun addListener(key : Any?, action : Action) : LObservable<T>{
         listeners[key] = action
         return this
     }
 
-    infix fun removeListener(key : Any?) : LProperty<T>{
+    fun removeListener(key : Any?) : LObservable<T>{
         listeners.remove(key)
         return this
     }
 
-    infix fun addListener(action : Action) : LProperty<T> = addListener(action, action)
+    fun addListener(action : Action) : LObservable<T> = addListener(action, action)
 
 }

@@ -3,7 +3,7 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 
@@ -18,7 +18,7 @@ class Switch : ResizableDisplayer(DEFAULT_SIZE, DEFAULT_SIZE) {
             g.fillRect(0, h - lineThickness, w, lineThickness)
             g.fillRect(w - lineThickness, 0, lineThickness, h)
         }}
-        private val DEFAULT_CLICKED_BACKGROUND : GraphicAction = {g : Graphics, w : Int, h : Int -> run{
+        private val DEFAULT_CLICKED_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int -> run{
             val lateralDelta : Int = 5
             DEFAULT_BACKGROUND.invoke(g, w, h)
             g.color = Color(0, 191, 255)
@@ -27,7 +27,7 @@ class Switch : ResizableDisplayer(DEFAULT_SIZE, DEFAULT_SIZE) {
         private const val DEFAULT_SIZE : Int = 45
     }
 
-    private val value : LProperty<Boolean> = LProperty(false)
+    private val value : LObservable<Boolean> = LObservable(false)
 
     private var background : GraphicAction = DEFAULT_BACKGROUND
 
@@ -35,7 +35,10 @@ class Switch : ResizableDisplayer(DEFAULT_SIZE, DEFAULT_SIZE) {
 
     init{
         setOnMouseReleasedAction { switch() }
+        core.addGraphicAction(background, this)
+        value.addListener { reloadImage() }
     }
+
 
     fun setTrue() : Switch{
         value.value = true
@@ -83,10 +86,8 @@ class Switch : ResizableDisplayer(DEFAULT_SIZE, DEFAULT_SIZE) {
         return this
     }
 
-    override fun loadParameters(g: Graphics) {}
-
-    override fun drawDisplayer(g: Graphics) {
-        if(isOn()) clickedBackground.invoke(g, width(), height()) else background.invoke(g, width(), height())
+    private fun reloadImage(){
+        core.addGraphicAction(if(isOn()) clickedBackground else background, this)
     }
 
 }

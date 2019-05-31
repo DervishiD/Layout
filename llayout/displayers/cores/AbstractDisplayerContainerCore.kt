@@ -1,14 +1,27 @@
-package llayout.displayers
+package llayout.displayers.cores
 
 import llayout.interfaces.StandardLContainer
 import llayout.interfaces.Displayable
 
 /**
- * An abstract Displayer that implements the StandardLContainer interface.
- * @see Displayer
+ * An abstract DisplayerCore that implements the StandardLContainer interface.
+ * @see DisplayerCore
  * @see StandardLContainer
  */
-abstract class AbstractDisplayerContainer : ResizableDisplayer, StandardLContainer {
+abstract class AbstractDisplayerContainerCore : ResizableDisplayerCore, StandardLContainer {
+
+    init{
+        w.addListener {
+            for(d : Displayable in parts){
+                d.updateRelativeValues(width(), height())
+            }
+        }
+        h.addListener {
+            for(d : Displayable in parts){
+                d.updateRelativeValues(width(), height())
+            }
+        }
+    }
 
     override val parts: MutableCollection<Displayable> = mutableListOf()
 

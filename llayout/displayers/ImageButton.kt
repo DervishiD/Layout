@@ -4,17 +4,8 @@ import llayout.Action
 import llayout.GraphicAction
 import java.awt.Graphics
 
-/**
- * A Button with an image.
- * @see TextButton
- * @see Displayer
- */
 class ImageButton : ResizableDisplayer {
 
-    /**
-     * The image of this button, as a GraphicAction.
-     * @see GraphicAction
-     */
     private var image : GraphicAction
 
     constructor(width : Int, height : Int, image : GraphicAction, action : Action) : super(width, height){
@@ -37,33 +28,19 @@ class ImageButton : ResizableDisplayer {
         setOnMouseReleasedAction { action() }
     }
 
-    /**
-     * Sets a new image for this ImageButton.
-     * @param image The new image of this Button, as a GraphicAction.
-     * @param width The new width of this Button, in pixels.
-     * @param height The new height of this Button, in pixels.
-     * @see image
-     * @see GraphicAction
-     */
     fun setImage(image : GraphicAction, width : Int, height : Int) : ImageButton {
-        w.value = width
-        h.value = height
+        setWidth(width)
+        setHeight(height)
         this.image = image
+        core.addGraphicAction(image, "IMAGE GIVEN BY ITS WRAPPER")
         return this
     }
 
-    /**
-     * Sets a new image for this ImageButton.
-     * @param image The new image of this Button, as a GraphicAction.
-     * @param width The new width of this Button, in pixels.
-     * @param height The new height of this Button, in pixels.
-     * @see image
-     * @see GraphicAction
-     */
     fun setImage(width : Int, height : Int, image : GraphicAction) : ImageButton = setImage(image, width, height)
 
-    override fun loadParameters(g: Graphics) {}
-
-    override fun drawDisplayer(g: Graphics) = image.invoke(g, width(), height())
+    override fun initializeDrawingParameters(g: Graphics) {
+        super.initializeDrawingParameters(g)
+        core.addGraphicAction(image, "IMAGE GIVEN BY ITS WRAPPER")
+    }
 
 }

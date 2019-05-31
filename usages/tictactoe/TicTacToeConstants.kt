@@ -2,12 +2,9 @@ package usages.tictactoe
 
 import llayout.GraphicAction
 import llayout.DEFAULT_LARGE_FONT
-import llayout.displayers.CanvasDisplayer
-import llayout.displayers.Displayer
-import llayout.displayers.Label
-import llayout.displayers.TextButton
+import llayout.displayers.*
 import llayout.frame.*
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 import llayout.utilities.StringDisplay
 import java.awt.Color.BLACK
 import java.awt.Graphics
@@ -37,11 +34,11 @@ private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : I
 
     }
 
-    private var type : LProperty<Type> = LProperty(Companion.Type.BLANK)
+    private var type : LObservable<Type> = LObservable(Companion.Type.BLANK)
 
     init{
-        setCenterX(x)
-        setCenterY(y)
+        setX(x)
+        setY(y)
         addGraphicAction(BOX)
         type.addListener{
             when(type.value){
@@ -115,24 +112,25 @@ private val cells : Array<Array<Cell>> = Array(3) {
     }
 }
 
-private var isFirst : LProperty<Boolean> = LProperty(true)
+private var isFirst : LObservable<Boolean> = LObservable(true)
 
 private fun nextPlayer(){
     isFirst.value = !isFirst.value
 }
 
-private val scene : LScene = object : LScene(){
+object scene : LScene(){
 
     private val FIRST : String = "x"
     private val SECOND : String = "o"
 
-    private val title : Label = Label(StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT)).setCenterX(0.25).setCenterY(0.33) as Label
+    private val title : Label = Label(StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT))
+            .setX(0.25).setY(0.33) as Label
 
-    private val exitButton : Displayer = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
+    private val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
 
-    private val player : Label = Label(FIRST).setCenterX(0.25).setCenterY(0.5) as Label
+    private val player : Label = Label(FIRST).setX(0.25).setY(0.5) as Label
 
-    private val resetButton : TextButton = TextButton("Reset") {reset()}.setCenterX(0.25).setCenterY(0.8) as TextButton
+    private val resetButton = TextButton("Reset") {reset()}.setX(0.25).setY(0.8)
 
     init{
         addPlayerListener()
@@ -145,7 +143,7 @@ private val scene : LScene = object : LScene(){
     }
 
     private fun addPlayerListener(){
-        isFirst.addListener{player.setDisplayedText(if(isFirst.value) FIRST else SECOND)}
+        isFirst.addListener{player.setText(if(isFirst.value) FIRST else SECOND)}
     }
 
     private fun reset(){

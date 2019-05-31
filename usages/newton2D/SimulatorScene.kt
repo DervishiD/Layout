@@ -2,6 +2,6 @@ package usages.newton2D
 
 import llayout.frame.LScene
 
-internal val simulatorScene = object : LScene(){
+internal object SimulatorScene : LScene(){
     //TODO
 }

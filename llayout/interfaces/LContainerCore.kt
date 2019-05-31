@@ -9,7 +9,7 @@ interface LContainerCore : HavingDimension {
     val parts : MutableCollection<Displayable>
 
     /**
-     * Forces the initialization of its Displayer components.
+     * Forces the initialization of its DisplayerCore components.
      * This should normally not be called by the User.
      * @see Displayable
      * @see Displayable.initialize
@@ -20,19 +20,5 @@ interface LContainerCore : HavingDimension {
             part.initialize()
         }
     }
-
-    /**
-     * Reacts to a key pressed event.
-     * The default reaction is to do nothing, but the method can be overriden in subclasses.
-     * @param key The Java key code of the pressed key.
-     */
-    fun pressKey(key : Int){}
-
-    /**
-     * Reacts to a key released event.
-     * The default reaction is to do nothing, but the method can be overriden in subclasses.
-     * @param key The Java key code of the released key.
-     */
-    fun releaseKey(key : Int){}
 
 }

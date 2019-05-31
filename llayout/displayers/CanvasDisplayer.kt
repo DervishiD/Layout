@@ -1,14 +1,9 @@
 package llayout.displayers
 
-import llayout.interfaces.Canvas
 import llayout.GraphicAction
+import llayout.interfaces.Canvas
 import java.awt.Graphics
 
-/**
- * A Displayer that implements the Canvas interface.
- * @see Displayer
- * @see Canvas
- */
 open class CanvasDisplayer : ResizableDisplayer, Canvas {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
@@ -23,9 +18,12 @@ open class CanvasDisplayer : ResizableDisplayer, Canvas {
 
     constructor(width : Double, height : Double) : super(width, height)
 
-    override fun loadParameters(g: Graphics) {}
+    override fun addGraphicAction(graphicAction: GraphicAction, key: Any?): CanvasDisplayer {
+        core.addGraphicAction(graphicAction, key)
+        return this
+    }
 
-    override fun drawDisplayer(g: Graphics) {
+    override fun drawDisplayable(g: Graphics) {
         drawBackground(g)
     }
 

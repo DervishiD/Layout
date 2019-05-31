@@ -1,9 +1,6 @@
 package usages.juliasets
 
-import llayout.displayers.DoubleCursor
-import llayout.displayers.Label
-import llayout.displayers.Switch
-import llayout.displayers.TextButton
+import llayout.displayers.*
 import llayout.frame.LApplication
 import llayout.frame.LFrame
 import llayout.frame.LScene
@@ -29,7 +26,7 @@ val juliaSetsApplication : LApplication = LApplication{
     graphFrame.run()
 }
 
-private val mainScreen = object : LScene(){
+private object mainScreen : LScene(){
 
     private val cursor : DoubleCursor = DoubleCursor(0.8, 1.0)
             .setMinimalYValue(-0.5)
@@ -48,15 +45,17 @@ private val mainScreen = object : LScene(){
             .alignUpToDown(xLabel)
             .alignLeftToRight(cursor) as Label
 
-    private val reloadButton : TextButton = TextButton("Reload") {reload()}.setCenterY(0.3).alignRightTo(1.0) as TextButton
+    private val reloadButton : TextButton = TextButton("Reload") {reload()}
+            .setY(0.3).alignRightTo(1.0) as TextButton
 
-    private val switch : Switch = Switch().setWidth(50).setHeight(50).setCenterY(0.6).alignLeftToRight(cursor) as Switch
+    private val switch : Switch = Switch()
+            .setWidth(50).setHeight(50).setY(0.6).alignLeftToRight(cursor) as Switch
 
     private val typeLabel : Label = Label("Julia").alignLeftToRight(cursor).alignUpToDown(switch) as Label
 
     init{
-        cursor.addXValueListener{ xLabel.setDisplayedText("x : ${cursor.xValue()}") }
-        cursor.addYValueListener{ yLabel.setDisplayedText("y : ${cursor.yValue()}") }
+        cursor.addXValueListener{ xLabel.setText("x : ${cursor.xValue()}") }
+        cursor.addYValueListener{ yLabel.setText("y : ${cursor.yValue()}") }
         add(yLabel)
         add(xLabel)
         add(cursor)
@@ -70,17 +69,14 @@ private val mainScreen = object : LScene(){
                 VK_ENTER -> reload()
             }
         }
-        setOnMouseClickedAction { cursor.requestFocusInWindow() }
-        xLabel.setOnMouseClickedAction { cursor.requestFocusInWindow() }
-        yLabel.setOnMouseClickedAction { cursor.requestFocusInWindow() }
         add(typeLabel)
         add(switch)
         switch.addValueListener {
             if(switch.value()){
-                typeLabel.setDisplayedText("Mandelbrot")
+                typeLabel.setText("Mandelbrot")
                 graphScene.mandelbrot()
             }else{
-                typeLabel.setDisplayedText("Julia")
+                typeLabel.setText("Julia")
                 graphScene.julia()
             }
         }
@@ -108,7 +104,7 @@ private val mainScreen = object : LScene(){
 
 }
 
-private val graphScene = object : LScene(){
+private object graphScene : LScene(){
 
     private val DEFAULT_JULIA_MIN_X : Double = -1.5
     private val DEFAULT_JULIA_MIN_Y : Double = -1.5
@@ -130,9 +126,9 @@ private val graphScene = object : LScene(){
     private var type : FractalType = FractalType.JULIA
 
     init{
-        w.addListener{ reset() }
-        h.addListener{ reset() }
+        addDimensionListener { reset() }
         setOnMouseWheelMovedAction { e -> zoom(e.x, e.y, e.unitsToScroll) }
+        setOnLoadAction { addPoints() }
     }
 
     fun reload(c : ComplexNumber){
@@ -200,10 +196,10 @@ private val graphScene = object : LScene(){
     private fun addPoints(){
         for(i : Int in 0..width()){
             for(j : Int in 0..height()){
-                addGraphicAction{ g : Graphics, _, _ ->
+                addGraphicAction({ g : Graphics, _, _ ->
                     g.color = iterateOn(xOfPixel(i), yOfPixel(j))
                     g.fillRect(i, j, 1, 1)
-                }
+                })
             }
         }
     }
@@ -230,10 +226,6 @@ private val graphScene = object : LScene(){
         minY = y - nextHalfYRange
         maxY = y + nextHalfYRange
         reset()
-    }
-
-    override fun load() {
-        addPoints()
     }
 
 }

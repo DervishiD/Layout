@@ -1,10 +1,5 @@
 Comment again
-
-Quick tutorial on how to use this
-
-Version
-
-Dokka
+    And add @Since and @Version for version 1
 
 Canvas
     Draw squares
@@ -29,42 +24,24 @@ Canvas
     Draw and fill rectangles and ovals (and squares and circles) from center point and other points
     Fix  the 0.999 problem
 
-StringDisplay
-    Switch to StringBuilder
-
-DisplayerContainer, Displayer to Displayable?
-
-TextArrowSelector, forceMaxLineLength to canonical one
-
-Initialize Displayers in reverse?
-    if l listens to b, l must be added *before* b, which will cause mistakes
-
 Add default fonts and colors setters to LFrames / LFrameBuilders
-
-StringBuilders, CharSequences everywhere
 
 Displayer Groups and Grids
 
 Actually draw a background in Buttons and such
-
-Remove focus in TextField
-
-Decorations to clean accessible methods and 'Use property access syntax' problem for WH?
-
-Refactor delta stuff in TextDisplayer
 
 Displayers
     relativeXYWH as LProperties
     Rename Displayer
     PreferredWH for doubles
     TextArea
-    Switch between two values
     Graph for Double-Double map
     TextScrollPane, ConsoleScrollPane
         Add lateral sliders
 
 Projects
     Better Chibre
+    Tower of Hanoi
     That game Schinz made that day
     9x9 Tic-Tac-Toe
     Amazons
@@ -79,3 +56,5 @@ Projects
     2D RPG
     Physics simulator
     3D physics simulator
+
+JSType.java line 358

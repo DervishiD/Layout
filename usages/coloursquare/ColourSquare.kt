@@ -9,7 +9,7 @@ import kotlin.random.Random
 
 val colourSquareApplication : LApplication = LApplication { frame.run() }
 
-val screen : LScene = object : LScene(){
+object Screen : LScene(){
 
     val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
 
@@ -18,20 +18,20 @@ val screen : LScene = object : LScene(){
     var colour : Color = Color(125, 125, 125)
 
     val variableSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
-            .setCenterX(0.5).setCenterY(0.33) as CanvasDisplayer).addGraphicAction{
+            .setX(0.5).setY(0.33) as CanvasDisplayer).addGraphicAction({
         g : Graphics, w : Int, h : Int -> run{
             g.color = colour
             g.fillRect(0, 0, w, h)
         }
-    } as CanvasDisplayer
+    })
 
     val constantSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
-            .setCenterX(0.5).setCenterY(0.66) as CanvasDisplayer).addGraphicAction{
+            .setX(0.5).setY(0.66) as CanvasDisplayer).addGraphicAction({
         g : Graphics, w : Int, h : Int -> run{
             g.color = if(following) colour else fixed
             g.fillRect(0, 0, w, h)
         }
-    } as CanvasDisplayer
+    })
 
     var following : Boolean = true
     var fixed : Color = colour
@@ -39,7 +39,7 @@ val screen : LScene = object : LScene(){
     val toggleButton : TextButton = TextButton("Toggle") {
         following = !following
         fixed = colour
-    }.setCenterX(0.75).setCenterY(0.5) as TextButton
+    }.setX(0.75).setY(0.5) as TextButton
 
     init{
         add(exitButton)
@@ -87,4 +87,4 @@ val screen : LScene = object : LScene(){
 
 }
 
-val frame : LFrame = LFrame(screen)
+val frame : LFrame = LFrame(Screen)

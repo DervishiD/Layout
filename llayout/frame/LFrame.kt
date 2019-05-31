@@ -5,7 +5,7 @@ import javax.swing.WindowConstants
 
 class LFrame(scene : LScene) {
 
-    companion object{
+    private companion object{
 
         /**
          * The computer's screen width.
@@ -19,7 +19,7 @@ class LFrame(scene : LScene) {
 
     }
 
-    private val core : LFrameCore = LFrameCore(scene)
+    private val core : LFrameCore = LFrameCore(scene.core())
 
     fun exitOnClose() : LFrame{
         core.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE

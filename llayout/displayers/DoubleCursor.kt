@@ -3,8 +3,7 @@ package llayout.displayers
 import llayout.Action
 import llayout.DEFAULT_COLOR
 import llayout.GraphicAction
-import llayout.interfaces.StandardLContainer
-import llayout.utilities.LProperty
+import llayout.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.ceil
@@ -34,29 +33,29 @@ class DoubleCursor : ResizableDisplayer {
             g.fillRect(0, h - lineThickness, w, lineThickness)
             g.fillRect(w - lineThickness, 0, lineThickness, h)
         }}
+        private const val CURSOR_BACKGROUND_KEY : String = "KEY GENERATED FOR THE CURSOR BACKGROUND"
     }
 
-    private var minimalXValue : LProperty<Double> = LProperty(DEFAULT_MIN_VALUE)
+    private var minimalXValue : LObservable<Double> = LObservable(DEFAULT_MIN_VALUE)
 
-    private var minimalYValue : LProperty<Double> = LProperty(DEFAULT_MIN_VALUE)
+    private var minimalYValue : LObservable<Double> = LObservable(DEFAULT_MIN_VALUE)
 
-    private var maximalXValue : LProperty<Double> = LProperty(DEFAULT_MAX_VALUE)
+    private var maximalXValue : LObservable<Double> = LObservable(DEFAULT_MAX_VALUE)
 
-    private var maximalYValue : LProperty<Double> = LProperty(DEFAULT_MAX_VALUE)
+    private var maximalYValue : LObservable<Double> = LObservable(DEFAULT_MAX_VALUE)
 
-    private var xPrecision : LProperty<Double> = LProperty(DEFAULT_PRECISION)
+    private var xPrecision : LObservable<Double> = LObservable(DEFAULT_PRECISION)
 
-    private var yPrecision : LProperty<Double> = LProperty(DEFAULT_PRECISION)
+    private var yPrecision : LObservable<Double> = LObservable(DEFAULT_PRECISION)
 
-    private var xValue : LProperty<Double> = LProperty(0.0)
+    private var xValue : LObservable<Double> = LObservable(0.0)
 
-    private var yValue : LProperty<Double> = LProperty(0.0)
-
-    private var background : GraphicAction = DEFAULT_BACKGROUND
+    private var yValue : LObservable<Double> = LObservable(0.0)
 
     private val cursor : CanvasDisplayer = CanvasDisplayer(DEFAULT_CURSOR_SIDE_LENGTH, DEFAULT_CURSOR_SIDE_LENGTH)
 
     init{
+        setBackground(DEFAULT_BACKGROUND)
         minimalXValue.addListener{
             checkXBounds()
             if(minimalX() > xValue()) setXValue(minimalX())
@@ -90,11 +89,14 @@ class DoubleCursor : ResizableDisplayer {
                 cursor.setHeight(DEFAULT_CURSOR_SIDE_LENGTH)
             }
         }
+        cursor.setX(width() / 2)
+        cursor.setY(height() / 2)
         cursor.addXListener{ correctCursorXPosition() }
         cursor.addYListener{ correctCursorYPosition() }
         cursor.addXListener{ updateXValue() }
         cursor.addYListener{ updateYValue() }
         cursor.setOnMouseDraggedAction { e -> cursor.moveTo(cursor.leftSideX() + e.x, cursor.upSideY() + e.y) }
+        core.add(cursor)
     }
 
     constructor(width : Int, height : Int) : super(width, height)
@@ -151,7 +153,7 @@ class DoubleCursor : ResizableDisplayer {
 
     fun setYPrecision(precision : Double) : DoubleCursor{
         if(precision < 0) throw IllegalArgumentException("Negative precision $precision in DoubleCursor.setYPrecision")
-            yPrecision.value = if(precision > yRange()) yRange() else precision
+        yPrecision.value = if(precision > yRange()) yRange() else precision
         return this
     }
 
@@ -181,12 +183,13 @@ class DoubleCursor : ResizableDisplayer {
         return this
     }
 
-    fun xValue() : Double = xValue.value
+    fun removeXValueListener(key : Any?) : DoubleCursor{
+        xValue.removeListener(key)
+        return this
+    }
 
-    fun yValue() : Double = yValue.value
-
-    fun setBackground(background : GraphicAction) : DoubleCursor{
-        this.background = background
+    fun removeYValueListener(key : Any?) : DoubleCursor{
+        yValue.removeListener(key)
         return this
     }
 
@@ -195,7 +198,16 @@ class DoubleCursor : ResizableDisplayer {
         return this
     }
 
-    fun moveCursor(x : Int, y : Int) : DoubleCursor{
+    fun setBackground(background : GraphicAction) : DoubleCursor{
+        core.addGraphicAction(background, CURSOR_BACKGROUND_KEY)
+        return this
+    }
+
+    fun xValue() : Double = xValue.value
+
+    fun yValue() : Double = yValue.value
+
+    fun moveCursorAlong(x : Int, y : Int) : DoubleCursor{
         cursor.moveAlong(x, y)
         return this
     }
@@ -279,28 +291,28 @@ class DoubleCursor : ResizableDisplayer {
         }else y
     }
 
-    private fun isTooFarUp() : Boolean = cursor.upSideY() < upSideY()
+    private fun isTooFarUp() : Boolean = cursor.upSideY() < 0
 
-    private fun isTooFarDown() : Boolean = cursor.downSideY() > downSideY()
+    private fun isTooFarDown() : Boolean = cursor.downSideY() > height()
 
-    private fun isTooFarLeft() : Boolean = cursor.leftSideX() < leftSideX()
+    private fun isTooFarLeft() : Boolean = cursor.leftSideX() < 0
 
-    private fun isTooFarRight() : Boolean = cursor.rightSideX() > rightSideX()
+    private fun isTooFarRight() : Boolean = cursor.rightSideX() > width()
 
     private fun correctUp(){
-        cursor.setCenterY(upSideY() + cursor.height() / 2)
+        cursor.setY(cursor.height() / 2)
     }
 
     private fun correctDown(){
-        cursor.setCenterY(downSideY() - cursor.height() / 2)
+        cursor.setY(height() - cursor.height() / 2)
     }
 
     private fun correctLeft(){
-        cursor.setCenterX(leftSideX() + cursor.width() / 2)
+        cursor.setX(cursor.width() / 2)
     }
 
     private fun correctRight(){
-        cursor.setCenterX(rightSideX() - cursor.width() / 2)
+        cursor.setX(width() - cursor.width() / 2)
     }
 
     private fun correctCursorXPosition(){
@@ -311,7 +323,7 @@ class DoubleCursor : ResizableDisplayer {
                 correctRight()
             }
         }else{
-            cursor.setCenterX(centerX())
+            cursor.setX(width() / 2)
         }
     }
 
@@ -323,7 +335,7 @@ class DoubleCursor : ResizableDisplayer {
                 correctDown()
             }
         }else{
-            cursor.setCenterY(centerY())
+            cursor.setY(height() / 2)
         }
     }
 
@@ -331,7 +343,7 @@ class DoubleCursor : ResizableDisplayer {
         if(cursor.width() >= width()){
             setXValue(minimalX())
         }else{
-            setXValue(minimalX() + ( (cursor.leftSideX().toDouble() - leftSideX()) / (width() - cursor.width()) ) * xRange() )
+            setXValue(minimalX() + ( cursor.leftSideX().toDouble() / (width() - cursor.width()) ) * xRange() )
         }
     }
 
@@ -339,47 +351,34 @@ class DoubleCursor : ResizableDisplayer {
         if(cursor.height() >= height()){
             setYValue(minimalY())
         }else{
-            setYValue(minimalY() + ( (downSideY() - cursor.downSideY().toDouble()) / (height() - cursor.height()) ) * yRange() )
+            setYValue(minimalY() + ( (height() - cursor.downSideY().toDouble()) / (height() - cursor.height()) ) * yRange() )
         }
     }
 
     private fun conserveCursorPositionOnResize(){
         val xProportion : Double = (xValue() - minimalX()) / xRange()
-        val newX : Int = leftSideX() + (xProportion * width()).toInt()
+        val newX : Int = (xProportion * width()).toInt()
         var previousValue : Double = xValue()
-        cursor.setCenterX(newX)
+        cursor.setX(newX)
         setXValue(previousValue)
         val yProportion : Double = (yValue() - minimalY()) / yRange()
-        val newY : Int = downSideY() - (yProportion * height()).toInt()
+        val newY : Int = height() - (yProportion * height()).toInt()
         previousValue = yValue()
-        cursor.setCenterY(newY)
+        cursor.setY(newY)
         setYValue(previousValue)
+        correctCursorXPosition()
+        correctCursorYPosition()
     }
 
-    override fun onAdd(container: StandardLContainer) {
-        container.add(cursor)
-    }
-
-    override fun onRemove(container: StandardLContainer) {
-        container.remove(cursor)
-    }
-
-    override fun loadParameters(g: Graphics) {
+    override fun initializeDrawingParameters(g: Graphics) {
         cursor.setWidth(DEFAULT_CURSOR_SIDE_LENGTH)
         cursor.setHeight(DEFAULT_CURSOR_SIDE_LENGTH)
-        cursor.setCenterX(centerX())
-        cursor.setCenterY(centerY())
         conserveCursorPositionOnResize()
     }
 
-    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int): DoubleCursor {
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
         super.updateRelativeValues(frameWidth, frameHeight)
         conserveCursorPositionOnResize()
-        return this
-    }
-
-    override fun drawDisplayer(g: Graphics) {
-        background.invoke(g, width(), height())
     }
 
 }

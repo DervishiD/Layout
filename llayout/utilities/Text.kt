@@ -20,29 +20,16 @@ class Text {
      */
     private val asString : String
 
-    /**
-     * Constructs a Text from a String.
-     * @param text a String that will be encoded as a Text object.
-     */
-    constructor(text : String){
-        asString = text
-        asLines = listOf(text).toStringDisplayLines()
-    }
+    private val asCollection : MutableCollection<StringDisplay>
 
     /**
      * Constructs a Text from a StringDisplay.
      * @param text a StringDisplay that will be encoded as a Text object.
      * @see StringDisplay
      */
-    constructor(text : StringDisplay){
-        asString = text.text
-        asLines = listOf(text).toLinesList()
-    }
+    constructor(text : StringDisplay) : this(setOf(text))
 
-    constructor(text : CharSequence){
-        asString = text.toString()
-        asLines = listOf(StringDisplay(asString)).toLinesList()
-    }
+    constructor(text : CharSequence) : this(StringDisplay(text))
 
     /**
      * Constructs a Text from a Collection of StringDisplays.
@@ -52,37 +39,39 @@ class Text {
     constructor(text : Collection<StringDisplay>){
         asString = text.collapse()
         asLines = text.toLinesList()
+        asCollection = text.toMutableCollection()
     }
 
     /**
      * Constructs a Text from an Int, i.e. the string representation of the given Int.
      * @param text an Int that will be encoded as a Text object.
      */
-    constructor(text : Int) : this(text.toString())
+    constructor(text : Int) : this(StringDisplay(text))
 
     /**
      * Constructs a Text from a Double, i.e. the string representation of the given Double.
      * @param text a Double that will be encoded as a Text object.
      */
-    constructor(text : Double) : this(text.toString())
+    constructor(text : Double) : this(StringDisplay(text))
 
-    constructor(text : Float) : this(text.toString())
+    constructor(text : Float) : this(StringDisplay(text))
 
-    constructor(text : Char) : this(text.toString())
+    constructor(text : Char) : this(StringDisplay(text))
 
-    constructor(text : Short) : this(text.toString())
+    constructor(text : Short) : this(StringDisplay(text))
 
-    constructor(text : Long) : this(text.toString())
+    constructor(text : Long) : this(StringDisplay(text))
 
-    constructor(text : Byte) : this(text.toString())
+    constructor(text : Byte) : this(StringDisplay(text))
 
-    constructor(text : Boolean) : this(text.toString())
+    constructor(text : Boolean) : this(StringDisplay(text))
 
-    constructor() : this("")
+    constructor() : this(StringDisplay())
 
     constructor(text : Text){
         asString = text.asString()
         asLines = text.asLines()
+        asCollection = text.asCollection
     }
 
     /**
@@ -97,6 +86,8 @@ class Text {
      * @return The content of this Text object as a String.
      */
     fun asString() : String = asString
+
+    fun asCollection() : MutableCollection<StringDisplay> = asCollection
 
     /**
      * Returns true if the contained text is empty.
