@@ -7,6 +7,7 @@ import llayout.interfaces.Displayable
  * An abstract DisplayerCore that implements the StandardLContainer interface.
  * @see DisplayerCore
  * @see StandardLContainer
+ * @since LLayout 1
  */
 abstract class AbstractDisplayerContainerCore : ResizableDisplayerCore, StandardLContainer {
 

@@ -23,19 +23,23 @@ open class Displayer : Displayable {
     private var isInitializing : Boolean = true
 
     protected constructor(x : Int, y : Int){
-        core.setCenterX(x).setCenterY(y)
+        core.setCenterX(x)
+        core.setCenterY(y)
     }
 
     protected constructor(x : Double, y : Int){
-        core.setCenterX(x).setCenterY(y)
+        core.setCenterX(x)
+        core.setCenterY(y)
     }
 
     protected constructor(x : Int, y : Double){
-        core.setCenterX(x).setCenterY(y)
+        core.setCenterX(x)
+        core.setCenterY(y)
     }
 
     protected constructor(x : Double, y : Double){
-        core.setCenterX(x).setCenterY(y)
+        core.setCenterX(x)
+        core.setCenterY(y)
     }
 
     protected constructor()

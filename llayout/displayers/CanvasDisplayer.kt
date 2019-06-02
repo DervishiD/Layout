@@ -4,6 +4,12 @@ import llayout.GraphicAction
 import llayout.interfaces.Canvas
 import java.awt.Graphics
 
+/**
+ * A CanvasDisplayer is a ResizableDisplayer that implements the Canvas interface.
+ * @see ResizableDisplayer
+ * @see Canvas
+ * @since LLayout 1
+ */
 open class CanvasDisplayer : ResizableDisplayer, Canvas {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()

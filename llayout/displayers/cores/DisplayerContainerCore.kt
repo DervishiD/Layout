@@ -9,6 +9,7 @@ import java.awt.Graphics
  * A simple DisplayerCore Container, nothing special.
  * @see DisplayerCore
  * @see AbstractDisplayerContainerCore
+ * @since LLayout 1
  */
 class DisplayerContainerCore : AbstractDisplayerContainerCore, Canvas {
 
@@ -58,6 +59,7 @@ class DisplayerContainerCore : AbstractDisplayerContainerCore, Canvas {
      * Adds the given displayers to this DisplayerContainerCore.
      * @param displayers The added Displayers.
      * @see DisplayerCore
+     * @since LLayout 1
      */
     fun addDisplayers(vararg displayers : Displayable) : DisplayerContainerCore {
         for(d : Displayable in displayers){
@@ -70,6 +72,7 @@ class DisplayerContainerCore : AbstractDisplayerContainerCore, Canvas {
      * Adds the given displayers to this DisplayerContainerCore.
      * @param displayers The added Displayers.
      * @see DisplayerCore
+     * @since LLayout 1
      */
     fun addDisplayers(displayers : Collection<Displayable>) : DisplayerContainerCore {
         for(d : Displayable in displayers){
