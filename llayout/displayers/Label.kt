@@ -3,6 +3,10 @@ package llayout.displayers
 import llayout.utilities.StringDisplay
 import llayout.utilities.Text
 
+/**
+ * A label that displays text.
+ * @see TextDisplayer
+ */
 class Label : TextDisplayer {
 
     private companion object{

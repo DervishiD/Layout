@@ -2,6 +2,11 @@ package llayout.displayers
 
 import java.awt.Graphics
 
+/**
+ * A Horizontal DoubleSlider.
+ * @see AbstractDoubleSlider
+ * @since LLayout 1
+ */
 class HorizontalDoubleSlider : AbstractDoubleSlider {
 
     init{
@@ -27,14 +32,30 @@ class HorizontalDoubleSlider : AbstractDoubleSlider {
 
     constructor(width : Double, height : Double) : super(width, height)
 
+    /**
+     * True if the slider is too far left.
+     * @since LLayout 1
+     */
     private fun isTooFarLeft() : Boolean = slider.leftSideX() < 0
 
+    /**
+     * True if the slider is too far right.
+     * @since LLayout 1
+     */
     private fun isTooFarRight() : Boolean = slider.rightSideX() > width()
 
+    /**
+     * Corrects the slider position if it's too far left.
+     * @since LLayout 1
+     */
     private fun correctLeft(){
         slider.setX(slider.width() / 2)
     }
 
+    /**
+     * Corrects the slider position if its too far right,
+     * @since LLayout 1
+     */
     private fun correctRight(){
         slider.setX(width() - slider.width() / 2)
     }
