@@ -37,7 +37,6 @@ Actually draw a background in Buttons and such
 Displayers
     relativeXYWH as LProperties
     Rename Displayer
-    PreferredWH for doubles
     TextArea
     Graph for Double-Double map
     TextScrollPane, ConsoleScrollPane
