@@ -2,6 +2,11 @@ package llayout.displayers
 
 import java.awt.Graphics
 
+/**
+ * A DoubleSlider sliding vertically.
+ * @see AbstractDoubleSlider
+ * @since LLayout 1
+ */
 class VerticalDoubleSlider : AbstractDoubleSlider {
 
     init{
@@ -27,14 +32,30 @@ class VerticalDoubleSlider : AbstractDoubleSlider {
 
     constructor(width : Double, height : Double) : super(width, height)
 
+    /**
+     * True if the slider is too far up.
+     * @since LLayout 1
+     */
     private fun isTooFarUp() : Boolean = slider.upSideY() < 0
 
+    /**
+     * True if the slider is too far down.
+     * @since LLayout 1
+     */
     private fun isTooFarDown() : Boolean = slider.downSideY() > height()
 
+    /**
+     * Corrects the position of the slider if it's too far up.
+     * @since LLayout 1
+     */
     private fun correctUp(){
         slider.setY(slider.height() / 2)
     }
 
+    /**
+     * Corrects the slider position if it's too far down.
+     * @since LLayout 1
+     */
     private fun correctDown(){
         slider.setY(height() - slider.height() / 2)
     }

@@ -25,13 +25,6 @@ internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canva
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
-    /**
-     * The next LSceneCore, as a LObservable.
-     * @see setNextScreen
-     * @see LObservable
-     */
-    private var nextLScene : LObservable<LSceneCore?> = LObservable(null)
-
     override var parts : MutableCollection<Displayable> = mutableListOf()
 
     private var onMouseClickedAction : (e : MouseEvent) -> Unit = {}
@@ -48,6 +41,8 @@ internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canva
 
     private var onSave : Action = {}
     private var onLoad : Action = {}
+
+    private var onTimerTick : Action = {}
 
     init{
         addMouseListener(object : MouseAdapter(){
@@ -137,14 +132,8 @@ internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canva
         return this
     }
 
-    /**
-     * Sets the next LSceneCore to the given value.
-     * @param nextLScene The LSceneCore that appears on the core LFrame after this one.
-     * @see nextLScene
-     * @see LFrameCore
-     */
-    internal fun setNextScreen(nextLScene : LSceneCore){
-        this.nextLScene.value = nextLScene
+    fun setOnTimerTickAction(action : Action){
+        onTimerTick = action
     }
 
     public override fun paintComponent(g: Graphics?) {
@@ -177,24 +166,6 @@ internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canva
     internal fun setOnLoadAction(action : Action){
         onLoad = action
     }
-
-    /**
-     * Adds a LSceneCore change listener to the nextLScene LObservable.
-     * @param key The key of the added listener.
-     * @param action The Action executed by the listener.
-     * @see nextLScene
-     * @see LObservable
-     * @see Action
-     */
-    fun addScreenChangeListener(key : Any?, action : Action) = nextLScene.addListener(key, action)
-
-    /**
-     * Removes a LSceneCore change listener from the nextLScene LObservable.
-     * @param key The key of the listener to remove.
-     * @see LObservable
-     * @see nextLScene
-     */
-    fun removeScreenChangeListener(key : Any?) = nextLScene.removeListener(key)
 
     fun addWidthListener(key : Any?, action : Action) : LSceneCore{
         w.addListener(key, action)
@@ -243,13 +214,8 @@ internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canva
         }
     }
 
-    /**
-     * The next LSceneCore.
-     * @see nextLScene
-     */
-    fun nextScreen() : LSceneCore? = nextLScene.value
-
     override fun onTimerTick() {
+        onTimerTick.invoke()
         for(d : Displayable in parts){
             d.onTimerTick()
         }

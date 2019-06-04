@@ -1720,4 +1720,6 @@ abstract class DisplayerCore : JLabel, Displayable {
      */
     protected abstract fun drawDisplayer(g : Graphics)
 
+    override fun onTimerTick() {}
+
 }

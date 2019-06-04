@@ -1,5 +1,5 @@
 package llayout.interfaces
 
 interface LTimerUpdatable {
-    fun onTimerTick(){}
+    fun onTimerTick()
 }

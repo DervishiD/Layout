@@ -902,4 +902,6 @@ open class Displayer : Displayable {
         core.updateRelativeValues(frameWidth, frameHeight)
     }
 
+    override fun onTimerTick(){}
+
 }

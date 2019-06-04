@@ -16,11 +16,6 @@ open class LScene : HavingDimension, LTimerUpdatable, Canvas {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
-    fun setNextScene(nextScene : LScene) : LScene{
-        core.setNextScreen(nextScene.core)
-        return this
-    }
-
     fun setOnMouseClickedAction(action : (e : MouseEvent) -> Unit) : LScene{
         core.setOnMouseClickedAction(action)
         return this
@@ -73,6 +68,11 @@ open class LScene : HavingDimension, LTimerUpdatable, Canvas {
 
     fun setOnKeyTypedAction(action : (e : KeyEvent) -> Unit) : LScene{
         core.setOnKeyTypedAction(action)
+        return this
+    }
+
+    fun setOnTimerTickAction(action : Action) : LScene{
+        core.setOnTimerTickAction(action)
         return this
     }
 
@@ -146,7 +146,6 @@ open class LScene : HavingDimension, LTimerUpdatable, Canvas {
     override fun height(): Int = core.height()
 
     override fun onTimerTick() {
-        super.onTimerTick()
         core.onTimerTick()
     }
 

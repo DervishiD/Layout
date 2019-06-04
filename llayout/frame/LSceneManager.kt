@@ -1,6 +1,5 @@
 package llayout.frame
 
-import llayout.Action
 import llayout.interfaces.LTimerUpdatable
 
 /**
@@ -8,13 +7,6 @@ import llayout.interfaces.LTimerUpdatable
  * @see LSceneCore
  */
 internal class LSceneManager : LTimerUpdatable {
-
-    /**
-     * The Action executed to change a LSceneCore.
-     * @see Action
-     * @see LSceneCore
-     */
-    private val screenChangeAction : Action = {if(currentLScene.nextScreen() != null) setScreen(currentLScene.nextScreen()!!)}
 
     /**
      * The LSceneCore that is currently displayed.
@@ -29,13 +21,6 @@ internal class LSceneManager : LTimerUpdatable {
     private val frame : LFrameCore
 
     /**
-     * The set of pressed keys.
-     * @see pressKey
-     * @see releaseKey
-     */
-    private val pressedKeys : MutableSet<Int> = mutableSetOf()
-
-    /**
      * Constructs a LSceneManager for the given LFrame with the given starting LSceneCore.
      * @param frame This LSceneManager's LFrame.
      * @param firstLScene The first LSceneCore.
@@ -46,7 +31,6 @@ internal class LSceneManager : LTimerUpdatable {
         this.frame = frame
         currentLScene = firstLScene
         setCurrentScreenBounds()
-        addScreenChangeListener(currentLScene)
     }
 
     /**
@@ -69,12 +53,10 @@ internal class LSceneManager : LTimerUpdatable {
      * @see LScene.initialization
      * @see currentLScene
      */
-    private infix fun setScreen(LScene : LSceneCore){
-        removeScreenChangeListener(currentLScene)
+    fun setScene(LScene : LSceneCore){
         currentLScene.save()
         currentLScene = LScene
         setCurrentScreenBounds()
-        addScreenChangeListener(currentLScene)
         frame.contentPane = currentLScene
         currentLScene.load()
         currentLScene.initialization()
@@ -90,22 +72,6 @@ internal class LSceneManager : LTimerUpdatable {
     private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.rootPane.width, frame.rootPane.height)
 
     internal fun resize() = setCurrentScreenBounds()
-
-    /**
-     * Adds a listener to the given LSceneCore's nextScreen property.
-     * @see currentLScene
-     * @see LScene
-     * @see LScene.nextScreen
-     */
-    private infix fun addScreenChangeListener(LScene : LSceneCore) = LScene.addScreenChangeListener(this, screenChangeAction)
-
-    /**
-     * Removes a listener from the given LSceneCore's nextScreen property.
-     * @see currentLScene
-     * @see LScene
-     * @see LScene.nextScreen
-     */
-    private infix fun removeScreenChangeListener(LScene : LSceneCore) = LScene.removeScreenChangeListener(this)
 
     override fun onTimerTick() {
         currentLScene.onTimerTick()

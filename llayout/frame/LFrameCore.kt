@@ -180,4 +180,8 @@ internal class LFrameCore : JFrame, LTimerUpdatable {
         runningIfHidden = false
     }
 
+    fun setNextScene(scene : LScene){
+        screenManager.setScene(scene.core())
+    }
+
 }
