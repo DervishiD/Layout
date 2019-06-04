@@ -34,9 +34,16 @@ Displayer Groups and Grids
 
 Actually draw a background in Buttons and such
 
+Add methods for property setters for Scene, in order to not make singletons
+    + Clean setNextScreen, put in LFrame
+    + refactor LTimerUpdatable, to have a lambda somewhere
+
+Change package name to include version
+
+Put usages in other projects
+
 Displayers
     relativeXYWH as LProperties
-    Rename Displayer
     TextArea
     Graph for Double-Double map
     TextScrollPane, ConsoleScrollPane

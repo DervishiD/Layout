@@ -7,12 +7,40 @@ import llayout.utilities.StringDisplay
 import llayout.utilities.Text
 import java.awt.Graphics
 
+/**
+ * A button that displays text.
+ * @see TextDisplayer
+ * @since LLayout 1
+ */
 class TextButton : TextDisplayer {
 
     private companion object{
+
+        /**
+         * The distance between the text and the bounds of the button.
+         * @since LLayout 1
+         */
         private const val LABEL_LATERAL_DISTANCE : Int = 4
+
+        /**
+         * The thickness of the lines of the default background.
+         * @see DEFAULT_BUTTON_BACKGROUND
+         * @since LLayout 1
+         */
         private const val LINE_THICKNESS : Int = 2
+
+        /**
+         * The color of the lines of the default background.
+         * @see DEFAULT_BUTTON_BACKGROUND
+         * @since LLayout 1
+         */
         private val LINE_COLOR = DEFAULT_COLOR
+
+        /**
+         * The default background of a button.
+         * @see GraphicAction
+         * @since LLayout 1
+         */
         private val DEFAULT_BUTTON_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int ->
             g.color = LINE_COLOR
             g.fillRect(0, 0, LINE_THICKNESS, h)

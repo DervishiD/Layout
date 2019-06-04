@@ -5,14 +5,34 @@ import llayout.utilities.*
 import java.awt.Color
 import java.awt.Graphics
 
+/**
+ * An ArrowSelector that displays text to show the user which option is selected.
+ * @see AbstractArrowSelector
+ * @since LLayout 1
+ */
 class TextArrowSelector<T> : AbstractArrowSelector<T> {
 
     private companion object {
 
+        /**
+         * The default thickness of the lines in the default background.
+         * @see DEFAULT_BACKGROUND
+         * @since LLayout 1
+         */
         private const val DEFAULT_LINE_THICKNESS : Int = 2
 
+        /**
+         * The default line color in the default background.
+         * @see DEFAULT_BACKGROUND
+         * @since LLayout 1
+         */
         private val DEFAULT_LINE_COLOR : Color = Color.BLACK
 
+        /**
+         * The default background of the text displayer.
+         * @see GraphicAction
+         * @since LLayout 1
+         */
         private val DEFAULT_BACKGROUND : GraphicAction = { g: Graphics, w: Int, h: Int -> run{
             g.color = DEFAULT_LINE_COLOR
             g.fillRect(0, 0, DEFAULT_LINE_THICKNESS, h)
@@ -23,16 +43,37 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
             g.fillRect(w - DEFAULT_LINE_THICKNESS, 0, w, h)
         }}
 
+        /**
+         * The distance between the text and the bounds of the text displayer.
+         * @since LLayout 1
+         */
         private const val TEXT_TO_BOUNDS_DISTANCE : Int = 4
 
     }
 
+    /**
+     * The object that displays the text.
+     * @see Label
+     * @since LLayout 1
+     */
     private var textDisplayer : Label = Label()
 
+    /**
+     * The text of all the options.
+     * @since LLayout 1
+     */
     private var text : MutableList<Collection<StringDisplay>> = mutableListOf()
 
+    /**
+     * The maximal width of the Selector.
+     * @since LLayout 1
+     */
     private var maxLineLength : Int? = null
 
+    /**
+     * The maximal width of the Selector, as a proportion of its component's width.
+     * @since LLayout 1
+     */
     private var relativeMaxLineLength : Double? = null
 
     init{
@@ -64,6 +105,10 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         textDisplayer.setText(text[currentOptionIndex.value])
     }
 
+    /**
+     * Fills the [text].
+     * @since LLayout 1
+     */
     private fun fillLinesList(text : Collection<Text>){
         for(t : Text in text){
             this.text.add(t.asCollection())
@@ -76,17 +121,33 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         return this
     }
 
+    /**
+     * Sets the background of the text displayer.
+     * @return this
+     * @see GraphicAction
+     * @since LLayout 1
+     */
     fun setBackground(background : GraphicAction) : TextArrowSelector<T> {
         core(textDisplayer).addGraphicAction(background)
         return this
     }
 
+    /**
+     * Sets the maximal width of this Selector, in pixels.
+     * @return this
+     * @since LLayout 1
+     */
     fun setMaxLineLength(length : Int) : TextArrowSelector<T> {
         maxLineLength = length
         initialize()
         return this
     }
 
+    /**
+     * Sets the maximal width of this Selector, as a proportion of its container's width.
+     * @return this
+     * @since LLayout 1
+     */
     fun setMaxLineLength(length : Double) : TextArrowSelector<T> {
         relativeMaxLineLength = length
         requestUpdate()
@@ -104,6 +165,10 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         textDisplayer.setText(text[currentOptionIndex.value])
     }
 
+    /**
+     * Makes sure the width is well adapted.
+     * @since LLayout 1
+     */
     private fun adaptWidth(){
         if(isHorizontal()){
             //DON'T
@@ -114,6 +179,10 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         }
     }
 
+    /**
+     * Makes sure the height is well adapted.
+     * @since LLayout 1
+     */
     private fun adaptHeight(){
         if(isHorizontal()){
             //DON'T
@@ -136,6 +205,10 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
         computeAndSetLabelWidth(g)
     }
 
+    /**
+     * Sets the dimensions of the text displayer.
+     * @since LLayout 1
+     */
     private fun computeAndSetLabelWidth(g : Graphics){
         var preferredWidth : Int = 0
         var preferredHeight : Int = 0
@@ -150,11 +223,11 @@ class TextArrowSelector<T> : AbstractArrowSelector<T> {
             }
         }
         if(maxLineLength != null && preferredWidth > maxLineLength!!){
-            textDisplayer.setPreferredWidth(maxLineLength!!)
+            core(textDisplayer).setPreferredWidth(maxLineLength!!)
         }else{
-            textDisplayer.setPreferredWidth(preferredWidth + 2 * TEXT_TO_BOUNDS_DISTANCE)
+            core(textDisplayer).setPreferredWidth(preferredWidth + 2 * TEXT_TO_BOUNDS_DISTANCE)
         }
-        textDisplayer.setPreferredHeight(preferredHeight - 2 * TEXT_TO_BOUNDS_DISTANCE)
+        core(textDisplayer).setPreferredHeight(preferredHeight - 2 * TEXT_TO_BOUNDS_DISTANCE)
     }
 
     override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
