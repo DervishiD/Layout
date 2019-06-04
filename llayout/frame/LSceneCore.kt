@@ -16,9 +16,13 @@ import java.awt.event.*
  * @see LSceneManager
  * @see JPanel
  * @see LFrameCore
+ * @since LLayout 1
  */
 internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canvas {
 
+    /**
+     *
+     */
     private var w : LObservable<Int> = LObservable(0)
 
     private var h : LObservable<Int> = LObservable(0)
