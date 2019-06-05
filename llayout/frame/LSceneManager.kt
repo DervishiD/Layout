@@ -5,18 +5,21 @@ import llayout.interfaces.LTimerUpdatable
 /**
  * A class that manages the transition between screens.
  * @see LSceneCore
+ * @since LLayout 1
  */
 internal class LSceneManager : LTimerUpdatable {
 
     /**
      * The LSceneCore that is currently displayed.
      * @see LSceneCore
+     * @since LLayout 1
      */
     private var currentLScene : LSceneCore
 
     /**
      * This LSceneManager's LFrame.
      * @see LFrameCore
+     * @since LLayout 1
      */
     private val frame : LFrameCore
 
@@ -26,6 +29,7 @@ internal class LSceneManager : LTimerUpdatable {
      * @param firstLScene The first LSceneCore.
      * @see LFrameCore
      * @see LSceneCore
+     * @since LLayout 1
      */
     internal constructor(frame : LFrameCore, firstLScene : LSceneCore){
         this.frame = frame
@@ -36,6 +40,7 @@ internal class LSceneManager : LTimerUpdatable {
     /**
      * Displays the starting LSceneCore.
      * @see LSceneCore
+     * @since LLayout 1
      */
     fun start(){
         frame.contentPane = currentLScene
@@ -48,10 +53,8 @@ internal class LSceneManager : LTimerUpdatable {
      * finally initializes it.
      * @param LScene The new displayed LSceneCore.
      * @see LScene
-     * @see LScene.save
-     * @see LScene.load
-     * @see LScene.initialization
      * @see currentLScene
+     * @since LLayout 1
      */
     fun setScene(LScene : LSceneCore){
         currentLScene.save()
@@ -68,9 +71,14 @@ internal class LSceneManager : LTimerUpdatable {
      * @see frame
      * @see LSceneCore
      * @see LFrameCore
+     * @since LLayout 1
      */
     private fun setCurrentScreenBounds() = currentLScene.setBounds(frame.rootPane.width, frame.rootPane.height)
 
+    /**
+     * Updates the size of the current LSeneCore.
+     * @since LLayout 1
+     */
     internal fun resize() = setCurrentScreenBounds()
 
     override fun onTimerTick() {

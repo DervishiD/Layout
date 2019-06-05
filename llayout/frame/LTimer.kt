@@ -8,6 +8,7 @@ import javax.swing.Timer
  * @param period This LTimer's period.
  * @see java.util.Timer
  * @see LFrameCore
+ * @since LLayout 1
  */
 internal class LTimer(private val frame: LFrameCore, private var period: Int = DEFAULT_PERIOD) {
 
@@ -15,6 +16,7 @@ internal class LTimer(private val frame: LFrameCore, private var period: Int = D
 
         /**
          * The default period of a LTimer.
+         * @since LLayout 1
          */
         private const val DEFAULT_PERIOD : Int = 30
 
@@ -23,6 +25,7 @@ internal class LTimer(private val frame: LFrameCore, private var period: Int = D
     /**
      * The inner java.util.Timer of this LTimer.
      * @see java.util.Timer
+     * @since LLayout 1
      */
     private val timer : Timer = Timer(period){
         frame.onTimerTick()
@@ -33,15 +36,24 @@ internal class LTimer(private val frame: LFrameCore, private var period: Int = D
      * Starts this LTimer.
      * @see timer
      * @see period
+     * @since LLayout 1
      */
     internal fun start(){
         timer.start()
     }
 
-    internal infix fun setPeriod(period : Int){
+    /**
+     * Changes the period of this timer.
+     * @since LLayout 1
+     */
+    internal fun setPeriod(period : Int){
         timer.delay = period
     }
 
+    /**
+     * Pauses the timer.
+     * @since LLayout 1
+     */
     internal fun pause(){
         timer.stop()
     }
