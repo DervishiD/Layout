@@ -1,6 +1,6 @@
 package usages.probability
 
-import llayout.RealFunction
+import llayout1.RealFunction
 import kotlin.math.*
 import kotlin.random.Random
 

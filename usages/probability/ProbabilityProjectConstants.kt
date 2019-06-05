@@ -1,9 +1,9 @@
 package usages.probability
 
-import llayout.Action
-import llayout.displayers.*
-import llayout.frame.*
-import llayout.utilities.*
+import llayout1.Action
+import llayout1.displayers.*
+import llayout1.frame.*
+import llayout1.utilities.*
 import kotlin.math.*
 
 val probabilityApplication : LApplication = LApplication {

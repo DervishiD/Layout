@@ -1,8 +1,5 @@
 Current version -- LLayout 1
 
-Comment again
-    And add @Since and @Version for version 1
-
 Canvas
     Draw squares
     Draw circles
@@ -33,12 +30,6 @@ Add default fonts and colors setters to LFrames / LFrameBuilders
 Displayer Groups and Grids
 
 Actually draw a background in Buttons and such
-
-Add methods for property setters for Scene, in order to not make singletons
-    + Clean setNextScreen, put in LFrame
-    + refactor LTimerUpdatable, to have a lambda somewhere
-
-Change package name to include version
 
 Put usages in other projects
 

@@ -1,6 +1,6 @@
 package usages.newton2D
 
-import llayout.frame.LScene
+import llayout1.frame.LScene
 
 internal object mainScene : LScene(){
     //TODO

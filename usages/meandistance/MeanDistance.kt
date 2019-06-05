@@ -1,6 +1,6 @@
 package usages.meandistance
 
-import llayout.frame.LApplication
+import llayout1.frame.LApplication
 import kotlin.math.sqrt
 import kotlin.random.Random
 

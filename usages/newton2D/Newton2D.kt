@@ -1,7 +1,7 @@
 package usages.newton2D
 
-import llayout.frame.LApplication
-import llayout.frame.LFrame
+import llayout1.frame.LApplication
+import llayout1.frame.LFrame
 
 val newton2DApplication : LApplication = LApplication{ mainFrame.run() }
 
