@@ -1,6 +1,6 @@
 package usages.probability
 
-import llayout1.RealFunction
+import llayout2.RealFunction
 import kotlin.math.*
 import kotlin.random.Random
 
@@ -63,14 +63,6 @@ fun randomHomogeneous(low : Int, high : Int) : Double = randomHomogeneous(low.to
 fun randomHomogeneous() : Double{
     return {x : Double -> x}.inverseDichotomicSearch(Random.nextDouble())
 }
-
-fun randomCosPlusX(low : Double, high : Double) : Double{
-    TODO("Not implemented.")
-}
-
-fun randomCosPlusX(low : Int, high : Double) : Double = randomCosPlusX(low.toDouble(), high)
-fun randomCosPlusX(low : Double, high : Int) : Double = randomCosPlusX(low, high.toDouble())
-fun randomCosPlusX(low : Int, high : Int) : Double = randomCosPlusX(low.toDouble(), high.toDouble())
 
 fun randomCosPlusX() : Double{
     //On the interval [0, 4.5], empirically

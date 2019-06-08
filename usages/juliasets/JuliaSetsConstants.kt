@@ -1,9 +1,9 @@
 package usages.juliasets
 
-import llayout1.displayers.*
-import llayout1.frame.LApplication
-import llayout1.frame.LFrame
-import llayout1.frame.LScene
+import llayout2.displayers.*
+import llayout2.frame.LApplication
+import llayout2.frame.LFrame
+import llayout2.frame.LScene
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.event.KeyEvent.*

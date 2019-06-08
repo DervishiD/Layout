@@ -1,8 +1,8 @@
 package debug
 
-import llayout1.Action
-import llayout1.RealFunction
-import llayout1.utilities.*
+import llayout2.Action
+import llayout2.RealFunction
+import llayout2.utilities.*
 import usages.probability.inverseDichotomicSearch
 import usages.probability.randomHomogeneous
 import kotlin.math.floor

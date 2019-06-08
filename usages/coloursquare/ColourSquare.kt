@@ -1,8 +1,8 @@
 package usages.coloursquare
 
-import llayout1.displayers.CanvasDisplayer
-import llayout1.displayers.TextButton
-import llayout1.frame.*
+import llayout2.displayers.CanvasDisplayer
+import llayout2.displayers.TextButton
+import llayout2.frame.*
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.random.Random

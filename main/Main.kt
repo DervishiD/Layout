@@ -1,9 +1,9 @@
 package main
 
 import debug.testApplication
-import usages.juliasets.juliaSetsApplication
+import usages.hanoi.towerOfHanoi
 
 fun main(){
-    testApplication.run()
-//    juliaSetsApplication.run()
+//    testApplication.run()
+    towerOfHanoi.run()
 }
