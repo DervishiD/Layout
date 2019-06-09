@@ -1,10 +1,10 @@
 package usages.heatequation
 
-import llayout2.DEFAULT_COLOR
-import llayout2.displayers.*
-import llayout2.frame.LApplication
-import llayout2.frame.LFrame
-import llayout2.frame.LScene
+import llayout3.DEFAULT_COLOR
+import llayout3.displayers.*
+import llayout3.frame.LApplication
+import llayout3.frame.LFrame
+import llayout3.frame.LScene
 import java.awt.Graphics
 import kotlin.math.PI
 import kotlin.math.exp

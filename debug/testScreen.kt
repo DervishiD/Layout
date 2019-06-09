@@ -1,9 +1,9 @@
 package debug
 
-import llayout2.displayers.*
-import llayout2.frame.*
-import llayout2.utilities.StringDisplay
-import llayout2.utilities.Text
+import llayout3.displayers.*
+import llayout3.frame.*
+import llayout3.utilities.StringDisplay
+import llayout3.utilities.Text
 import java.awt.Color.RED
 
 private object TestScreen : LScene(){
@@ -31,7 +31,7 @@ private object TestScreen : LScene(){
                     .setX(0.5)
                     .setY(0.25)
                     as VerticalDoubleSlider
-    private val s : Switch = Switch().alignUpTo(0).alignRightTo(1.0) as Switch
+    private val s : Switch = Switch()
     private val dc : DoubleCursor = DoubleCursor(0.2, 0.3)
                     .setMinimalXValue(-2)
                     .setMaximalXValue(2)
@@ -49,6 +49,8 @@ private object TestScreen : LScene(){
     private val tasa : TextArrowSelector<Int> = TextArrowSelector(Text("200") to 1, Text("10000000") to 2)
     private val tfa : TextField = TextField()
             .setX(0.7).setY(0.2) as TextField
+    private val grid : RegularGrid = RegularGrid(2, 2, 200, 200).alignRightTo(1.0).alignUpTo(0) as RegularGrid
+    private val gdc : DoubleCursor = DoubleCursor(100, 100)
 
     init{
         b.setOnMouseReleasedAction { b.moveAlong(-5, 5) }
@@ -104,7 +106,6 @@ private object TestScreen : LScene(){
         add(csp)
         add(hds)
         add(vds)
-        add(s)
         add(dc)
         add(ld)
         add(sd)
@@ -112,6 +113,9 @@ private object TestScreen : LScene(){
         tasa.alignRightToLeft(ld).alignDownToUp(ld)
         add(tasa)
         add(tfa)
+        grid[0, 0] = s
+        grid[1, 1] = gdc
+        add(grid)
     }
 
 }
