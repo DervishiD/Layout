@@ -13,7 +13,7 @@ val probabilityApplication : LApplication = LApplication {
 
 object RandomDistributionScreen : LScene(){
 
-    private val exitButton = TextButton("X", { randomDistributionFrame.close()}).alignUpTo(0).alignLeftTo(0)
+    private val exitButton = TextButton("X", { randomDistributionFrame.close()}).alignTopTo(0).alignLeftTo(0)
 
     private var firstGenerator : () -> Double = {0.0}
 
@@ -121,7 +121,7 @@ object MainScreen : LScene(){
 
     val title : Label = Label("Random number generator").setX(0.5).setY(0.1) as Label
 
-    val exitButton = TextButton("X", {mainFrame.close()}).alignUpTo(0).alignLeftTo(0)
+    val exitButton = TextButton("X", {mainFrame.close()}).alignTopTo(0).alignLeftTo(0)
 
     init{
         add(title)

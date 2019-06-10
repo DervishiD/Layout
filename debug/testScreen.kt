@@ -9,8 +9,8 @@ import java.awt.Color.RED
 private object TestScreen : LScene(){
 
     private val b : TextButton = TextButton("Button"){}.setX(0.5).setY(0.6) as TextButton
-    private val l : Label = Label("Label").alignUpToDown(b).alignRightToRight(b) as Label
-    private val l2 = Label("Label 2").alignLeftTo(0).alignUpTo(0)
+    private val l : Label = Label("Label").alignTopToBottom(b).alignRightToRight(b) as Label
+    private val l2 = Label("Label 2").alignLeftTo(0).alignTopTo(0)
     private val f : TextField = TextField(0.5).setY(0.5).alignLeftTo(0) as TextField
     private val tsp : TextScrollPane = TextScrollPane(0.4, 0.4)
             .setX(0.8).setY(0.5) as TextScrollPane
@@ -38,18 +38,19 @@ private object TestScreen : LScene(){
                     .setMinimalYValue(0)
                     .setMaximalYValue(5)
                     .setXYPrecision(0.25)
-                    .alignUpTo(0)
+                    .alignTopTo(0)
                     .alignLeftTo(0.1) as DoubleCursor
-    private val sd : Switch = Switch().alignDownTo(1.0).alignRightTo(1.0) as Switch
+    private val sd : Switch = Switch().alignBottomTo(1.0).alignRightTo(1.0) as Switch
     private val ld : Label = Label(StringDisplay("This one's a label adapter", RED))
             .alignRightToLeft(sd)
-            .alignUpToUp(sd) as Label
+            .alignTopToTop(sd) as Label
     private val tbd : TextButton = TextButton("That one's a TextButton adapter"){println("Yup, it is")}
             .setMaxLineLength(110).setX(340).setY(270) as TextButton
     private val tasa : TextArrowSelector<Int> = TextArrowSelector(Text("200") to 1, Text("10000000") to 2)
     private val tfa : TextField = TextField()
             .setX(0.7).setY(0.2) as TextField
-    private val grid : RegularGrid = RegularGrid(2, 2, 200, 200).alignRightTo(1.0).alignUpTo(0) as RegularGrid
+    private val grid : MutableRegularGrid =
+            MutableRegularGrid(2, 2, 200, 200).alignRightTo(1.0).alignTopTo(0) as MutableRegularGrid
     private val gdc : DoubleCursor = DoubleCursor(100, 100)
 
     init{
@@ -83,7 +84,7 @@ private object TestScreen : LScene(){
                 "reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat… ")
         add(tsp)
         csp.alignLeftTo(0)
-        csp.alignDownTo(1.0)
+        csp.alignBottomTo(1.0)
         csp.write(1)
         csp.writeln("Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, " +
                 "totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, " +
@@ -110,11 +111,13 @@ private object TestScreen : LScene(){
         add(ld)
         add(sd)
         add(tbd)
-        tasa.alignRightToLeft(ld).alignDownToUp(ld)
+        tasa.alignRightToLeft(ld).alignBottomToTop(ld)
         add(tasa)
         add(tfa)
         grid[0, 0] = s
         grid[1, 1] = gdc
+        grid.addLine()
+        grid[2, 0] = Switch()
         add(grid)
     }
 

@@ -27,13 +27,9 @@ Fuse Displayer cores
 
 Add default fonts and colors setters to LFrames / LFrameBuilders
 
-Displayer Groups and Grids
-
 Actually draw a background in Buttons and such
 
 Put usages in other projects
-
-Align Up/Down -> Align Top/Bottom
 
 Displayers
     relativeXYWH as LProperties
@@ -45,9 +41,9 @@ Displayers
 
 Projects
     Better Chibre
-    Tower of Hanoi
     Draughts/Checkers
     Battleships
+    Chess
     That game Schinz made that day
     9x9 Tic-Tac-Toe
     Amazons

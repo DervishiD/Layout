@@ -35,14 +35,14 @@ private object mainScreen : LScene(){
             .setMaximalYValue(0.5)
             .setXYPrecision(0)
             .alignLeftTo(0)
-            .alignUpTo(0) as DoubleCursor
+            .alignTopTo(0) as DoubleCursor
 
     private val xLabel : Label = Label()
-            .alignUpToUp(cursor)
+            .alignTopToTop(cursor)
             .alignLeftToRight(cursor) as Label
 
     private val yLabel : Label = Label()
-            .alignUpToDown(xLabel)
+            .alignTopToBottom(xLabel)
             .alignLeftToRight(cursor) as Label
 
     private val reloadButton : TextButton = TextButton("Reload") {reload()}
@@ -51,7 +51,7 @@ private object mainScreen : LScene(){
     private val switch : Switch = Switch()
             .setWidth(50).setHeight(50).setY(0.6).alignLeftToRight(cursor) as Switch
 
-    private val typeLabel : Label = Label("Julia").alignLeftToRight(cursor).alignUpToDown(switch) as Label
+    private val typeLabel : Label = Label("Julia").alignLeftToRight(cursor).alignTopToBottom(switch) as Label
 
     init{
         cursor.addXValueListener{ xLabel.setText("x : ${cursor.xValue()}") }

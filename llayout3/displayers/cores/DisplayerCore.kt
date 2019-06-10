@@ -195,10 +195,10 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Fixing an alignment of the up side will annihilate any existing alignment of
      * the down side.
      * @see LObservable
-     * @see alignUpTo
+     * @see alignTopTo
      * @since LLayout 1
      */
-    private var absoluteAlignUpTo : LObservable<Int?> = LObservable(null)
+    private var absolutealignTopTo : LObservable<Int?> = LObservable(null)
 
     /**
      * Encodes the coordinate at which the down side of this DisplayerCore is fixed.
@@ -206,10 +206,10 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Fixing an alignment of the down side will annihilate any existing alignment of
      * the up side.
      * @see LObservable
-     * @see alignDownTo
+     * @see alignBottomTo
      * @since LLayout 1
      */
-    private var absoluteAlignDownTo : LObservable<Int?> = LObservable(null)
+    private var absolutealignBottomTo : LObservable<Int?> = LObservable(null)
 
     init{
 
@@ -225,10 +225,10 @@ abstract class DisplayerCore : JLabel, Displayable {
             }
         }
         h.addListener{
-            if(absoluteAlignUpTo.value != null){
-                alignUpTo(absoluteAlignUpTo.value!!)
-            }else if(absoluteAlignDownTo.value != null){
-                alignDownTo(absoluteAlignDownTo.value!!)
+            if(absolutealignTopTo.value != null){
+                alignTopTo(absolutealignTopTo.value!!)
+            }else if(absolutealignBottomTo.value != null){
+                alignBottomTo(absolutealignBottomTo.value!!)
             }
         }
         absoluteAlignLeftTo.addListener {
@@ -245,18 +245,18 @@ abstract class DisplayerCore : JLabel, Displayable {
                 absoluteX.value = absoluteAlignRightTo.value!! - width() / 2
             }
         }
-        absoluteAlignUpTo.addListener {
-            if(absoluteAlignUpTo.value != null){
-                absoluteAlignDownTo.value = null
-                relativeAlignDownTo = null
-                absoluteY.value = absoluteAlignUpTo.value!! + height() / 2
+        absolutealignTopTo.addListener {
+            if(absolutealignTopTo.value != null){
+                absolutealignBottomTo.value = null
+                relativealignBottomTo = null
+                absoluteY.value = absolutealignTopTo.value!! + height() / 2
             }
         }
-        absoluteAlignDownTo.addListener {
-            if(absoluteAlignDownTo.value != null){
-                absoluteAlignUpTo.value = null
-                relativeAlignUpTo = null
-                absoluteY.value = absoluteAlignDownTo.value!! - height() / 2
+        absolutealignBottomTo.addListener {
+            if(absolutealignBottomTo.value != null){
+                absolutealignTopTo.value = null
+                relativealignTopTo = null
+                absoluteY.value = absolutealignBottomTo.value!! - height() / 2
             }
         }
     }
@@ -280,18 +280,18 @@ abstract class DisplayerCore : JLabel, Displayable {
     /**
      * The relative up alignment of this DisplayerCore, as a proportion of its container's height.
      * @see updateRelativeAlignment
-     * @see absoluteAlignUpTo
+     * @see absolutealignTopTo
      * @since LLayout 1
      */
-    private var relativeAlignUpTo : Double? = null
+    private var relativealignTopTo : Double? = null
 
     /**
      * The relative down alignment of this DisplayerCore, as a proportion of its container's height.
      * @see updateRelativeAlignment
-     * @see absoluteAlignDownTo
+     * @see absolutealignBottomTo
      * @since LLayout 1
      */
-    private var relativeAlignDownTo : Double? = null
+    private var relativealignBottomTo : Double? = null
 
     /**
      * The DisplayerCore to which this one is aligned horizontally.
@@ -521,8 +521,8 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Updates the relative alignment of this DisplayerCore with its container's width and height.
      * @see relativeAlignLeftTo
      * @see relativeAlignRightTo
-     * @see relativeAlignUpTo
-     * @see relativeAlignDownTo
+     * @see relativealignTopTo
+     * @see relativealignBottomTo
      * @since LLayout 1
      */
     private fun updateRelativeAlignment(frameWidth: Int, frameHeight: Int){
@@ -531,10 +531,10 @@ abstract class DisplayerCore : JLabel, Displayable {
         }else if(relativeAlignRightTo != null){
             absoluteAlignRightTo.value = (frameWidth * relativeAlignRightTo!!).toInt()
         }
-        if(relativeAlignUpTo != null){
-            absoluteAlignUpTo.value = (frameHeight * relativeAlignUpTo!!).toInt()
-        }else if(relativeAlignDownTo != null){
-            absoluteAlignDownTo.value = (frameHeight * relativeAlignDownTo!!).toInt()
+        if(relativealignTopTo != null){
+            absolutealignTopTo.value = (frameHeight * relativealignTopTo!!).toInt()
+        }else if(relativealignBottomTo != null){
+            absolutealignBottomTo.value = (frameHeight * relativealignBottomTo!!).toInt()
         }
     }
 
@@ -589,24 +589,24 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Aligns the up side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the down side.
      * @param position The y coordinate at which this DisplayerCore's up side will be aligned.
-     * @see absoluteAlignUpTo
-     * @since LLayout 1
+     * @see absolutealignTopTo
+     * @since LLayout 3
      */
-    fun alignUpTo(position : Int) {
-        absoluteAlignUpTo.value = position
-        absoluteY.value = absoluteAlignUpTo.value!! + height() / 2
+    fun alignTopTo(position : Int) {
+        absolutealignTopTo.value = position
+        absoluteY.value = absolutealignTopTo.value!! + height() / 2
     }
 
     /**
      * Aligns the down side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the up side.
      * @param position The y coordinate at which this DisplayerCore's down side will be aligned.
-     * @see absoluteAlignDownTo
-     * @since LLayout 1
+     * @see absolutealignBottomTo
+     * @since LLayout 3
      */
-    fun alignDownTo(position : Int) {
-        absoluteAlignDownTo.value = position
-        absoluteY.value = absoluteAlignDownTo.value!! - height() / 2
+    fun alignBottomTo(position : Int) {
+        absolutealignBottomTo.value = position
+        absoluteY.value = absolutealignBottomTo.value!! - height() / 2
     }
 
     /**
@@ -639,12 +639,12 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Aligns the up side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the down side.
      * @param position The y coordinate at which this DisplayerCore's up side will be aligned, as a proportion of its container's height.
-     * @see relativeAlignUpTo
-     * @since LLayout 2
+     * @see relativealignTopTo
+     * @since LLayout 3
      */
-    fun alignUpTo(position : Double) {
+    fun alignTopTo(position : Double) {
         resetVerticalAlignment()
-        relativeAlignUpTo = position
+        relativealignTopTo = position
         requestUpdate()
     }
 
@@ -652,12 +652,12 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Aligns the down side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the up side.
      * @param position The y coordinate at which this DisplayerCore's down side will be aligned, as a proportion of its container's height.
-     * @see relativeAlignDownTo
-     * @since LLayout 2
+     * @see relativealignBottomTo
+     * @since LLayout 3
      */
-    fun alignDownTo(position : Double) {
+    fun alignBottomTo(position : Double) {
         resetVerticalAlignment()
-        relativeAlignDownTo = position
+        relativealignBottomTo = position
         requestUpdate()
     }
 
@@ -683,19 +683,19 @@ abstract class DisplayerCore : JLabel, Displayable {
      * Aligns the up side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the down side.
      * @param position The y coordinate at which this DisplayerCore's up side will be aligned, as a proportion of its container's height.
-     * @see relativeAlignUpTo
-     * @since LLayout 1
+     * @see relativealignTopTo
+     * @since LLayout 3
      */
-    fun alignUpTo(position : Float) = alignUpTo(position.toDouble())
+    fun alignTopTo(position : Float) = alignTopTo(position.toDouble())
 
     /**
      * Aligns the down side of this DisplayerCore to the given y coordinate.
      * Resets any alignment of the up side.
      * @param position The y coordinate at which this DisplayerCore's down side will be aligned, as a proportion of its container's height.
-     * @see relativeAlignDownTo
-     * @since LLayout 1
+     * @see relativealignBottomTo
+     * @since LLayout 3
      */
-    fun alignDownTo(position : Float) = alignDownTo(position.toDouble())
+    fun alignBottomTo(position : Float) = alignBottomTo(position.toDouble())
 
     /**
      * Aligns the upper part of this component to the upper part of the other, with the
@@ -703,15 +703,15 @@ abstract class DisplayerCore : JLabel, Displayable {
      * @param component The DisplayerCore to which this one will be aligned.
      * @param delta The distance, in pixels, between the two edges.
      * @see verticalDisplayerAlignment
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpToUp(component : DisplayerCore, delta : Int = 0) {
+    fun alignTopToTop(component : DisplayerCore, delta : Int = 0) {
         val key = "UP TO UP DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
-        alignUpTo(component.upSideY() + delta)
+        alignTopTo(component.upSideY() + delta)
         if(verticalDisplayerAlignment != null){
             verticalDisplayerAlignment!!.removeUpSideListener(key)
         }
-        verticalDisplayerAlignment = component.addUpSideListener(key){ alignUpTo(component.upSideY() + delta) }
+        verticalDisplayerAlignment = component.addUpSideListener(key){ alignTopTo(component.upSideY() + delta) }
         resetVerticalDisplayerAlignment = {
             if(verticalDisplayerAlignment != null){
                 verticalDisplayerAlignment!!.removeUpSideListener(key)
@@ -726,15 +726,15 @@ abstract class DisplayerCore : JLabel, Displayable {
      * @param component The DisplayerCore to which this one will be aligned.
      * @param delta The distance, in pixels, between the two edges.
      * @see verticalDisplayerAlignment
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpToDown(component : DisplayerCore, delta : Int = 0) {
+    fun alignTopToBottom(component : DisplayerCore, delta : Int = 0) {
         val key = "UP TO DOWN DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
-        alignUpTo(component.downSideY() + delta)
+        alignTopTo(component.downSideY() + delta)
         if(verticalDisplayerAlignment != null){
             verticalDisplayerAlignment!!.removeDownSideListener(key)
         }
-        verticalDisplayerAlignment = component.addDownSideListener(key){ alignUpTo(component.downSideY() + delta) }
+        verticalDisplayerAlignment = component.addDownSideListener(key){ alignTopTo(component.downSideY() + delta) }
         resetVerticalDisplayerAlignment = {
             if(verticalDisplayerAlignment != null){
                 verticalDisplayerAlignment!!.removeDownSideListener(key)
@@ -841,15 +841,15 @@ abstract class DisplayerCore : JLabel, Displayable {
      * @param component The DisplayerCore to which this one will be aligned.
      * @param delta The distance, in pixels, between the two edges.
      * @see verticalDisplayerAlignment
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownToDown(component : DisplayerCore, delta : Int = 0) {
+    fun alignBottomToBottom(component : DisplayerCore, delta : Int = 0) {
         val key = "DOWN TO DOWN DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
-        alignDownTo(component.downSideY() + delta)
+        alignBottomTo(component.downSideY() + delta)
         if(verticalDisplayerAlignment != null){
             verticalDisplayerAlignment!!.removeDownSideListener(key)
         }
-        verticalDisplayerAlignment = component.addDownSideListener(key){ alignDownTo(component.downSideY() + delta) }
+        verticalDisplayerAlignment = component.addDownSideListener(key){ alignBottomTo(component.downSideY() + delta) }
         resetVerticalDisplayerAlignment = {
             if(verticalDisplayerAlignment != null){
                 verticalDisplayerAlignment!!.removeDownSideListener(key)
@@ -864,15 +864,15 @@ abstract class DisplayerCore : JLabel, Displayable {
      * @param component The DisplayerCore to which this one will be aligned.
      * @param delta The distance, in pixels, between the two edges.
      * @see verticalDisplayerAlignment
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownToUp(component : DisplayerCore, delta : Int = 0) {
+    fun alignBottomToTop(component : DisplayerCore, delta : Int = 0) {
         val key = "DOWN TO UP DISPLAYER ALIGNMENT OF DISPLAYER INDEX : $displayerIndex"
-        alignDownTo(component.upSideY() + delta)
+        alignBottomTo(component.upSideY() + delta)
         if(verticalDisplayerAlignment != null){
             verticalDisplayerAlignment!!.removeUpSideListener(key)
         }
-        verticalDisplayerAlignment = component.addUpSideListener(key){ alignDownTo(component.upSideY() + delta) }
+        verticalDisplayerAlignment = component.addUpSideListener(key){ alignBottomTo(component.upSideY() + delta) }
         resetVerticalDisplayerAlignment = {
             if(verticalDisplayerAlignment != null){
                 verticalDisplayerAlignment!!.removeUpSideListener(key)
@@ -936,18 +936,18 @@ abstract class DisplayerCore : JLabel, Displayable {
 
     /**
      * Resets the vertical coordinate alignments of this DisplayerCore.
-     * @see absoluteAlignUpTo
-     * @see absoluteAlignDownTo
-     * @see relativeAlignUpTo
-     * @see relativeAlignDownTo
+     * @see absolutealignTopTo
+     * @see absolutealignBottomTo
+     * @see relativealignTopTo
+     * @see relativealignBottomTo
      * @see resetCoordinateAlignment
      * @since LLayout 1
      */
     private fun resetVerticalCoordinateAlignment(){
-        absoluteAlignUpTo.value = null
-        absoluteAlignDownTo.value = null
-        relativeAlignUpTo = null
-        relativeAlignDownTo = null
+        absolutealignTopTo.value = null
+        absolutealignBottomTo.value = null
+        relativealignTopTo = null
+        relativealignBottomTo = null
     }
 
     /**

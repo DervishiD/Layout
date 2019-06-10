@@ -126,7 +126,7 @@ object scene : LScene(){
     private val title : Label = Label(StringDisplay("Tic-Tac-Toe", DEFAULT_LARGE_FONT))
             .setX(0.25).setY(0.33) as Label
 
-    private val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
+    private val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignTopTo(0)
 
     private val player : Label = Label(FIRST).setX(0.25).setY(0.5) as Label
 

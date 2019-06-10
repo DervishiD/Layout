@@ -113,6 +113,7 @@ internal object GameScene : LScene() {
     }
 
     fun reset(height : Int, isHuman : Boolean){
+        currentIndex = 0
         numberOfDiscs = height
         clearTowers()
         refillFirstTower(height)
@@ -153,7 +154,7 @@ internal object GameScene : LScene() {
                 g.color = CONTOUR_COLOR
                 g.drawRect(0, 0, w - 1, h - 1)
             })
-            towers[i].alignDownTo(1.0)
+            towers[i].alignBottomTo(1.0)
             towers[i].setX(relativeXAtTowerIndex(i))
             add(towers[i])
         }
@@ -194,7 +195,7 @@ internal object GameScene : LScene() {
     }
 
     private fun addBackButton(){
-        add(backButton.alignUpTo(0).alignLeftTo(0))
+        add(backButton.alignTopTo(0).alignLeftTo(0))
     }
 
     private fun hover(index : Int){
@@ -308,9 +309,9 @@ internal object GameScene : LScene() {
 
     private fun addToTower(disc : CanvasDisplayer, index : Int){
         if(discs[index].isEmpty()){
-            disc.alignDownTo(1.0)
+            disc.alignBottomTo(1.0)
         }else{
-            disc.alignDownToUp(discs[index].last())
+            disc.alignBottomToTop(discs[index].last())
         }
         disc.setX(towers[index].x())
         discs[index].add(disc)

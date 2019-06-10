@@ -4,19 +4,19 @@ import java.awt.Graphics
 
 /**
  * A Container that contains [ResizableDisplayer]s and arranges them in a grid.
- * The Grid has a fixed number of columns and lines. For a grid with variable dimensions, see [MutableRegularGrid].
+ * The Grid has a variable number of columns and lines. For a grid with fixed dimensions, see [RegularGrid].
  * @see ResizableDisplayer
- * @see MutableRegularGrid
+ * @see RegularGrid
  * @since LLayout 3
  */
-class RegularGrid : ResizableDisplayer {
+class MutableRegularGrid : ResizableDisplayer {
 
     /**
      * The grid containing the added components in the correct order.
      * It contains nullable elements to signify empty cells.
      * @since LLayout 3
      */
-    private val grid : Array<Array<ResizableDisplayer?>>
+    private val grid : MutableList<MutableList<ResizableDisplayer?>>
 
     init{
         addWidthListener { resizeAllComponents() }
@@ -26,32 +26,32 @@ class RegularGrid : ResizableDisplayer {
     constructor(lines : Int, columns : Int, gridWidth : Int, gridHeight : Int) : super(gridWidth, gridHeight){
         if(columns <= 0) throw IllegalArgumentException("The number of columns must be at least 1")
         if(lines <= 0) throw IllegalArgumentException("The number of lines must be at least 1")
-        grid = Array(lines){Array<ResizableDisplayer?>(columns){null}}
+        grid = MutableList(lines) { MutableList<ResizableDisplayer?>(columns) { null } }
     }
 
     constructor(lines : Int, columns : Int, gridWidth : Double, gridHeight : Int) : super(gridWidth, gridHeight){
         if(columns <= 0) throw IllegalArgumentException("The number of columns must be at least 1")
         if(lines <= 0) throw IllegalArgumentException("The number of lines must be at least 1")
-        grid = Array(lines){Array<ResizableDisplayer?>(columns){null}}
+        grid = MutableList(lines) { MutableList<ResizableDisplayer?>(columns) { null } }
     }
 
 
     constructor(lines : Int, columns : Int, gridWidth : Int, gridHeight : Double) : super(gridWidth, gridHeight){
         if(columns <= 0) throw IllegalArgumentException("The number of columns must be at least 1")
         if(lines <= 0) throw IllegalArgumentException("The number of lines must be at least 1")
-        grid = Array(lines){Array<ResizableDisplayer?>(columns){null}}
+        grid = MutableList(lines) { MutableList<ResizableDisplayer?>(columns) { null } }
     }
 
 
     constructor(lines : Int, columns : Int, gridWidth : Double, gridHeight : Double) : super(gridWidth, gridHeight){
         if(columns <= 0) throw IllegalArgumentException("The number of columns must be at least 1")
         if(lines <= 0) throw IllegalArgumentException("The number of lines must be at least 1")
-        grid = Array(lines){Array<ResizableDisplayer?>(columns){null}}
+        grid = MutableList(lines) { MutableList<ResizableDisplayer?>(columns) { null } }
     }
 
     /**
-     * Adds a component at the given line and column of the grid.
-     * @throws IndexOutOfBoundsException If the indices are out of bounds.
+     * Adds the given component at the given line and column.
+     * @throws IndexOutOfBoundsException If the indices are invalid.
      * @since LLayout 3
      */
     operator fun set(line : Int, column : Int, component : ResizableDisplayer){
@@ -68,7 +68,7 @@ class RegularGrid : ResizableDisplayer {
      * @return this
      * @since LLayout 3
      */
-    fun removeAt(line : Int, column : Int) : RegularGrid{
+    fun removeAt(line : Int, column : Int) : MutableRegularGrid{
         checkIfValidIndices(line, column)
         if(grid[line][column] != null){
             core.remove(grid[line][column]!!)
@@ -82,7 +82,7 @@ class RegularGrid : ResizableDisplayer {
      * @return this
      * @since LLayout 3
      */
-    fun remove(component : ResizableDisplayer) : RegularGrid{
+    fun remove(component : ResizableDisplayer) : MutableRegularGrid{
         for(i : Int in 0 until numberOfLines()){
             if(component in grid[i]){
                 core.remove(component)
@@ -94,18 +94,128 @@ class RegularGrid : ResizableDisplayer {
     }
 
     /**
-     * The number of columns of the grid.
-     * @see grid
+     * Adds an empty line at the given index.
+     * @throws IndexOutOfBoundsException If the index is invalid.
+     * @return this
      * @since LLayout 3
      */
-    private fun numberOfColumns() : Int = grid[0].size
+    fun addLine(index : Int) : MutableRegularGrid{
+        if(index == numberOfLines()){
+            grid.add(MutableList(numberOfColumns()) { null } )
+        }else{
+            validLine(index)
+            grid.add(index, MutableList(numberOfColumns()) { null } )
+        }
+        resizeAllComponents()
+        return this
+    }
+
+    /**
+     * Adds a new empty line at the bottom of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun addLine() : MutableRegularGrid = addLine(numberOfLines())
+
+    /**
+     * Adds an empty column at the given index.
+     * @throws IndexOutOfBoundsException If the index is invalid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun addColumn(index : Int) : MutableRegularGrid{
+        if(index == numberOfColumns()){
+            for(line : MutableList<ResizableDisplayer?> in grid){
+                line.add(null)
+            }
+        }else{
+            validColumn(index)
+            for(line : MutableList<ResizableDisplayer?> in grid){
+                line.add(index, null)
+            }
+        }
+        resizeAllComponents()
+        return this
+    }
+
+    /**
+     * Adds a new empty column at the right side of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun addColumn() : MutableRegularGrid = addColumn(numberOfColumns())
+
+    /**
+     * Removes the line with the given index.
+     * @throws IndexOutOfBoundsException If the index is invalid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeLine(index : Int) : MutableRegularGrid{
+        validLine(index)
+        for(component : ResizableDisplayer? in grid[index]){
+            if(component != null) core.remove(component)
+        }
+        grid.removeAt(index)
+        resizeAllComponents()
+        return this
+    }
+
+    /**
+     * Removes the first line of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeFirstLine() : MutableRegularGrid = removeLine(0)
+
+    /**
+     * Removes the last line of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeLastLine() : MutableRegularGrid = removeLine(numberOfLines() - 1)
+
+    /**
+     * Removes the column with the given index.
+     * @throws IndexOutOfBoundsException If the index is invalid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeColumn(index : Int) : MutableRegularGrid{
+        validColumn(index)
+        for(line : MutableList<ResizableDisplayer?> in grid){
+            if(line[index] != null) core.remove(line[index]!!)
+            line.removeAt(index)
+        }
+        resizeAllComponents()
+        return this
+    }
+
+    /**
+     * Removes the first column of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeFirstColumn() : MutableRegularGrid = removeColumn(0)
+
+    /**
+     * Removes the last column of the grid.
+     * @return this
+     * @since LLayout 3
+     */
+    fun removeLastColumn() : MutableRegularGrid = removeColumn(numberOfColumns() - 1)
+
+    /**
+     * The number of columns of the grid.
+     * @since LLayout 3
+     */
+    fun numberOfColumns() : Int = grid[0].size
 
     /**
      * The number of lines of the grid.
-     * @see grid
      * @since LLayout 3
      */
-    private fun numberOfLines() : Int = grid.size
+    fun numberOfLines() : Int = grid.size
 
     /**
      * The width of a cell.
@@ -172,9 +282,13 @@ class RegularGrid : ResizableDisplayer {
      * @since LLayout 3
      */
     private fun resizeAllComponents(){
-        for(line : Array<ResizableDisplayer?> in grid){
-            for(component : ResizableDisplayer? in line){
-                if(component != null) setComponentDimensions(component)
+        for(i : Int in 0 until numberOfLines()){
+            for(j : Int in 0 until numberOfColumns()){
+                val component = grid[i][j]
+                if(component != null){
+                    setComponentDimensions(component)
+                    setComponentPosition(i, j, component)
+                }
             }
         }
     }

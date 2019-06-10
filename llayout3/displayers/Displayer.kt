@@ -212,60 +212,60 @@ open class Displayer : Displayable {
     /**
      * Aligns the up side of this Displayer to the given coordinate.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpTo(y : Int) : Displayer{
-        core.alignUpTo(y)
+    fun alignTopTo(y : Int) : Displayer{
+        core.alignTopTo(y)
         return this
     }
 
     /**
      * Aligns the up side of this Displayer to the given proportion of its container's height.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpTo(y : Double) : Displayer{
-        core.alignUpTo(y)
+    fun alignTopTo(y : Double) : Displayer{
+        core.alignTopTo(y)
         return this
     }
 
     /**
      * Aligns the up side of this Displayer to the given proportion of its container's height.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpTo(y : Float) : Displayer{
-        core.alignUpTo(y)
+    fun alignTopTo(y : Float) : Displayer{
+        core.alignTopTo(y)
         return this
     }
 
     /**
      * Aligns the down side of this Displayer to the given coordinate.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownTo(y : Int) : Displayer{
-        core.alignDownTo(y)
+    fun alignBottomTo(y : Int) : Displayer{
+        core.alignBottomTo(y)
         return this
     }
 
     /**
      * Aligns the down side of this Displayer to the given proportion of its container's height.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownTo(y : Double) : Displayer{
-        core.alignDownTo(y)
+    fun alignBottomTo(y : Double) : Displayer{
+        core.alignBottomTo(y)
         return this
     }
 
     /**
      * Aligns the down side of this Displayer to the given proportion of its container's height.
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownTo(y : Float) : Displayer{
-        core.alignDownTo(y)
+    fun alignBottomTo(y : Float) : Displayer{
+        core.alignBottomTo(y)
         return this
     }
 
@@ -274,10 +274,10 @@ open class Displayer : Displayable {
      * @param component The other Displayer
      * @param delta The signed distance between the aligned sides
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpToUp(component : Displayer, delta : Int = 0) : Displayer{
-        core.alignUpToUp(component.core, delta)
+    fun alignTopToTop(component : Displayer, delta : Int = 0) : Displayer{
+        core.alignTopToTop(component.core, delta)
         return this
     }
 
@@ -286,10 +286,10 @@ open class Displayer : Displayable {
      * @param component The other Displayer
      * @param delta The signed distance between the aligned sides
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignUpToDown(component : Displayer, delta : Int = 0) : Displayer{
-        core.alignUpToDown(component.core, delta)
+    fun alignTopToBottom(component : Displayer, delta : Int = 0) : Displayer{
+        core.alignTopToBottom(component.core, delta)
         return this
     }
 
@@ -298,10 +298,10 @@ open class Displayer : Displayable {
      * @param component The other Displayer
      * @param delta The signed distance between the aligned sides
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownToDown(component : Displayer, delta : Int = 0) : Displayer{
-        core.alignDownToDown(component.core, delta)
+    fun alignBottomToBottom(component : Displayer, delta : Int = 0) : Displayer{
+        core.alignBottomToBottom(component.core, delta)
         return this
     }
 
@@ -310,10 +310,10 @@ open class Displayer : Displayable {
      * @param component The other Displayer
      * @param delta The signed distance between the aligned sides
      * @return this
-     * @since LLayout 1
+     * @since LLayout 3
      */
-    fun alignDownToUp(component : Displayer, delta : Int = 0) : Displayer{
-        core.alignDownToUp(component.core, delta)
+    fun alignBottomToTop(component : Displayer, delta : Int = 0) : Displayer{
+        core.alignBottomToTop(component.core, delta)
         return this
     }
 

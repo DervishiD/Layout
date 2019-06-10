@@ -311,8 +311,8 @@ open class AbstractArrowSelector<T> : Displayer, AbstractSelector<T> {
             previousArrow.setY(0.5).alignLeftTo(0.0)
             nextArrow.setY(0.5).alignRightTo(1.0)
         }else{
-            previousArrow.setX(0.5).alignDownTo(1.0)
-            nextArrow.setX(0.5).alignUpTo(0.0)
+            previousArrow.setX(0.5).alignBottomTo(1.0)
+            nextArrow.setX(0.5).alignTopTo(0.0)
         }
     }
 

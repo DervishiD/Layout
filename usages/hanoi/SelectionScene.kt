@@ -49,7 +49,7 @@ internal object SelectionScene : LScene() {
     }
 
     private fun addPlayerIndicator(){
-        playerIndicator.setX(0.5).alignDownToUp(playerSwitch)
+        playerIndicator.setX(0.5).alignBottomToTop(playerSwitch)
         playerSwitch.addValueListener {
             playerIndicator.setText(if(playerSwitch.value()) COMPUTER_STRING else PLAYER_STRING)
         }
@@ -62,12 +62,12 @@ internal object SelectionScene : LScene() {
     }
 
     private fun addHeightLabel(){
-        heightLabel.setX(0.5).alignDownToUp(heightSlider)
+        heightLabel.setX(0.5).alignBottomToTop(heightSlider)
         add(heightLabel)
     }
 
     private fun addHeightIndicator(){
-        heightIndicator.setText(heightSlider.value().toInt()).setX(0.5).alignUpToDown(heightSlider)
+        heightIndicator.setText(heightSlider.value().toInt()).setX(0.5).alignTopToBottom(heightSlider)
         heightSlider.addValueListener { heightIndicator.setText(heightSlider.value().toInt()) }
         add(heightIndicator)
     }

@@ -11,7 +11,7 @@ val colourSquareApplication : LApplication = LApplication { frame.run() }
 
 object Screen : LScene(){
 
-    val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignUpTo(0)
+    val exitButton = TextButton("X") {frame.close()}.alignLeftTo(0).alignTopTo(0)
 
     val colourStep : Int = 5
 
