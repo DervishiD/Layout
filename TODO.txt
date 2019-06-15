@@ -7,9 +7,6 @@ Canvas
     Draw arc
     Draw image
     Draw roundRect
-    Draw string
-    Draw StringDisplay
-    Draw Text
     Draw triangles
     Draw regular polygons
     Draw polygons
@@ -32,12 +29,12 @@ Actually draw a background in Buttons and such
 Put usages in other projects
 
 Displayers
-    relativeXYWH as LProperties
     TextArea
     Graph for Double-Double map
     TextScrollPane, ConsoleScrollPane
         Add lateral sliders
     DisplayerScrollPane
+    Discrete slider, vertical and horizontal
 
 Projects
     Better Chibre

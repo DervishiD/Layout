@@ -2,7 +2,12 @@ package llayout3.interfaces
 
 import llayout3.DEFAULT_COLOR
 import llayout3.GraphicAction
+import llayout3.utilities.StringDisplay
+import llayout3.utilities.Text
+import llayout3.utilities.displayedHeight
+import llayout3.utilities.displayedWidth
 import java.awt.Color
+import java.awt.FontMetrics
 import java.awt.Graphics
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
@@ -699,5 +704,59 @@ interface Canvas : HavingDimension {
             g.fillOval((x * w).toInt(), (y * h).toInt(), (width * w).toInt(), (height * h).toInt())
         }, key)
     }
+
+    fun writeCentered(text : StringDisplay, key : Any? = defaultKey()) : Canvas{
+        return addGraphicAction({ g : Graphics, w : Int, h : Int ->
+            g.color = text.color
+            g.font = text.font
+            g.drawString(text.text, (w - displayedWidth(text, g)) / 2, (h - displayedHeight(text, g)) / 2)
+        }, key)
+    }
+
+    fun writeCentered(text : CharSequence, key : Any? = defaultKey()) : Canvas = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Text, key : Any? = defaultKey()) : Canvas = writeCentered(text.asString(), key)
+
+    fun writeAtTop(text : StringDisplay, key : Any? = defaultKey()) : Canvas{
+        return addGraphicAction({ g : Graphics, _ : Int, _ : Int ->
+            g.color = text.color
+            g.font = text.font
+            g.drawString(text.text, 0, g.getFontMetrics(text.font).maxAscent)
+        }, key)
+    }
+
+    fun writeAtTop(text : CharSequence, key : Any? = defaultKey()) : Canvas = writeAtTop(StringDisplay(text), key)
+
+    fun writeAtTop(text : Text, key : Any? = defaultKey()) : Canvas = writeAtTop(text.asString(), key)
+
+    fun writeAtBottom(text : StringDisplay, key : Any? = defaultKey()) : Canvas{
+        return addGraphicAction({ g : Graphics, _ : Int, h : Int ->
+            g.color = text.color
+            g.font = text.font
+            g.drawString(text.text, 0, h - displayedHeight(text, g) + g.getFontMetrics(text.font).maxAscent)
+        }, key)
+    }
+
+    fun writeAtBottom(text : CharSequence, key : Any? = defaultKey()) : Canvas = writeAtBottom(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Text, key : Any? = defaultKey()) : Canvas = writeAtBottom(text.asString(), key)
+
+    fun nPixelFrame(n : Int, color : Color = DEFAULT_COLOR, key : Any? = defaultKey()) : Canvas{
+        if(n < 0) throw IllegalArgumentException("The width $n of the framing must be positive.")
+        if(n == 0) return this
+        return addGraphicAction({ g : Graphics, w : Int, h : Int ->
+            g.color = color
+            g.fillRect(0, 0, n, h)
+            g.fillRect(0, 0, w, n)
+            g.fillRect(0, h - n, w, n)
+            g.fillRect(w - n, 0, n, h)
+        }, key)
+    }
+
+    fun onePixelFrame(color : Color = DEFAULT_COLOR, key : Any? = defaultKey()) : Canvas = nPixelFrame(1, color, key)
+
+    fun twoPixelFrame(color : Color = DEFAULT_COLOR, key : Any? = defaultKey()) : Canvas = nPixelFrame(2, color, key)
+
+    fun threePixelFrame(color : Color = DEFAULT_COLOR, key : Any? = defaultKey()) : Canvas = nPixelFrame(3, color, key)
 
 }

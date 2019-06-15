@@ -320,6 +320,12 @@ open class LScene : HavingDimension, LTimerUpdatable, Canvas {
         core.onTimerTick()
     }
 
+    /**
+     * The core of this LScene. Use with caution.
+     * @return This LScene's core.
+     * @see LSceneCore
+     * @since LLayout 1
+     */
     internal fun core() : LSceneCore = core
 
 }

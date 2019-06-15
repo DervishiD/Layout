@@ -1,7 +1,9 @@
 package main
 
 import debug.testApplication
+import usages.schinz.schinz
 
 fun main(){
-    testApplication.run()
+//    testApplication.run()
+    schinz.run()
 }

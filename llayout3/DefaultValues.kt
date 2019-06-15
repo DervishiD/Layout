@@ -21,6 +21,18 @@ typealias GraphicAction = (Graphics, Int, Int) -> Unit
  */
 typealias RealFunction = (Double) -> Double
 
+/**
+ * Invokes both actions.
+ * @see Action
+ * @since LLayout 3
+ */
+operator fun Action.plus(other : Action) : Action{
+    return {
+        invoke()
+        other()
+    }
+}
+
 //FONTS-----------------------------------------------------------------------
 
 /**

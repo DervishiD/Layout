@@ -46,7 +46,7 @@ fun Collection<StringDisplay>.toLinesList() : MutableList<MutableList<StringDisp
 /**
  * Computes the height of this as a line of text in the given Graphics context
  */
-infix fun Collection<StringDisplay>.lineHeight(g : Graphics) : Int{
+fun Collection<StringDisplay>.lineHeight(g : Graphics) : Int{
     var maxAscent = 0
     var maxDescent = 0
     var fm : FontMetrics
@@ -65,7 +65,7 @@ infix fun Collection<StringDisplay>.lineHeight(g : Graphics) : Int{
 /**
  * Computes the length of this as a line of text in the given Graphics context
  */
-infix fun Collection<StringDisplay>.lineLength(g : Graphics) : Int{
+fun Collection<StringDisplay>.lineLength(g : Graphics) : Int{
     var result = 0
     for(s : StringDisplay in this){
         result +=  g.getFontMetrics(s.font).stringWidth(s.text)
@@ -76,7 +76,7 @@ infix fun Collection<StringDisplay>.lineLength(g : Graphics) : Int{
 /**
  * Computes the ascent of this as a line of text in the given Graphics context
  */
-infix fun Collection<StringDisplay>.ascent(g : Graphics) : Int{
+fun Collection<StringDisplay>.ascent(g : Graphics) : Int{
     var maxAscent : Int = 0
     var fm : FontMetrics
     for(s : StringDisplay in this){
@@ -91,7 +91,7 @@ infix fun Collection<StringDisplay>.ascent(g : Graphics) : Int{
 /**
  * Computes the descent of this as a line of text in the given Graphics context
  */
-infix fun Collection<StringDisplay>.descent(g : Graphics) : Int{
+fun Collection<StringDisplay>.descent(g : Graphics) : Int{
     var maxDescent = 0
     var fm : FontMetrics
     for(s : StringDisplay in this){
@@ -106,29 +106,29 @@ infix fun Collection<StringDisplay>.descent(g : Graphics) : Int{
 /**
  * Returns a StringDisplay version of this String
  */
-fun String.toStringDisplay(font : Font, color : Color) : StringDisplay =
+fun CharSequence.toStringDisplay(font : Font, color : Color) : StringDisplay =
         StringDisplay(this, font, color)
 
 /**
  * Returns a StringDisplay version of this String
  */
-fun String.toStringDisplay(color : Color, font : Font) : StringDisplay =
+fun CharSequence.toStringDisplay(color : Color, font : Font) : StringDisplay =
         StringDisplay(this, font, color)
 
 /**
  * Returns a StringDisplay version of this String
  */
-fun String.toStringDisplay(font : Font) : StringDisplay = StringDisplay(this, font)
+fun CharSequence.toStringDisplay(font : Font) : StringDisplay = StringDisplay(this, font)
 
 /**
  * Returns a StringDisplay version of this String
  */
-fun String.toStringDisplay(color : Color) : StringDisplay = StringDisplay(this, color)
+fun CharSequence.toStringDisplay(color : Color) : StringDisplay = StringDisplay(this, color)
 
 /**
  * Returns a StringDisplay version of this String
  */
-fun String.toStringDisplay() : StringDisplay = StringDisplay(this)
+fun CharSequence.toStringDisplay() : StringDisplay = StringDisplay(this)
 
 fun Collection<String>.toStringDisplays(font : Font, color : Color) : MutableList<StringDisplay>{
     val result : MutableList<StringDisplay> = mutableListOf()
@@ -165,6 +165,8 @@ fun Regex.matches(s : StringDisplay) : Boolean = matches(s.text)
 fun Regex.matches(t : Text) : Boolean = matches(t.asString())
 
 fun FontMetrics.stringWidth(s : CharSequence) : Int = stringWidth(s.toString())
+
+fun FontMetrics.stringWidth(s : StringDisplay) : Int = stringWidth(s.toString())
 
 fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics, trimSpaces : Boolean = true) : MutableList<MutableList<StringDisplay>>{
     if(maxLength <= 0)
@@ -268,10 +270,28 @@ fun Collection<StringDisplay>.toLines(maxLength : Int, g : Graphics, trimSpaces 
     return result
 }
 
-operator fun StringBuilder.plus(s : StringBuilder) : StringBuilder = append(s.toString())
+operator fun StringBuilder.plus(s : CharSequence) : StringBuilder = append(s.toString())
 
 operator fun StringBuilder.plus(s : String) : StringBuilder = append(s)
 
 operator fun StringBuilder.plus(c : Char) : StringBuilder = append(c.toString())
 
 fun StringBuilder.set(s : String) : StringBuilder = clear().append(s)
+
+fun displayedWidth(s : StringDisplay, g : Graphics) : Int{
+    var width = 0
+    val fm : FontMetrics = g.getFontMetrics(s.font)
+    var lineWidth : Int
+    for(line : StringDisplay in s.toLines()){
+        lineWidth = fm.stringWidth(s)
+        if(lineWidth > width){
+            width = lineWidth
+        }
+    }
+    return width
+}
+
+fun displayedHeight(s : StringDisplay, g : Graphics) : Int{
+    val fm : FontMetrics = g.getFontMetrics(s.font)
+    return s.toLines().size * (fm.maxAscent + fm.maxDescent)
+}
