@@ -463,7 +463,7 @@ object GameScene : LScene() {
                     "SBI $secondBlockIndex " +
                     "FBP (${firstBlockPosition().line}, ${firstBlockPosition().column}) " +
                     "SBP (${secondBlockPosition().line}, ${secondBlockPosition().column}) " +
-                    "VHP (${virtualHolePosition().line}, ${virtualHolePosition().column})" +
+                    "VHP (${virtualHolePosition().line}, ${virtualHolePosition().column}) " +
                     "FLI $firstLineIndex FCI $firstColumnIndex")
             if(movingTwoBlocks()){
                 locateTwoBlocks()
@@ -727,7 +727,7 @@ object GameScene : LScene() {
             }
 
             fun handleNext(position: Position){
-                info()
+                //info()
                 path.add(position)
             }
 

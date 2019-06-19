@@ -1,9 +1,9 @@
 package main
 
 import debug.testApplication
-import usages.schinz.schinz
+import usages.tictactoe9.ticTacToe9
 
 fun main(){
 //    testApplication.run()
-    schinz.run()
+    ticTacToe9.run()
 }

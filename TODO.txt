@@ -39,11 +39,9 @@ Displayers
     Discrete slider, vertical and horizontal
 
 Projects
-    Better Chibre
     Draughts/Checkers
     Battleships
     Chess
-    That game Schinz made that day
     9x9 Tic-Tac-Toe
     Amazons
     Recipe stuff
@@ -57,5 +55,6 @@ Projects
     2D RPG
     Physics simulator
     3D physics simulator
+    Fix schinz
 
 JSType.java line 358
