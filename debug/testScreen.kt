@@ -124,7 +124,6 @@ private object TestScreen : LScene(){
         grid[2, 0] = Switch()
         add(grid)
         add(hdiss)
-        vdiss.addValueListener { println(vdiss.value()) }
         add(vdiss)
     }
 

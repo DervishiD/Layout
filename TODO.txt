@@ -36,7 +36,6 @@ Displayers
     TextScrollPane, ConsoleScrollPane
         Add lateral sliders
     DisplayerScrollPane
-    Discrete slider, vertical and horizontal
 
 Projects
     Draughts/Checkers

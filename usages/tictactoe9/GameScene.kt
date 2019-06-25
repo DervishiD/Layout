@@ -121,7 +121,7 @@ object GameScene : LScene() {
 
     }
 
-    private const val GRID_SIZE : Int = 3
+    private const val GRID_SIZE : Int = 4
 
     private const val ANY_CELL : Int = -1
 

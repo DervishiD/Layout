@@ -18,16 +18,10 @@ abstract class AbstractDiscreteSlider : ResizableDisplayer {
     private companion object{
 
         /**
-         * The background color of the default image of a slider.
-         * @since LLayout 4
-         */
-        private val DEFAULT_BACKGROUND_COLOR : Color = Color(220, 220, 220)
-
-        /**
          * The color of the default background of the sliding thing.
          * @since LLAyout 4
          */
-        private val DEFAULT_SLIDER_BACKGROUND_COLOR : Color = Color(180, 180, 180)
+        private val DEFAULT_SLIDER_BACKGROUND_COLOR : Color = Color(220, 220, 220)
 
         /**
          * The color of the lines of the default background.
@@ -53,8 +47,6 @@ abstract class AbstractDiscreteSlider : ResizableDisplayer {
          * @since LLayout 4
          */
         private val DEFAULT_BACKGROUND : GraphicAction = { g : Graphics, w : Int, h : Int ->
-            g.color = DEFAULT_BACKGROUND_COLOR
-            g.fillRect(0, 0, w, h)
             g.color = DEFAULT_LINE_COLOR
             g.fillRect(0, 0, w, DEFAULT_LINE_THICKNESS)
             g.fillRect(0, 0, DEFAULT_LINE_THICKNESS, h)

@@ -56,6 +56,7 @@ class MutableRegularGrid : ResizableDisplayer {
      */
     operator fun set(line : Int, column : Int, component : ResizableDisplayer){
         checkIfValidIndices(line, column)
+        if(grid[line][column] != null) core.remove(grid[line][column]!!)
         grid[line][column] = component
         setComponentDimensions(component)
         setComponentPosition(line, column, component)
