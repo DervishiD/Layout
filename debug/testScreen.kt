@@ -1,9 +1,9 @@
 package debug
 
-import llayout3.displayers.*
-import llayout3.frame.*
-import llayout3.utilities.StringDisplay
-import llayout3.utilities.Text
+import llayout4.displayers.*
+import llayout4.frame.*
+import llayout4.utilities.StringDisplay
+import llayout4.utilities.Text
 import java.awt.Color.RED
 
 private object TestScreen : LScene(){
@@ -52,6 +52,10 @@ private object TestScreen : LScene(){
     private val grid : MutableRegularGrid =
             MutableRegularGrid(2, 2, 200, 200).alignRightTo(1.0).alignTopTo(0) as MutableRegularGrid
     private val gdc : DoubleCursor = DoubleCursor(100, 100)
+    private val hdiss : HorizontalDiscreteSlider = HorizontalDiscreteSlider(300, 50, 6).
+            alignTopTo(0).alignLeftToRight(dc) as HorizontalDiscreteSlider
+    private val vdiss : VerticalDiscreteSlider = VerticalDiscreteSlider(50, 250, 8).
+            alignTopToBottom(hdiss).alignLeftToRight(dc)  as VerticalDiscreteSlider
 
     init{
         b.setOnMouseReleasedAction { b.moveAlong(-5, 5) }
@@ -119,6 +123,9 @@ private object TestScreen : LScene(){
         grid.addLine()
         grid[2, 0] = Switch()
         add(grid)
+        add(hdiss)
+        vdiss.addValueListener { println(vdiss.value()) }
+        add(vdiss)
     }
 
 }

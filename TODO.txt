@@ -56,5 +56,8 @@ Projects
     Physics simulator
     3D physics simulator
     Fix schinz
+    mnk game
+    connect6
+    MonteCarloTreeSearch
 
 JSType.java line 358

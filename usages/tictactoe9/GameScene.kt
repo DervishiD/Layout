@@ -1,12 +1,12 @@
 package usages.tictactoe9
 
-import llayout3.DEFAULT_COLOR
-import llayout3.GraphicAction
-import llayout3.displayers.CanvasDisplayer
-import llayout3.displayers.RegularGrid
-import llayout3.displayers.TextButton
-import llayout3.frame.LScene
-import llayout3.utilities.LObservable
+import llayout4.DEFAULT_COLOR
+import llayout4.GraphicAction
+import llayout4.displayers.CanvasDisplayer
+import llayout4.displayers.RegularGrid
+import llayout4.displayers.TextButton
+import llayout4.frame.LScene
+import llayout4.utilities.LObservable
 import usages.tictactoe9.GameScene.Type.*
 import java.awt.Color
 import java.awt.Graphics

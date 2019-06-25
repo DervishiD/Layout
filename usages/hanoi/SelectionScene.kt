@@ -1,12 +1,12 @@
 package usages.hanoi
 
-import llayout3.DEFAULT_LARGE_FONT
-import llayout3.displayers.HorizontalDoubleSlider
-import llayout3.displayers.Label
-import llayout3.displayers.Switch
-import llayout3.displayers.TextButton
-import llayout3.frame.LScene
-import llayout3.utilities.StringDisplay
+import llayout4.DEFAULT_LARGE_FONT
+import llayout4.displayers.HorizontalDoubleSlider
+import llayout4.displayers.Label
+import llayout4.displayers.Switch
+import llayout4.displayers.TextButton
+import llayout4.frame.LScene
+import llayout4.utilities.StringDisplay
 
 internal object SelectionScene : LScene() {
 
