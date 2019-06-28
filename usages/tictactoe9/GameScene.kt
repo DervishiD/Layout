@@ -7,14 +7,13 @@ import llayout4.displayers.RegularGrid
 import llayout4.displayers.TextButton
 import llayout4.frame.LScene
 import llayout4.utilities.LObservable
-import usages.tictactoe9.GameScene.Type.*
+import llayout4.utilities.montecarlotreesearch.MCTSState
+import usages.tictactoe9.Type.*
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.random.Random
 
 object GameScene : LScene() {
-
-    private enum class Type { O, X, EMPTY }
 
     private val LINE_COLOR : Color = DEFAULT_COLOR
     private val CROSS : GraphicAction = { g : Graphics, w : Int, h : Int ->
@@ -47,19 +46,14 @@ object GameScene : LScene() {
         fun type() : Type = type.value
 
         fun click(){
-            if(inGame && isNotClicked() && isClickable()){
-                type.value = currentPlayer
-                handleNewClick(checkGrid(i, j), i, j, k, l)
-                switchPlayer()
+            if(isNotClicked() && game.isClickable(i, j)){
+                type.value = game.playing
+                game.tick(type(), i, j, k, l)
             }
         }
 
-        private fun isClickable() : Boolean{
-            return if(clickableLine == ANY_CELL && clickableColumn == ANY_CELL){
-                true
-            }else{
-                i == clickableLine && j == clickableColumn
-            }
+        fun forceType(forcedType : Type){
+            type.value = forcedType
         }
 
         private fun backgroundColor() : Color = backgroundColor
@@ -115,43 +109,37 @@ object GameScene : LScene() {
 
     private object Algorithm{
 
+        private const val ITERATIONS : Int = 1000
+
+        private const val DEPTH : Int = 10
+
         fun performNextStep(){
-            TODO("Not implemented.")
+            game = MCTSState.computeNextState(game, ITERATIONS, DEPTH) as GameState
+            game.updateScene()
         }
 
     }
 
-    private const val GRID_SIZE : Int = 4
-
-    private const val ANY_CELL : Int = -1
-
     private val CLICKABLE_COLOR : Color = Color.WHITE
 
-    private val UNCLICKABLE_COLOR : Color = Color(200, 140, 130)
+    private val UNCLICKABLE_COLOR : Color = Color(230, 180, 180)
 
     private val BACK_BUTTON : TextButton = TextButton("Back") { backToSelection() }
 
+    private var game : GameState = GameState()
+
     private val grid : RegularGrid = RegularGrid(GRID_SIZE, GRID_SIZE, 1.0, 1.0)
-
-    private val resultGrid : Array<Array<Type>> = Array(GRID_SIZE) { Array(GRID_SIZE) { EMPTY } }
-
-    private var currentPlayer : Type = X
 
     private var isPlayer : Boolean = true
 
     private var algorithmTurn : LObservable<Boolean> = LObservable(false)
-
-    private var clickableLine : Int = ANY_CELL
-
-    private var clickableColumn : Int = ANY_CELL
-
-    private var inGame : Boolean = false
 
     init{
         addGrid()
         addBackButton()
         algorithmTurn.addListener {
             if(algorithmTurn()){
+                game.playing = AI_PLAYING
                 Algorithm.performNextStep()
                 algorithmTurn.value = false
             }
@@ -165,16 +153,8 @@ object GameScene : LScene() {
     }
 
     private fun resetValues(){
-        currentPlayer = X
-        clickableLine = ANY_CELL
-        clickableColumn = ANY_CELL
-        inGame = true
         algorithmTurn.value = false
-        for(i : Int in 0 until GRID_SIZE){
-            for(j : Int in 0 until GRID_SIZE){
-                resultGrid[i][j] = EMPTY
-            }
-        }
+        game = GameState()
     }
 
     private fun resetGrid(){
@@ -198,41 +178,10 @@ object GameScene : LScene() {
 
     private fun algorithmTurn() : Boolean = algorithmTurn.value
 
-    private fun switchPlayer(){
-        currentPlayer = if(currentPlayer == X) O else X
-        if(!isPlayer && !algorithmTurn()) algorithmTurn.value = true
-    }
-
-    private fun isFull(i : Int, j: Int) : Boolean = resultGrid[i][j] != EMPTY
-
-    private fun handleNewClick(type : Type, i : Int, j : Int, k : Int, l : Int){
-        if(type != EMPTY){
-            fillSmallGrid(type, i, j)
-        }
-        setNextGrid(k, l)
-        setCellsColors()
-        checkGrid()
-    }
-
-    private fun fillSmallGrid(type : Type, i : Int, j : Int){
-        resultGrid[i][j] = type
-        grid[i, j] = FilledCell(type)
-    }
-
-    private fun setNextGrid(i : Int, j : Int){
-        if(isFull(i, j)){
-            clickableLine = ANY_CELL
-            clickableColumn = ANY_CELL
-        }else{
-            clickableLine = i
-            clickableColumn = j
-        }
-    }
-
-    private fun setCellsColors(){
+    internal fun setCellsColors(){
         for(i : Int in 0 until GRID_SIZE){
             for(j : Int in 0 until GRID_SIZE){
-                if(!isFull(i, j)){
+                if(grid[i, j] !is FilledCell){
                     setCellsColors(i, j)
                 }
             }
@@ -243,123 +192,13 @@ object GameScene : LScene() {
         val smallGrid : RegularGrid = grid[i, j] as RegularGrid
         for(k : Int in 0 until GRID_SIZE){
             for(l : Int in 0 until GRID_SIZE){
-                (smallGrid[k, l] as Cell).setBackgroundColor(if(isClickable(i, j)) CLICKABLE_COLOR else UNCLICKABLE_COLOR)
+                (smallGrid[k, l] as Cell).setBackgroundColor(if(game.isClickable(i, j)) CLICKABLE_COLOR else UNCLICKABLE_COLOR)
             }
         }
     }
 
-    private fun isClickable(i : Int, j : Int) : Boolean{
-        return if(clickableLine == ANY_CELL && clickableColumn == ANY_CELL){
-            true
-        }else{
-            i == clickableLine && j == clickableColumn
-        }
-    }
-
-    private fun checkGrid(){
-        var finished = false
-        for(i : Int in 0 until GRID_SIZE){
-            if(isBigLineFull(i)) finished = true
-            if(isBigColumnFull(i)) finished = true
-        }
-        if(finished || checkBigDiagonals()) endGame()
-    }
-
-    private fun isBigLineFull(i : Int) : Boolean{
-        val type : Type = resultGrid[i][0]
-        if(type == EMPTY){
-            return false
-        }else{
-            for(j : Int in 1 until GRID_SIZE){
-                if(resultGrid[i][j] != type) return false
-            }
-            return true
-        }
-    }
-
-    private fun isBigColumnFull(i : Int) : Boolean{
-        val type : Type = resultGrid[0][i]
-        if(type == EMPTY){
-            return false
-        }else{
-            for(j : Int in 1 until GRID_SIZE){
-                if(resultGrid[j][i] != type) return false
-            }
-            return true
-        }
-    }
-
-    private fun checkBigDiagonals() : Boolean{
-        val firstType : Type = resultGrid[0][0]
-        val secondType : Type = resultGrid[0][GRID_SIZE - 1]
-        var firstFull = true
-        var secondFull = true
-        return if(firstType == EMPTY && secondType == EMPTY){
-            false
-        }else{
-            for(i : Int in 1 until GRID_SIZE){
-                if(resultGrid[i][i] != firstType){
-                    firstFull = false
-                }
-                if(resultGrid[i][GRID_SIZE - 1 - i] != secondType){
-                    secondFull = false
-                }
-            }
-            ( firstFull && firstType != EMPTY ) || ( secondFull && secondType != EMPTY )
-        }
-    }
-
-    private fun endGame(){
-        inGame = false
-    }
-
-    private fun gridIsFinished(i : Int, j : Int) : Boolean = resultGrid[i][j] != EMPTY
-
-    private fun checkGrid(i : Int, j : Int) : Type{
-        if(!gridIsFinished(i, j)){
-            val smallGrid : RegularGrid = grid[i, j] as RegularGrid
-            //lines
-            for(k : Int in 0 until GRID_SIZE){
-                val type : Type = (smallGrid[k, 0] as Cell).type()
-                if(type != EMPTY){
-                    var full = true
-                    for(l : Int in 1 until GRID_SIZE){
-                        if((smallGrid[k, l] as Cell).type() != type) full = false
-                    }
-                    if(full) return type
-                }
-            }
-            //columns
-            for(k : Int in 0 until GRID_SIZE){
-                val type : Type = (smallGrid[0, k] as Cell).type()
-                if(type != EMPTY){
-                    var full = true
-                    for(l : Int in 1 until GRID_SIZE){
-                        if((smallGrid[l, k] as Cell).type() != type) full = false
-                    }
-                    if(full) return type
-                }
-            }
-            //first diagonal
-            var type : Type = (smallGrid[0, 0] as Cell).type()
-            var full = true
-            if(type != EMPTY){
-                for(m : Int in 1 until GRID_SIZE){
-                    if((smallGrid[m, m] as Cell).type() != type) full = false
-                }
-                if(full) return type
-            }
-            //second diagonal
-            type = (smallGrid[0, GRID_SIZE - 1] as Cell).type()
-            if(type != EMPTY){
-                full = true
-                for(n : Int in 1 until GRID_SIZE){
-                    if((smallGrid[n, GRID_SIZE - 1 - n] as Cell).type() != type) full = false
-                }
-                if(full) return type
-            }
-        }
-        return EMPTY
+    internal fun fillCell(i : Int, j : Int, type : Type){
+        grid[i, j] = FilledCell(type)
     }
 
     private fun backToSelection(){
@@ -372,6 +211,14 @@ object GameScene : LScene() {
 
     private fun addGrid(){
         add(grid.alignTopTo(0).alignLeftTo(0))
+    }
+
+    internal fun forceType(i : Int, j : Int, k : Int, l : Int, type : Type) = ((grid[i, j] as RegularGrid)[k, l] as Cell).forceType(type)
+
+    internal fun hasAI() : Boolean = !isPlayer
+
+    internal fun runAlgorithm(){
+        algorithmTurn.value = true
     }
 
 }
