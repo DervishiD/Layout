@@ -4,13 +4,13 @@ import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.abs
 import kotlin.random.Random
-import llayout4.DEFAULT_LARGE_FONT
-import llayout4.DEFAULT_MEDIUM_FONT
-import llayout4.displayers.CanvasDisplayer
-import llayout4.displayers.RegularGrid
-import llayout4.displayers.TextButton
-import llayout4.frame.LScene
-import llayout4.utilities.StringDisplay
+import llayout5.DEFAULT_LARGE_FONT
+import llayout5.DEFAULT_MEDIUM_FONT
+import llayout5.displayers.CanvasDisplayer
+import llayout5.displayers.RegularGrid
+import llayout5.displayers.TextButton
+import llayout5.frame.LScene
+import llayout5.utilities.StringDisplay
 import usages.schinz.GameScene.Algorithm.Direction.*
 import usages.schinz.GameScene.Algorithm.CycleType.*
 

@@ -1,13 +1,21 @@
 package usages.tictactoe9
 
-import llayout4.utilities.montecarlotreesearch.MCTSState
+import llayout5.utilities.montecarlotreesearch.MCTSState
 import usages.tictactoe9.Type.*
-import kotlin.random.Random
+import java.util.*
 
 internal class GameState : MCTSState {
 
     internal companion object{
+        private val randomizer : SplittableRandom = SplittableRandom()
         internal const val ANY_CELL : Int = -1
+        private const val AI_WINNING_SCORE : Double = 400.0
+        private const val PLAYER_WINNING_SCORE : Double = -800.0
+        private const val AI_BIG_ALMOST_SCORE : Double = 35.0
+        private const val PLAYER_BIG_ALMOST_SCORE : Double = -70.0
+        private const val AI_BIG_CELL_SCORE : Double = 20.0
+        private const val PLAYER_BIG_CELL_SCORE : Double = -40.0
+        private const val CLICKABLE_EVERYWHERE_SCORE : Double = -25.0
     }
 
     private val gameGrid : Array<Array<TicTacToeGrid>> = Array(GRID_SIZE) { i -> Array(GRID_SIZE) { j -> TicTacToeGrid(this, i, j) } }
@@ -38,23 +46,185 @@ internal class GameState : MCTSState {
     }
 
     override fun MCTSStateScore(): Double {
-//        var score = 0.0
-//        for(i : Int in 0 until GRID_SIZE){
-//            for(j : Int in 0 until GRID_SIZE){
-//                when(resultGrid[i][j]){
-//                    AI_PLAYING -> score++
-//                    EMPTY -> {}
-//                    else -> score--
-//                }
-//            }
-//        }
-//        return score
 
-        /*
-         * The above one is a real algorithm but it is so first-order-ish that it is even worse than randomness
-         */
+        fun finishedState() : Double{
+            val type : Type = detectIfFull()
+            return when(type){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_WINNING_SCORE
+                else -> PLAYER_WINNING_SCORE
+            }
+        }
 
-        return Random.nextDouble()
+        fun bigLineAlmostType(index : Int) : Type{
+            var type : Type = gameGrid[index][0].makeSureIsNotFull()
+//            var type : Type = resultGrid[index][0]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = gameGrid[index][i].makeSureIsNotFull()
+//                val cellType : Type = resultGrid[index][i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun bigColumnAlmostType(index : Int) : Type{
+            var type : Type = gameGrid[0][index].makeSureIsNotFull()
+//            var type : Type = resultGrid[0][index]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = gameGrid[i][index].makeSureIsNotFull()
+//                val cellType : Type = resultGrid[i][index]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun bigLineScore(index : Int) : Double{
+            return when(bigLineAlmostType(index)){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_BIG_ALMOST_SCORE
+                else -> PLAYER_BIG_ALMOST_SCORE
+            }
+        }
+
+        fun bigColumnScore(index : Int) : Double{
+            return when(bigColumnAlmostType(index)){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_BIG_ALMOST_SCORE
+                else -> PLAYER_BIG_ALMOST_SCORE
+            }
+        }
+
+        fun firstBigDiagonalType() : Type{
+            var type : Type = gameGrid[0][0].makeSureIsNotFull()
+//            var type : Type = resultGrid[0][0]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = gameGrid[i][i].makeSureIsNotFull()
+//                val cellType : Type = resultGrid[i][i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun firstBigDiagonalScore() : Double{
+            return when(firstBigDiagonalType()){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_BIG_ALMOST_SCORE
+                else -> PLAYER_BIG_ALMOST_SCORE
+            }
+        }
+
+        fun secondBigDiagonalType() : Type{
+            var type : Type = gameGrid[0][GRID_SIZE - 1].makeSureIsNotFull()
+//            var type : Type = resultGrid[0][GRID_SIZE - 1]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = gameGrid[i][GRID_SIZE - 1 - i].makeSureIsNotFull()
+//                val cellType : Type = resultGrid[i][GRID_SIZE - 1 - i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun secondBigDiagonalScore() : Double{
+            return when(secondBigDiagonalType()){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_BIG_ALMOST_SCORE
+                else -> PLAYER_BIG_ALMOST_SCORE
+            }
+        }
+
+        fun bigDiagonalsScore() : Double{
+            return firstBigDiagonalScore() + secondBigDiagonalScore()
+        }
+
+        fun bigGridStateScore() : Double{
+            var score = 0.0
+            for(i : Int in 0 until GRID_SIZE){
+                score += bigLineScore(i) + bigColumnScore(i)
+                for(j : Int in 0 until GRID_SIZE){
+                    score += when(gameGrid[i][j].makeSureIsNotFull()/*resultGrid[i][j]*/){
+                        EMPTY -> 0.0
+                        AI_PLAYING -> AI_BIG_CELL_SCORE
+                        else -> PLAYER_BIG_CELL_SCORE
+                    }
+                }
+            }
+            score += bigDiagonalsScore()
+            return score
+        }
+
+        fun smallGridsScores() : Double{
+            var score = 0.0
+            for(i : Int in 0 until GRID_SIZE){
+                for(j : Int in 0 until GRID_SIZE){
+                    score += gameGrid[i][j].MCTSScore()
+                }
+            }
+            return score
+        }
+
+        fun scoreForPlayableCell() : Double{
+            return if(clickableLine == ANY_CELL) CLICKABLE_EVERYWHERE_SCORE else 0.0
+        }
+
+        var score = 0.0
+        score += finishedState()
+        score += bigGridStateScore()
+        score += smallGridsScores()
+        score += scoreForPlayableCell()
+        return score
+
     }
 
     override fun findNextMCTSStates(): Collection<MCTSState> {
@@ -81,10 +251,10 @@ internal class GameState : MCTSState {
         return result
     }
 
-    override fun generateRandomNextMCTSStates(): MCTSState {
+    override fun generateRandomNextMCTSState(): MCTSState {
         val possibleStates : List<MCTSState> = findNextMCTSStates().toList()
         if(possibleStates.isEmpty()) throw UnsupportedOperationException("no more MCTS states, should have been tested above")
-        return possibleStates[Random.nextInt(possibleStates.size)]
+        return possibleStates[randomizer.nextInt(possibleStates.size)]
     }
 
     override fun hasNextMCTSStates(): Boolean {
@@ -251,6 +421,7 @@ internal class GameState : MCTSState {
         }
         setNewGrid(clickableLine, clickableColumn)
         GameScene.setCellsColors()
+        println(MCTSStateScore())
     }
 
     private fun typeAt(i : Int, j: Int, k: Int, l: Int) : Type = gameGrid[i][j].typeAt(k, l)

@@ -1,12 +1,12 @@
 package usages.schinz
 
-import llayout4.DEFAULT_LARGE_FONT
-import llayout4.displayers.DoubleCursor
-import llayout4.displayers.Label
-import llayout4.displayers.Switch
-import llayout4.displayers.TextButton
-import llayout4.frame.LScene
-import llayout4.utilities.StringDisplay
+import llayout5.DEFAULT_LARGE_FONT
+import llayout5.displayers.DoubleCursor
+import llayout5.displayers.Label
+import llayout5.displayers.Switch
+import llayout5.displayers.TextButton
+import llayout5.frame.LScene
+import llayout5.utilities.StringDisplay
 
 object MenuScene : LScene() {
 

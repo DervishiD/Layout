@@ -1,7 +1,7 @@
 package usages.tictactoe9
 
-import llayout4.frame.LApplication
-import llayout4.frame.LFrame
+import llayout5.frame.LApplication
+import llayout5.frame.LFrame
 
 val ticTacToe9 : LApplication = LApplication { frame.run() }
 

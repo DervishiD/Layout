@@ -24,8 +24,6 @@ Fuse Displayer cores
 
 Add default fonts and colors setters to LFrames / LFrameBuilders
 
-Actually draw a background in Buttons and such
-
 Put usages in other projects
 
 Remove charMatcher from TextField
@@ -56,6 +54,7 @@ Projects
     3D physics simulator
     Fix schinz
     mnk game
+    multiple player mnk game
     connect6
     MonteCarloTreeSearch
 

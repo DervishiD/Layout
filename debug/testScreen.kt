@@ -1,9 +1,9 @@
 package debug
 
-import llayout4.displayers.*
-import llayout4.frame.*
-import llayout4.utilities.StringDisplay
-import llayout4.utilities.Text
+import llayout5.displayers.*
+import llayout5.frame.*
+import llayout5.utilities.StringDisplay
+import llayout5.utilities.Text
 import java.awt.Color.RED
 
 private object TestScreen : LScene(){

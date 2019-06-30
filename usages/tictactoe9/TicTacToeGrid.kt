@@ -4,6 +4,11 @@ import usages.tictactoe9.Type.*
 
 internal class TicTacToeGrid(private val gameState : GameState, private val i : Int, private val j : Int) {
 
+    private companion object{
+        private const val AI_SMALL_ALMOST_SCORE : Double = 7.0
+        private const val PLAYER_SMALL_ALMOST_SCORE : Double = -14.0
+    }
+
     private val resultGrid : Array<Array<Type>> = Array(GRID_SIZE) { Array(GRID_SIZE) { EMPTY } }
 
     private var full : Boolean = false
@@ -113,8 +118,145 @@ internal class TicTacToeGrid(private val gameState : GameState, private val i : 
         }
     }
 
-    internal fun lock(){
+    private fun lock(){
         full = true
+    }
+
+    internal fun MCTSScore() : Double{
+
+        fun bigLineAlmostType(index : Int) : Type{
+            var type : Type = resultGrid[index][0]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = resultGrid[index][i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun bigColumnAlmostType(index : Int) : Type{
+            var type : Type = resultGrid[0][index]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = resultGrid[i][index]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun lineScore(index : Int) : Double{
+            return when(bigLineAlmostType(index)){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_SMALL_ALMOST_SCORE
+                else -> PLAYER_SMALL_ALMOST_SCORE
+            }
+        }
+
+        fun columnScore(index : Int) : Double{
+            return when(bigColumnAlmostType(index)){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_SMALL_ALMOST_SCORE
+                else -> PLAYER_SMALL_ALMOST_SCORE
+            }
+        }
+
+        fun firstDiagonalAlmostType() : Type{
+            var type : Type = resultGrid[0][0]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = resultGrid[i][i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun secondDiagonalAlmostType() : Type{
+            var type : Type = resultGrid[0][GRID_SIZE - 1]
+            var holeEncountered = type == EMPTY
+            for(i : Int in 1 until GRID_SIZE){
+                val cellType : Type = resultGrid[i][GRID_SIZE - 1 - i]
+                if(cellType == EMPTY){
+                    if(holeEncountered){
+                        return EMPTY
+                    }else{
+                        holeEncountered = true
+                    }
+                }else if(cellType != type){
+                    if(type != EMPTY){
+                        return EMPTY
+                    }else{
+                        type = cellType
+                    }
+                }
+            }
+            return type
+        }
+
+        fun firstDiagonalScore() : Double{
+            return when(firstDiagonalAlmostType()){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_SMALL_ALMOST_SCORE
+                else -> PLAYER_SMALL_ALMOST_SCORE
+            }
+        }
+
+        fun secondDiagonalScore() : Double{
+            return when(secondDiagonalAlmostType()){
+                EMPTY -> 0.0
+                AI_PLAYING -> AI_SMALL_ALMOST_SCORE
+                else -> PLAYER_SMALL_ALMOST_SCORE
+            }
+        }
+
+        fun diagonalsScore() : Double{
+            return firstDiagonalScore() + secondDiagonalScore()
+        }
+
+        fun gridStateScore() : Double{
+            var score = 0.0
+            for(i : Int in 0 until GRID_SIZE){
+                score += lineScore(i) + columnScore(i)
+            }
+            return score + diagonalsScore()
+        }
+
+        return gridStateScore()
     }
 
 }

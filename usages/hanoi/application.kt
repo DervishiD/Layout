@@ -1,7 +1,7 @@
 package usages.hanoi
 
-import llayout4.frame.LApplication
-import llayout4.frame.LFrame
+import llayout5.frame.LApplication
+import llayout5.frame.LFrame
 
 internal val frame : LFrame = LFrame(SelectionScene).setTitle("Tower of Hanoi").setTimerPeriod(100).setUnResizable()
 

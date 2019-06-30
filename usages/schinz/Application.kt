@@ -1,7 +1,7 @@
 package usages.schinz
 
-import llayout4.frame.LApplication
-import llayout4.frame.LFrame
+import llayout5.frame.LApplication
+import llayout5.frame.LFrame
 
 val schinz : LApplication = LApplication{ frame.run() }
 

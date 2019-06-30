@@ -1,13 +1,13 @@
 package usages.tictactoe9
 
-import llayout4.DEFAULT_COLOR
-import llayout4.GraphicAction
-import llayout4.displayers.CanvasDisplayer
-import llayout4.displayers.RegularGrid
-import llayout4.displayers.TextButton
-import llayout4.frame.LScene
-import llayout4.utilities.LObservable
-import llayout4.utilities.montecarlotreesearch.MCTSState
+import llayout5.DEFAULT_COLOR
+import llayout5.GraphicAction
+import llayout5.displayers.CanvasDisplayer
+import llayout5.displayers.RegularGrid
+import llayout5.displayers.TextButton
+import llayout5.frame.LScene
+import llayout5.utilities.LObservable
+import llayout5.utilities.montecarlotreesearch.MCTSState
 import usages.tictactoe9.Type.*
 import java.awt.Color
 import java.awt.Graphics
@@ -109,7 +109,7 @@ object GameScene : LScene() {
 
     private object Algorithm{
 
-        private const val ITERATIONS : Int = 1000
+        private const val ITERATIONS : Int = 40000
 
         private const val DEPTH : Int = 10
 
