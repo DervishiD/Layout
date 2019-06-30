@@ -31,11 +31,7 @@ internal class MCTSNode(private val state: MCTSState, private val parent : MCTSN
      * The number of iterations that have been run from this node or its children.
      * @since LLayout 5
      */
-    private var iterations : Int = 0
-
-    init{
-        if(parent == null) iterations = 1
-    }
+    private var iterations : Int = if(parent == null) 1 else 0
 
     /**
      * The sum of the scores associated to this node and its children.
@@ -56,14 +52,20 @@ internal class MCTSNode(private val state: MCTSState, private val parent : MCTSN
     private var nextNodes : MutableList<MCTSNode> = mutableListOf()
 
     /**
-     * The mean score of this node.
+     * The iteration score of this node.
      * @since LLayout 5
      */
-    private fun meanScore() : Double =
+    private fun iterationScore() : Double =
             if(hasTooFewIterations() || parent == null)
                 Double.MAX_VALUE
             else
                 score / iterations + SCORE_CONSTANT * sqrt(2 * ln(parent.iterations.toDouble()) / iterations)
+
+    /**
+     * The mean score of this node.
+     * @since LLayout 5
+     */
+    private fun meanScore() : Double = if(hasTooFewIterations()) Double.MAX_VALUE else score / iterations
 
     /**
      * The [MCTSState] associated to this node.
@@ -147,7 +149,7 @@ internal class MCTSNode(private val state: MCTSState, private val parent : MCTSN
         for(node : MCTSNode in nextNodes){
             if(best == null ||
                     ( node.hasTooFewIterations() && node.iterations < best.iterations) ||
-                    ( stateIsNotLocked(node.state) && node.meanScore() > best.meanScore() ) ){
+                    ( stateIsNotLocked(node.state) && node.iterationScore() > best.iterationScore() ) ){
                 best = node
             }
         }

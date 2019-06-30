@@ -55,6 +55,7 @@ interface MCTSState {
 
     /**
      * Assigns a score to this [MCTSState]. Keep in mind that the algorithm defines the best next state as the one with the bigger score.
+     * Most states should have a score closer to the tens than the hundreds, positive or negative, to suit the implementation better.
      * @see computeNextState
      * @see computeToBottom
      * @since LLayout 5
