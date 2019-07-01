@@ -308,11 +308,17 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     /**
      * Sets the value of this slider to the given one.
-     * @since LLayout 1
+     * @since LLayout 5
      */
-    protected fun setValue(value : Double){
+    fun setValue(value : Double){
         currentValue.value = rounded(value)
     }
+
+    /**
+     * Sets the value of this slider to the given one.
+     * @since LLayout 5
+     */
+    fun setValue(value : Int) = setValue(value.toDouble())
 
     /**
      * Corrects the position of the sliding thing such that it stays inside the object.
