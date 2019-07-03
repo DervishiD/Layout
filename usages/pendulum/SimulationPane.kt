@@ -1,6 +1,6 @@
 package usages.pendulum
 
-import llayout5.displayers.CanvasDisplayer
+import llayout6.displayers.CanvasDisplayer
 import usages.pendulum.Scene.MAXIMAL_LENGTH
 import java.awt.Color
 import java.awt.Graphics

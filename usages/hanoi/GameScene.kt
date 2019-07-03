@@ -1,11 +1,11 @@
 package usages.hanoi
 
-import llayout5.utilities.Action
-import llayout5.DEFAULT_COLOR
-import llayout5.utilities.GraphicAction
-import llayout5.displayers.CanvasDisplayer
-import llayout5.displayers.TextButton
-import llayout5.frame.LScene
+import llayout6.utilities.Action
+import llayout6.DEFAULT_COLOR
+import llayout6.utilities.GraphicAction
+import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.TextButton
+import llayout6.frame.LScene
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.event.KeyEvent

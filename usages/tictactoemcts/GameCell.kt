@@ -1,7 +1,7 @@
 package usages.tictactoemcts
 
-import llayout5.utilities.GraphicAction
-import llayout5.displayers.CanvasDisplayer
+import llayout6.utilities.GraphicAction
+import llayout6.displayers.CanvasDisplayer
 import java.awt.Color
 import java.awt.Graphics
 

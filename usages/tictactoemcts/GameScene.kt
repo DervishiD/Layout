@@ -1,8 +1,8 @@
 package usages.tictactoemcts
 
-import llayout5.displayers.RegularGrid
-import llayout5.displayers.TextButton
-import llayout5.frame.LScene
+import llayout6.displayers.RegularGrid
+import llayout6.displayers.TextButton
+import llayout6.frame.LScene
 
 internal object GameScene : LScene() {
 

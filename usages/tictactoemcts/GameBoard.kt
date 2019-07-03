@@ -1,6 +1,6 @@
 package usages.tictactoemcts
 
-import llayout5.utilities.montecarlotreesearch.MCTSState
+import llayout6.utilities.montecarlotreesearch.MCTSState
 import kotlin.random.Random
 
 internal class GameBoard : MCTSState {

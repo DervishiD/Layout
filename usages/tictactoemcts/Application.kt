@@ -1,7 +1,7 @@
 package usages.tictactoemcts
 
-import llayout5.frame.LApplication
-import llayout5.frame.LFrame
+import llayout6.frame.LApplication
+import llayout6.frame.LFrame
 
 val ticTacToeMCTS : LApplication = LApplication { frame.run() }
 

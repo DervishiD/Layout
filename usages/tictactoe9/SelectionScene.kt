@@ -1,11 +1,11 @@
 package usages.tictactoe9
 
-import llayout5.DEFAULT_LARGE_FONT
-import llayout5.displayers.Label
-import llayout5.displayers.Switch
-import llayout5.displayers.TextButton
-import llayout5.frame.LScene
-import llayout5.utilities.StringDisplay
+import llayout6.DEFAULT_LARGE_FONT
+import llayout6.displayers.Label
+import llayout6.displayers.Switch
+import llayout6.displayers.TextButton
+import llayout6.frame.LScene
+import llayout6.utilities.StringDisplay
 
 object SelectionScene : LScene() {
 

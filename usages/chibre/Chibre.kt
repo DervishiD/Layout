@@ -1,9 +1,9 @@
 package usages.chibre
 
-import llayout5.displayers.Label
-import llayout5.displayers.TextField
-import llayout5.frame.*
-import llayout5.utilities.LObservable
+import llayout6.displayers.Label
+import llayout6.displayers.TextField
+import llayout6.frame.*
+import llayout6.utilities.LObservable
 
 val chibreApplication : LApplication = LApplication { frame.run() }
 

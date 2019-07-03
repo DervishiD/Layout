@@ -1,9 +1,9 @@
 package debug
 
-import llayout5.displayers.*
-import llayout5.frame.*
-import llayout5.utilities.StringDisplay
-import llayout5.utilities.Text
+import llayout6.displayers.*
+import llayout6.frame.*
+import llayout6.utilities.StringDisplay
+import llayout6.utilities.Text
 import java.awt.Color.RED
 
 private object TestScreen : LScene(){
@@ -126,7 +126,8 @@ private object TestScreen : LScene(){
         add(grid)
         add(hdiss)
         add(vdiss)
-        add(plot.setXRange(-2, 2).setYRange(-2, 2).plot({x -> - 0.6 * x * x + 1.5 }).plot({x -> 2 * x - 1}, RED).setX(0.5).setY(0.5))
+        //add(plot.setXRange(-2, 2).setYRange(-2, 2).plot({x -> - 0.6 * x * x + 1.5 }).plot({x -> 2 * x - 1}, RED).setX(0.5).setY(0.5))
+        //Commented for visibility
     }
 
 }

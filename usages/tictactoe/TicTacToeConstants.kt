@@ -1,11 +1,11 @@
 package usages.tictactoe
 
-import llayout5.utilities.GraphicAction
-import llayout5.DEFAULT_LARGE_FONT
-import llayout5.displayers.*
-import llayout5.frame.*
-import llayout5.utilities.LObservable
-import llayout5.utilities.StringDisplay
+import llayout6.utilities.GraphicAction
+import llayout6.DEFAULT_LARGE_FONT
+import llayout6.displayers.*
+import llayout6.frame.*
+import llayout6.utilities.LObservable
+import llayout6.utilities.StringDisplay
 import java.awt.Color.BLACK
 import java.awt.Graphics
 import java.awt.event.KeyEvent.VK_ESCAPE

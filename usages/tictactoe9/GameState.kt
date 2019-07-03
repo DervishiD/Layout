@@ -1,6 +1,6 @@
 package usages.tictactoe9
 
-import llayout5.utilities.montecarlotreesearch.MCTSState
+import llayout6.utilities.montecarlotreesearch.MCTSState
 import usages.tictactoe9.Type.*
 import java.util.*
 
