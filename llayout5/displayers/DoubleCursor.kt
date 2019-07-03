@@ -1,12 +1,14 @@
 package llayout5.displayers
 
-import llayout5.Action
+import llayout5.utilities.Action
 import llayout5.DEFAULT_COLOR
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.ceil
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * A cursor that takey pairs of values in closed intervals over the reals.
@@ -290,6 +292,90 @@ class DoubleCursor : ResizableDisplayer {
      * @since LLayout 1
      */
     fun setMaximalXYValue(maximum : Int) : DoubleCursor = setMaximalXYValue(maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in the x direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXRange(minimum : Double, maximum : Double) : DoubleCursor = setMinimalXValue(min(minimum, maximum)).setMaximalXValue(max(minimum, maximum))
+
+    /**
+     * Sets the range of this cursor in the x direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXRange(minimum : Int, maximum : Double) : DoubleCursor = setXRange(minimum.toDouble(), maximum)
+
+    /**
+     * Sets the range of this cursor in the x direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXRange(minimum : Double, maximum : Int) : DoubleCursor = setXRange(minimum, maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in the x direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXRange(minimum : Int, maximum : Int) : DoubleCursor = setXRange(minimum.toDouble(), maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in the y direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setYRange(minimum : Double, maximum : Double) : DoubleCursor = setMinimalYValue(min(minimum, maximum)).setMaximalYValue(max(minimum, maximum))
+
+    /**
+     * Sets the range of this cursor in the y direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setYRange(minimum : Int, maximum : Double) : DoubleCursor = setYRange(minimum.toDouble(), maximum)
+
+    /**
+     * Sets the range of this cursor in the y direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setYRange(minimum : Double, maximum : Int) : DoubleCursor = setYRange(minimum, maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in the y direction.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setYRange(minimum : Int, maximum : Int) : DoubleCursor = setYRange(minimum.toDouble(), maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in both directions.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXYRange(minimum : Double, maximum : Double) : DoubleCursor = setXRange(minimum, maximum).setYRange(minimum, maximum)
+
+    /**
+     * Sets the range of this cursor in both directions.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXYRange(minimum : Int, maximum : Double) : DoubleCursor = setXYRange(minimum.toDouble(), maximum)
+
+    /**
+     * Sets the range of this cursor in both directions.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXYRange(minimum : Double, maximum : Int) : DoubleCursor = setXYRange(minimum, maximum.toDouble())
+
+    /**
+     * Sets the range of this cursor in both directions.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setXYRange(minimum : Int, maximum : Int) : DoubleCursor = setXYRange(minimum.toDouble(), maximum.toDouble())
 
     /**
      * Sets the precision of the x value.

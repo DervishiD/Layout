@@ -1,8 +1,9 @@
 package llayout5.frame
 
-import llayout5.*
 import llayout5.displayers.cores.DisplayerCore
 import llayout5.interfaces.*
+import llayout5.utilities.Action
+import llayout5.utilities.GraphicAction
 import java.awt.Graphics
 import javax.swing.JPanel
 import llayout5.utilities.LObservable

@@ -56,6 +56,7 @@ private object TestScreen : LScene(){
             alignTopTo(0).alignLeftToRight(dc) as HorizontalDiscreteSlider
     private val vdiss : VerticalDiscreteSlider = VerticalDiscreteSlider(50, 250, 8).
             alignTopToBottom(hdiss).alignLeftToRight(dc)  as VerticalDiscreteSlider
+    private val plot : RealPlot = RealPlot(1.0, 1.0)
 
     init{
         b.setOnMouseReleasedAction { b.moveAlong(-5, 5) }
@@ -125,6 +126,7 @@ private object TestScreen : LScene(){
         add(grid)
         add(hdiss)
         add(vdiss)
+        add(plot.setXRange(-2, 2).setYRange(-2, 2).plot({x -> - 0.6 * x * x + 1.5 }).plot({x -> 2 * x - 1}, RED).setX(0.5).setY(0.5))
     }
 
 }

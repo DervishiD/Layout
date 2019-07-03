@@ -1,12 +1,14 @@
 package llayout5.displayers
 
-import llayout5.Action
+import llayout5.utilities.Action
 import llayout5.DEFAULT_COLOR
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.utilities.LObservable
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.ceil
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * An abstraction for sliders that take double values.
@@ -160,6 +162,34 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
      * @since LLayout 1
      */
     fun setMaximum(maximum : Int) : AbstractDoubleSlider = setMaximum(maximum.toDouble())
+
+    /**
+     * Sets the range of this slider.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setRange(minimum : Double, maximum : Double) : AbstractDoubleSlider = setMinimum(min(minimum, maximum)).setMaximum(max(minimum, maximum))
+
+    /**
+     * Sets the range of this slider.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setRange(minimum : Int, maximum : Double) : AbstractDoubleSlider = setRange(minimum.toDouble(), maximum)
+
+    /**
+     * Sets the range of this slider.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setRange(minimum : Double, maximum : Int) : AbstractDoubleSlider = setRange(minimum, maximum.toDouble())
+
+    /**
+     * Sets the range of this slider.
+     * @return this
+     * @since LLayout 5
+     */
+    fun setRange(minimum : Int, maximum : Int) : AbstractDoubleSlider = setRange(minimum.toDouble(), maximum.toDouble())
 
     /**
      * Sets the precision of this slider.

@@ -4,21 +4,32 @@ import llayout5.displayers.CanvasDisplayer
 import usages.pendulum.Scene.MAXIMAL_LENGTH
 import java.awt.Color
 import java.awt.Graphics
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
 internal object SimulationPane : CanvasDisplayer() {
 
-    private const val INTEGRATION_STEP : Double = 0.0001
+    private const val INTEGRATION_STEP : Double = 0.0002
 
-    private const val ITERATIONS_PER_TICK : Int = 100
+    private const val ITERATIONS_PER_TICK : Int = 50
 
     private val SIMULATION_COLOR : Color = Color.BLACK
 
     private const val BORDER_GAP : Double = 0.1
 
     private const val MASS_RADIUS : Int = 6
+
+    private const val ARROW_TIP_LENGTH : Int = 20
+
+    private const val ARROW_TIP_HALF_WIDTH : Int = 8
+
+    private const val ARROW_BODY_LENGTH : Int = 60
+
+    private const val ARROW_LENGTH : Int = ARROW_BODY_LENGTH + ARROW_TIP_LENGTH
+
+    private const val SPEED_NORM_FOR_RED : Double = 5.0
 
     private var theta : Double = 0.0
 
@@ -47,6 +58,7 @@ internal object SimulationPane : CanvasDisplayer() {
             g.color = SIMULATION_COLOR
             drawRod(g, w, h)
             drawMass(g, w, h)
+            drawArrow(g, w, h)
         })
     }
 
@@ -62,6 +74,36 @@ internal object SimulationPane : CanvasDisplayer() {
 
     private fun drawMass(g : Graphics, w : Int, h : Int){
         g.fillOval(drawingX(w, h) - MASS_RADIUS, drawingY(w, h) - MASS_RADIUS, 2 * MASS_RADIUS, 2 * MASS_RADIUS)
+    }
+
+    private fun arrowDirection() : Int = if(thetaDot >= 0.0) 1 else -1
+
+    private fun drawArrow(g : Graphics, w : Int, h : Int){
+        if(abs(thetaDot) > 0.01){
+            val tipX : Int = (drawingX(w, h) + cos(theta) * ARROW_LENGTH * arrowDirection()).toInt()
+            val tipY : Int = (drawingY(w, h) - sin(theta) * ARROW_LENGTH * arrowDirection()).toInt()
+            val middleX : Int = (drawingX(w, h) + cos(theta) * ARROW_BODY_LENGTH * arrowDirection()).toInt()
+            val middleY : Int = (drawingY(w, h) - sin(theta) * ARROW_BODY_LENGTH * arrowDirection()).toInt()
+            val leftX : Int = (middleX - ARROW_TIP_HALF_WIDTH * sin(theta)).toInt()
+            val leftY : Int = (middleY - ARROW_TIP_HALF_WIDTH * cos(theta)).toInt()
+            val rightX : Int = (middleX + ARROW_TIP_HALF_WIDTH * sin(theta)).toInt()
+            val rightY : Int = (middleY + ARROW_TIP_HALF_WIDTH * cos(theta)).toInt()
+            g.color = colorForSpeed()
+            g.drawLine(drawingX(w, h), drawingY(w, h), middleX, middleY)
+            g.fillPolygon(intArrayOf(tipX, leftX, rightX), intArrayOf(tipY, leftY, rightY), 3)
+        }
+    }
+
+    private fun speedNorm() : Double = abs(l * thetaDot)
+
+    private fun colorForSpeed() : Color{
+        val speed : Double = speedNorm()
+        return if(speed > SPEED_NORM_FOR_RED){
+            Color.RED
+        }else{
+            val t : Double = speedNorm() / SPEED_NORM_FOR_RED
+            Color((t * t * 255).toInt(), ((1 - t * t) * 255).toInt(), 0)
+        }
     }
 
     private fun thetaDotDot() : Double = -g/l * sin(theta) - mu * thetaDot

@@ -1,8 +1,8 @@
 package llayout5.displayers
 
-import llayout5.Action
+import llayout5.utilities.Action
 import llayout5.DEFAULT_COLOR
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.utilities.StringDisplay
 import llayout5.utilities.Text
 import java.awt.Graphics

@@ -1,6 +1,6 @@
 package llayout5.utilities
 
-import llayout5.Action
+import llayout5.utilities.Action
 
 /**
  * A class containing a single value that supports update listeners.

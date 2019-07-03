@@ -1,6 +1,6 @@
 package llayout5.frame
 
-import llayout5.Action
+import llayout5.utilities.Action
 
 /**
  * An object that represents a runnable application.

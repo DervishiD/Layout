@@ -1,6 +1,6 @@
 package llayout5.displayers
 
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.interfaces.Canvas
 import java.awt.Graphics
 

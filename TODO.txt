@@ -1,4 +1,11 @@
-Current version -- LLayout 3
+Current version -- LLayout 5
+Version History
+    LLayout 1   -- first usable version
+    LLayout 2   -- Bug fixes
+    LLayout 3   -- Grids
+    LLayout 4   -- Discrete Sliders
+    LLayout 5   -- Monte Carlo Tree Search
+    Coming soon -- LLayout 6   -- Plots
 
 Canvas
     Draw squares
@@ -56,6 +63,6 @@ Projects
     mnk game
     multiple player mnk game
     connect6
-    MonteCarloTreeSearch
+    Spring-Pendulum
 
 JSType.java line 358

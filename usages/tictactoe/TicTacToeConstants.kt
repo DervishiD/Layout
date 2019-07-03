@@ -1,6 +1,6 @@
 package usages.tictactoe
 
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.DEFAULT_LARGE_FONT
 import llayout5.displayers.*
 import llayout5.frame.*

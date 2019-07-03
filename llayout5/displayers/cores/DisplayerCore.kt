@@ -1,7 +1,7 @@
 package llayout5.displayers.cores
 
-import llayout5.*
 import llayout5.interfaces.*
+import llayout5.utilities.Action
 import llayout5.utilities.LObservable
 import java.awt.Graphics
 import java.awt.event.*

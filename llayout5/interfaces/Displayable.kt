@@ -1,6 +1,6 @@
 package llayout5.interfaces
 
-import llayout5.Action
+import llayout5.utilities.Action
 import java.awt.Graphics
 
 /**

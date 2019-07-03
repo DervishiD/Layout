@@ -1,8 +1,8 @@
 package usages.hanoi
 
-import llayout5.Action
+import llayout5.utilities.Action
 import llayout5.DEFAULT_COLOR
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.displayers.CanvasDisplayer
 import llayout5.displayers.TextButton
 import llayout5.frame.LScene

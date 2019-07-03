@@ -1,7 +1,7 @@
 package llayout5.frame
 
-import llayout5.Action
-import llayout5.GraphicAction
+import llayout5.utilities.Action
+import llayout5.utilities.GraphicAction
 import llayout5.interfaces.Canvas
 import llayout5.interfaces.Displayable
 import llayout5.interfaces.HavingDimension

@@ -1,7 +1,7 @@
 package llayout5.displayers
 
-import llayout5.Action
-import llayout5.GraphicAction
+import llayout5.utilities.Action
+import llayout5.utilities.GraphicAction
 import java.awt.Graphics
 
 /**

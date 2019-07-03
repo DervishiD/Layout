@@ -26,7 +26,7 @@ val juliaSetsApplication : LApplication = LApplication{
     graphFrame.run()
 }
 
-private object mainScreen : LScene(){
+private object MainScene : LScene(){
 
     private val cursor : DoubleCursor = DoubleCursor(0.8, 1.0)
             .setMinimalYValue(-0.5)
@@ -74,17 +74,17 @@ private object mainScreen : LScene(){
         switch.addValueListener {
             if(switch.value()){
                 typeLabel.setText("Mandelbrot")
-                graphScene.mandelbrot()
+                GraphScene.mandelbrot()
             }else{
                 typeLabel.setText("Julia")
-                graphScene.julia()
+                GraphScene.julia()
             }
         }
     }
 
     private fun selectedValue() : ComplexNumber = ComplexNumber(cursor.xValue(), cursor.yValue())
 
-    private fun reload() = graphScene.reload(selectedValue())
+    private fun reload() = GraphScene.reload(selectedValue())
 
     private fun moveLeft(){
         cursor.moveCursorAlongX(-ARROW_MOVEMENT)
@@ -104,17 +104,17 @@ private object mainScreen : LScene(){
 
 }
 
-private object graphScene : LScene(){
+private object GraphScene : LScene(){
 
-    private val DEFAULT_JULIA_MIN_X : Double = -1.5
-    private val DEFAULT_JULIA_MIN_Y : Double = -1.5
-    private val DEFAULT_JULIA_MAX_X : Double = 1.5
-    private val DEFAULT_JULIA_MAX_Y : Double = 1.5
+    private const val DEFAULT_JULIA_MIN_X : Double = -1.5
+    private const val DEFAULT_JULIA_MIN_Y : Double = -1.5
+    private const val DEFAULT_JULIA_MAX_X : Double = 1.5
+    private const val DEFAULT_JULIA_MAX_Y : Double = 1.5
 
-    private val DEFAULT_MANDELBROT_MIN_X : Double = -2.0
-    private val DEFAULT_MANDELBROT_MIN_Y : Double = -2.0
-    private val DEFAULT_MANDELBROT_MAX_X : Double = 2.0
-    private val DEFAULT_MANDELBROT_MAX_Y : Double = 2.0
+    private const val DEFAULT_MANDELBROT_MIN_X : Double = -2.0
+    private const val DEFAULT_MANDELBROT_MIN_Y : Double = -2.0
+    private const val DEFAULT_MANDELBROT_MAX_X : Double = 2.0
+    private const val DEFAULT_MANDELBROT_MAX_Y : Double = 2.0
 
     private var c : ComplexNumber = ComplexNumber()
 
@@ -168,7 +168,7 @@ private object graphScene : LScene(){
     private fun yOfPixel(j : Int) : Double = maxY() - (j * yRange() / height())
 
     private fun juliaIterations(x : Double, y : Double) : Int{
-        var number : ComplexNumber = ComplexNumber(x, y)
+        var number = ComplexNumber(x, y)
         for(i : Int in 0..ITERATIONS){
             if(number.modulus() >= 2) return i
             number = number * number + c()
@@ -177,8 +177,8 @@ private object graphScene : LScene(){
     }
 
     private fun mandelbrotIterations(x : Double, y : Double) : Int{
-        val z : ComplexNumber = ComplexNumber(x, y)
-        var number : ComplexNumber = ComplexNumber()
+        val z = ComplexNumber(x, y)
+        var number = ComplexNumber()
         for(i : Int in 0..ITERATIONS){
             if(number.modulus() >= 2) return i
             number = number * number + z
@@ -194,14 +194,14 @@ private object graphScene : LScene(){
     private fun iterateOn(x : Double, y : Double) : Color = if(type == FractalType.JULIA) colorOf(juliaIterations(x, y)) else colorOf(mandelbrotIterations(x, y))
 
     private fun addPoints(){
-        for(i : Int in 0..width()){
-            for(j : Int in 0..height()){
-                addGraphicAction({ g : Graphics, _, _ ->
+        addGraphicAction({ g : Graphics, _, _ ->
+            for(i : Int in 0..width()){
+                for(j : Int in 0..height()){
                     g.color = iterateOn(xOfPixel(i), yOfPixel(j))
                     g.fillRect(i, j, 1, 1)
-                })
+                }
             }
-        }
+        })
     }
 
     private fun reset(){
@@ -230,6 +230,6 @@ private object graphScene : LScene(){
 
 }
 
-private val graphFrame : LFrame = LFrame(graphScene).setWidth(PLOT_SIZE).setHeight(PLOT_SIZE).setUnResizable().setTimerPeriod(RELOAD_PERIOD)
+private val graphFrame : LFrame = LFrame(GraphScene).setWidth(PLOT_SIZE).setHeight(PLOT_SIZE).setUnResizable().setTimerPeriod(RELOAD_PERIOD)
 
-private val mainFrame : LFrame = LFrame(mainScreen)
+private val mainFrame : LFrame = LFrame(MainScene)

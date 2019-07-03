@@ -1,7 +1,7 @@
 package llayout5.interfaces
 
 import llayout5.DEFAULT_COLOR
-import llayout5.GraphicAction
+import llayout5.utilities.GraphicAction
 import llayout5.utilities.StringDisplay
 import llayout5.utilities.Text
 import llayout5.utilities.displayedHeight
