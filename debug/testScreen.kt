@@ -1,21 +1,26 @@
 package debug
 
-import llayout6.displayers.VectorFieldPlot
+import llayout6.displayers.PointPlot
 import llayout6.frame.*
-import java.awt.Color
 import kotlin.math.sin
 
 private object TestScreen : LScene(){
 
-    private val plot : VectorFieldPlot = VectorFieldPlot(1.0, 1.0)
+    private val plot : PointPlot = PointPlot(1.0, 1.0)
+
+    private var time : Double = 0.1
+
+    private const val DELTA_T : Double = 0.05
 
     init{
 
-        plot.setXRange(-5, 5).setYRange(-5, 5).drawMesh(0.5)
-        plot.plot { x : Double, y : Double -> Pair(sin(y), -sin(x)) }
-        val maxNorm = 5.0
-        plot.setColourFunction { x -> if(x > maxNorm) Color.RED else Color( ( 255 * x / maxNorm ).toInt() , 0, 0) }
-        add(plot.alignTopTo(0).alignLeftTo(0))
+        plot.mediumPoints()
+        add(plot.alignLeftTo(0).alignTopTo(0))
+
+        setOnTimerTickAction {
+            plot.addPoint(time, sin(time) / time)
+            time += DELTA_T
+        }
 
     }
 
