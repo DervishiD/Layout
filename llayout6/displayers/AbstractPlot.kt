@@ -1,5 +1,6 @@
 package llayout6.displayers
 
+import llayout6.utilities.Action
 import llayout6.utilities.GraphicAction
 import llayout6.utilities.LObservable
 import java.awt.Color
@@ -303,6 +304,126 @@ abstract class AbstractPlot : ResizableDisplayer {
     fun setBackground(background : GraphicAction) : AbstractPlot{
         this.background = background
         core.addGraphicAction(background, BACKGROUND_KEY)
+        return this
+    }
+
+    /**
+     * Adds a listener to the maximal plotted x of this plot, associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMaximalXListener(key : Any?, action : Action) : AbstractPlot{
+        maximalX.addListener(key, action)
+        return this
+    }
+
+    /**
+     * Adds a listener to the maximal plotted x of this plot.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMaximalXListener(action : Action) : AbstractPlot{
+        maximalX.addListener(action)
+        return this
+    }
+
+    /**
+     * Removes the listener of the maximal x of this plot associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun removeMaximalXListener(key : Any?) : AbstractPlot{
+        maximalX.removeListener(key)
+        return this
+    }
+
+    /**
+     * Adds a listener to the minimal plotted x of this plot, associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMinimalXListener(key : Any?, action : Action) : AbstractPlot{
+        minimalX.addListener(key, action)
+        return this
+    }
+
+    /**
+     * Adds a listener to the minimal plotted x of this plot.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMinimalXListener(action : Action) : AbstractPlot{
+        minimalX.addListener(action)
+        return this
+    }
+
+    /**
+     * Removes the listener of the minimal x of this plot associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun removeMinimalXListener(key : Any?) : AbstractPlot{
+        minimalX.removeListener(key)
+        return this
+    }
+
+    /**
+     * Adds a listener to the maximal plotted y of this plot, associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMaximalYListener(key : Any?, action : Action) : AbstractPlot{
+        maximalY.addListener(key, action)
+        return this
+    }
+
+    /**
+     * Adds a listener to the maximal plotted y of this plot.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMaximalYListener(action : Action) : AbstractPlot{
+        maximalY.addListener(action)
+        return this
+    }
+
+    /**
+     * Removes the listener of the maximal y of this plot associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun removeMaximalYListener(key : Any?) : AbstractPlot{
+        maximalY.removeListener(key)
+        return this
+    }
+
+    /**
+     * Adds a listener to the minimal plotted y of this plot, associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMinimalYListener(key : Any?, action : Action) : AbstractPlot{
+        minimalY.addListener(key, action)
+        return this
+    }
+
+    /**
+     * Adds a listener to the minimal plotted y of this plot.
+     * @return this
+     * @since LLayout 6
+     */
+    fun addMinimalYListener(action : Action) : AbstractPlot{
+        minimalY.addListener(action)
+        return this
+    }
+
+    /**
+     * Removes the listener of the minimal y of this plot associated to the given key.
+     * @return this
+     * @since LLayout 6
+     */
+    fun removeMinimalYListener(key : Any?) : AbstractPlot{
+        minimalY.removeListener(key)
         return this
     }
 
