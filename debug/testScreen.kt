@@ -1,23 +1,21 @@
 package debug
 
-import llayout6.displayers.ColourPlot
+import llayout6.displayers.VectorFieldPlot
 import llayout6.frame.*
 import java.awt.Color
 import kotlin.math.sin
-import kotlin.math.sqrt
 
 private object TestScreen : LScene(){
 
-    private val plot : ColourPlot = ColourPlot(1.0, 1.0)
+    private val plot : VectorFieldPlot = VectorFieldPlot(1.0, 1.0)
 
     init{
 
-        plot.setXRange(-15, 15).setYRange(-15, 15)
-        plot.plot { x, y ->
-            val t : Double = ( sin( sqrt( x * x + y * y ) ) + 1 ) / 2
-            Color(( 255 * t ).toInt(), ( 255 * t ).toInt(), ( 255 * t ).toInt())
-        }
-        add(plot.alignLeftTo(0).alignTopTo(0))
+        plot.setXRange(-5, 5).setYRange(-5, 5).drawMesh(0.5)
+        plot.plot { x : Double, y : Double -> Pair(sin(y), -sin(x)) }
+        val maxNorm = 5.0
+        plot.setColourFunction { x -> if(x > maxNorm) Color.RED else Color( ( 255 * x / maxNorm ).toInt() , 0, 0) }
+        add(plot.alignTopTo(0).alignLeftTo(0))
 
     }
 
