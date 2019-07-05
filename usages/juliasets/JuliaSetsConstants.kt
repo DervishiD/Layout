@@ -7,10 +7,11 @@ import llayout6.frame.LScene
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.event.KeyEvent.*
+import java.awt.image.BufferedImage
 
 private const val PLOT_SIZE : Int = 800
 private const val ITERATIONS : Int = 200
-private const val RELOAD_PERIOD : Int = 2000
+private const val RELOAD_PERIOD : Int = 200
 private const val ARROW_MOVEMENT : Int = 2
 private enum class FractalType{JULIA, MANDELBROT}
 
@@ -125,10 +126,13 @@ private object GraphScene : LScene(){
 
     private var type : FractalType = FractalType.JULIA
 
+    private var image : BufferedImage = BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
+
     init{
         addDimensionListener { reset() }
         setOnMouseWheelMovedAction { e -> zoom(e.x, e.y, e.unitsToScroll) }
         setOnLoadAction { addPoints() }
+        addGraphicAction({ g : Graphics, _ : Int, _ : Int -> g.drawImage(image(), 0, 0, null)})
     }
 
     fun reload(c : ComplexNumber){
@@ -153,6 +157,8 @@ private object GraphScene : LScene(){
         maxY = DEFAULT_MANDELBROT_MAX_Y
         reset()
     }
+
+    private fun image() : BufferedImage = image
 
     private fun c() : ComplexNumber = c
 
@@ -194,18 +200,19 @@ private object GraphScene : LScene(){
     private fun iterateOn(x : Double, y : Double) : Color = if(type == FractalType.JULIA) colorOf(juliaIterations(x, y)) else colorOf(mandelbrotIterations(x, y))
 
     private fun addPoints(){
-        addGraphicAction({ g : Graphics, _, _ ->
-            for(i : Int in 0..width()){
-                for(j : Int in 0..height()){
-                    g.color = iterateOn(xOfPixel(i), yOfPixel(j))
-                    g.fillRect(i, j, 1, 1)
-                }
+        for(i : Int in 0..width()){
+            for(j : Int in 0..height()){
+                val g = image.graphics
+                g.color = iterateOn(xOfPixel(i), yOfPixel(j))
+                g.fillRect(i, j, 1, 1)
             }
-        })
+        }
     }
 
     private fun reset(){
-        clearBackground()
+        image = if(width() == 0 || height() == 0)
+            BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB) else
+            BufferedImage(width(), height(), BufferedImage.TYPE_INT_RGB)
         addPoints()
     }
 
