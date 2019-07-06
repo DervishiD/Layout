@@ -4,6 +4,6 @@ import debug.testApplication
 import usages.pendulum.pendulum
 
 fun main(){
-    testApplication.run()
-//    pendulum.run()
+//    testApplication.run()
+    pendulum.run()
 }

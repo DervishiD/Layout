@@ -11,9 +11,9 @@ import kotlin.math.sin
 
 internal object SimulationPane : CanvasDisplayer() {
 
-    private const val INTEGRATION_STEP : Double = 0.0002
-
     private const val ITERATIONS_PER_TICK : Int = 50
+
+    private const val INTEGRATION_STEP : Double = TIMER_PERIOD * 1e-3 / ITERATIONS_PER_TICK
 
     private val SIMULATION_COLOR : Color = Color.BLACK
 
@@ -51,6 +51,8 @@ internal object SimulationPane : CanvasDisplayer() {
         this.mu = mu
         if(!running) startAnimation()
         running = true
+        PlotScene.clear()
+        if(plotFrame.isHidden()) plotFrame.setVisible()
     }
 
     private fun startAnimation(){
@@ -116,6 +118,7 @@ internal object SimulationPane : CanvasDisplayer() {
 
     private fun timerUpdate(){
         for(i : Int in 1..ITERATIONS_PER_TICK) updateAngle()
+        PlotScene.plot(theta)
     }
 
     override fun onTimerTick() {

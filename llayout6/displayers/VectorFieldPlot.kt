@@ -38,6 +38,12 @@ class VectorFieldPlot : AbstractPlot {
          */
         private const val MINIMAL_NORM : Double = 0.01
 
+        /**
+         * The default mesh of the vector plot.
+         * @since LLayout 6
+         */
+        private const val DEFAULT_VECTOR_MESH : Double = 1.0
+
     }
 
     /**
@@ -46,7 +52,17 @@ class VectorFieldPlot : AbstractPlot {
      */
     private var field : (Double, Double) -> Pair<Double, Double> = ZERO_FIELD
 
+    /**
+     * The function that attributes colours to the vectors.
+     * @since LLayout 6
+     */
     private var colourFunction : (Double) -> Color = MONOCHROMATIC_FUNCTION
+
+    /**
+     * The mesh of the vector grid.
+     * @since LLayout 6
+     */
+    private var vectorMesh : Double = DEFAULT_VECTOR_MESH
 
     constructor(width : Int, height : Int) : super(width, height)
 
@@ -82,10 +98,20 @@ class VectorFieldPlot : AbstractPlot {
     }
 
     /**
+     * Determines the mesh of the vector field.
+     * @since LLayout 6
+     */
+    fun setMeshSize(mesh : Double) : VectorFieldPlot{
+        vectorMesh = if(mesh > 0) mesh else DEFAULT_VECTOR_MESH
+        updatePlot()
+        return this
+    }
+
+    /**
      * Returns the mesh of the field.
      * @since LLayout 6
      */
-    private fun vectorMesh() : Double = if(meshSize() > 0) meshSize() else DEFAULT_MESH
+    private fun vectorMesh() : Double = vectorMesh
 
     override fun clearPlot() {
         field = ZERO_FIELD

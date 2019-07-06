@@ -539,7 +539,7 @@ abstract class AbstractPlot : ResizableDisplayer {
      * Returns the size of the mesh, or a negative number if no mesh is drawn.
      * @since LLayout 6
      */
-    protected fun meshSize() : Double = gridMesh
+    private fun meshSize() : Double = gridMesh
 
     /**
      * Updates the display of the plot.
