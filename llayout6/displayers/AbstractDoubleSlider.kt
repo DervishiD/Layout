@@ -98,10 +98,10 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
 
     /**
      * The actual sliding thing.
-     * @see CanvasDisplayer
+     * @see Canvas
      * @since LLayout 1
      */
-    protected val slider : CanvasDisplayer = CanvasDisplayer()
+    protected val slider : Canvas = Canvas()
 
     /*
      * Adds listeners to the LObservables declared above.

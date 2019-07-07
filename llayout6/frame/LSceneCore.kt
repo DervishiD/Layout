@@ -19,7 +19,7 @@ import java.awt.event.*
  * @see LFrameCore
  * @since LLayout 1
  */
-internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, Canvas {
+internal class LSceneCore : JPanel(), StandardLContainer, LTimerUpdatable, CanvasCore {
 
     /**
      * The width of this LSceneCore.

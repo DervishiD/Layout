@@ -139,10 +139,10 @@ class DoubleCursor : ResizableDisplayer {
 
     /**
      * The moving thing.
-     * @see CanvasDisplayer
+     * @see Canvas
      * @since LLayout 1
      */
-    private val cursor : CanvasDisplayer = CanvasDisplayer(DEFAULT_CURSOR_SIDE_LENGTH, DEFAULT_CURSOR_SIDE_LENGTH)
+    private val cursor : Canvas = Canvas(DEFAULT_CURSOR_SIDE_LENGTH, DEFAULT_CURSOR_SIDE_LENGTH)
 
     init{
         setBackground(DEFAULT_BACKGROUND)

@@ -86,10 +86,10 @@ abstract class AbstractDiscreteSlider : ResizableDisplayer {
 
     /**
      * The sliding part.
-     * @see CanvasDisplayer
+     * @see Canvas
      * @since LLayout 4
      */
-    protected val slider : CanvasDisplayer = CanvasDisplayer()
+    protected val slider : Canvas = Canvas()
 
     init{
         setBackground(DEFAULT_BACKGROUND)

@@ -1,6 +1,6 @@
 package usages.coloursquare
 
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import llayout6.displayers.TextButton
 import llayout6.frame.*
 import java.awt.Color
@@ -17,16 +17,16 @@ object Screen : LScene(){
 
     var colour : Color = Color(125, 125, 125)
 
-    val variableSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
-            .setX(0.5).setY(0.33) as CanvasDisplayer).addGraphicAction({
+    val variableSquare : Canvas = (Canvas(0.25, 0.25)
+            .setX(0.5).setY(0.33) as Canvas).addGraphicAction({
         g : Graphics, w : Int, h : Int -> run{
             g.color = colour
             g.fillRect(0, 0, w, h)
         }
     })
 
-    val constantSquare : CanvasDisplayer = (CanvasDisplayer(0.25, 0.25)
-            .setX(0.5).setY(0.66) as CanvasDisplayer).addGraphicAction({
+    val constantSquare : Canvas = (Canvas(0.25, 0.25)
+            .setX(0.5).setY(0.66) as Canvas).addGraphicAction({
         g : Graphics, w : Int, h : Int -> run{
             g.color = if(following) colour else fixed
             g.fillRect(0, 0, w, h)

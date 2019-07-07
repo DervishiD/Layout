@@ -2,7 +2,7 @@ package llayout6.frame
 
 import llayout6.utilities.Action
 import llayout6.utilities.GraphicAction
-import llayout6.interfaces.Canvas
+import llayout6.interfaces.CanvasCore
 import llayout6.interfaces.Displayable
 import llayout6.interfaces.HavingDimension
 import llayout6.interfaces.LTimerUpdatable
@@ -14,11 +14,11 @@ import java.awt.event.MouseWheelEvent
  * A LScene is the object on which components (Displayables) are added.
  * @see Displayable
  * @see LTimerUpdatable
- * @see Canvas
+ * @see CanvasCore
  * @see HavingDimension
  * @since LLayout 1
  */
-open class LScene : HavingDimension, LTimerUpdatable, Canvas {
+open class LScene : HavingDimension, LTimerUpdatable, CanvasCore {
 
     /**
      * This class is a wrapper.

@@ -1,16 +1,16 @@
 package llayout6.displayers
 
 import llayout6.utilities.GraphicAction
-import llayout6.interfaces.Canvas
+import llayout6.interfaces.CanvasCore
 import java.awt.Graphics
 
 /**
- * A CanvasDisplayer is a ResizableDisplayer that implements the Canvas interface.
+ * A Canvas is a ResizableDisplayer that implements the CanvasCore interface.
  * @see ResizableDisplayer
- * @see Canvas
+ * @see CanvasCore
  * @since LLayout 1
  */
-open class CanvasDisplayer : ResizableDisplayer, Canvas {
+open class Canvas : ResizableDisplayer, CanvasCore {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
@@ -24,7 +24,7 @@ open class CanvasDisplayer : ResizableDisplayer, Canvas {
 
     constructor(width : Double, height : Double) : super(width, height)
 
-    override fun addGraphicAction(graphicAction: GraphicAction, key: Any?): CanvasDisplayer {
+    override fun addGraphicAction(graphicAction: GraphicAction, key: Any?): Canvas {
         core.addGraphicAction(graphicAction, key)
         return this
     }

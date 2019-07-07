@@ -1,11 +1,11 @@
 package usages.tictactoemcts
 
 import llayout6.utilities.GraphicAction
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import java.awt.Color
 import java.awt.Graphics
 
-internal class GameCell(private val i : Int, private val j : Int) : CanvasDisplayer(){
+internal class GameCell(private val i : Int, private val j : Int) : Canvas(){
 
     private companion object{
         private const val KEY : Int = 0

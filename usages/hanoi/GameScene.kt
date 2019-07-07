@@ -3,7 +3,7 @@ package usages.hanoi
 import llayout6.utilities.Action
 import llayout6.DEFAULT_COLOR
 import llayout6.utilities.GraphicAction
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import llayout6.displayers.TextButton
 import llayout6.frame.LScene
 import java.awt.Color
@@ -41,9 +41,9 @@ internal object GameScene : LScene() {
 
     private const val TOWER_HEIGHT : Double = 0.8
 
-    private val discs : Array<MutableList<CanvasDisplayer>> = Array(NUMBER_OF_TOWERS){ mutableListOf<CanvasDisplayer>() }
+    private val discs : Array<MutableList<Canvas>> = Array(NUMBER_OF_TOWERS){ mutableListOf<Canvas>() }
 
-    private val towers : Array<CanvasDisplayer> = Array(NUMBER_OF_TOWERS){ CanvasDisplayer(TOWER_WIDTH, TOWER_HEIGHT) }
+    private val towers : Array<Canvas> = Array(NUMBER_OF_TOWERS){ Canvas(TOWER_WIDTH, TOWER_HEIGHT) }
 
     private val backButton : TextButton = TextButton("Back"){ back() }
 
@@ -138,7 +138,7 @@ internal object GameScene : LScene() {
 
     private fun setDiscsX(){
         for(index : Int in 0 until NUMBER_OF_TOWERS){
-            for(disc : CanvasDisplayer in discs[index]){
+            for(disc : Canvas in discs[index]){
                 disc.setX(towers[index].x())
             }
         }
@@ -161,8 +161,8 @@ internal object GameScene : LScene() {
     }
 
     private fun clearTowers(){
-        for(tower : MutableList<CanvasDisplayer> in discs){
-            for(disc : CanvasDisplayer in tower){
+        for(tower : MutableList<Canvas> in discs){
+            for(disc : Canvas in tower){
                 remove(disc)
             }
             tower.clear()
@@ -177,7 +177,7 @@ internal object GameScene : LScene() {
     private fun addDiscsOnFirstTower(height : Int){
         val discHeight : Int = towerHeight() / height
         for(i : Int in 0 until height){
-            val newDisc = CanvasDisplayer()
+            val newDisc = Canvas()
             newDisc.setWidth(discWidth(i, height))
             newDisc.setHeight(discHeight)
             setDefaultBackground(newDisc)
@@ -203,7 +203,7 @@ internal object GameScene : LScene() {
         hover(discs[index].last())
     }
 
-    private fun hover(disc : CanvasDisplayer){
+    private fun hover(disc : Canvas){
         disc.addGraphicAction(HOVERED_DISC_BACKGROUND, BACKGROUND_KEY)
     }
 
@@ -219,7 +219,7 @@ internal object GameScene : LScene() {
         }
     }
 
-    private fun select(disc : CanvasDisplayer){
+    private fun select(disc : Canvas){
         disc.addGraphicAction(SELECTED_DISC_BACKGROUND, BACKGROUND_KEY)
     }
 
@@ -228,7 +228,7 @@ internal object GameScene : LScene() {
         hover(discs[currentIndex].last())
     }
 
-    private fun setDefaultBackground(disc : CanvasDisplayer){
+    private fun setDefaultBackground(disc : Canvas){
         disc.addGraphicAction(DEFAULT_DISC_BACKGROUND, BACKGROUND_KEY)
     }
 
@@ -307,7 +307,7 @@ internal object GameScene : LScene() {
 
     private fun getIndexAtRight(i : Int) : Int = (currentIndex + i) % NUMBER_OF_TOWERS
 
-    private fun addToTower(disc : CanvasDisplayer, index : Int){
+    private fun addToTower(disc : Canvas, index : Int){
         if(discs[index].isEmpty()){
             disc.alignBottomTo(1.0)
         }else{
@@ -355,14 +355,14 @@ internal object GameScene : LScene() {
     }
 
     private fun colorForWin(){
-        for(tower : MutableList<CanvasDisplayer> in discs){
-            for(disc : CanvasDisplayer in tower){
+        for(tower : MutableList<Canvas> in discs){
+            for(disc : Canvas in tower){
                 setWinningColor(disc)
             }
         }
     }
 
-    private fun setWinningColor(disc : CanvasDisplayer){
+    private fun setWinningColor(disc : Canvas){
         disc.addGraphicAction(WINNING_DISC_BACKGROUND, BACKGROUND_KEY)
     }
 
@@ -386,7 +386,7 @@ internal object GameScene : LScene() {
     }
 
     private fun move(fromIndex : Int, toIndex : Int){
-        val toMove : CanvasDisplayer = discs[fromIndex].last()
+        val toMove : Canvas = discs[fromIndex].last()
         discs[fromIndex].remove(toMove)
         addToTower(toMove, toIndex)
     }

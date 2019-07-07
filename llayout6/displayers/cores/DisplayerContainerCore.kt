@@ -1,7 +1,7 @@
 package llayout6.displayers.cores
 
 import llayout6.utilities.GraphicAction
-import llayout6.interfaces.Canvas
+import llayout6.interfaces.CanvasCore
 import llayout6.interfaces.Displayable
 import java.awt.Graphics
 
@@ -11,7 +11,7 @@ import java.awt.Graphics
  * @see AbstractDisplayerContainerCore
  * @since LLayout 1
  */
-class DisplayerContainerCore : AbstractDisplayerContainerCore, Canvas {
+class DisplayerContainerCore : AbstractDisplayerContainerCore, CanvasCore {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 

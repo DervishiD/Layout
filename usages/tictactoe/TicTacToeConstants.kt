@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent.VK_ESCAPE
 
 val TicTacToeApplication : LApplication = LApplication { frame.run() }
 
-private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : Int, private val j : Int) : CanvasDisplayer(w, h) {
+private class Cell(x: Double, y: Double, w: Double, h: Double, private val i : Int, private val j : Int) : Canvas(w, h) {
 
     companion object{
         private val XDrawing : GraphicAction = {g : Graphics, w : Int, h : Int -> run{

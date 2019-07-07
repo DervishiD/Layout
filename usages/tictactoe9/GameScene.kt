@@ -2,7 +2,7 @@ package usages.tictactoe9
 
 import llayout6.DEFAULT_COLOR
 import llayout6.utilities.GraphicAction
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import llayout6.displayers.RegularGrid
 import llayout6.displayers.TextButton
 import llayout6.frame.LScene
@@ -27,7 +27,7 @@ object GameScene : LScene() {
     }
     private const val THICK_BORDER_WIDTH : Int = 4
 
-    private class Cell(private val i : Int, private val j : Int, private val k : Int, private val l : Int) : CanvasDisplayer(){
+    private class Cell(private val i : Int, private val j : Int, private val k : Int, private val l : Int) : Canvas(){
 
         private companion object{
             private const val KEY : Int = 0
@@ -100,7 +100,7 @@ object GameScene : LScene() {
 
     }
 
-    private class FilledCell(type : Type) : CanvasDisplayer(){
+    private class FilledCell(type : Type) : Canvas(){
         init{
             fillBackground(Color.WHITE)
             if(type == X) addGraphicAction(CROSS) else addGraphicAction(ROUND)

@@ -54,7 +54,6 @@ Projects
     mnk game
     multiple player mnk game
     connect6
-    Spring-Pendulum
 
 Current version -- LLayout 6
 Version History

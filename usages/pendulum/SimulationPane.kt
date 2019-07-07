@@ -1,6 +1,6 @@
 package usages.pendulum
 
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import usages.pendulum.Scene.MAXIMAL_LENGTH
 import java.awt.Color
 import java.awt.Graphics
@@ -9,7 +9,7 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-internal object SimulationPane : CanvasDisplayer() {
+internal object SimulationPane : Canvas() {
 
     private const val ITERATIONS_PER_TICK : Int = 50
 

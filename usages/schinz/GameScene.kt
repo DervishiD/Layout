@@ -6,7 +6,7 @@ import kotlin.math.abs
 import kotlin.random.Random
 import llayout6.DEFAULT_LARGE_FONT
 import llayout6.DEFAULT_MEDIUM_FONT
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import llayout6.displayers.RegularGrid
 import llayout6.displayers.TextButton
 import llayout6.frame.LScene
@@ -22,7 +22,7 @@ object GameScene : LScene() {
 
     private const val COMPUTER_PERIOD : Int = 500
 
-    private class Block(private val index : Int, var line : Int, var column : Int) : CanvasDisplayer(){
+    private class Block(private val index : Int, var line : Int, var column : Int) : Canvas(){
 
         companion object{
             private val DEFAULT_COLOR : Color = Color(255, 160, 20)

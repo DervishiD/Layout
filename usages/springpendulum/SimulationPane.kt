@@ -1,11 +1,11 @@
 package usages.springpendulum
 
-import llayout6.displayers.CanvasDisplayer
+import llayout6.displayers.Canvas
 import java.awt.Color
 import java.awt.Graphics
 import kotlin.math.*
 
-internal object SimulationPane : CanvasDisplayer() {
+internal object SimulationPane : Canvas() {
 
     private const val ITERATIONS_PER_TICK : Int = 100
 
