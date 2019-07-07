@@ -1,9 +1,9 @@
 package main
 
 import debug.testApplication
-import usages.pendulum.pendulum
+import usages.springpendulum.springPendulum
 
 fun main(){
 //    testApplication.run()
-    pendulum.run()
+    springPendulum.run()
 }

@@ -15,7 +15,7 @@ import kotlin.math.sqrt
  * @see ResizableDisplayer
  * @since LLayout 6
  */
-class PointPlot : ResizableDisplayer {
+open class PointPlot : ResizableDisplayer {
 
     private companion object{
 
