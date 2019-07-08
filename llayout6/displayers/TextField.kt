@@ -1562,7 +1562,6 @@ class TextField : Displayer {
     }
 
     //DANGER ZONE
-    //FUTURE SELF, THE NEXT TIME YOU FEEL THE NEED TO REFACTOR THIS, BEWARE
     //YOU'VE BEEN WARNED
     override fun initializeDrawingParameters(g: Graphics) {
         super.initializeDrawingParameters(g)

@@ -1,7 +1,6 @@
 Canvas
     Draw squares
     Draw circles
-    Draw point of width 4? 5? n?
     Draw arc
     Draw image
     Draw roundRect
@@ -24,8 +23,6 @@ Add default fonts and colors setters to LFrames
 
 Put usages in other projects
 
-Remove charMatcher from TextField
-
 Displayers
     TextArea
     Graph for Double-Double map
@@ -39,21 +36,14 @@ Projects
     Chess
     9x9 Tic-Tac-Toe
     Amazons
-    Recipe stuff
     Game of life
     Calculator
     Console
-    Bubbles Screen saver
-    XML and TXT
-    Databases
-    3D stuff
-    2D RPG
-    Physics simulator
-    3D physics simulator
     Fix schinz
     mnk game
     multiple player mnk game
     connect6
+    Evolution simulator
 
 Current version -- LLayout 6
 Version History
