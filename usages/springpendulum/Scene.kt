@@ -220,7 +220,7 @@ internal object Scene : LScene() {
     }
 
     private fun addMassSlider(){
-        MASS_SLIDER.setRange(MINIMAL_MASS, MAXIMAL_MASS).setPrecision(MASS_PRECISION).setValue(DEFAULT_MASS)
+        MASS_SLIDER.setRange(MINIMAL_MASS, MAXIMAL_MASS).setPrecision(MASS_PRECISION).setStartingValue(DEFAULT_MASS)
         add(MASS_SLIDER.setX(MIDDLE_X).setY(0.15))
     }
 
@@ -243,7 +243,7 @@ internal object Scene : LScene() {
         SPRING_CONSTANT_SLIDER
                 .setRange(MINIMAL_SPRING_CONSTANT, MAXIMAL_SPRING_CONSTANT)
                 .setPrecision(SPRING_CONSTANT_PRECISION)
-                .setValue(DEFAULT_SPRING_CONSTANT)
+                .setStartingValue(DEFAULT_SPRING_CONSTANT)
         add(SPRING_CONSTANT_SLIDER.setX(MIDDLE_X).setY(0.24))
     }
 
@@ -266,7 +266,7 @@ internal object Scene : LScene() {
         RELAXED_LENGTH_SLIDER
                 .setRange(MINIMAL_RELAXED_LENGTH, MAXIMAL_RELAXED_LENGTH)
                 .setPrecision(RELAXED_LENGTH_PRECISION)
-                .setValue(DEFAULT_RELAXED_LENGTH)
+                .setStartingValue(DEFAULT_RELAXED_LENGTH)
         add(RELAXED_LENGTH_SLIDER.setX(MIDDLE_X).setY(0.33))
     }
 
@@ -289,7 +289,7 @@ internal object Scene : LScene() {
         STARTING_LENGTH_SLIDER
                 .setRange(MINIMAL_STARTING_LENGTH, MAXIMAL_STARTING_LENGTH)
                 .setPrecision(STARTING_LENGTH_PRECISION)
-                .setValue(DEFAULT_STARTING_LENGTH)
+                .setStartingValue(DEFAULT_STARTING_LENGTH)
         add(STARTING_LENGTH_SLIDER.setX(MIDDLE_X).setY(0.42))
     }
 
@@ -312,7 +312,7 @@ internal object Scene : LScene() {
         STARTING_RHO_DOT_SLIDER
                 .setRange(MINIMAL_STARTING_RHO_DOT, MAXIMAL_STARTING_RHO_DOT)
                 .setPrecision(STARTING_RHO_DOT_PRECISION)
-                .setValue(DEFAULT_STARTING_RHO_DOT)
+                .setStartingValue(DEFAULT_STARTING_RHO_DOT)
         add(STARTING_RHO_DOT_SLIDER.setX(MIDDLE_X).setY(0.51))
     }
 
@@ -335,7 +335,7 @@ internal object Scene : LScene() {
         STARTING_ANGLE_SLIDER
                 .setRange(MINIMAL_STARTING_ANGLE, MAXIMAL_STARTING_ANGLE)
                 .setPrecision(STARTING_ANGLE_PRECISION)
-                .setValue(DEFAULT_STARTING_ANGLE)
+                .setStartingValue(DEFAULT_STARTING_ANGLE)
         add(STARTING_ANGLE_SLIDER.setX(MIDDLE_X).setY(0.60))
     }
 
@@ -358,7 +358,7 @@ internal object Scene : LScene() {
         STARTING_THETA_DOT_SLIDER
                 .setRange(MINIMAL_STARTING_THETA_DOT, MAXIMAL_STARTING_THETA_DOT)
                 .setPrecision(STARTING_THETA_DOT_PRECISION)
-                .setValue(DEFAULT_STARTING_THETA_DOT)
+                .setStartingValue(DEFAULT_STARTING_THETA_DOT)
         add(STARTING_THETA_DOT_SLIDER.setX(MIDDLE_X).setY(0.69))
     }
 
@@ -381,7 +381,7 @@ internal object Scene : LScene() {
         GRAVITY_SLIDER
                 .setRange(MINIMAL_GRAVITY, MAXIMAL_GRAVITY)
                 .setPrecision(GRAVITY_PRECISION)
-                .setValue(DEFAULT_GRAVITY)
+                .setStartingValue(DEFAULT_GRAVITY)
         add(GRAVITY_SLIDER.setX(MIDDLE_X).setY(0.78))
     }
 
@@ -404,7 +404,7 @@ internal object Scene : LScene() {
         FRICTION_SLIDER
                 .setRange(MINIMAL_FRICTION, MAXIMAL_FRICTION)
                 .setPrecision(FRICTION_PRECISION)
-                .setValue(DEFAULT_FRICTION)
+                .setStartingValue(DEFAULT_FRICTION)
         add(FRICTION_SLIDER.setX(MIDDLE_X).setY(0.87))
     }
 

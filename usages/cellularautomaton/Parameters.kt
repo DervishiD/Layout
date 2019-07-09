@@ -16,11 +16,9 @@ internal object Parameters {
 
     private var neighbourhood : Collection<Pair<Int, Int>> = setOf()
 
-    private var survivingParameter : Collection<Int> = setOf()
+    private var survivingParameter : (Collection<Triple<Int, Int, Boolean>>) -> Boolean = { _ -> true }
 
-    private var deathParameters : Collection<Int> = setOf()
-
-    private var birthParameters : Collection<Int> = setOf()
+    private var birthParameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean = { _ -> true }
 
     internal fun setWidth(width : Int){
         gridWidth = width
@@ -46,15 +44,11 @@ internal object Parameters {
         this.neighbourhood = neighbourhood
     }
 
-    internal fun setSurvivingParameters(parameters : Collection<Int>){
+    internal fun setSurvivingParameters(parameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean){
         survivingParameter = parameters
     }
 
-    internal fun setDeathParameters(parameters : Collection<Int>){
-        deathParameters = parameters
-    }
-
-    internal fun setBirthParameters(parameters : Collection<Int>){
+    internal fun setBirthParameters(parameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean){
         birthParameters = parameters
     }
 

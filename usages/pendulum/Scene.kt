@@ -157,7 +157,7 @@ internal object Scene : LScene() {
 
     private fun addStartingAngleSlider(){
         add(STARTING_ANGLE_SLIDER.setMinimum(MINIMAL_ANGLE).setMaximum(MAXIMAL_ANGLE).setPrecision(ANGLE_PRECISION).setX(CENTRAL_X).setY(0.20))
-        STARTING_ANGLE_SLIDER.setValue(DEFAULT_STARTING_ANGLE)
+        STARTING_ANGLE_SLIDER.setStartingValue(DEFAULT_STARTING_ANGLE)
     }
 
     private fun addStartingAngleIndicator(){
@@ -171,7 +171,7 @@ internal object Scene : LScene() {
 
     private fun addStartingSpeedSlider(){
         add(STARTING_SPEED_SLIDER.setMinimum(MINIMAL_SPEED).setMaximum(MAXIMAL_SPEED).setPrecision(SPEED_PRECISION).setX(CENTRAL_X).setY(0.35))
-        STARTING_SPEED_SLIDER.setValue(DEFAULT_STARTING_SPEED)
+        STARTING_SPEED_SLIDER.setStartingValue(DEFAULT_STARTING_SPEED)
     }
 
     private fun addStartingSpeedIndicator(){
@@ -185,7 +185,7 @@ internal object Scene : LScene() {
 
     private fun addGravitySlider(){
         add(GRAVITY_SLIDER.setMinimum(MINIMAL_GRAVITY).setMaximum(MAXIMAL_GRAVITY).setPrecision(GRAVITY_PRECISION).setX(CENTRAL_X).setY(0.50))
-        GRAVITY_SLIDER.setValue(DEFAULT_GRAVITY)
+        GRAVITY_SLIDER.setStartingValue(DEFAULT_GRAVITY)
     }
 
     private fun addGravityIndicator(){
@@ -199,7 +199,7 @@ internal object Scene : LScene() {
 
     private fun addLengthSlider(){
         add(LENGTH_SLIDER.setMinimum(MINIMAL_LENGTH).setMaximum(MAXIMAL_LENGTH).setPrecision(LENGTH_PRECISION).setX(CENTRAL_X).setY(0.65))
-        LENGTH_SLIDER.setValue(DEFAULT_LENGTH)
+        LENGTH_SLIDER.setStartingValue(DEFAULT_LENGTH)
     }
 
     private fun addLengthIndicator(){
@@ -213,7 +213,7 @@ internal object Scene : LScene() {
 
     private fun addFrictionSlider(){
         add(FRICTION_SLIDER.setMinimum(MINIMAL_FRICTION).setMaximum(MAXIMAL_FRICTION).setPrecision(FRICTION_PRECISION).setX(CENTRAL_X).setY(0.80))
-        FRICTION_SLIDER.setValue(DEFAULT_FRICTION)
+        FRICTION_SLIDER.setStartingValue(DEFAULT_FRICTION)
     }
 
     private fun addFrictionIndicator(){

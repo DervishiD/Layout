@@ -128,6 +128,8 @@ abstract class AbstractDiscreteSlider : ResizableDisplayer {
      * @since LLayout 4
      */
     fun setValue(value : Int) : AbstractDiscreteSlider{
+        if(value !in 0 until numberOfOptions) throw IllegalArgumentException("The value $value is not in the interval of the slider, that is, " +
+                "[0, $numberOfOptions[.")
         currentValue.value = value
         return this
     }

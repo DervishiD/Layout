@@ -265,6 +265,28 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
     }
 
     /**
+     * Sets the value of the slider.
+     * @return this
+     * @since LLayout 6
+     */
+    fun setStartingValue(value : Double) : AbstractDoubleSlider{
+        setValue(value)
+        conserveSliderPositionOnResize()
+        return this
+    }
+
+    /**
+     * Sets the value of the slider.
+     * @return this
+     * @since LLayout 6
+     */
+    fun setStartingValue(value : Int) : AbstractDoubleSlider{
+        setValue(value)
+        conserveSliderPositionOnResize()
+        return this
+    }
+
+    /**
      * Returns the value of [minimalValue].
      * @since LLayout 1
      */
@@ -317,6 +339,9 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
      * @since LLayout 1
      */
     private fun rounded(value : Double) : Double{
+        if(value < minimalValue() || value > maximalValue()){
+            throw IllegalArgumentException("Value not in the range of the slider.")
+        }
         return if(finitePrecision()){
             minimalValue() + precision() * ceil( ( value - minimalValue() - precision() / 2 ) / precision() )
         }else{
@@ -340,7 +365,7 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
      * Sets the value of this slider to the given one.
      * @since LLayout 5
      */
-    fun setValue(value : Double){
+    protected fun setValue(value : Double){
         currentValue.value = rounded(value)
     }
 
@@ -348,7 +373,7 @@ abstract class AbstractDoubleSlider : ResizableDisplayer {
      * Sets the value of this slider to the given one.
      * @since LLayout 5
      */
-    fun setValue(value : Int) = setValue(value.toDouble())
+    protected fun setValue(value : Int) = setValue(value.toDouble())
 
     /**
      * Corrects the position of the sliding thing such that it stays inside the object.
