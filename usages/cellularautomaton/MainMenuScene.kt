@@ -27,7 +27,7 @@ internal object MainMenuScene : LScene() {
     }
 
     private fun start(){
-        frame.setScene(FirstSelectionScene)
+        frame.setScene(DimensionScene)
     }
 
 }

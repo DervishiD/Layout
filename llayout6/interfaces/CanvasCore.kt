@@ -714,6 +714,22 @@ interface CanvasCore : HavingDimension {
 
     fun writeCentered(text : CharSequence, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
 
+    fun writeCentered(text : Int, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Double, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Float, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Long, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Short, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Byte, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Boolean, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeCentered(text : Char, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
     fun writeCentered(text : Text, key : Any? = defaultKey()) : CanvasCore = writeCentered(text.asString(), key)
 
     fun writeAtTop(text : StringDisplay, key : Any? = defaultKey()) : CanvasCore{
@@ -726,6 +742,22 @@ interface CanvasCore : HavingDimension {
 
     fun writeAtTop(text : CharSequence, key : Any? = defaultKey()) : CanvasCore = writeAtTop(StringDisplay(text), key)
 
+    fun writeAtTop(text : Int, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Double, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Float, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Long, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Short, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Byte, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Boolean, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtTop(text : Char, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
     fun writeAtTop(text : Text, key : Any? = defaultKey()) : CanvasCore = writeAtTop(text.asString(), key)
 
     fun writeAtBottom(text : StringDisplay, key : Any? = defaultKey()) : CanvasCore{
@@ -737,6 +769,22 @@ interface CanvasCore : HavingDimension {
     }
 
     fun writeAtBottom(text : CharSequence, key : Any? = defaultKey()) : CanvasCore = writeAtBottom(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Int, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Double, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Float, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Long, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Short, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Byte, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Boolean, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
+
+    fun writeAtBottom(text : Char, key : Any? = defaultKey()) : CanvasCore = writeCentered(StringDisplay(text), key)
 
     fun writeAtBottom(text : Text, key : Any? = defaultKey()) : CanvasCore = writeAtBottom(text.asString(), key)
 

@@ -14,11 +14,11 @@ internal object Parameters {
 
     private var borderColour : Color = Color.WHITE
 
-    private var neighbourhood : Collection<Pair<Int, Int>> = setOf()
+    private var survivingParameter : Collection<Int> = setOf()
 
-    private var survivingParameter : (Collection<Triple<Int, Int, Boolean>>) -> Boolean = { _ -> true }
+    private var birthParameters : Collection<Int> = setOf()
 
-    private var birthParameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean = { _ -> true }
+    private var grid : Array<Array<Boolean>> = Array(1) { Array(1) { true } }
 
     internal fun setWidth(width : Int){
         gridWidth = width
@@ -40,16 +40,30 @@ internal object Parameters {
         borderColour = colour
     }
 
-    internal fun setNeighbourhood(neighbourhood : Collection<Pair<Int, Int>>){
-        this.neighbourhood = neighbourhood
-    }
-
-    internal fun setSurvivingParameters(parameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean){
+    internal fun setSurvivingParameters(parameters : Collection<Int>){
         survivingParameter = parameters
     }
 
-    internal fun setBirthParameters(parameters : (Collection<Triple<Int, Int, Boolean>>) -> Boolean){
+    internal fun setBirthParameters(parameters : Collection<Int>){
         birthParameters = parameters
+    }
+
+    internal fun setGrid(grid : Array<Array<Boolean>>){
+        this.grid = grid
+    }
+
+    internal fun width() : Int = gridWidth
+
+    internal fun height() : Int = gridHeight
+
+    internal fun aliveColour() : Color = aliveCellColour
+
+    internal fun deadColour() : Color = deadCellColour
+
+    internal fun borderColour() : Color = borderColour
+
+    internal fun createGame() : Game{
+        TODO("Not implemented.")
     }
 
 }

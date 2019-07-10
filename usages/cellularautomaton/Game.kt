@@ -1,5 +1,5 @@
 package usages.cellularautomaton
 
-internal class Cell {
+internal class Game {
 
 }
