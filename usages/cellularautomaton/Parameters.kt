@@ -8,17 +8,17 @@ internal object Parameters {
 
     private var gridHeight : Int = 0
 
-    private var deadCellColour : Color = Color.WHITE
+    private lateinit var deadCellColour : Color
 
-    private var aliveCellColour : Color = Color.WHITE
+    private lateinit var aliveCellColour : Color
 
-    private var borderColour : Color = Color.WHITE
+    private lateinit var borderColour : Color
 
-    private var survivingParameter : Collection<Int> = setOf()
+    private lateinit var survivingParameters : Collection<Int>
 
-    private var birthParameters : Collection<Int> = setOf()
+    private lateinit var birthParameters : Collection<Int>
 
-    private var grid : Array<Array<Boolean>> = Array(1) { Array(1) { true } }
+    private lateinit var grid : Array<Array<Boolean>>
 
     internal fun setWidth(width : Int){
         gridWidth = width
@@ -41,7 +41,7 @@ internal object Parameters {
     }
 
     internal fun setSurvivingParameters(parameters : Collection<Int>){
-        survivingParameter = parameters
+        survivingParameters = parameters
     }
 
     internal fun setBirthParameters(parameters : Collection<Int>){
@@ -62,8 +62,6 @@ internal object Parameters {
 
     internal fun borderColour() : Color = borderColour
 
-    internal fun createGame() : Game{
-        TODO("Not implemented.")
-    }
+    internal fun createGame() : Game = Game(grid, survivingParameters, birthParameters)
 
 }

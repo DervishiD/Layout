@@ -80,14 +80,15 @@ internal object GridScene : LScene() {
     }
 
     private fun selectedGrid() : Array<Array<Boolean>>{
-        val result : Array<Array<Boolean>> = Array(grid.numberOfColumns()) { Array(grid.numberOfLines()) { false } }
+        val result : Array<Array<Boolean>> = Array(grid.numberOfLines()) { Array(grid.numberOfColumns()) { false } }
         grid.forEachCell { i, j -> result[i][j] = (grid[i, j] as Cell).state() }
         return result
     }
 
     private fun simulate(){
         Parameters.setGrid(selectedGrid())
-        SimulationScene.setGame(Parameters.createGame())
+        SimulationScene.setParameters(Parameters.createGame(), Parameters.aliveColour(), Parameters.deadColour(), Parameters.borderColour())
+        setInGamePeriod()
         frame.setScene(SimulationScene)
     }
 

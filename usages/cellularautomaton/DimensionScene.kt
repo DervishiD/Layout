@@ -27,17 +27,17 @@ internal object DimensionScene : LScene() {
 
     private const val HEIGHT_Y : Double = 0.3
 
-    private val WIDTH_LABEL : Label = Label("Width")
-
-    private val WIDTH_SLIDER : HorizontalDoubleSlider = HorizontalDoubleSlider(SLIDER_WIDTH, SLIDER_HEIGHT)
-
-    private val WIDTH_INDICATOR : Label = Label()
-
     private val HEIGHT_LABEL : Label = Label("Height")
 
     private val HEIGHT_SLIDER : HorizontalDoubleSlider = HorizontalDoubleSlider(SLIDER_WIDTH, SLIDER_HEIGHT)
 
     private val HEIGHT_INDICATOR : Label = Label()
+
+    private val WIDTH_LABEL : Label = Label("Width")
+
+    private val WIDTH_SLIDER : HorizontalDoubleSlider = HorizontalDoubleSlider(SLIDER_WIDTH, SLIDER_HEIGHT)
+
+    private val WIDTH_INDICATOR : Label = Label()
 
     private val BACK_BUTTON : TextButton = TextButton("Back") { back() }
 
@@ -57,17 +57,17 @@ internal object DimensionScene : LScene() {
     }
 
     private fun addWidthLabel(){
-        add(WIDTH_LABEL.setX(LABEL_X).setY(WIDTH_Y))
+        add(HEIGHT_LABEL.setX(LABEL_X).setY(WIDTH_Y))
     }
 
     private fun addWidthSlider(){
-        WIDTH_SLIDER.setRange(MINIMAL_WIDTH, MAXIMAL_WIDTH).setPrecision(1)
-        add(WIDTH_SLIDER.alignLeftToRight(WIDTH_LABEL, SLIDER_LABEL_GAP).setY(WIDTH_Y))
+        HEIGHT_SLIDER.setRange(MINIMAL_WIDTH, MAXIMAL_WIDTH).setPrecision(1)
+        add(HEIGHT_SLIDER.alignLeftToRight(HEIGHT_LABEL, SLIDER_LABEL_GAP).setY(WIDTH_Y))
     }
 
     private fun addWidthIndicator(){
-        WIDTH_SLIDER.addValueListener { WIDTH_INDICATOR.setText(WIDTH_SLIDER.value().toInt()) }
-        add(WIDTH_INDICATOR.alignLeftToLeft(WIDTH_LABEL).alignTopToBottom(WIDTH_LABEL, LABEL_INDICATOR_GAP))
+        HEIGHT_SLIDER.addValueListener { HEIGHT_INDICATOR.setText(HEIGHT_SLIDER.value().toInt()) }
+        add(HEIGHT_INDICATOR.alignLeftToLeft(HEIGHT_LABEL).alignTopToBottom(HEIGHT_LABEL, LABEL_INDICATOR_GAP))
     }
 
     private fun addHeightParameters(){
@@ -77,17 +77,17 @@ internal object DimensionScene : LScene() {
     }
 
     private fun addHeightLabel(){
-        add(HEIGHT_LABEL.setX(LABEL_X).setY(HEIGHT_Y))
+        add(WIDTH_LABEL.setX(LABEL_X).setY(HEIGHT_Y))
     }
 
     private fun addHeightSlider(){
-        HEIGHT_SLIDER.setRange(MINIMAL_HEIGHT, MAXIMAL_HEIGHT).setPrecision(1)
-        add(HEIGHT_SLIDER.alignLeftToRight(HEIGHT_LABEL, SLIDER_LABEL_GAP).setY(HEIGHT_Y))
+        WIDTH_SLIDER.setRange(MINIMAL_HEIGHT, MAXIMAL_HEIGHT).setPrecision(1)
+        add(WIDTH_SLIDER.alignLeftToRight(WIDTH_LABEL, SLIDER_LABEL_GAP).setY(HEIGHT_Y))
     }
 
     private fun addHeightIndicator(){
-        HEIGHT_SLIDER.addValueListener { HEIGHT_INDICATOR.setText(HEIGHT_SLIDER.value().toInt()) }
-        add(HEIGHT_INDICATOR.alignLeftToLeft(HEIGHT_LABEL).alignTopToBottom(HEIGHT_LABEL, LABEL_INDICATOR_GAP))
+        WIDTH_SLIDER.addValueListener { WIDTH_INDICATOR.setText(WIDTH_SLIDER.value().toInt()) }
+        add(WIDTH_INDICATOR.alignLeftToLeft(WIDTH_LABEL).alignTopToBottom(WIDTH_LABEL, LABEL_INDICATOR_GAP))
     }
 
     private fun addBackButton(){
@@ -102,9 +102,9 @@ internal object DimensionScene : LScene() {
         frame.setScene(MainMenuScene)
     }
 
-    private fun selectedWidth() : Int = WIDTH_SLIDER.value().toInt()
-
     private fun selectedHeight() : Int = HEIGHT_SLIDER.value().toInt()
+
+    private fun selectedWidth() : Int = WIDTH_SLIDER.value().toInt()
 
     private fun next(){
         updateParameters()
@@ -112,8 +112,8 @@ internal object DimensionScene : LScene() {
     }
 
     private fun updateParameters(){
-        Parameters.setWidth(selectedWidth())
-        Parameters.setHeight(selectedHeight())
+        Parameters.setWidth(selectedHeight())
+        Parameters.setHeight(selectedWidth())
     }
 
 }
