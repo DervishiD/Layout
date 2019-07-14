@@ -3,7 +3,7 @@ package usages.doublependulum
 import llayout6.frame.LApplication
 import llayout6.frame.LFrame
 
-val doublePendulum : LApplication = LApplication {  }
+val doublePendulum : LApplication = LApplication { frame.run() }
 
 internal const val TIMER_PERIOD : Int = 10
 
