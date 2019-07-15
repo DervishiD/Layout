@@ -12,7 +12,7 @@ import kotlin.math.sin
 
 internal object SimulationPane : Canvas() {
 
-    private const val ITERATIONS_PER_TICK : Int = 10000
+    private const val ITERATIONS_PER_TICK : Int = 20000
 
     private const val INTEGRATION_STEP : Double = TIMER_PERIOD * 1e-3 / ITERATIONS_PER_TICK
 
