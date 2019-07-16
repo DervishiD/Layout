@@ -104,7 +104,7 @@ internal object Scene : LScene() {
     private const val GRAVITY_Y : Double = 0.72
 
     private const val MINIMAL_FRICTION : Double = 0.0
-    private const val MAXIMAL_FRICTION : Double = 2.0
+    private const val MAXIMAL_FRICTION : Double = 1.0
     private const val FRICTION_PRECISION : Double = 0.1
     private const val DEFAULT_FRICTION : Double = 0.0
 

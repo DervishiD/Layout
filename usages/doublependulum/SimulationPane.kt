@@ -12,7 +12,7 @@ import kotlin.math.sin
 
 internal object SimulationPane : Canvas() {
 
-    private const val ITERATIONS_PER_TICK : Int = 20000
+    private const val ITERATIONS_PER_TICK : Int = 100000
 
     private const val INTEGRATION_STEP : Double = TIMER_PERIOD * 1e-3 / ITERATIONS_PER_TICK
 
@@ -113,9 +113,9 @@ internal object SimulationPane : Canvas() {
 
     private fun cosTheta() : Double = cos(theta())
 
-    private fun phiDotDot(sinTheta : Double, cosTheta : Double) : Double = - ( mPhi * g * sin(phi) + mu * lPhi * phiDot + mPsi * sinTheta * ( g * cos(psi) + lPhi * phiDot * phiDot * cosTheta + lPsi * ( phiDot + psiDot ) * ( phiDot + psiDot ) ) ) / ( lPhi * ( mPhi + mPsi * sinTheta * sinTheta ) )
+    private fun phiDotDot(sinTheta : Double, cosTheta : Double) : Double = - ( mPsi * cosTheta * ( lPhi * phiDot * ( phiDot + psiDot ) * sinTheta - g * sin(psi) - lPsi * mu * psiDot ) + mPsi * lPsi * psiDot * ( phiDot + psiDot ) * sinTheta + g * ( mPhi + mPsi ) * sin(phi) + mPhi * lPhi * mu * phiDot ) / ( lPhi * ( mPhi + mPsi * sinTheta * sinTheta ) )
 
-    private fun psiDotDot(sinTheta : Double, cosTheta : Double, phiDotDot : Double) : Double = ( - g * sin(psi) - mu * lPsi * psiDot / mPsi - ( lPsi + lPhi * cosTheta ) * phiDotDot + lPhi * phiDot * phiDot * sinTheta ) / lPsi
+    private fun psiDotDot(sinTheta : Double, cosTheta : Double, phiDotDot : Double) : Double = ( - lPhi * cosTheta * phiDotDot + lPhi * phiDot * ( phiDot + psiDot ) * sinTheta - g * sin(psi) - lPsi * mu * psiDot ) / lPsi
 
     private fun integrate(){
         val sinTheta : Double = sinTheta()
