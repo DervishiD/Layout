@@ -45,7 +45,6 @@ Projects
     multiple player mnk game
     connect6
     Evolution simulator
-    Double pendulum
     Double spring pendulum
 
 Current version -- LLayout 6
