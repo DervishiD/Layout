@@ -10,20 +10,21 @@ import java.awt.Font
  * @see Font
  * @since LLayout 1
  */
-internal val DEFAULT_SMALL_FONT : Font = Font("Monospaced", Font.BOLD, 16)
+val DEFAULT_SMALL_FONT : Font = Font("Monospaced", Font.BOLD, 16)
+
 /**
  * The default medium font.
  * @see Font
  * @since LLayout 1
  */
-internal val DEFAULT_MEDIUM_FONT : Font = Font("Monospaced", Font.BOLD, 24)
+val DEFAULT_MEDIUM_FONT : Font = Font("Monospaced", Font.BOLD, 24)
 
 /**
  * The default large font.
  * @see Font
  * @since LLayout 1
  */
-internal val DEFAULT_LARGE_FONT : Font = Font("Monospaced", Font.BOLD, 32)
+val DEFAULT_LARGE_FONT : Font = Font("Monospaced", Font.BOLD, 32)
 
 //COLOURS----------------------------------------------------------------------
 
@@ -32,4 +33,4 @@ internal val DEFAULT_LARGE_FONT : Font = Font("Monospaced", Font.BOLD, 32)
  * @see Color
  * @since LLayout 1
  */
-internal val DEFAULT_COLOR : Color = Color.BLACK
+val DEFAULT_COLOR : Color = Color.BLACK

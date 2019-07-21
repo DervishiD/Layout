@@ -21,10 +21,6 @@ Fuse Displayer cores
 
 Add default fonts and colors setters to LFrames
 
-Put usages in other projects
-
-Modules
-
 Displayers
     TextArea
     Graph for Double-Double map
