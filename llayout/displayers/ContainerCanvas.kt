@@ -8,7 +8,7 @@ import java.awt.Graphics
  * A [Displayer] that acts like a [Canvas] and a [DisplayerContainer]. It can contain other [Displayer]s and draw on itself.
  * @since LLayout 7
  */
-class ContainerCanvas : DisplayerContainer, CanvasCore {
+open class ContainerCanvas : DisplayerContainer, CanvasCore {
 
     override var graphics: MutableMap<Any?, GraphicAction> = mutableMapOf()
 
