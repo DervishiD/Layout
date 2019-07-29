@@ -21,13 +21,6 @@ Fuse Displayer cores
 
 Add default fonts and colors setters to LFrames
 
-Displayers
-    TextArea
-    Graph for Double-Double map
-    TextScrollPane, ConsoleScrollPane
-        Add lateral sliders
-    DisplayerScrollPane
-
 Projects
     Draughts/Checkers
     Battleships
@@ -42,8 +35,9 @@ Projects
     connect6
     Evolution simulator
     Double spring pendulum
+    Grid game
 
-Current version -- LLayout 6
+Current version -- LLayout 7
 Version History
     LLayout 1   -- first usable version
     LLayout 2   -- Bug fixes
@@ -51,5 +45,6 @@ Version History
     LLayout 4   -- Discrete Sliders
     LLayout 5   -- Monte Carlo Tree Search
     LLayout 6   -- Plots
+    LLayout 7   -- ContainerCanvas
 
 JSType.java line 358
