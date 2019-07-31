@@ -159,6 +159,8 @@ abstract class AbstractPlot : ResizableDisplayer {
             updatePlot()
         }
         core.addGraphicAction(DEFAULT_BACKGROUND, BACKGROUND_KEY)
+        addWidthListener { updatePlot() }
+        addHeightListener { updatePlot() }
     }
 
     constructor(width : Int, height : Int) : super(width, height)

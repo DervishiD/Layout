@@ -1,26 +1,3 @@
-Canvas
-    Draw squares
-    Draw circles
-    Draw arc
-    Draw image
-    Draw roundRect
-    Draw triangles
-    Draw regular polygons
-    Draw polygons
-    Fill Squares
-    Fill circles
-    Fill arcs
-    Fill round rect
-    Fill triangle
-    Fill regular polygons
-    Fill polygons
-    Draw and fill rectangles and ovals (and squares and circles) from center point and other points
-    Fix  the 0.999 problem
-
-Fuse Displayer cores
-
-Add default fonts and colors setters to LFrames
-
 Projects
     Draughts/Checkers
     Battleships
@@ -45,6 +22,4 @@ Version History
     LLayout 4   -- Discrete Sliders
     LLayout 5   -- Monte Carlo Tree Search
     LLayout 6   -- Plots
-    LLayout 7   -- ContainerCanvas
-
-JSType.java line 358
+    LLayout 7   -- ContainerCanvas, VerticalScrollPane

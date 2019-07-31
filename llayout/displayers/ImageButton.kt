@@ -9,7 +9,7 @@ import java.awt.Graphics
  * @see ResizableDisplayer
  * @since LLayout 1
  */
-class ImageButton : ResizableDisplayer {
+open class ImageButton : ResizableDisplayer {
 
     /**
      * It's image.

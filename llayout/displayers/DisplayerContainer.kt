@@ -5,17 +5,17 @@ package llayout.displayers
  * @see ResizableDisplayer
  * @since LLayout 1
  */
-abstract class DisplayerContainer : ResizableDisplayer {
+open class DisplayerContainer : ResizableDisplayer {
 
-    protected constructor(width : Int, height : Int) : super(width, height)
+    constructor(width : Int, height : Int) : super(width, height)
 
-    protected constructor(width : Double, height : Int) : super(width, height)
+    constructor(width : Double, height : Int) : super(width, height)
 
-    protected constructor(width : Int, height : Double) : super(width, height)
+    constructor(width : Int, height : Double) : super(width, height)
 
-    protected constructor(width : Double, height : Double) : super(width, height)
+    constructor(width : Double, height : Double) : super(width, height)
 
-    protected constructor() : super()
+    constructor() : super()
 
     /**
      * Adds the given Displayers to this container.
