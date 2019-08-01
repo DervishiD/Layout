@@ -1665,6 +1665,7 @@ abstract class DisplayerCore : JLabel, Displayable {
         }
         loadBounds()
         drawDisplayer(g!!)
+
     }
 
     /**

@@ -288,7 +288,7 @@ abstract class TextDisplayer : Displayer {
      * @since LLayout 1
      */
     private fun setCoreDimensions(g : Graphics){
-        var maximalWidth : Int = 0
+        var maximalWidth = 0
         var height : Int = 2 * lateralAdditionalDistance
         for(line : Collection<StringDisplay> in lines){
             height += line.lineHeight(g)
@@ -297,7 +297,9 @@ abstract class TextDisplayer : Displayer {
                 maximalWidth = lineLength
             }
         }
+        //DON'T
         core.setWidth(maximalWidth + 2 * lateralAdditionalDistance)
+        //DON'T
         core.setHeight(height)
     }
 

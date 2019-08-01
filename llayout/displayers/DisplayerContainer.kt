@@ -22,9 +22,9 @@ open class DisplayerContainer : ResizableDisplayer {
      * @return this
      * @since LLayout 1
      */
-    fun add(vararg components : Displayer) : Displayer{
+    fun add(vararg components : Displayer) : DisplayerContainer{
         for(component : Displayer in components){
-            core.add(core(component))
+            core.add(component)
         }
         return this
     }
@@ -34,9 +34,9 @@ open class DisplayerContainer : ResizableDisplayer {
      * @return this
      * @since LLayout 1
      */
-    fun add(components : Collection<Displayer>) : Displayer{
+    fun add(components : Collection<Displayer>) : DisplayerContainer{
         for(component : Displayer in components){
-            core.add(core(component))
+            core.add(component)
         }
         return this
     }
@@ -46,9 +46,9 @@ open class DisplayerContainer : ResizableDisplayer {
      * @return this
      * @since LLayout 1
      */
-    fun remove(vararg components : Displayer) : Displayer{
+    fun remove(vararg components : Displayer) : DisplayerContainer{
         for(component : Displayer in components){
-            core.remove(core(component))
+            core.remove(component)
         }
         return this
     }
@@ -58,9 +58,9 @@ open class DisplayerContainer : ResizableDisplayer {
      * @return this
      * @since LLayout 1
      */
-    fun remove(components : Collection<Displayer>) : Displayer{
+    fun remove(components : Collection<Displayer>) : DisplayerContainer{
         for(component : Displayer in components){
-            core.remove(core(component))
+            core.remove(component)
         }
         return this
     }

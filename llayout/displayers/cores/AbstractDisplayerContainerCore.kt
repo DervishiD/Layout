@@ -36,4 +36,8 @@ abstract class AbstractDisplayerContainerCore : ResizableDisplayerCore, Standard
 
     protected constructor() : super()
 
+    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
+        super.updateRelativeValues(frameWidth, frameHeight)
+    }
+
 }

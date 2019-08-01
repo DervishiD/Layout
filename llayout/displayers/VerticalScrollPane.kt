@@ -87,6 +87,8 @@ class VerticalScrollPane : ResizableDisplayer {
         slider.setRange(0, 1).addValueListener { updatePanePosition(1 - slider.value()) }.alignTopTo(0).alignRightTo(1.0)
         slider.setStartingValue(1.0)
         core.add(slider)
+        addWidthListener { resizeComponents() }
+        addHeightListener { resizeComponents() }
     }
 
     constructor(width : Int, height : Int) : super(width, height)
@@ -325,12 +327,10 @@ class VerticalScrollPane : ResizableDisplayer {
                 paneToBottom()
             }
             //Add first component
-            components[0].component().alignTopTo(0)
-            pane.add(components[0].component())
+            pane.add(components[0].component().alignTopTo(0))
             //Add other components
             for(i : Int in 1..lastIndex()){
-                components[i].component().alignTopToBottom(components[i - 1].component(), components[i].gap())
-                pane.add(components[i].component())
+                pane.add(components[i].component().alignTopToBottom(components[i - 1].component(), components[i].gap()))
             }
         }
     }
@@ -408,6 +408,23 @@ class VerticalScrollPane : ResizableDisplayer {
     override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
         super.updateRelativeValues(frameWidth, frameHeight)
         pane.updateRelativeValues(width(), height())
+    }
+
+    /**
+     * Resizes the contained components.
+     * @since LLayout 7
+     */
+    private fun resizeComponents(){
+        for(c : PaneComponent in components){
+            c.component().updateRelativeValues(width(), height())
+        }
+    }
+
+    override fun onTimerTick() {
+        super.onTimerTick()
+        for(c : PaneComponent in components){
+            c.component().onTimerTick()
+        }
     }
 
 }
