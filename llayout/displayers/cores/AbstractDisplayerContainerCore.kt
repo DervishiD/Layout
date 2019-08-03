@@ -2,6 +2,7 @@ package llayout.displayers.cores
 
 import llayout.interfaces.StandardLContainer
 import llayout.interfaces.Displayable
+import java.awt.Graphics
 
 /**
  * An abstract DisplayerCore that implements the StandardLContainer interface.
@@ -35,9 +36,5 @@ abstract class AbstractDisplayerContainerCore : ResizableDisplayerCore, Standard
     protected constructor(width : Double, height : Double) : super(width, height)
 
     protected constructor() : super()
-
-    override fun updateRelativeValues(frameWidth: Int, frameHeight: Int) {
-        super.updateRelativeValues(frameWidth, frameHeight)
-    }
 
 }

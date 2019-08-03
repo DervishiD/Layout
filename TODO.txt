@@ -22,4 +22,4 @@ Version History
     LLayout 4   -- Discrete Sliders
     LLayout 5   -- Monte Carlo Tree Search
     LLayout 6   -- Plots
-    LLayout 7   -- ContainerCanvas, VerticalScrollPane
+    LLayout 7   -- ContainerCanvas, VerticalScrollPane, bug fixes

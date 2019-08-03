@@ -84,7 +84,7 @@ class VerticalScrollPane : ResizableDisplayer {
         pane.alignLeftTo(0)
         pane.alignTopTo(0)
         core.add(pane)
-        slider.setRange(0, 1).addValueListener { updatePanePosition(1 - slider.value()) }.alignTopTo(0).alignRightTo(1.0)
+        slider.setRange(0, 1).setPrecision(0).addValueListener { updatePanePosition(1 - slider.value()) }.alignTopTo(0).alignRightTo(1.0)
         slider.setStartingValue(1.0)
         core.add(slider)
         addWidthListener { resizeComponents() }

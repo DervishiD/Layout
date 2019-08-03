@@ -291,6 +291,16 @@ class TextScrollPane : ResizableDisplayer {
     fun write(b : Boolean) : TextScrollPane = this.write(StringDisplay(b))
 
     /**
+     * Writes the argument in the current line.
+     * @return this
+     * @since LLayout 7
+     */
+    fun write(t : Collection<StringDisplay>) : TextScrollPane{
+        for(sd : StringDisplay in t) write(sd)
+        return this
+    }
+
+    /**
      * Clears all the lines.
      * @since LLayout 1
      */

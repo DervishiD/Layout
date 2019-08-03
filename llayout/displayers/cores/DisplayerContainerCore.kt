@@ -88,6 +88,10 @@ class DisplayerContainerCore : AbstractDisplayerContainerCore, CanvasCore {
     }
 
     override fun drawDisplayer(g: Graphics) {
+        for(part : Displayable in parts){
+            part.drawDisplayable(g)
+        }
+        g.clearRect(0, 0, width(), height())
         drawBackground(g)
     }
 
