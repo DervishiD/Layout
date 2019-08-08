@@ -7,13 +7,13 @@ package llayout.displayers
  */
 class VerticalScrollPane : ResizableDisplayer {
 
-    private companion object{
+    companion object{
 
         /**
          * The slider's width.
          * @since LLayout 7
          */
-        private const val SLIDER_WIDTH : Int = 25
+        const val SLIDER_WIDTH : Int = 25
 
         /**
          * The default height of a component, that is, the height automatically given if its height is not defined.

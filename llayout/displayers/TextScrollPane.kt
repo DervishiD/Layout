@@ -376,10 +376,8 @@ class TextScrollPane : ResizableDisplayer {
 
     override fun initializeDrawingParameters(g: Graphics) {
         super.initializeDrawingParameters(g)
-        if(lines.isNotEmpty()){
-            resetLines(g)
-            verifyLines(g)
-        }
+        resetLines(g)
+        verifyLines(g)
         recomputeTotalHeight(g)
         verifyScrollReference()
         recalculateDrawingParameters(g)
@@ -426,10 +424,10 @@ class TextScrollPane : ResizableDisplayer {
      * @since LLayout 1
      */
     private fun recalculateDrawingParameters(g : Graphics){
-        if(recalculateDrawingParameters.value){
+        if(recalculateDrawingParameters.value && lines().isNotEmpty()){
             var zero : Int = scrollReference
-            var lowerFound : Boolean = false
-            var index : Int = 0
+            var lowerFound = false
+            var index = 0
             var lineHeight : Int
             while(!lowerFound){
                 lineHeight = lines[index].lineHeight(g)
@@ -448,7 +446,6 @@ class TextScrollPane : ResizableDisplayer {
             }
             higherDrawingIndex = if(index < lines.size) index else lines.size - 1
             recalculateDrawingParameters.value = false
-
         }
     }
 
